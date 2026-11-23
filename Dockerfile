@@ -11,7 +11,7 @@ RUN apk add --no-cache \
     git \
     unzip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j"$(nproc)" pdo_pgsql intl zip bcmath gd opcache
+    && docker-php-ext-install -j"$(nproc)" pdo_pgsql zip bcmath gd mbstring opcache
 
 WORKDIR /app
 
