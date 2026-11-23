@@ -1,0 +1,54 @@
+name: Hostinger deployment preflight
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/hostinger-deploy.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-hostinger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify SSH access and inspect hosting environment
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          command_timeout: 2m
+          script: |
+            set -eu
+            echo "=== HOSTINGER SSH PREFLIGHT ==="
+            echo "USER: $(whoami)"
+            echo "HOME: $HOME"
+            echo "PWD: $(pwd)"
+            echo "=== OS ==="
+            (cat /etc/os-release 2>/dev/null || uname -a) | head -20
+            echo "=== PHP ==="
+            (php -v 2>&1 | head -2) || true
+            echo "=== COMPOSER ==="
+            (composer --version 2>&1 | head -2) || true
+            echo "=== NODE / NPM ==="
+            (node --version 2>&1) || true
+            (npm --version 2>&1) || true
+            echo "=== GIT ==="
+            (git --version 2>&1) || true
+            echo "=== AVAILABLE DISK ==="
+            df -h "$HOME" 2>&1 | tail -2
+            echo "=== HOSTINGER DOMAIN DIRECTORIES ==="
+            for d in "$HOME/domains/biraconsultants.com" "$HOME/domains/biraconsultants.com/public_html" "$HOME/public_html"; do
+              if [ -e "$d" ]; then
+                ls -ld "$d"
+                [ ! -d "$d" ] || find "$d" -maxdepth 1 -mindepth 1 -printf '%f\n' 2>/dev/null | head -30
+              fi
+            done
+            echo "=== PHP MODULES ==="
+            php -m 2>/dev/null | grep -Ei '^(bcmath|ctype|curl|dom|fileinfo|gd|intl|mbstring|openssl|pdo|pdo_mysql|tokenizer|xml|zip)$' || true
+            echo "=== PREFLIGHT COMPLETE ==="
