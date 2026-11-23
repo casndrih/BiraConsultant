@@ -232,6 +232,15 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+        });
+
         Schema::create('biraconsultant_settings', function (Blueprint $table) {
             $table->id();
             $table->string('key')->unique();
@@ -243,7 +252,7 @@ return new class extends Migration
     public function down(): void
     {
         foreach ([
-            'biraconsultant_settings', 'notifications', 'biraconsultant_company_followers',
+            'biraconsultant_settings', 'sessions', 'notifications', 'biraconsultant_company_followers',
             'biraconsultant_saved_jobs', 'biraconsultant_job_skill',
             'biraconsultant_user_category_interests', 'biraconsultant_user_skills',
             'biraconsultant_user_work_experiences', 'biraconsultant_blogs',
