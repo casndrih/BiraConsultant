@@ -17,7 +17,7 @@ WORKDIR /app
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --prefer-dist --no-progress --optimize-autoloader --no-scripts \
+RUN composer update symfony/routing --with-all-dependencies --no-dev --no-interaction --prefer-dist --no-progress --optimize-autoloader --no-scripts \
     && composer audit --locked --no-dev
 
 COPY . .
