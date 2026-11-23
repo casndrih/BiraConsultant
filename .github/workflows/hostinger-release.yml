@@ -61,7 +61,7 @@ jobs:
             echo "=== Install PHP and frontend dependencies ==="
             mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
             composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-            npm ci --no-audit --no-fund
+            npm install --no-audit --no-fund
             npm run build
             test -s public/build/manifest.json
             php artisan key:generate --force --no-interaction
