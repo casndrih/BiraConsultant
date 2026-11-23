@@ -30,7 +30,7 @@
         "lottie-web": "^5.13.0"
     },
     "overrides": {
-        "webpack-dev-server": "^5.2.8",
-        "webpack-dev-middleware": "^7.4.5"
+        "webpack-dev-server": "^5.2.7",
+        "webpack-dev-middleware": "^7.4.6"
     }
 }
