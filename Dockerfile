@@ -17,7 +17,8 @@ WORKDIR /app
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --prefer-dist --no-progress --optimize-autoloader --no-scripts
+RUN composer install --no-dev --no-interaction --prefer-dist --no-progress --optimize-autoloader --no-scripts \
+    && composer audit --locked --no-dev
 
 COPY . .
 
@@ -31,13 +32,14 @@ RUN mkdir -p \
     bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
-# Install the reproducible locked frontend tree and audit production
-# dependencies only. Laravel Mix/webpack are build-time devDependencies; their
-# legacy transitive advisories must not block the production runtime audit.
-# Keep the full dev toolchain available until assets have been compiled.
+# Refresh the lockfile with non-breaking security updates before installing.
+# Audit the complete dependency tree (including build tooling), and fail on
+# any reported severity rather than masking development dependency findings.
 RUN apk add --no-cache nodejs npm \
+    && npm install --package-lock-only --ignore-scripts --no-audit \
+    && npm audit fix --package-lock-only --ignore-scripts \
     && npm ci \
-    && npm audit --omit=dev --audit-level=high \
+    && npm audit --audit-level=low \
     && npm run production \
     && rm -rf node_modules
 
