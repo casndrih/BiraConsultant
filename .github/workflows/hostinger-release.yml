@@ -94,6 +94,11 @@ jobs:
             chmod -R ug+rwX storage bootstrap/cache
             rm -rf "$APP_DIR"
             mv "$STAGING" "$APP_DIR"
+            cd "$APP_DIR"
+            php artisan optimize:clear
+            php artisan config:cache
+            php artisan view:cache
+            php artisan route:cache
             find "$WEBROOT" -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +
             cp -a "$APP_DIR/public/." "$WEBROOT/"
             cat > "$WEBROOT/index.php" <<'PHP'
