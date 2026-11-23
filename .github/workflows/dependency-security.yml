@@ -1,0 +1,58 @@
+name: Dependency security
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - package-lock.json
+      - composer.lock
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit-and-refresh-lockfiles:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Refresh npm lockfile with non-breaking security fixes
+        run: |
+          npm install --package-lock-only --ignore-scripts --no-audit
+          npm audit fix --package-lock-only --ignore-scripts
+
+      - name: Install and audit all npm dependencies
+        run: |
+          npm ci
+          npm audit --audit-level=low
+          npm run build
+
+      - name: Set up PHP and Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+
+      - name: Update patched Symfony routing and audit production PHP dependencies
+        run: |
+          composer update symfony/routing --with-all-dependencies --no-dev --no-interaction --prefer-dist --no-scripts
+          composer audit --locked --no-dev
+
+      - name: Commit refreshed lockfiles
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json composer.lock
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: refresh audited dependency lockfiles"
+            git push
+          fi
