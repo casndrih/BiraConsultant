@@ -22,7 +22,10 @@ jobs:
           username: ${{ secrets.HOSTINGER_USER }}
           port: ${{ secrets.HOSTINGER_PORT }}
           password: ${{ secrets.HOSTINGER_PASSWORD }}
+          envs: GH_TOKEN
           command_timeout: 30m
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           script: |
             set -eu
 
@@ -40,7 +43,7 @@ jobs:
             command -v node >/dev/null
             command -v npm >/dev/null
             php -r 'exit(version_compare(PHP_VERSION, "8.2.0", ">=") ? 0 : 1);'
-            mkdir -p "$RELEASES"
+            mkdir -p "$RELEASES" "$RELEASE"
 
             echo "=== 2. PRESERVE PRODUCTION CONNECTION SETTINGS ==="
             cp "$ENV_SOURCE" "$HOME/.biraconsultant-production.env"
@@ -58,7 +61,7 @@ jobs:
             done
 
             echo "=== 3. FETCH EXACT LATEST MAIN SOURCE ==="
-            git clone --depth 1 --branch main https://github.com/casndrih/BiraConsultant.git "$RELEASE/source"
+            git clone --depth 1 --branch main "https://x-access-token:$GH_TOKEN@github.com/casndrih/BiraConsultant.git" "$RELEASE/source"
             cd "$RELEASE/source"
             test -f artisan
             test -f composer.lock
