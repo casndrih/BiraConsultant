@@ -16,6 +16,7 @@ class BiraConsultantJob extends Model
         'slug',
         'description',
         'requirements',
+        'responsibilities',
         'how_to_apply',
         'company_id',
         'category_id',
@@ -109,7 +110,7 @@ class BiraConsultantJob extends Model
 
     public function isSavedBy($userId)
     {
-        return $this->savedBy()->where('biraconsultant_user_id', $userId)->exists();
+        return $this->savedBy()->where('biraconsultant_users.id', $userId)->exists();
     }
 
     // Scopes
