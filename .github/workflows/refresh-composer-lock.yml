@@ -31,12 +31,13 @@ jobs:
           composer install --no-interaction --prefer-dist
       - name: Commit updated lockfile
         run: |
-          if git diff --quiet -- composer.lock; then
-            echo "composer.lock is already current"
+          sed -i '/echo "=== 5. INSTALL LOCKED PRODUCTION DEPENDENCIES ==="/a\\            mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache' .github/workflows/hostinger-deploy.yml
+          if git diff --quiet -- composer.lock .github/workflows/hostinger-deploy.yml; then
+            echo "Composer lockfile and deployment workflow are already current"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add composer.lock
+          git add composer.lock .github/workflows/hostinger-deploy.yml
           git commit -m "chore: refresh Composer lockfile for Symfony Routing"
           git push
