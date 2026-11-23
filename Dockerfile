@@ -40,7 +40,7 @@ RUN apk add --no-cache nodejs npm \
     && npm audit fix --package-lock-only --ignore-scripts \
     && npm ci \
     && npm audit --audit-level=low \
-    && npm run production \
+    && npm run build \
     && rm -rf node_modules
 
 RUN composer dump-autoload --no-dev --optimize \
