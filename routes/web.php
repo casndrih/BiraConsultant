@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/healthz', fn () => response()->json(['status' => 'ok']))->name('healthz');
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\JobController;
@@ -15,6 +14,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\CompanyDashboardController;
+
+Route::get('/healthz', fn () => response()->json(['status' => 'ok']))->name('healthz');
 
 // Serve public profile photos directly from the public disk. Some packaged
 // Oreshnik workspaces cannot maintain Laravel's public/storage symlink.
