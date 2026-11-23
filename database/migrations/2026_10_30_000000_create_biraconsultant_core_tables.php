@@ -205,7 +205,6 @@ return new class extends Migration
                 $table->foreignId($left)->constrained(str_starts_with($left, 'user_') || $left === 'user_id' ? 'biraconsultant_users' : 'biraconsultant_jobs')->cascadeOnDelete();
                 $table->foreignId($right)->constrained($related)->cascadeOnDelete();
                 $table->primary([$left, $right]);
-                $table->timestamps();
             });
         }
 
