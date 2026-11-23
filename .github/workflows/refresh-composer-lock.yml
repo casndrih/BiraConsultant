@@ -25,6 +25,7 @@ jobs:
           coverage: none
       - name: Refresh the Symfony Routing lock entry
         run: |
+          mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
           composer update symfony/routing --with-dependencies --no-interaction --prefer-dist
           composer validate --no-check-publish
           composer install --no-interaction --prefer-dist
