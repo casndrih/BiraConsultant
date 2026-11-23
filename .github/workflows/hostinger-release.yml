@@ -1,4 +1,5 @@
 name: Deploy fresh BiraConsultant release to Hostinger
+# Release builder now uses the package ESM configuration.
 
 on:
   workflow_dispatch:
