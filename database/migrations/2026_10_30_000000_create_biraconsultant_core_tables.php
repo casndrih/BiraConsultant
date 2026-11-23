@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('biraconsultant_countries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('iso', 2)->nullable()->index();
+            $table->string('iso', 2)->nullable()->unique();
             $table->string('iso3', 3)->nullable();
             $table->string('dial', 10)->nullable();
             $table->string('currency', 3)->nullable();
