@@ -28,9 +28,5 @@
         "flag-icons": "^7.3.2",
         "flowbite": "^2.5.2",
         "lottie-web": "^5.13.0"
-    },
-    "overrides": {
-        "webpack-dev-server": "^5.2.7",
-        "webpack-dev-middleware": "^7.4.6"
     }
 }
