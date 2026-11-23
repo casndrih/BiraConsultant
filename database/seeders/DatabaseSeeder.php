@@ -49,6 +49,43 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        $jobCategories = [
+            'Administration', 'Accounting & Finance', 'Agriculture',
+            'Construction', 'Education & Training', 'Engineering',
+            'Healthcare & Medical', 'Hospitality & Tourism', 'Human Resources',
+            'Information Technology', 'Logistics & Transport', 'Manufacturing',
+            'Marketing & Communications', 'Mining & Resources', 'Retail & Sales',
+            'Security', 'Trades & Services',
+        ];
+
+        foreach ($jobCategories as $name) {
+            DB::table('biraconsultant_job_categories')->updateOrInsert(
+                ['slug' => \Illuminate\Support\Str::slug($name)],
+                ['name' => $name, 'updated_at' => $now, 'created_at' => $now]
+            );
+        }
+
+        foreach (['Full Time', 'Part Time', 'Contract', 'Casual', 'Internship', 'Temporary'] as $name) {
+            DB::table('biraconsultant_job_types')->updateOrInsert(
+                ['name' => $name],
+                ['updated_at' => $now, 'created_at' => $now]
+            );
+        }
+
+        foreach (['No Experience', 'Entry Level', 'Mid Level', 'Senior Level', 'Executive'] as $name) {
+            DB::table('biraconsultant_job_experience_levels')->updateOrInsert(
+                ['name' => $name],
+                ['updated_at' => $now, 'created_at' => $now]
+            );
+        }
+
+        foreach (['News', 'Career Advice', 'Employer Insights'] as $name) {
+            DB::table('biraconsultant_blog_categories')->updateOrInsert(
+                ['slug' => \Illuminate\Support\Str::slug($name)],
+                ['name' => $name, 'description' => null, 'updated_at' => $now, 'created_at' => $now]
+            );
+        }
+
         $statuses = [
             [1, 'Applied', 'bg-blue-100 text-blue-700'],
             [2, 'Under Review', 'bg-yellow-100 text-yellow-700'],
