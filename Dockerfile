@@ -32,6 +32,8 @@ RUN composer dump-autoload --no-dev --optimize \
     && chown -R www-data:www-data storage bootstrap/cache
 
 COPY docker/Caddyfile /etc/caddy/Caddyfile
+COPY docker/start.sh /usr/local/bin/start-app
+RUN chmod +x /usr/local/bin/start-app
 
 ENV APP_ENV=production \
     APP_DEBUG=false \
@@ -40,4 +42,4 @@ ENV APP_ENV=production \
 
 EXPOSE 3000
 
-CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+CMD ["/usr/local/bin/start-app"]
