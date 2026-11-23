@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Deploy fresh Laravel release and reset demo database
         uses: appleboy/ssh-action@v1.2.0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
@@ -24,8 +26,6 @@ jobs:
           password: ${{ secrets.HOSTINGER_PASSWORD }}
           envs: GH_TOKEN
           command_timeout: 30m
-          env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           script: |
             set -eu
 
