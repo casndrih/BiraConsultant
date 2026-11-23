@@ -629,7 +629,48 @@
   --bc-brand-soft: #FFF7D6;
   --bc-brand-ink: #5B4500;
 }
-.bc-brand__logo { display: block; width: 44px; height: 44px; flex: 0 0 auto; object-fit: contain; }
+.bc-brand__logo {
+    display: block;
+    width: 40px !important;
+    min-width: 40px;
+    max-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px;
+    max-height: 40px !important;
+    flex: 0 0 40px;
+    object-fit: contain;
+}
+
+.bc-footer__logo {
+    display: block;
+    width: 40px !important;
+    min-width: 40px;
+    max-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px;
+    max-height: 40px !important;
+    flex: 0 0 40px;
+    object-fit: contain;
+    align-self: center;
+}
+
+.bc-brand,
+.bc-footer__brand {
+    min-width: 0;
+}
+
+@media (max-width: 767px) {
+    .bc-brand__logo,
+    .bc-footer__logo {
+        width: 36px !important;
+        min-width: 36px;
+        max-width: 36px !important;
+        height: 36px !important;
+        min-height: 36px;
+        max-height: 36px !important;
+        flex-basis: 36px;
+    }
+}
 .text-green-50,.text-green-100,.text-green-200,.text-green-300,.text-green-400,.text-green-500,.text-green-600,.text-green-700,.text-green-800,.text-green-900 { color: var(--bc-brand-ink) !important; }
 .bg-green-50,.bg-green-100,.bg-green-200 { background-color: var(--bc-brand-soft) !important; }
 .bg-green-300,.bg-green-400,.bg-green-500,.bg-green-600,.bg-green-700,.bg-green-800,.bg-green-900 { background-color: var(--bc-brand) !important; color: #4A3900 !important; }
