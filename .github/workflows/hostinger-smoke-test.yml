@@ -1,0 +1,49 @@
+name: Verify BiraConsultant production deployment
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/hostinger-smoke-test.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test public routes, assets, and Laravel database
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          command_timeout: 5m
+          script: |
+            set -eu
+            APP="$HOME/domains/biraconsultants.com/bira_app"
+            echo "=== Laravel production configuration ==="
+            cd "$APP"
+            php artisan about --only=environment
+            php artisan migrate:status --no-ansi
+            php artisan tinker --execute='Illuminate\\Support\\Facades\\DB::connection()->getPdo(); echo "Database connection: OK".PHP_EOL;'
+            echo "=== Public route checks ==="
+            for path in / /healthz /login /jobs /companies; do
+              code="$(curl -sS -L --max-time 30 -o /dev/null -w '%{http_code}' "https://biraconsultants.com$path")"
+              echo "$path -> $code"
+              case "$code" in 200|301|302) ;; *) exit 10 ;; esac
+            done
+            echo "=== Security and asset checks ==="
+            envcode="$(curl -sS -o /dev/null -w '%{http_code}' https://biraconsultants.com/.env)"
+            echo ".env public access -> $envcode"
+            case "$envcode" in 403|404) ;; *) exit 11 ;; esac
+            asset="$(find "$APP/public/build/assets" -maxdepth 1 -type f | head -1)"
+            test -n "$asset"
+            assetname="$(basename "$asset")"
+            assetcode="$(curl -sS -o /dev/null -w '%{http_code}' "https://biraconsultants.com/build/assets/$assetname")"
+            echo "Built asset -> $assetcode"
+            test "$assetcode" = "200"
+            echo "ALL SMOKE TESTS PASSED"
