@@ -36,6 +36,7 @@ jobs:
 
           # Rename matching files and directories from the deepest level upward.
           for current, dirs, files in os.walk(".", topdown=False):
+              dirs[:] = [d for d in dirs if d != ".git"]
               current_path = Path(current)
               for name in files:
                   if re.search(r"qjobs", name, re.IGNORECASE):
@@ -49,6 +50,10 @@ jobs:
                       target = current_path / brand_name(name)
                       if source.exists() and source != target:
                           source.rename(target)
+
+          # Remove this temporary workflow, stage renames/deletions, then verify the staged tree.
+          Path(".github/workflows/finalize-bira-filenames.yml").unlink(missing_ok=True)
+          subprocess.check_call(["git", "add", "-A"])
 
           # Verify no legacy brand remains in tracked text or file paths.
           paths = subprocess.check_output(["git", "ls-files", "-z"]).decode().split("\0")
