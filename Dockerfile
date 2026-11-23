@@ -20,14 +20,28 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --prefer-dist --no-progress --optimize-autoloader --no-scripts
 
 COPY . .
+
+# Laravel resolves real paths for compiled views and package manifests during
+# Composer's post-autoload scripts, so create writable runtime directories first.
+RUN mkdir -p \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache
+
+# Install the locked frontend tree, apply non-breaking security fixes, audit it,
+# then compile assets. npm audit fix intentionally avoids --force / major bumps.
 RUN apk add --no-cache nodejs npm \
     && npm ci \
+    && npm audit fix \
+    && npm audit --audit-level=high \
     && npm run production \
     && rm -rf node_modules
 
 RUN composer dump-autoload --no-dev --optimize \
     && php artisan package:discover --ansi \
-    && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
 COPY docker/Caddyfile /etc/caddy/Caddyfile
