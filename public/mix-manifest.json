@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/css/biraconsultant-theme.css": "/css/biraconsultant-theme.css",
     "/images/cover.svg": "/images/cover.svg",
     "/images/favicon/android-icon-144x144.png": "/images/favicon/android-icon-144x144.png",
     "/images/favicon/android-icon-192x192.png": "/images/favicon/android-icon-192x192.png",
@@ -29,5 +30,6 @@
     "/images/favicon/ms-icon-144x144.png": "/images/favicon/ms-icon-144x144.png",
     "/images/favicon/ms-icon-150x150.png": "/images/favicon/ms-icon-150x150.png",
     "/images/favicon/ms-icon-310x310.png": "/images/favicon/ms-icon-310x310.png",
-    "/images/favicon/ms-icon-70x70.png": "/images/favicon/ms-icon-70x70.png"
+    "/images/favicon/ms-icon-70x70.png": "/images/favicon/ms-icon-70x70.png",
+    "/images/papua-new-guinea-location-map.svg": "/images/papua-new-guinea-location-map.svg"
 }
