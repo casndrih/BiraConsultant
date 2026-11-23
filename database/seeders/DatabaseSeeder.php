@@ -59,10 +59,12 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($jobCategories as $name) {
-            DB::table('biraconsultant_job_categories')->updateOrInsert(
-                ['slug' => \Illuminate\Support\Str::slug($name)],
-                ['name' => $name, 'updated_at' => $now, 'created_at' => $now]
-            );
+            DB::table('biraconsultant_job_categories')->insertOrIgnore([
+                'name' => $name,
+                'slug' => \Illuminate\Support\Str::slug($name),
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
         }
 
         foreach (['Full Time', 'Part Time', 'Contract', 'Casual', 'Internship', 'Temporary'] as $name) {
@@ -82,10 +84,13 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach (['News', 'Career Advice', 'Employer Insights'] as $name) {
-            DB::table('biraconsultant_blog_categories')->updateOrInsert(
-                ['slug' => \Illuminate\Support\Str::slug($name)],
-                ['name' => $name, 'description' => null, 'updated_at' => $now, 'created_at' => $now]
-            );
+            DB::table('biraconsultant_blog_categories')->insertOrIgnore([
+                'name' => $name,
+                'slug' => \Illuminate\Support\Str::slug($name),
+                'description' => null,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
         }
 
         $statuses = [
