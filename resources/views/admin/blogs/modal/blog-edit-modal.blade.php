@@ -5,7 +5,7 @@
 
         <div class="relative bg-white rounded-lg shadow dark:bg-custom-dark">
             <button type="button"
-                class="qj-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-md p-1.5 ml-auto inline-flex items-center"
+                class="bc-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-md p-1.5 ml-auto inline-flex items-center"
                 data-modal-hide="editBlogModal">
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
@@ -90,7 +90,7 @@
                             <div>
                                 <label for="edit_blog_featured_image" class="block mb-2 text-md font-medium text-gray-700 dark:text-gray-300">Featured Image</label>
                                 <input type="file" id="edit_blog_featured_image" name="featured_image" accept="image/jpeg,image/png,image/jpg"
-                                    class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-md rounded-full focus:ring-yellow-300 focus:border-yellow-300 block w-full p-2.5 file:mr-4 file:py-0 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold qj-modal-file-control">
+                                    class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-md rounded-full focus:ring-yellow-300 focus:border-yellow-300 block w-full p-2.5 file:mr-4 file:py-0 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold bc-modal-file-control">
                                 <div id="edit_blog_image_preview_container" class="mt-2">
                                     <img id="edit_blog_featured_image_preview" src="" alt="Current featured image" class="hidden w-32 h-20 object-cover rounded-lg">
                                 </div>
@@ -106,7 +106,7 @@
                             Cancel
                         </button>
                         <button type="submit"
-                            class="qj-modal-button--green-hover px-4 py-2 text-md font-medium text-white bg-[#050708] dark:bg-black shadow-lg rounded-full">
+                            class="bc-modal-button--green-hover px-4 py-2 text-md font-medium text-white bg-[#050708] dark:bg-black shadow-lg rounded-full">
                             Save Changes
                         </button>
                     </div>

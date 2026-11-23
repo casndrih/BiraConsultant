@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class QJobsSetting extends Model
+class BiraConsultantSetting extends Model
 {
     use HasFactory;
 
-    protected $table = 'qjobs_settings';
+    protected $table = 'biraconsultant_settings';
 
     protected $fillable = [
         'key',

@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class QJobsCountry extends Model
+class BiraConsultantCountry extends Model
 {
-    protected $table = 'qjobs_countries';
+    protected $table = 'biraconsultant_countries';
 
     protected $primaryKey = 'id';
 

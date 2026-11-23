@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\QJobsCompany;
-use App\Models\QJobsJob;
-use App\Models\QJobsApplication;
-use App\Models\QJobsApplicationStatus;
-use App\Models\QJobsJobType;
-use App\Models\QJobsJobCategory;
+use App\Models\BiraConsultantCompany;
+use App\Models\BiraConsultantJob;
+use App\Models\BiraConsultantApplication;
+use App\Models\BiraConsultantApplicationStatus;
+use App\Models\BiraConsultantJobType;
+use App\Models\BiraConsultantJobCategory;
 use App\Helpers\UploadLimitHelper;
-use App\Models\QJobsJobExperienceLevel;
+use App\Models\BiraConsultantJobExperienceLevel;
 use App\Services\JobSpreadsheetImporter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +23,7 @@ class CompanyDashboardController extends Controller
 {
     private function getCompany()
     {
-        return QJobsCompany::where('user_id', Auth::id())->first();
+        return BiraConsultantCompany::where('user_id', Auth::id())->first();
     }
 
     public function index()
@@ -36,28 +36,28 @@ class CompanyDashboardController extends Controller
         }
 
         $companyId = $company->id;
-        $jobIds = QJobsJob::where('company_id', $companyId)->pluck('id');
+        $jobIds = BiraConsultantJob::where('company_id', $companyId)->pluck('id');
 
         $stats = [
-            'total_jobs' => QJobsJob::where('company_id', $companyId)->count(),
-            'active_jobs' => QJobsJob::where('company_id', $companyId)->where('status', 1)->where('approval_status', 'approved')->count(),
-            'pending_jobs' => QJobsJob::where('company_id', $companyId)->where('approval_status', 'pending')->count(),
-            'total_applications' => QJobsApplication::whereIn('job_id', $jobIds)->count(),
-            'received' => QJobsApplication::whereIn('job_id', $jobIds)->where('status_id', 1)->count(),
-            'under_review' => QJobsApplication::whereIn('job_id', $jobIds)->where('status_id', 2)->count(),
-            'interview' => QJobsApplication::whereIn('job_id', $jobIds)->where('status_id', 3)->count(),
-            'job_offer' => QJobsApplication::whereIn('job_id', $jobIds)->where('status_id', 4)->count(),
-            'hired' => QJobsApplication::whereIn('job_id', $jobIds)->where('status_id', 5)->count(),
-            'rejected' => QJobsApplication::whereIn('job_id', $jobIds)->where('status_id', 6)->count(),
+            'total_jobs' => BiraConsultantJob::where('company_id', $companyId)->count(),
+            'active_jobs' => BiraConsultantJob::where('company_id', $companyId)->where('status', 1)->where('approval_status', 'approved')->count(),
+            'pending_jobs' => BiraConsultantJob::where('company_id', $companyId)->where('approval_status', 'pending')->count(),
+            'total_applications' => BiraConsultantApplication::whereIn('job_id', $jobIds)->count(),
+            'received' => BiraConsultantApplication::whereIn('job_id', $jobIds)->where('status_id', 1)->count(),
+            'under_review' => BiraConsultantApplication::whereIn('job_id', $jobIds)->where('status_id', 2)->count(),
+            'interview' => BiraConsultantApplication::whereIn('job_id', $jobIds)->where('status_id', 3)->count(),
+            'job_offer' => BiraConsultantApplication::whereIn('job_id', $jobIds)->where('status_id', 4)->count(),
+            'hired' => BiraConsultantApplication::whereIn('job_id', $jobIds)->where('status_id', 5)->count(),
+            'rejected' => BiraConsultantApplication::whereIn('job_id', $jobIds)->where('status_id', 6)->count(),
         ];
 
-        $recentApplications = QJobsApplication::with(['user.country', 'job', 'status'])
+        $recentApplications = BiraConsultantApplication::with(['user.country', 'job', 'status'])
             ->whereIn('job_id', $jobIds)
             ->orderBy('created_at', 'desc')
             ->take(10)
             ->get();
 
-        $jobs = QJobsJob::withCount('applications')
+        $jobs = BiraConsultantJob::withCount('applications')
             ->where('company_id', $companyId)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -74,9 +74,9 @@ class CompanyDashboardController extends Controller
             return redirect()->route('company.register')->with('error', 'Please register your company first.');
         }
 
-        $jobTypes = QJobsJobType::orderBy('name')->get();
-        $categories = QJobsJobCategory::orderBy('name')->get();
-        $experienceLevels = QJobsJobExperienceLevel::orderBy('name')->get();
+        $jobTypes = BiraConsultantJobType::orderBy('name')->get();
+        $categories = BiraConsultantJobCategory::orderBy('name')->get();
+        $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->get();
 
         return view('company.jobs.create', compact('company', 'jobTypes', 'categories', 'experienceLevels'));
     }
@@ -93,16 +93,16 @@ class CompanyDashboardController extends Controller
             'description' => 'required|string',
             'requirements' => 'nullable|string',
             'how_to_apply' => 'nullable|string',
-            'category_id' => 'required|exists:qjobs_job_categories,id',
+            'category_id' => 'required|exists:biraconsultant_job_categories,id',
             'location' => 'nullable|string|max:255',
-            'job_type_id' => 'required|exists:qjobs_job_types,id',
+            'job_type_id' => 'required|exists:biraconsultant_job_types,id',
             'salary' => 'nullable|string|max:100',
-            'experience_level_id' => 'required|exists:qjobs_job_experience_levels,id',
+            'experience_level_id' => 'required|exists:biraconsultant_job_experience_levels,id',
             'deadline' => 'nullable|date|after:today',
             'duration' => 'nullable|integer|min:1|max:365',
         ]);
 
-        QJobsJob::create([
+        BiraConsultantJob::create([
             'title' => $request->title,
             'description' => $request->description,
             'requirements' => $request->requirements,
@@ -129,9 +129,9 @@ class CompanyDashboardController extends Controller
             return redirect()->route('company.register')->with('error', 'Please register your company first.');
         }
 
-        $categories = QJobsJobCategory::orderBy('name')->pluck('name');
-        $jobTypes = QJobsJobType::orderBy('name')->pluck('name');
-        $experienceLevels = QJobsJobExperienceLevel::orderBy('name')->pluck('name');
+        $categories = BiraConsultantJobCategory::orderBy('name')->pluck('name');
+        $jobTypes = BiraConsultantJobType::orderBy('name')->pluck('name');
+        $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->pluck('name');
 
         return view('company.jobs.import', compact('company', 'categories', 'jobTypes', 'experienceLevels'));
     }
@@ -148,7 +148,7 @@ class CompanyDashboardController extends Controller
             fwrite($output, "\xEF\xBB\xBF");
             fputcsv($output, $headers);
             fclose($output);
-        }, 'qjobs-bulk-jobs-template.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
+        }, 'biraconsultant-bulk-jobs-template.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
     }
 
     public function importJobs(Request $request, JobSpreadsheetImporter $importer)
@@ -166,9 +166,9 @@ class CompanyDashboardController extends Controller
             return back()->withErrors(['jobs_file' => $exception->getMessage()])->withInput();
         }
 
-        $categories = QJobsJobCategory::all(['id', 'name']);
-        $jobTypes = QJobsJobType::all(['id', 'name']);
-        $experienceLevels = QJobsJobExperienceLevel::all(['id', 'name']);
+        $categories = BiraConsultantJobCategory::all(['id', 'name']);
+        $jobTypes = BiraConsultantJobType::all(['id', 'name']);
+        $experienceLevels = BiraConsultantJobExperienceLevel::all(['id', 'name']);
         $jobsToCreate = [];
         $rowErrors = [];
 
@@ -194,9 +194,9 @@ class CompanyDashboardController extends Controller
                 'description' => 'required|string|max:20000',
                 'requirements' => 'nullable|string|max:20000',
                 'how_to_apply' => 'nullable|string|max:10000',
-                'category_id' => 'required|integer|exists:qjobs_job_categories,id',
-                'job_type_id' => 'required|integer|exists:qjobs_job_types,id',
-                'experience_level_id' => 'required|integer|exists:qjobs_job_experience_levels,id',
+                'category_id' => 'required|integer|exists:biraconsultant_job_categories,id',
+                'job_type_id' => 'required|integer|exists:biraconsultant_job_types,id',
+                'experience_level_id' => 'required|integer|exists:biraconsultant_job_experience_levels,id',
                 'location' => 'nullable|string|max:255',
                 'salary' => 'nullable|string|max:100',
                 'deadline' => 'nullable|date|after:today',
@@ -214,7 +214,7 @@ class CompanyDashboardController extends Controller
         if ($jobsToCreate !== []) {
             DB::transaction(function () use ($jobsToCreate, $company) {
                 foreach ($jobsToCreate as $job) {
-                    QJobsJob::create(array_merge($job, [
+                    BiraConsultantJob::create(array_merge($job, [
                         'company_id' => $company->id,
                         'status' => 1,
                         'approval_status' => 'pending',
@@ -269,21 +269,21 @@ class CompanyDashboardController extends Controller
         }
     }
 
-    public function editJob(QJobsJob $job)
+    public function editJob(BiraConsultantJob $job)
     {
         $company = $this->getCompany();
         if (!$company || $job->company_id !== $company->id) {
             abort(403);
         }
 
-        $jobTypes = QJobsJobType::orderBy('name')->get();
-        $categories = QJobsJobCategory::orderBy('name')->get();
-        $experienceLevels = QJobsJobExperienceLevel::orderBy('name')->get();
+        $jobTypes = BiraConsultantJobType::orderBy('name')->get();
+        $categories = BiraConsultantJobCategory::orderBy('name')->get();
+        $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->get();
 
         return view('company.jobs.edit', compact('company', 'job', 'jobTypes', 'categories', 'experienceLevels'));
     }
 
-    public function updateJob(Request $request, QJobsJob $job)
+    public function updateJob(Request $request, BiraConsultantJob $job)
     {
         $company = $this->getCompany();
         if (!$company || $job->company_id !== $company->id) {
@@ -295,11 +295,11 @@ class CompanyDashboardController extends Controller
             'description' => 'required|string',
             'requirements' => 'nullable|string',
             'how_to_apply' => 'nullable|string',
-            'category_id' => 'required|exists:qjobs_job_categories,id',
+            'category_id' => 'required|exists:biraconsultant_job_categories,id',
             'location' => 'nullable|string|max:255',
-            'job_type_id' => 'required|exists:qjobs_job_types,id',
+            'job_type_id' => 'required|exists:biraconsultant_job_types,id',
             'salary' => 'nullable|string|max:100',
-            'experience_level_id' => 'required|exists:qjobs_job_experience_levels,id',
+            'experience_level_id' => 'required|exists:biraconsultant_job_experience_levels,id',
             'deadline' => 'nullable|date',
             'duration' => 'nullable|integer|min:1|max:365',
         ]);
@@ -328,7 +328,7 @@ class CompanyDashboardController extends Controller
         return redirect()->route('company.dashboard')->with('success', 'Job updated successfully!' . ($approvalStatus === 'pending' ? ' It will be re-reviewed by our team.' : ''));
     }
 
-    public function toggleJobStatus(QJobsJob $job)
+    public function toggleJobStatus(BiraConsultantJob $job)
     {
         $company = $this->getCompany();
         if (!$company || $job->company_id !== $company->id) {
@@ -341,7 +341,7 @@ class CompanyDashboardController extends Controller
         return redirect()->back()->with('success', "Job {$label} successfully.");
     }
 
-    public function deleteJob(QJobsJob $job)
+    public function deleteJob(BiraConsultantJob $job)
     {
         $company = $this->getCompany();
         if (!$company || $job->company_id !== $company->id) {
@@ -362,9 +362,9 @@ class CompanyDashboardController extends Controller
             return redirect()->route('company.register')->with('error', 'Please register your company first.');
         }
 
-        $jobIds = QJobsJob::where('company_id', $company->id)->pluck('id');
+        $jobIds = BiraConsultantJob::where('company_id', $company->id)->pluck('id');
 
-        $query = QJobsApplication::with(['user.country', 'job', 'status'])
+        $query = BiraConsultantApplication::with(['user.country', 'job', 'status'])
             ->whereIn('job_id', $jobIds);
 
         if (request('status')) {
@@ -382,8 +382,8 @@ class CompanyDashboardController extends Controller
         }
 
         $applications = $query->orderBy('created_at', 'desc')->paginate(15)->appends(request()->query());
-        $jobs = QJobsJob::where('company_id', $company->id)->orderBy('title')->get();
-        $statuses = QJobsApplicationStatus::orderBy('id')->get();
+        $jobs = BiraConsultantJob::where('company_id', $company->id)->orderBy('title')->get();
+        $statuses = BiraConsultantApplicationStatus::orderBy('id')->get();
 
         return view('company.applications', compact('company', 'applications', 'jobs', 'statuses'));
     }
@@ -396,9 +396,9 @@ class CompanyDashboardController extends Controller
             return response()->json(['error' => 'No company'], 403);
         }
 
-        $jobIds = QJobsJob::where('company_id', $company->id)->pluck('id');
+        $jobIds = BiraConsultantJob::where('company_id', $company->id)->pluck('id');
 
-        $query = QJobsApplication::with(['user.country', 'job', 'status'])
+        $query = BiraConsultantApplication::with(['user.country', 'job', 'status'])
             ->whereIn('job_id', $jobIds);
 
         if (request('status')) {
@@ -416,7 +416,7 @@ class CompanyDashboardController extends Controller
         }
 
         $applications = $query->orderBy('created_at', 'desc')->paginate(10)->appends(request()->query());
-        $statuses = QJobsApplicationStatus::orderBy('id')->get();
+        $statuses = BiraConsultantApplicationStatus::orderBy('id')->get();
 
         $html = view('company.applications-list', compact('applications', 'statuses'))->render();
         $pagination = $applications->links()->toHtml();
@@ -428,14 +428,14 @@ class CompanyDashboardController extends Controller
         ]);
     }
 
-    public function jobApplications(QJobsJob $job)
+    public function jobApplications(BiraConsultantJob $job)
     {
         $company = $this->getCompany();
         if (!$company || $job->company_id !== $company->id) {
             abort(403);
         }
 
-        $query = QJobsApplication::with(['user.country', 'status'])
+        $query = BiraConsultantApplication::with(['user.country', 'status'])
             ->where('job_id', $job->id);
 
         if (request('status')) {
@@ -443,15 +443,15 @@ class CompanyDashboardController extends Controller
         }
 
         $applications = $query->orderBy('created_at', 'desc')->paginate(15)->appends(request()->query());
-        $statuses = QJobsApplicationStatus::orderBy('id')->get();
+        $statuses = BiraConsultantApplicationStatus::orderBy('id')->get();
 
         return view('company.job-applications', compact('company', 'job', 'applications', 'statuses'));
     }
 
-    public function updateStage(Request $request, QJobsApplication $application)
+    public function updateStage(Request $request, BiraConsultantApplication $application)
     {
         $company = $this->getCompany();
-        $job = QJobsJob::findOrFail($application->job_id);
+        $job = BiraConsultantJob::findOrFail($application->job_id);
 
         if (!$company || $job->company_id !== $company->id) {
             abort(403, 'Unauthorized');
@@ -476,13 +476,13 @@ class CompanyDashboardController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Application status updated to: ' . (QJobsApplicationStatus::find($request->status_id)->label ?? 'Unknown'));
+        return redirect()->back()->with('success', 'Application status updated to: ' . (BiraConsultantApplicationStatus::find($request->status_id)->label ?? 'Unknown'));
     }
 
-    public function downloadFile(QJobsApplication $application, $type)
+    public function downloadFile(BiraConsultantApplication $application, $type)
     {
         $company = $this->getCompany();
-        $job = QJobsJob::findOrFail($application->job_id);
+        $job = BiraConsultantJob::findOrFail($application->job_id);
 
         if (!$company || $job->company_id !== $company->id) {
             abort(403);
@@ -562,7 +562,7 @@ class CompanyDashboardController extends Controller
             return redirect()->route('company.register')->with('error', 'Please register your company first.');
         }
 
-        $countries = \App\Models\QJobsCountry::orderBy('name')->get();
+        $countries = \App\Models\BiraConsultantCountry::orderBy('name')->get();
 
         return view('company.settings', compact('company', 'countries'));
     }
@@ -585,7 +585,7 @@ class CompanyDashboardController extends Controller
             'description' => 'nullable|string|max:5000',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:100',
-            'country_id' => 'nullable|exists:qjobs_countries,id',
+            'country_id' => 'nullable|exists:biraconsultant_countries,id',
             'size' => 'nullable|string|max:50',
             'founded_year' => 'nullable|integer|min:1800|max:' . date('Y'),
             'latitude' => 'nullable|numeric|between:-90,90',

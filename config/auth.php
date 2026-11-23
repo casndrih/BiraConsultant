@@ -61,7 +61,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\QJobsUser::class,
+            'model' => App\Models\BiraConsultantUser::class,
         ],
 
         // 'users' => [

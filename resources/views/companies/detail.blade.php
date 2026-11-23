@@ -6,7 +6,7 @@
 
 @section('content')
 @include('partials.skeleton-styles')
-<div class="qj-detail-page">
+<div class="bc-detail-page">
     <!-- Skeleton Loading -->
     <div id="company-detail-skeleton">
         @include('components.skeleton-company-detail')
@@ -15,10 +15,10 @@
     <!-- Real Content (hidden initially) -->
     <div id="company-detail-content" class="hidden">
     <!-- Company Header -->
-    <div class="qj-detail-topbar shadow-sm">
+    <div class="bc-detail-topbar shadow-sm">
         <div class="container mx-auto px-4 py-6">
             <div class="flex items-center justify-between">
-                <a href="{{ route('companies') }}" class="qj-inline-link flex items-center">
+                <a href="{{ route('companies') }}" class="bc-inline-link flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
@@ -37,7 +37,7 @@
             <!-- Main Content -->
             <div class="lg:col-span-2 min-w-0">
                 <!-- Company Profile -->
-                <div class="qj-detail-card qj-company-detail-card mb-6 min-w-0">
+                <div class="bc-detail-card bc-company-detail-card mb-6 min-w-0">
                     <div class="flex items-start gap-6 mb-6">
                         <div class="flex-shrink-0">
                             @if($company->logo)
@@ -83,7 +83,7 @@
                                 @if($company->website)
                                     <a href="{{ $company->website }}" 
                                        target="_blank"
-                                       class="qj-action-button qj-action-button--primary">
+                                       class="bc-action-button bc-action-button--primary">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                                         </svg>
@@ -109,7 +109,7 @@
                                             <form action="{{ route('user.company.follow', $company) }}" method="POST" class="inline">
                                                 @csrf
                                                 <button type="submit"
-                                                        class="qj-action-button qj-action-button--primary">
+                                                        class="bc-action-button bc-action-button--primary">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                                                     </svg>
@@ -121,7 +121,7 @@
                                 @else
                                     <button type="button"
                                             data-modal-target="signin-modal" data-modal-show="signin-modal"
-                                            class="qj-action-button qj-action-button--primary">
+                                            class="bc-action-button bc-action-button--primary">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
                                         </svg>
@@ -133,7 +133,7 @@
                     </div>
 
                     <!-- Company Description -->
-                    <div class="qj-company-description mb-6 min-w-0 max-w-full">
+                    <div class="bc-company-description mb-6 min-w-0 max-w-full">
                         <h3 class="text-xl font-semibold text-black dark:text-white mb-4">About {{ $company->name }}</h3>
                         <div class="prose prose-sm dark:prose-invert max-w-none min-w-0">
                             {!! nl2br(e($company->description)) !!}
@@ -165,7 +165,7 @@
                                         </svg>
                                         <div>
                                             <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Website</p>
-                            <a href="{{ $company->website }}" target="_blank" class="qj-inline-link text-sm">{{ $company->website }}</a>
+                            <a href="{{ $company->website }}" target="_blank" class="bc-inline-link text-sm">{{ $company->website }}</a>
                                         </div>
                                     </div>
                                 @endif
@@ -199,13 +199,13 @@
                 </div>
 
                 <!-- Company Jobs -->
-                <div class="qj-detail-card">
+                <div class="bc-detail-card">
                     <h3 class="text-xl font-semibold text-black dark:text-white mb-6">Open Positions at {{ $company->name }}</h3>
                     
                     @if($jobs->count() > 0)
                         <div class="space-y-4">
                             @foreach($jobs as $job)
-                                <div class="qj-detail-row rounded-lg p-4 hover:shadow-md transition-shadow">
+                                <div class="bc-detail-row rounded-lg p-4 hover:shadow-md transition-shadow">
                                     <div class="flex items-start justify-between">
                                         <div class="flex-1">
                                             <h4 class="font-medium text-black dark:text-white hover:text-green-700 mb-2">
@@ -231,7 +231,7 @@
                                                 </span>
                                             @endif
                                             <a href="{{ route('job.detail', $job->slug) }}" 
-                                               class="qj-inline-link text-sm">
+                                               class="bc-inline-link text-sm">
                                                 Apply →
                                             </a>
                                         </div>
@@ -259,7 +259,7 @@
             <!-- Sidebar -->
             <div class="lg:col-span-1">
                 <!-- Quick Info Card -->
-                <div class="qj-detail-card mb-6 sticky top-4">
+                <div class="bc-detail-card mb-6 sticky top-4">
                     <h3 class="text-lg font-semibold text-black dark:text-white mb-4">Quick Info</h3>
                     
                     <div class="space-y-4">
@@ -294,7 +294,7 @@
 
                     <!-- Share Button -->
                     <div class="mt-6 pt-6 border-t border-gray-200 dark:border-black">
-                        <button class="qj-action-button qj-action-button--secondary w-full">
+                        <button class="bc-action-button bc-action-button--secondary w-full">
                             Share Company Profile
                         </button>
                     </div>
@@ -302,7 +302,7 @@
 
                 <!-- Map -->
                 @if($mapEnabled && $mapApiKey && $company->latitude && $company->longitude)
-                <div class="qj-detail-card mb-6">
+                <div class="bc-detail-card mb-6">
                     <h3 class="text-lg font-semibold text-black dark:text-white mb-3">Location</h3>
                     <div class="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                         <iframe
@@ -320,7 +320,7 @@
                 @endif
 
                 <!-- Recent Activity -->
-                <div class="qj-detail-card">
+                <div class="bc-detail-card">
                     <h3 class="text-lg font-semibold text-black dark:text-white mb-4">Recent Activity</h3>
                     <div class="space-y-3">
                         <div class="text-sm">

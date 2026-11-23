@@ -7,35 +7,35 @@
 @section('content')
 @include('partials.skeleton-styles')
 <div class="min-h-screen bg-gray-50 dark:bg-black">
-    <section class="qj-search-hero qj-search-hero--jobs">
-        <div class="qj-search-hero__inner">
-            <span class="qj-search-hero__eyebrow">Make your next move</span>
-            <h1 class="qj-search-hero__title">Find work that fits your life.</h1>
-            <p class="qj-search-hero__subtitle">Explore opportunities from employers across Papua New Guinea.</p>
+    <section class="bc-search-hero bc-search-hero--jobs">
+        <div class="bc-search-hero__inner">
+            <span class="bc-search-hero__eyebrow">Make your next move</span>
+            <h1 class="bc-search-hero__title">Find work that fits your life.</h1>
+            <p class="bc-search-hero__subtitle">Explore opportunities from employers across Papua New Guinea.</p>
 
-            <form method="GET" action="{{ route('jobs') }}" class="qj-search-panel" id="search-form">
-                <div class="qj-search-fields qj-search-fields--jobs">
-                    <label class="qj-search-field">
+            <form method="GET" action="{{ route('jobs') }}" class="bc-search-panel" id="search-form">
+                <div class="bc-search-fields bc-search-fields--jobs">
+                    <label class="bc-search-field">
                         <span>Role or company</span>
-                        <span class="qj-search-input-wrap">
+                        <span class="bc-search-input-wrap">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                 <circle cx="10.8" cy="10.8" r="6.8" />
                                 <path stroke-linecap="round" d="m16 16 4.2 4.2" />
                             </svg>
-                            <input type="text" name="search" placeholder="e.g. Project Manager" value="{{ request('search') }}" class="qj-search-input">
+                            <input type="text" name="search" placeholder="e.g. Project Manager" value="{{ request('search') }}" class="bc-search-input">
                         </span>
                     </label>
-                    <label class="qj-search-field">
+                    <label class="bc-search-field">
                         <span>Location</span>
-                        <span class="qj-search-input-wrap">
+                        <span class="bc-search-input-wrap">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.2c0 5.2-7.5 11-7.5 11s-7.5-5.8-7.5-11a7.5 7.5 0 1 1 15 0Z" />
                                 <circle cx="12" cy="10" r="2.4" />
                             </svg>
-                            <input type="text" name="location" placeholder="City or province" value="{{ request('location') }}" class="qj-search-input">
+                            <input type="text" name="location" placeholder="City or province" value="{{ request('location') }}" class="bc-search-input">
                         </span>
                     </label>
-                    <button type="submit" class="qj-search-submit">
+                    <button type="submit" class="bc-search-submit">
                         Search jobs
                         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 10h11m-4-4 4 4-4 4" />
@@ -47,27 +47,27 @@
     </section>
 
     <!-- Filters Section -->
-    <div class="container mx-auto px-4 py-8 qj-results-container">
+    <div class="container mx-auto px-4 py-8 bc-results-container">
         @include('partials.adsense', ['placement' => 'jobs'])
-        <div class="qj-filter-panel mb-8">
-            <div class="qj-filter-panel__heading">
+        <div class="bc-filter-panel mb-8">
+            <div class="bc-filter-panel__heading">
                 <div>
                     <h3>Refine your search</h3>
                     <p>Choose the details that matter to you.</p>
                 </div>
-                <span class="qj-filter-panel__icon" aria-hidden="true">
+                <span class="bc-filter-panel__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M7 12h10m-7 6h4" />
                     </svg>
                 </span>
             </div>
-            <form method="GET" action="{{ route('jobs') }}" id="filter-form" class="qj-filter-grid">
+            <form method="GET" action="{{ route('jobs') }}" id="filter-form" class="bc-filter-grid">
                 <input type="hidden" name="search" value="{{ request('search') }}">
                 <input type="hidden" name="location" value="{{ request('location') }}">
                 <!-- Category Filter -->
                 <div>
-                    <label class="qj-filter-label">Category</label>
-                    <select name="category" class="qj-filter-select">
+                    <label class="bc-filter-label">Category</label>
+                    <select name="category" class="bc-filter-select">
                         <option value="">All Categories</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
@@ -79,8 +79,8 @@
 
                 <!-- Job Type Filter -->
                 <div>
-                    <label class="qj-filter-label">Job type</label>
-                    <select name="type" class="qj-filter-select">
+                    <label class="bc-filter-label">Job type</label>
+                    <select name="type" class="bc-filter-select">
                         <option value="">All Types</option>
                         @foreach($jobTypes as $type)
                             <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
@@ -92,8 +92,8 @@
 
                 <!-- Experience Level Filter -->
                 <div>
-                    <label class="qj-filter-label">Experience level</label>
-                    <select name="experience" class="qj-filter-select">
+                    <label class="bc-filter-label">Experience level</label>
+                    <select name="experience" class="bc-filter-select">
                         <option value="">All Levels</option>
                         @foreach($experienceLevels as $level)
                             <option value="{{ $level->id }}" {{ request('experience') == $level->id ? 'selected' : '' }}>
@@ -104,8 +104,8 @@
                 </div>
 
                 <!-- Clear Filters Button -->
-                <div class="qj-filter-clear-cell">
-                    <a href="{{ route('jobs') }}" class="qj-clear-filters">
+                <div class="bc-filter-clear-cell">
+                    <a href="{{ route('jobs') }}" class="bc-clear-filters">
                         Clear Filters
                     </a>
                 </div>
@@ -113,7 +113,7 @@
         </div>
 
         <!-- Results Info -->
-        <div class="qj-results-heading mb-6" id="results-info">
+        <div class="bc-results-heading mb-6" id="results-info">
             <h2 id="results-count">
                 Loading...
             </h2>

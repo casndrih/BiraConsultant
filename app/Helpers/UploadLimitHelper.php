@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Models\QJobsSetting;
+use App\Models\BiraConsultantSetting;
 
 class UploadLimitHelper
 {
@@ -46,7 +46,7 @@ class UploadLimitHelper
             return self::DEFAULTS[$type] ?? 2048;
         }
 
-        $value = QJobsSetting::getValue($settingKey);
+        $value = BiraConsultantSetting::getValue($settingKey);
         if ($value === null || $value === '' || (int) $value <= 0) {
             return self::DEFAULTS[$type] ?? 2048;
         }

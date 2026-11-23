@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsUser;
+use App\Models\BiraConsultantUser;
 use App\Services\AuthMethodSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +19,8 @@ class GoogleAuthController extends Controller
         abort_unless(AuthMethodSettings::googleEnabled(), 404);
 
         $state = Str::random(48);
-        $request->session()->put('qjobs.google.state_hash', hash('sha256', $state));
-        $request->session()->put('qjobs.google.platform', $request->query('platform') === 'android' ? 'android' : 'web');
+        $request->session()->put('biraconsultant.google.state_hash', hash('sha256', $state));
+        $request->session()->put('biraconsultant.google.platform', $request->query('platform') === 'android' ? 'android' : 'web');
 
         $query = http_build_query([
             'client_id' => AuthMethodSettings::googleClientId(),
@@ -36,8 +36,8 @@ class GoogleAuthController extends Controller
 
     public function callback(Request $request)
     {
-        $expectedHash = $request->session()->pull('qjobs.google.state_hash');
-        $platform = $request->session()->pull('qjobs.google.platform', 'web');
+        $expectedHash = $request->session()->pull('biraconsultant.google.state_hash');
+        $platform = $request->session()->pull('biraconsultant.google.platform', 'web');
         $state = (string) $request->query('state', '');
 
         if (!$expectedHash || $state === '' || !hash_equals($expectedHash, hash('sha256', $state))) {
@@ -79,15 +79,15 @@ class GoogleAuthController extends Controller
                 return $this->failed($platform, 'unverified_identity');
             }
 
-            $user = QJobsUser::where('google_id', $googleId)->first();
+            $user = BiraConsultantUser::where('google_id', $googleId)->first();
             if (!$user) {
-                $user = QJobsUser::whereRaw('LOWER(email) = ?', [$email])->first();
+                $user = BiraConsultantUser::whereRaw('LOWER(email) = ?', [$email])->first();
                 if ($user) {
                     $user->google_id = $googleId;
                     $user->email_verified_at ??= now();
                     $user->save();
                 } else {
-                    $user = new QJobsUser();
+                    $user = new BiraConsultantUser();
                     $user->name = trim((string) ($identity['name'] ?? '')) ?: strstr($email, '@', true);
                     $user->email = $email;
                     $user->google_id = $googleId;
@@ -107,8 +107,8 @@ class GoogleAuthController extends Controller
 
             if ($platform === 'android') {
                 $code = Str::random(64);
-                Cache::put('qjobs:google:exchange:' . hash('sha256', $code), $user->id, now()->addMinutes(2));
-                return redirect()->away('qjobs://auth/google?code=' . urlencode($code));
+                Cache::put('biraconsultant:google:exchange:' . hash('sha256', $code), $user->id, now()->addMinutes(2));
+                return redirect()->away('biraconsultant://auth/google?code=' . urlencode($code));
             }
 
             Auth::login($user);
@@ -128,7 +128,7 @@ class GoogleAuthController extends Controller
     private function failed(string $platform, string $reason)
     {
         if ($platform === 'android') {
-            return redirect()->away('qjobs://auth/google?error=' . urlencode($reason));
+            return redirect()->away('biraconsultant://auth/google?error=' . urlencode($reason));
         }
 
         return redirect()->route('home')->with('error', 'Google sign-in could not be completed. Please try again.');

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsJob;
+use App\Models\BiraConsultantJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -11,7 +11,7 @@ class AdminJobApiController extends Controller
 {
     public function index(Request $request)
     {
-        $query = QJobsJob::with(['company', 'category']);
+        $query = BiraConsultantJob::with(['company', 'category']);
 
         if ($request->filled('filter')) {
             match ($request->input('filter')) {
@@ -39,7 +39,7 @@ class AdminJobApiController extends Controller
 
     public function show($slug)
     {
-        $job = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $job = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->where('slug', $slug)
             ->firstOrFail();
 
@@ -51,14 +51,14 @@ class AdminJobApiController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'company_id' => 'required|exists:qjobs_companies,id',
-            'category_id' => 'nullable|exists:qjobs_job_categories,id',
-            'job_type_id' => 'nullable|exists:qjobs_job_types,id',
+            'company_id' => 'required|exists:biraconsultant_companies,id',
+            'category_id' => 'nullable|exists:biraconsultant_job_categories,id',
+            'job_type_id' => 'nullable|exists:biraconsultant_job_types,id',
             'location' => 'nullable|string|max:255',
             'salary' => 'nullable|string|max:100',
         ]);
 
-        $job = QJobsJob::create([
+        $job = BiraConsultantJob::create([
             'title' => $request->title,
             'slug' => Str::slug($request->title),
             'description' => $request->description,
@@ -78,13 +78,13 @@ class AdminJobApiController extends Controller
 
     public function update(Request $request, $slug)
     {
-        $job = QJobsJob::where('slug', $slug)->firstOrFail();
+        $job = BiraConsultantJob::where('slug', $slug)->firstOrFail();
 
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'category_id' => 'nullable|exists:qjobs_job_categories,id',
-            'job_type_id' => 'nullable|exists:qjobs_job_types,id',
+            'category_id' => 'nullable|exists:biraconsultant_job_categories,id',
+            'job_type_id' => 'nullable|exists:biraconsultant_job_types,id',
             'location' => 'nullable|string|max:255',
             'salary' => 'nullable|string|max:100',
         ]);
@@ -104,21 +104,21 @@ class AdminJobApiController extends Controller
 
     public function destroy($slug)
     {
-        $job = QJobsJob::where('slug', $slug)->firstOrFail();
+        $job = BiraConsultantJob::where('slug', $slug)->firstOrFail();
         $job->delete();
         return response()->json(['success' => true]);
     }
 
     public function approve($slug)
     {
-        $job = QJobsJob::where('slug', $slug)->firstOrFail();
+        $job = BiraConsultantJob::where('slug', $slug)->firstOrFail();
         $job->update(['approval_status' => 'approved']);
         return response()->json(['success' => true, 'data' => $job]);
     }
 
     public function reject(Request $request, $slug)
     {
-        $job = QJobsJob::where('slug', $slug)->firstOrFail();
+        $job = BiraConsultantJob::where('slug', $slug)->firstOrFail();
         $job->update([
             'approval_status' => 'rejected',
             'rejection_reason' => $request->input('rejection_reason'),

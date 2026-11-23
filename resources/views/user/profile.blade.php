@@ -5,13 +5,13 @@
 @endsection
 
 @section('content')
-<div class="qj-dashboard-page">
+<div class="bc-dashboard-page">
     <!-- Profile Header -->
     @php($profileCoverUrl = $user->cover ? (str_starts_with(strtolower($user->cover), 'http') ? $user->cover : asset('storage/' . $user->cover)) : '')
     @php($profileImageUrl = $user->image ? (str_starts_with(strtolower($user->image), 'http') ? $user->image : asset('storage/' . $user->image)) : '')
-    <div class="qj-dashboard-hero"
+    <div class="bc-dashboard-hero"
          @if($profileCoverUrl) style="background-image: linear-gradient(90deg, rgba(0,0,0,.70), rgba(30,55,20,.52)), url('{{ $profileCoverUrl }}'); background-size: cover; background-position: center;" @endif>
-        <div class="qj-dashboard-hero__inner container mx-auto px-4">
+        <div class="bc-dashboard-hero__inner container mx-auto px-4">
             <div class="flex flex-col sm:flex-row items-center gap-6">
                 <div class="relative group">
                     @if($profileImageUrl)

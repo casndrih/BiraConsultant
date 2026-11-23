@@ -23,7 +23,7 @@ class CheckMaintenanceMode
     public function handle(Request $request, Closure $next)
     {
         // Retrieve the setting – use a simple query to avoid loading the full model.
-        $maintenance = DB::table('qjobs_settings')
+        $maintenance = DB::table('biraconsultant_settings')
             ->where('key', 'maintenance_mode')
             ->value('value');
 

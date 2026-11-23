@@ -1,9 +1,15 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "biraconsultant/biraconsultant",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "BiraConsultant recruitment and job marketplace application.",
+    "keywords": [
+        "biraconsultant",
+        "recruitment",
+        "jobs",
+        "marketplace",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",

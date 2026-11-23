@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsApplication;
-use App\Models\QJobsUser;
-use App\Models\QJobsUserWorkExperience;
-use App\Models\QJobsJobSkill;
+use App\Models\BiraConsultantApplication;
+use App\Models\BiraConsultantUser;
+use App\Models\BiraConsultantUserWorkExperience;
+use App\Models\BiraConsultantJobSkill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,18 +17,18 @@ class UserApiController extends Controller
         $user = Auth::user();
 
         $stats = [
-            'total_applications' => QJobsApplication::where('user_id', $user->id)->count(),
-            'pending' => QJobsApplication::where('user_id', $user->id)->where('status_id', 1)->count(),
-            'reviewed' => QJobsApplication::where('user_id', $user->id)->where('status_id', 2)->count(),
-            'interview' => QJobsApplication::where('user_id', $user->id)->where('status_id', 3)->count(),
-            'offered' => QJobsApplication::where('user_id', $user->id)->where('status_id', 4)->count(),
-            'hired' => QJobsApplication::where('user_id', $user->id)->where('status_id', 5)->count(),
-            'rejected' => QJobsApplication::where('user_id', $user->id)->where('status_id', 6)->count(),
+            'total_applications' => BiraConsultantApplication::where('user_id', $user->id)->count(),
+            'pending' => BiraConsultantApplication::where('user_id', $user->id)->where('status_id', 1)->count(),
+            'reviewed' => BiraConsultantApplication::where('user_id', $user->id)->where('status_id', 2)->count(),
+            'interview' => BiraConsultantApplication::where('user_id', $user->id)->where('status_id', 3)->count(),
+            'offered' => BiraConsultantApplication::where('user_id', $user->id)->where('status_id', 4)->count(),
+            'hired' => BiraConsultantApplication::where('user_id', $user->id)->where('status_id', 5)->count(),
+            'rejected' => BiraConsultantApplication::where('user_id', $user->id)->where('status_id', 6)->count(),
             'saved_jobs' => $user->savedJobs()->count(),
             'followed_companies' => $user->followingCompanies()->count(),
         ];
 
-        $recentApplications = QJobsApplication::with(['job.company'])
+        $recentApplications = BiraConsultantApplication::with(['job.company'])
             ->where('user_id', $user->id)
             ->latest()
             ->limit(5)
@@ -52,7 +52,7 @@ class UserApiController extends Controller
     public function applications(Request $request)
     {
         $user = Auth::user();
-        $query = QJobsApplication::with(['job.company'])
+        $query = BiraConsultantApplication::with(['job.company'])
             ->where('user_id', $user->id);
 
         if ($request->filled('status')) {
@@ -72,7 +72,7 @@ class UserApiController extends Controller
     public function addSkill(Request $request)
     {
         $request->validate(['name' => 'required|string|max:100']);
-        $skill = QJobsJobSkill::firstOrCreate(['name' => $request->name]);
+        $skill = BiraConsultantJobSkill::firstOrCreate(['name' => $request->name]);
         Auth::user()->skills()->syncWithoutDetaching([$skill->id]);
         return response()->json(['success' => true, 'data' => $skill]);
     }
@@ -99,7 +99,7 @@ class UserApiController extends Controller
             'end_date' => 'nullable|date|after_or_equal:start_date',
         ]);
 
-        $experience = QJobsUserWorkExperience::create([
+        $experience = BiraConsultantUserWorkExperience::create([
             'user_id' => Auth::id(),
             'company_name' => $request->company_name,
             'position' => $request->position,
@@ -113,7 +113,7 @@ class UserApiController extends Controller
 
     public function deleteWorkExperience($id)
     {
-        QJobsUserWorkExperience::where('user_id', Auth::id())->findOrFail($id)->delete();
+        BiraConsultantUserWorkExperience::where('user_id', Auth::id())->findOrFail($id)->delete();
         return response()->json(['success' => true]);
     }
 

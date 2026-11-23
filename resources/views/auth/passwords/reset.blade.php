@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <title>Reset password · QJobs</title>
+    <title>Reset password · BiraConsultant</title>
     <style>
         :root { color-scheme: light dark; --bg:#f2f4f5; --card:#fff; --ink:#121522; --muted:#626873; --line:#e2e6ef; --green:#78c65a; }
         @media(prefers-color-scheme:dark) { :root { --bg:#000; --card:#1b1f27; --ink:#f3f4f6; --muted:#9ca3af; --line:#2e333d; --green:#8bd36d; } }
@@ -22,7 +22,7 @@
 <main>
     <div class="brand" aria-hidden="true">Q</div>
     <h1>Reset your password</h1>
-    <p>Choose a new password for your QJobs account.</p>
+    <p>Choose a new password for your BiraConsultant account.</p>
     @if ($errors->any())
         <div class="error">{{ $errors->first() }}</div>
     @endif

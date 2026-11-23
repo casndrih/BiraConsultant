@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Helpers\UploadLimitHelper;
-use App\Models\QJobsApplication;
-use App\Models\QJobsCompany;
-use App\Models\QJobsJob;
-use App\Models\QJobsUserWorkExperience;
+use App\Models\BiraConsultantApplication;
+use App\Models\BiraConsultantCompany;
+use App\Models\BiraConsultantJob;
+use App\Models\BiraConsultantUserWorkExperience;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +25,7 @@ class UserActionApiController extends Controller
     public function apply(Request $request, $job)
     {
         $user = Auth::user();
-        $job = QJobsJob::active()->find($job);
+        $job = BiraConsultantJob::active()->find($job);
 
         if (!$job) {
             return response()->json(['success' => false, 'message' => 'Job not found or not active'], 404);
@@ -76,7 +76,7 @@ class UserActionApiController extends Controller
             $data['cover_letter_path'] = $request->file('cover_letter_file')->store('applications/' . $user->id . '/cover_letter', 'public');
         }
 
-        $application = QJobsApplication::create($data);
+        $application = BiraConsultantApplication::create($data);
 
         return response()->json([
             'success' => true,
@@ -88,7 +88,7 @@ class UserActionApiController extends Controller
     /** DELETE /api/v1/user/applications/{id} — withdraw a pending application */
     public function withdraw($id)
     {
-        $application = QJobsApplication::where('user_id', Auth::id())
+        $application = BiraConsultantApplication::where('user_id', Auth::id())
             ->where('id', $id)
             ->where('status_id', 1) // only pending applications can be withdrawn
             ->first();
@@ -110,7 +110,7 @@ class UserActionApiController extends Controller
     /** POST /api/v1/user/jobs/{job}/save — toggle saved state */
     public function toggleSave($job)
     {
-        $job = QJobsJob::find($job);
+        $job = BiraConsultantJob::find($job);
         if (!$job) {
             return response()->json(['success' => false, 'message' => 'Job not found'], 404);
         }
@@ -131,7 +131,7 @@ class UserActionApiController extends Controller
     {
         $jobs = Auth::user()->savedJobs()
             ->with(['company', 'category', 'jobType'])
-            ->latest('qjobs_saved_jobs.created_at')
+            ->latest('biraconsultant_saved_jobs.created_at')
             ->get();
 
         return response()->json(['success' => true, 'data' => $jobs]);
@@ -142,7 +142,7 @@ class UserActionApiController extends Controller
     /** POST /api/v1/user/companies/{company}/follow */
     public function follow($company)
     {
-        $company = QJobsCompany::find($company);
+        $company = BiraConsultantCompany::find($company);
         if (!$company) {
             return response()->json(['success' => false, 'message' => 'Company not found'], 404);
         }
@@ -167,7 +167,7 @@ class UserActionApiController extends Controller
     /** DELETE /api/v1/user/companies/{company}/unfollow */
     public function unfollow($company)
     {
-        $company = QJobsCompany::find($company);
+        $company = BiraConsultantCompany::find($company);
         if (!$company) {
             return response()->json(['success' => false, 'message' => 'Company not found'], 404);
         }
@@ -232,11 +232,11 @@ class UserActionApiController extends Controller
 
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'name'       => 'required|string|max:255',
-            'email'      => 'required|email|unique:qjobs_users,email,' . $user->id,
+            'email'      => 'required|email|unique:biraconsultant_users,email,' . $user->id,
             'phone'      => 'nullable|string|max:20',
             'bio'        => 'nullable|string|max:1000',
             'website'    => 'nullable|url|max:255',
-            'country_id' => 'nullable|exists:qjobs_countries,id',
+            'country_id' => 'nullable|exists:biraconsultant_countries,id',
             'state'      => 'nullable|string|max:255',
             'birthday'   => 'nullable|date',
             'gender'     => 'nullable|string|max:15',

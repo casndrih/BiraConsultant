@@ -7,13 +7,13 @@
     <div class="relative w-full max-w-md max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white dark:bg-black rounded-lg shadow">
-            <button type="button" class="qj-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="signin-modal">
+            <button type="button" class="bc-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="signin-modal">
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 <span class="sr-only">Close modal</span>
             </button>
             <div class="px-6 py-3 lg:px-8">
                 <h3 class="mb-1 text-2xl font-medium text-black dark:text-white">Welcome!</h3>
-                <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">Sign in to continue to your QJobs account.</p>
+                <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">Sign in to continue to your BiraConsultant account.</p>
                 @if($googleLoginEnabled)
                     <a href="{{ route('auth.google.redirect', ['platform' => 'web']) }}" class="mb-4 w-full flex items-center justify-center gap-3 rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-custom-dark px-5 py-3 text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">
                         <span class="text-lg font-bold text-green-600">G</span>
@@ -46,19 +46,19 @@
                     <div class="flex justify-between">
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                            <input id="remember" name="remember" type="checkbox" class="qj-modal-choice w-5 h-5 bg-gray-100 dark:bg-custom-dark rounded">
+                            <input id="remember" name="remember" type="checkbox" class="bc-modal-choice w-5 h-5 bg-gray-100 dark:bg-custom-dark rounded">
                             </div>
                             <label for="remember" class="ml-2 text-sm text-black dark:text-white">Remember me</label>
                         </div>
-                        <a data-modal-target="reset-modal" data-modal-show="reset-modal" data-modal-hide="signin-modal" class="qj-modal-accent-text text-sm hover:underline cursor-pointer">Lost Password</a>
+                        <a data-modal-target="reset-modal" data-modal-show="reset-modal" data-modal-hide="signin-modal" class="bc-modal-accent-text text-sm hover:underline cursor-pointer">Lost Password</a>
                     </div>
 
                     @include('components.captcha')
 
-                    <button type="submit" class="qj-modal-primary w-full text-medium font-medium rounded-full px-5 py-2.5 text-center">Sign in to your account</button>
+                    <button type="submit" class="bc-modal-primary w-full text-medium font-medium rounded-full px-5 py-2.5 text-center">Sign in to your account</button>
 
                     <div class="text-sm text-gray-600 dark:text-gray-400">
-                      Not signup yet? <a data-modal-target="signup-modal" data-modal-show="signup-modal" data-modal-hide="signin-modal" class="qj-modal-accent-text hover:underline cursor-pointer">Create account</a>
+                      Not signup yet? <a data-modal-target="signup-modal" data-modal-show="signup-modal" data-modal-hide="signin-modal" class="bc-modal-accent-text hover:underline cursor-pointer">Create account</a>
                     </div>
                     </form>
                 @elseif(!$googleLoginEnabled)
@@ -76,7 +76,7 @@
 
 <!-- Modal content -->
 <div class="relative bg-white dark:bg-black rounded-lg shadow">
-<button type="button" class="qj-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="signup-modal">
+<button type="button" class="bc-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="signup-modal">
 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
 <span class="sr-only">Close modal</span>
 </button>
@@ -102,11 +102,11 @@
     <label class="block mb-2 text-sm font-medium text-black dark:text-white">Account Type</label>
     <div class="flex gap-4">
         <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="role" value="0" class="qj-modal-choice w-4 h-4 bg-gray-100 dark:bg-custom-dark border-gray-300 dark:border-gray-600 cursor-pointer" @checked(old('role', '0') == '0') onchange="toggleAccountType(0)">
+            <input type="radio" name="role" value="0" class="bc-modal-choice w-4 h-4 bg-gray-100 dark:bg-custom-dark border-gray-300 dark:border-gray-600 cursor-pointer" @checked(old('role', '0') == '0') onchange="toggleAccountType(0)">
             <span class="text-sm text-black dark:text-white">🎓 Applicant</span>
         </label>
         <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="role" value="2" class="qj-modal-choice w-4 h-4 bg-gray-100 dark:bg-custom-dark border-gray-300 dark:border-gray-600 cursor-pointer" @checked(old('role') == '2') onchange="toggleAccountType(2)">
+            <input type="radio" name="role" value="2" class="bc-modal-choice w-4 h-4 bg-gray-100 dark:bg-custom-dark border-gray-300 dark:border-gray-600 cursor-pointer" @checked(old('role') == '2') onchange="toggleAccountType(2)">
             <span class="text-sm text-black dark:text-white">🏢 Company</span>
         </label>
     </div>
@@ -116,7 +116,7 @@
 <div id="company-name-row" class="{{ old('role') == '2' ? '' : 'hidden' }}">
     <label for="company_name" class="block mb-1 text-sm font-medium text-black dark:text-white">Company Name</label>
     <input type="text" name="company_name" id="company_name" value="{{ old('company_name') }}" class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-sm rounded-full focus:ring-yellow-300 block w-full p-2.5 placeholder-gray-500 dark:placeholder-gray-400" placeholder="e.g. Tree">
-    <p id="domain-hint" class="text-xs text-gray-500 dark:text-gray-400 mt-1 hidden">Email will use domain: <span class="qj-modal-accent-text font-medium">@<span id="domain-text">example</span>.com</span></p>
+    <p id="domain-hint" class="text-xs text-gray-500 dark:text-gray-400 mt-1 hidden">Email will use domain: <span class="bc-modal-accent-text font-medium">@<span id="domain-text">example</span>.com</span></p>
 </div>
 
 <div id="name-row">
@@ -149,7 +149,7 @@
     <label for="country_id" class="block mb-1 text-sm font-medium text-black dark:text-white">Country</label>
     <select name="country_id" id="country_id" class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-sm rounded-full focus:ring-yellow-300 block w-full p-2.5" required>
     <option value="">Select your country</option>
-    @foreach (\App\Models\QJobsCountry::orderBy('name')->get(['id', 'name']) as $country)
+    @foreach (\App\Models\BiraConsultantCountry::orderBy('name')->get(['id', 'name']) as $country)
         <option value="{{ $country->id }}" @selected(old('country_id') == $country->id)>{{ $country->name }}</option>
     @endforeach
     </select>
@@ -187,17 +187,17 @@
 
 <div class="flex items-start">
     <div class="flex items-center h-5">
-        <input id="agree" name="agree" type="checkbox" class="qj-modal-choice w-5 h-5 bg-gray-100 dark:bg-custom-dark rounded" @checked(old('agree')) required>
+        <input id="agree" name="agree" type="checkbox" class="bc-modal-choice w-5 h-5 bg-gray-100 dark:bg-custom-dark rounded" @checked(old('agree')) required>
     </div>
-    <label for="agree" class="ml-2 text-sm text-black dark:text-white">I agree to the <a href="{{ URL::to('/privacy') }}" class="qj-modal-accent-text hover:underline">Privacy Policy</a> & <a href="{{ URL::to('/terms') }}" class="qj-modal-accent-text hover:underline">T&C</a> of QJobs.</label>
+    <label for="agree" class="ml-2 text-sm text-black dark:text-white">I agree to the <a href="{{ URL::to('/privacy') }}" class="bc-modal-accent-text hover:underline">Privacy Policy</a> & <a href="{{ URL::to('/terms') }}" class="bc-modal-accent-text hover:underline">T&C</a> of BiraConsultant.</label>
 </div>
 
 @include('components.captcha')
 
-<button id="btnreg" type="submit" class="qj-modal-primary w-full text-medium font-medium rounded-full px-5 py-2.5 text-center">Register account</button>
+<button id="btnreg" type="submit" class="bc-modal-primary w-full text-medium font-medium rounded-full px-5 py-2.5 text-center">Register account</button>
 
 <div class="text-sm text-gray-600 dark:text-gray-400">
-  Already Signup? <a data-modal-target="signin-modal" data-modal-show="signin-modal" data-modal-hide="signup-modal" class="qj-modal-accent-text hover:underline cursor-pointer">Signin to account</a>
+  Already Signup? <a data-modal-target="signin-modal" data-modal-show="signin-modal" data-modal-hide="signup-modal" class="bc-modal-accent-text hover:underline cursor-pointer">Signin to account</a>
 </div>
 </form>
 </div>
@@ -212,7 +212,7 @@
 <div class="relative w-full max-w-md max-h-full">
 <!-- Modal content -->
 <div class="relative bg-white dark:bg-black rounded-lg shadow">
-    <button type="button" class="qj-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="reset-modal">
+    <button type="button" class="bc-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="reset-modal">
     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
     <span class="sr-only">Close modal</span>
     </button>
@@ -228,10 +228,10 @@
 
     @include('components.captcha')
 
-    <button type="submit" class="qj-modal-primary w-full text-medium font-medium rounded-full px-5 py-2.5 text-center">Reset password</button>
+    <button type="submit" class="bc-modal-primary w-full text-medium font-medium rounded-full px-5 py-2.5 text-center">Reset password</button>
                   
     <div class="text-sm text-gray-600 dark:text-gray-400">
-     Not signup yet? <a data-modal-target="signup-modal" data-modal-show="signup-modal" data-modal-hide="reset-modal" class="qj-modal-accent-text hover:underline cursor-pointer">Create account</a>
+     Not signup yet? <a data-modal-target="signup-modal" data-modal-show="signup-modal" data-modal-hide="reset-modal" class="bc-modal-accent-text hover:underline cursor-pointer">Create account</a>
     </div>
     </form>
     </div>

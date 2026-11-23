@@ -8,8 +8,8 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (Schema::hasTable('qjobs_users') && !Schema::hasColumn('qjobs_users', 'google_id')) {
-            Schema::table('qjobs_users', function (Blueprint $table) {
+        if (Schema::hasTable('biraconsultant_users') && !Schema::hasColumn('biraconsultant_users', 'google_id')) {
+            Schema::table('biraconsultant_users', function (Blueprint $table) {
                 $table->string('google_id')->nullable()->unique();
             });
         }
@@ -17,8 +17,8 @@ return new class extends Migration
 
     public function down(): void
     {
-        if (Schema::hasTable('qjobs_users') && Schema::hasColumn('qjobs_users', 'google_id')) {
-            Schema::table('qjobs_users', function (Blueprint $table) {
+        if (Schema::hasTable('biraconsultant_users') && Schema::hasColumn('biraconsultant_users', 'google_id')) {
+            Schema::table('biraconsultant_users', function (Blueprint $table) {
                 $table->dropUnique(['google_id']);
                 $table->dropColumn('google_id');
             });

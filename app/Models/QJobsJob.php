@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class QJobsJob extends Model
+class BiraConsultantJob extends Model
 {
     use HasFactory;
 
-    protected $table = 'qjobs_jobs';
+    protected $table = 'biraconsultant_jobs';
 
     protected $fillable = [
         'title',
@@ -74,42 +74,42 @@ class QJobsJob extends Model
 
     public function company()
     {
-        return $this->belongsTo(QJobsCompany::class, 'company_id');
+        return $this->belongsTo(BiraConsultantCompany::class, 'company_id');
     }
 
     public function applications()
     {
-        return $this->hasMany(QJobsApplication::class, 'job_id');
+        return $this->hasMany(BiraConsultantApplication::class, 'job_id');
     }
 
     public function category()
     {
-        return $this->belongsTo(QJobsJobCategory::class, 'category_id');
+        return $this->belongsTo(BiraConsultantJobCategory::class, 'category_id');
     }
 
     public function jobType()
     {
-        return $this->belongsTo(QJobsJobType::class, 'job_type_id');
+        return $this->belongsTo(BiraConsultantJobType::class, 'job_type_id');
     }
 
     public function experienceLevel()
     {
-        return $this->belongsTo(QJobsJobExperienceLevel::class, 'experience_level_id');
+        return $this->belongsTo(BiraConsultantJobExperienceLevel::class, 'experience_level_id');
     }
 
     public function skills()
     {
-        return $this->belongsToMany(QJobsJobSkill::class, 'qjobs_job_skill', 'job_id', 'skill_id');
+        return $this->belongsToMany(BiraConsultantJobSkill::class, 'biraconsultant_job_skill', 'job_id', 'skill_id');
     }
 
     public function savedBy()
     {
-        return $this->belongsToMany(QJobsUser::class, 'qjobs_saved_jobs', 'job_id', 'user_id');
+        return $this->belongsToMany(BiraConsultantUser::class, 'biraconsultant_saved_jobs', 'job_id', 'user_id');
     }
 
     public function isSavedBy($userId)
     {
-        return $this->savedBy()->where('qjobs_user_id', $userId)->exists();
+        return $this->savedBy()->where('biraconsultant_user_id', $userId)->exists();
     }
 
     // Scopes

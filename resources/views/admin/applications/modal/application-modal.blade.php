@@ -5,7 +5,7 @@
 
         <div class="relative bg-white rounded-lg shadow dark:bg-custom-dark">
             <button type="button"
-                class="qj-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-md p-1.5 ml-auto inline-flex items-center"
+                class="bc-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-md p-1.5 ml-auto inline-flex items-center"
                 data-modal-hide="viewApplicationModal">
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +93,7 @@
         <a id="resume_button_grid"
            href="#"
            target="_blank"
-           class="qj-modal-button--green-hover inline-flex items-center justify-center px-4 py-2 bg-black dark:bg-white text-white dark:text-black text-sm font-medium rounded-full">
+           class="bc-modal-button--green-hover inline-flex items-center justify-center px-4 py-2 bg-black dark:bg-white text-white dark:text-black text-sm font-medium rounded-full">
             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm1 7V3.5L18.5 9H15zM8 15h8v2H8v-2zm0-4h8v2H8v-2z"/>
             </svg>
@@ -104,7 +104,7 @@
         <a id="cover_letter_button"
            href="#"
            target="_blank"
-           class="qj-modal-button--green-hover inline-flex items-center justify-center px-4 py-2.5 bg-black dark:bg-white text-white dark:text-black text-sm font-medium rounded-full">
+           class="bc-modal-button--green-hover inline-flex items-center justify-center px-4 py-2.5 bg-black dark:bg-white text-white dark:text-black text-sm font-medium rounded-full">
             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm1 7V3.5L18.5 9H15zM8 15h8v2H8v-2zm0-4h8v2H8v-2z"/>
             </svg>
@@ -117,7 +117,7 @@
         <a id="resume_button_alone"
            href="#"
            target="_blank"
-           class="qj-modal-button--green-hover inline-flex items-center justify-center px-4 py-2 mt-2 bg-black dark:bg-white text-white dark:text-black text-sm font-medium rounded-full w-auto">
+           class="bc-modal-button--green-hover inline-flex items-center justify-center px-4 py-2 mt-2 bg-black dark:bg-white text-white dark:text-black text-sm font-medium rounded-full w-auto">
             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm1 7V3.5L18.5 9H15zM8 15h8v2H8v-2zm0-4h8v2H8v-2z"/>
             </svg>
@@ -140,7 +140,7 @@
                             Cancel
                         </button>
                         <button type="submit"
-                            class="qj-modal-button--green-hover px-4 py-2 text-md font-medium text-white bg-black rounded-full">
+                            class="bc-modal-button--green-hover px-4 py-2 text-md font-medium text-white bg-black rounded-full">
                             Update Status
                         </button>
                     </div>

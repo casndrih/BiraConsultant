@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsUser;
-use App\Models\QJobsApplication;
-use App\Models\QJobsCompany;
-use App\Models\QJobsJob;
-use App\Models\QJobsBlog;
+use App\Models\BiraConsultantUser;
+use App\Models\BiraConsultantApplication;
+use App\Models\BiraConsultantCompany;
+use App\Models\BiraConsultantJob;
+use App\Models\BiraConsultantBlog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -19,28 +19,28 @@ class DashboardController extends Controller
             return Carbon::create()->month($month)->format('M');
         });
 
-        $usersPerMonth = QJobsUser::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
+        $usersPerMonth = BiraConsultantUser::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
             ->whereYear('created_at', now()->year)
             ->where('role', 0)
             ->groupBy(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER)'))
             ->pluck('count', 'month');
 
-        $applicationsPerMonth = QJobsApplication::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
+        $applicationsPerMonth = BiraConsultantApplication::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
             ->whereYear('created_at', now()->year)
             ->groupBy(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER)'))
             ->pluck('count', 'month');
 
-        $jobsPerMonth = QJobsJob::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
+        $jobsPerMonth = BiraConsultantJob::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
             ->whereYear('created_at', now()->year)
             ->groupBy(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER)'))
             ->pluck('count', 'month');
 
-        $companiesPerMonth = QJobsCompany::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
+        $companiesPerMonth = BiraConsultantCompany::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
             ->whereYear('created_at', now()->year)
             ->groupBy(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER)'))
             ->pluck('count', 'month');
 
-        $blogsPerMonth = QJobsBlog::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
+        $blogsPerMonth = BiraConsultantBlog::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
             ->whereYear('created_at', now()->year)
             ->groupBy(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER)'))
             ->pluck('count', 'month');
@@ -55,24 +55,24 @@ class DashboardController extends Controller
             'blogsData'     => $months->map(fn($m, $i) => $blogsPerMonth[$i + 1] ?? 0),
 
             // Overall Stats
-            'totalUsers'             => QJobsUser::where('role', 0)->count(),
-            'totalApplications'      => QJobsApplication::count(),
-            'pendingApplications'    => QJobsApplication::where('status_id', 1)->count(),
-            'successfulApplications' => QJobsApplication::where('status_id', 2)->count(),
-            'unsuccessfulApplications'=> QJobsApplication::where('status_id', 5)->count(),
-            'totalCompanies'         => QJobsCompany::count(),
-            'totalJobs'              => QJobsJob::count(),
-            'totalBlogs'             => QJobsBlog::count(),
+            'totalUsers'             => BiraConsultantUser::where('role', 0)->count(),
+            'totalApplications'      => BiraConsultantApplication::count(),
+            'pendingApplications'    => BiraConsultantApplication::where('status_id', 1)->count(),
+            'successfulApplications' => BiraConsultantApplication::where('status_id', 2)->count(),
+            'unsuccessfulApplications'=> BiraConsultantApplication::where('status_id', 5)->count(),
+            'totalCompanies'         => BiraConsultantCompany::count(),
+            'totalJobs'              => BiraConsultantJob::count(),
+            'totalBlogs'             => BiraConsultantBlog::count(),
             // Today Stats
-            'todayApplications'      => QJobsApplication::whereDate('created_at', now()->toDateString())->count(),
-            'todayUsers'            => QJobsUser::where('role', 0)->whereDate('created_at', now()->toDateString())->count(),
+            'todayApplications'      => BiraConsultantApplication::whereDate('created_at', now()->toDateString())->count(),
+            'todayUsers'            => BiraConsultantUser::where('role', 0)->whereDate('created_at', now()->toDateString())->count(),
 
             // Latest Entries
-            'latestUsers' => QJobsUser::where('role', 0)->latest()->take(5)->get(),
-            'latestApplications' => QJobsApplication::with(['user', 'job'])->latest()->take(5)->get(),
-            'latestCompanies' => QJobsCompany::latest()->take(5)->get(),
-            'latestJobs' => QJobsJob::with(['company', 'category'])->withCount('applications')->where('status', 1)->latest()->paginate(5),
-            'latestBlogs' => QJobsBlog::with('category')->latest()->take(5)->get(),
+            'latestUsers' => BiraConsultantUser::where('role', 0)->latest()->take(5)->get(),
+            'latestApplications' => BiraConsultantApplication::with(['user', 'job'])->latest()->take(5)->get(),
+            'latestCompanies' => BiraConsultantCompany::latest()->take(5)->get(),
+            'latestJobs' => BiraConsultantJob::with(['company', 'category'])->withCount('applications')->where('status', 1)->latest()->paginate(5),
+            'latestBlogs' => BiraConsultantBlog::with('category')->latest()->take(5)->get(),
         ]);
     }
 }

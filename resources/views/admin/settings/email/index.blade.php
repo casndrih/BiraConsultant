@@ -86,7 +86,7 @@
             <input type="text" id="setting-mail_from_name" name="settings[mail_from_name]"
                 value="{{ $settings['email']['mail_from_name']->value ?? '' }}"
                 class="block w-full p-2.5 text-gray-900  rounded-lg bg-gray-50 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300 dark:text-white"
-                placeholder="QJobs">
+                placeholder="BiraConsultant">
         </div>
     </div>
 </div>

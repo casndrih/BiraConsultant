@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\QJobsJob;
+use App\Models\BiraConsultantJob;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -13,7 +13,7 @@ class NewJobFromFollowedCompanyNotification extends Notification implements Shou
     use Queueable;
 
     public function __construct(
-        public QJobsJob $job
+        public BiraConsultantJob $job
     ) {}
 
     public function via(object $notifiable): array
@@ -38,7 +38,7 @@ class NewJobFromFollowedCompanyNotification extends Notification implements Shou
             ->line('**Position:** ' . $this->job->title)
             ->line('**Location:** ' . ($this->job->location ?? 'Not specified'))
             ->action('View Job', route('job.detail', $this->job->slug))
-            ->line('You received this because you follow this company on QJobs Job Board.')
+            ->line('You received this because you follow this company on BiraConsultant Job Board.')
             ->line('Manage your notification preferences in your account settings.');
     }
 

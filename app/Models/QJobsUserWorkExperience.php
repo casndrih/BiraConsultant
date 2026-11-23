@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class QJobsUserWorkExperience extends Model
+class BiraConsultantUserWorkExperience extends Model
 {
     use HasFactory;
 
-    protected $table = 'qjobs_user_work_experiences';
+    protected $table = 'biraconsultant_user_work_experiences';
 
     protected $fillable = [
         'user_id',
@@ -27,6 +27,6 @@ class QJobsUserWorkExperience extends Model
 
     public function user()
     {
-        return $this->belongsTo(QJobsUser::class);
+        return $this->belongsTo(BiraConsultantUser::class);
     }
 }

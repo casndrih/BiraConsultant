@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsBlog;
-use App\Models\QJobsBlogCategory;
+use App\Models\BiraConsultantBlog;
+use App\Models\BiraConsultantBlogCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -17,7 +17,7 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = QJobsBlog::with(['author', 'category'])
+        $blogs = BiraConsultantBlog::with(['author', 'category'])
             ->orderBy('title', 'asc')
             ->paginate(15);
 
@@ -28,7 +28,7 @@ class BlogController extends Controller
     {
         $query = trim($request->input('query-blog', ''));
 
-        $blogs = QJobsBlog::with(['author', 'category'])
+        $blogs = BiraConsultantBlog::with(['author', 'category'])
             ->where('title', 'like', '%' . $query . '%')
             ->orWhere('slug', 'like', '%' . $query . '%')
             ->orderBy('title', 'asc')
@@ -44,12 +44,12 @@ class BlogController extends Controller
             'excerpt'         => 'nullable|string|max:255',
             'content'         => 'nullable|string',
             'featured_image'  => 'nullable|image|mimes:jpeg,png,jpg|max:' . UploadLimitHelper::maxRule('blog_images'),
-            'category_id'     => 'nullable|exists:qjobs_blog_categories,id',
+            'category_id'     => 'nullable|exists:biraconsultant_blog_categories,id',
             'status'          => 'required|in:draft,published,archived',
             'published_at'    => 'nullable|date',
         ]);
 
-        QJobsBlog::create([
+        BiraConsultantBlog::create([
             'title'          => $request->title,
             'slug'           => Str::slug($request->title),
             'excerpt'        => $request->excerpt,
@@ -67,24 +67,24 @@ class BlogController extends Controller
 
     public function edit($slug)
     {
-        $blog = QJobsBlog::with(['author', 'category'])->where('slug', $slug)->firstOrFail();
+        $blog = BiraConsultantBlog::with(['author', 'category'])->where('slug', $slug)->firstOrFail();
         return response()->json($blog);
     }
 
     public function update(Request $request)
     {
     $validated = $request->validate([
-        'edit_blog_id'     => 'required|exists:qjobs_blogs,id',
+        'edit_blog_id'     => 'required|exists:biraconsultant_blogs,id',
         'title'            => 'required|string|max:255',
         'excerpt'          => 'nullable|string|max:255',
         'content'          => 'nullable|string',
         'featured_image'   => 'nullable|image|mimes:jpeg,png,jpg|max:' . UploadLimitHelper::maxRule('blog_images'),
-        'category_id'      => 'nullable|exists:qjobs_blog_categories,id',
+        'category_id'      => 'nullable|exists:biraconsultant_blog_categories,id',
         'status'           => 'required|in:draft,published,archived',
         'published_at'     => 'nullable|date',
     ]);
 
-    $blog = QJobsBlog::findOrFail($validated['edit_blog_id']);
+    $blog = BiraConsultantBlog::findOrFail($validated['edit_blog_id']);
 
     // Handle image upload
     if ($request->hasFile('featured_image')) {
@@ -118,7 +118,7 @@ class BlogController extends Controller
 
     public function delete($slug)
     {
-    $blog = QJobsBlog::where('slug', $slug)->firstOrFail();
+    $blog = BiraConsultantBlog::where('slug', $slug)->firstOrFail();
 
     // Delete the featured image file if it exists
     if ($blog->featured_image) {

@@ -20,17 +20,17 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{ URL::asset('images/favicon/favicon-96x96.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('images/favicon/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ URL::asset('images/favicon/manifest.json') }}">
-    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileColor" content="#F4C542">
     <meta name="msapplication-TileImage" content="{{ URL::asset('images/favicon/ms-icon-144x144.png') }}">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#F4C542">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>QJobs</title>
+    <title>BiraConsultant</title>
     @include('partials.adsense-script')
     <link href="{{ URL::asset('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('/css/qjobs-theme.css') }}?v=20261103.1" rel="stylesheet">
+    <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v=20261103.1" rel="stylesheet">
 </head>
-<body class="qj-app-shell">
+<body class="bc-app-shell">
     @yield('header')
 
     {{-- Global flash messages (status / success / error) --}}

@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Models\QJobsSetting;
+use App\Models\BiraConsultantSetting;
 use Illuminate\Support\Facades\Http;
 
 class RecaptchaHelper
@@ -12,7 +12,7 @@ class RecaptchaHelper
      */
     public static function isEnabled(): bool
     {
-        return QJobsSetting::getValue('recaptcha_enabled', '0') === '1';
+        return BiraConsultantSetting::getValue('recaptcha_enabled', '0') === '1';
     }
 
     /**
@@ -20,7 +20,7 @@ class RecaptchaHelper
      */
     public static function getSiteKey(): string
     {
-        return QJobsSetting::getValue('recaptcha_site_key', '');
+        return BiraConsultantSetting::getValue('recaptcha_site_key', '');
     }
 
     /**
@@ -28,7 +28,7 @@ class RecaptchaHelper
      */
     public static function getSecretKey(): string
     {
-        return QJobsSetting::getValue('recaptcha_secret_key', '');
+        return BiraConsultantSetting::getValue('recaptcha_secret_key', '');
     }
 
     /**

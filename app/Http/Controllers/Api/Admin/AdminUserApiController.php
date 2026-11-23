@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsJobSkill;
-use App\Models\QJobsUser;
+use App\Models\BiraConsultantJobSkill;
+use App\Models\BiraConsultantUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -13,7 +13,7 @@ class AdminUserApiController extends Controller
 {
     public function index(Request $request)
     {
-        $query = QJobsUser::with(['country']);
+        $query = BiraConsultantUser::with(['country']);
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -33,7 +33,7 @@ class AdminUserApiController extends Controller
 
     public function show($slug)
     {
-        $user = QJobsUser::with(['country', 'skills', 'workExperiences'])
+        $user = BiraConsultantUser::with(['country', 'skills', 'workExperiences'])
             ->where('slug', $slug)
             ->firstOrFail();
 
@@ -44,12 +44,12 @@ class AdminUserApiController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:qjobs_users,email',
+            'email' => 'required|email|unique:biraconsultant_users,email',
             'password' => 'required|string|min:8',
             'role' => 'required|in:0,1,2',
         ]);
 
-        $user = QJobsUser::create([
+        $user = BiraConsultantUser::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'email' => $request->email,
@@ -62,11 +62,11 @@ class AdminUserApiController extends Controller
 
     public function update(Request $request, $slug)
     {
-        $user = QJobsUser::where('slug', $slug)->firstOrFail();
+        $user = BiraConsultantUser::where('slug', $slug)->firstOrFail();
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:qjobs_users,email,' . $user->id,
+            'email' => 'required|email|unique:biraconsultant_users,email,' . $user->id,
             'role' => 'required|in:0,1,2',
         ]);
 
@@ -82,14 +82,14 @@ class AdminUserApiController extends Controller
 
     public function destroy($slug)
     {
-        $user = QJobsUser::where('slug', $slug)->firstOrFail();
+        $user = BiraConsultantUser::where('slug', $slug)->firstOrFail();
         $user->delete();
         return response()->json(['success' => true]);
     }
 
     public function deleteProfilePic($id)
     {
-        $user = QJobsUser::findOrFail($id);
+        $user = BiraConsultantUser::findOrFail($id);
         if ($user->image) {
             $path = str_replace(asset('storage/'), '', $user->image);
             $fullPath = public_path('storage/' . $path);
@@ -103,7 +103,7 @@ class AdminUserApiController extends Controller
 
     public function deleteCoverPic($id)
     {
-        $user = QJobsUser::findOrFail($id);
+        $user = BiraConsultantUser::findOrFail($id);
         if ($user->cover) {
             $path = str_replace(asset('storage/'), '', $user->cover);
             $fullPath = public_path('storage/' . $path);
@@ -118,15 +118,15 @@ class AdminUserApiController extends Controller
     public function addSkill(Request $request, $user)
     {
         $request->validate(['name' => 'required|string|max:100']);
-        $skill = \App\Models\QJobsJobSkill::firstOrCreate(['name' => $request->name]);
-        $user = QJobsUser::findOrFail($user);
+        $skill = \App\Models\BiraConsultantJobSkill::firstOrCreate(['name' => $request->name]);
+        $user = BiraConsultantUser::findOrFail($user);
         $user->skills()->syncWithoutDetaching([$skill->id]);
         return response()->json(['success' => true, 'data' => $skill]);
     }
 
     public function removeSkill($user, $skill)
     {
-        $user = QJobsUser::findOrFail($user);
+        $user = BiraConsultantUser::findOrFail($user);
         $user->skills()->detach($skill);
         return response()->json(['success' => true]);
     }
@@ -134,7 +134,7 @@ class AdminUserApiController extends Controller
     public function verification(Request $request)
     {
         $tab = $request->query('tab', 'pending');
-        $query = QJobsUser::whereNotNull('nid_front_path');
+        $query = BiraConsultantUser::whereNotNull('nid_front_path');
 
         $query->when($tab === 'pending', fn($q) => $q->where('identity_verified', 0))
               ->when($tab === 'verified', fn($q) => $q->where('identity_verified', 1))
@@ -143,9 +143,9 @@ class AdminUserApiController extends Controller
         $users = $query->latest()->paginate(20);
 
         $counts = [
-            'pending' => QJobsUser::whereNotNull('nid_front_path')->where('identity_verified', 0)->count(),
-            'verified' => QJobsUser::whereNotNull('nid_front_path')->where('identity_verified', 1)->count(),
-            'rejected' => QJobsUser::whereNotNull('nid_front_path')->where('identity_verified', 2)->count(),
+            'pending' => BiraConsultantUser::whereNotNull('nid_front_path')->where('identity_verified', 0)->count(),
+            'verified' => BiraConsultantUser::whereNotNull('nid_front_path')->where('identity_verified', 1)->count(),
+            'rejected' => BiraConsultantUser::whereNotNull('nid_front_path')->where('identity_verified', 2)->count(),
         ];
 
         return response()->json(['success' => true, 'data' => ['users' => $users, 'counts' => $counts]]);
@@ -153,7 +153,7 @@ class AdminUserApiController extends Controller
 
     public function approveIdentity($user)
     {
-        $user = QJobsUser::findOrFail($user);
+        $user = BiraConsultantUser::findOrFail($user);
         $user->update([
             'identity_verified' => 1,
             'identity_verified_at' => now(),
@@ -165,7 +165,7 @@ class AdminUserApiController extends Controller
     public function rejectIdentity(Request $request, $user)
     {
         $request->validate(['rejection_reason' => 'required|string|max:500']);
-        $user = QJobsUser::findOrFail($user);
+        $user = BiraConsultantUser::findOrFail($user);
         $user->update([
             'identity_verified' => 2,
             'identity_rejection_reason' => $request->rejection_reason,

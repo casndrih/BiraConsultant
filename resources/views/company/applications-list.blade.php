@@ -1,5 +1,5 @@
 @if($applications->count() > 0)
-    @php $statuses = \App\Models\QJobsApplicationStatus::orderBy('id')->get(); @endphp
+    @php $statuses = \App\Models\BiraConsultantApplicationStatus::orderBy('id')->get(); @endphp
     @foreach($applications as $application)
     <div class="bg-white dark:bg-custom-dark rounded-lg shadow-md" id="application-{{ $application->id }}">
         <div class="p-5">

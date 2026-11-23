@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Helpers\UploadLimitHelper;
-use App\Models\QJobsJob;
-use App\Models\QJobsApplication;
-use App\Models\QJobsCompany;
+use App\Models\BiraConsultantJob;
+use App\Models\BiraConsultantApplication;
+use App\Models\BiraConsultantCompany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 
 class CompanyApiController extends Controller
 {
-    private function currentCompany(): QJobsCompany
+    private function currentCompany(): BiraConsultantCompany
     {
         $company = Auth::user()?->company;
         abort_if(!$company, 404, 'No company found.');
@@ -26,21 +26,21 @@ class CompanyApiController extends Controller
         $company = $this->currentCompany();
 
         $stats = [
-            'total_jobs' => QJobsJob::where('company_id', $company->id)->count(),
-            'active_jobs' => QJobsJob::where('company_id', $company->id)->where('status', 1)->where('approval_status', 'approved')->count(),
-            'pending_jobs' => QJobsJob::where('company_id', $company->id)->where('approval_status', 'pending')->count(),
-            'total_applications' => QJobsApplication::whereIn('job_id', function ($q) use ($company) {
-                $q->select('id')->from('qjobs_jobs')->where('company_id', $company->id);
+            'total_jobs' => BiraConsultantJob::where('company_id', $company->id)->count(),
+            'active_jobs' => BiraConsultantJob::where('company_id', $company->id)->where('status', 1)->where('approval_status', 'approved')->count(),
+            'pending_jobs' => BiraConsultantJob::where('company_id', $company->id)->where('approval_status', 'pending')->count(),
+            'total_applications' => BiraConsultantApplication::whereIn('job_id', function ($q) use ($company) {
+                $q->select('id')->from('biraconsultant_jobs')->where('company_id', $company->id);
             })->count(),
-            'pending_applications' => QJobsApplication::where('status_id', 1)
+            'pending_applications' => BiraConsultantApplication::where('status_id', 1)
                 ->whereIn('job_id', function ($q) use ($company) {
-                    $q->select('id')->from('qjobs_jobs')->where('company_id', $company->id);
+                    $q->select('id')->from('biraconsultant_jobs')->where('company_id', $company->id);
                 })->count(),
         ];
 
-        $recentApplications = QJobsApplication::with(['job', 'user'])
+        $recentApplications = BiraConsultantApplication::with(['job', 'user'])
             ->whereIn('job_id', function ($q) use ($company) {
-                $q->select('id')->from('qjobs_jobs')->where('company_id', $company->id);
+                $q->select('id')->from('biraconsultant_jobs')->where('company_id', $company->id);
             })
             ->latest()
             ->limit(10)
@@ -59,9 +59,9 @@ class CompanyApiController extends Controller
     public function applications(Request $request)
     {
         $company = $this->currentCompany();
-        $query = QJobsApplication::with(['job', 'user'])
+        $query = BiraConsultantApplication::with(['job', 'user'])
             ->whereIn('job_id', function ($q) use ($company) {
-                $q->select('id')->from('qjobs_jobs')->where('company_id', $company->id);
+                $q->select('id')->from('biraconsultant_jobs')->where('company_id', $company->id);
             });
 
         if ($request->filled('status')) {
@@ -79,9 +79,9 @@ class CompanyApiController extends Controller
     public function jobApplications(Request $request, $job)
     {
         $company = $this->currentCompany();
-        $job = QJobsJob::where('company_id', $company->id)->findOrFail($job);
+        $job = BiraConsultantJob::where('company_id', $company->id)->findOrFail($job);
 
-        $query = QJobsApplication::with(['user'])
+        $query = BiraConsultantApplication::with(['user'])
             ->where('job_id', $job->id);
 
         if ($request->filled('status')) {
@@ -97,8 +97,8 @@ class CompanyApiController extends Controller
         $request->validate(['stage' => 'required|integer|between:1,6']);
 
         $company = $this->currentCompany();
-        $application = QJobsApplication::findOrFail($application);
-        $job = QJobsJob::findOrFail($application->job_id);
+        $application = BiraConsultantApplication::findOrFail($application);
+        $job = BiraConsultantJob::findOrFail($application->job_id);
 
         if (!$company || $job->company_id !== $company->id) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
@@ -180,7 +180,7 @@ class CompanyApiController extends Controller
     public function jobs(Request $request)
     {
         $company = $this->currentCompany();
-        $query = QJobsJob::where('company_id', $company->id);
+        $query = BiraConsultantJob::where('company_id', $company->id);
 
         if ($request->filled('status')) {
             $query->where('status', $request->input('status') === 'active' ? 1 : 0);
@@ -197,7 +197,7 @@ class CompanyApiController extends Controller
     public function showJob($job)
     {
         $company = $this->currentCompany();
-        $job = QJobsJob::with(['category', 'jobType', 'experienceLevel'])
+        $job = BiraConsultantJob::with(['category', 'jobType', 'experienceLevel'])
             ->where('company_id', $company->id)
             ->findOrFail($job);
 
@@ -213,15 +213,15 @@ class CompanyApiController extends Controller
             'responsibilities' => 'nullable|string',
             'location' => 'nullable|string|max:255',
             'salary' => 'nullable|string|max:100',
-            'category_id' => 'nullable|exists:qjobs_job_categories,id',
-            'job_type_id' => 'nullable|exists:qjobs_job_types,id',
-            'experience_level_id' => 'nullable|exists:qjobs_job_experience_levels,id',
+            'category_id' => 'nullable|exists:biraconsultant_job_categories,id',
+            'job_type_id' => 'nullable|exists:biraconsultant_job_types,id',
+            'experience_level_id' => 'nullable|exists:biraconsultant_job_experience_levels,id',
             'duration' => 'nullable|integer|min:1|max:365',
         ]);
 
         $company = $this->currentCompany();
 
-        $job = QJobsJob::create([
+        $job = BiraConsultantJob::create([
             'company_id' => $company->id,
             'title' => $request->title,
             'slug' => Str::slug($request->title),
@@ -244,7 +244,7 @@ class CompanyApiController extends Controller
     public function updateJob(Request $request, $job)
     {
         $company = $this->currentCompany();
-        $job = QJobsJob::where('company_id', $company->id)->findOrFail($job);
+        $job = BiraConsultantJob::where('company_id', $company->id)->findOrFail($job);
 
         $request->validate([
             'title' => 'required|string|max:255',
@@ -253,9 +253,9 @@ class CompanyApiController extends Controller
             'responsibilities' => 'nullable|string',
             'location' => 'nullable|string|max:255',
             'salary' => 'nullable|string|max:100',
-            'category_id' => 'nullable|exists:qjobs_job_categories,id',
-            'job_type_id' => 'nullable|exists:qjobs_job_types,id',
-            'experience_level_id' => 'nullable|exists:qjobs_job_experience_levels,id',
+            'category_id' => 'nullable|exists:biraconsultant_job_categories,id',
+            'job_type_id' => 'nullable|exists:biraconsultant_job_types,id',
+            'experience_level_id' => 'nullable|exists:biraconsultant_job_experience_levels,id',
             'duration' => 'nullable|integer|min:1|max:365',
         ]);
 
@@ -280,7 +280,7 @@ class CompanyApiController extends Controller
     public function toggleJobStatus($job)
     {
         $company = $this->currentCompany();
-        $job = QJobsJob::where('company_id', $company->id)->findOrFail($job);
+        $job = BiraConsultantJob::where('company_id', $company->id)->findOrFail($job);
         $newStatus = $job->status ? 0 : 1;
         $job->update(['status' => $newStatus]);
         return response()->json(['success' => true, 'data' => $job]);
@@ -289,7 +289,7 @@ class CompanyApiController extends Controller
     public function deleteJob($job)
     {
         $company = $this->currentCompany();
-        $job = QJobsJob::where('company_id', $company->id)->findOrFail($job);
+        $job = BiraConsultantJob::where('company_id', $company->id)->findOrFail($job);
         $job->delete();
         return response()->json(['success' => true]);
     }

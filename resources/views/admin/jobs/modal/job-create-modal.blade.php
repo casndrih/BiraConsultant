@@ -5,7 +5,7 @@
 
         <div class="relative bg-white rounded-lg shadow dark:bg-custom-dark">
             <button type="button"
-                class="qj-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-md p-1.5 ml-auto inline-flex items-center"
+                class="bc-modal-close absolute top-3 right-2.5 text-black dark:text-white bg-transparent rounded-lg text-md p-1.5 ml-auto inline-flex items-center"
                 data-modal-hide="createJobModal">
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
@@ -114,7 +114,7 @@
                             <div>
                                 <label class="inline-flex items-center cursor-pointer">
     <input type="checkbox" id="create_status_toggle" class="sr-only peer" checked>
-    <div class="qj-modal-toggle relative w-9 h-5 bg-gray-200 rounded-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+    <div class="bc-modal-toggle relative w-9 h-5 bg-gray-200 rounded-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
     <span id="create_status_label" class="ml-3 text-md text-black dark:text-white">Active</span>
 </label>
 <input type="hidden" id="create_status" name="status" value="1">
@@ -125,7 +125,7 @@
                     <!-- Modal footer -->
                     <div class="flex justify-end p-3 rounded-b-lg bg-white dark:bg-custom-dark">
                         <button type="submit"
-                            class="qj-modal-button--green-hover px-4 py-2 text-md font-medium text-white bg-[#050708] dark:bg-black shadow-lg rounded-full">
+                            class="bc-modal-button--green-hover px-4 py-2 text-md font-medium text-white bg-[#050708] dark:bg-black shadow-lg rounded-full">
                             Create Job
                         </button>
                     </div>

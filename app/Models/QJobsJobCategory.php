@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class QJobsJobCategory extends Model
+class BiraConsultantJobCategory extends Model
 {
     use HasFactory;
 
-    protected $table = 'qjobs_job_categories';
+    protected $table = 'biraconsultant_job_categories';
 
     protected $fillable = [
         'name',
@@ -18,6 +18,6 @@ class QJobsJobCategory extends Model
 
     public function jobs()
     {
-        return $this->hasMany(QJobsJob::class, 'category_id');
+        return $this->hasMany(BiraConsultantJob::class, 'category_id');
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Mail\VerifyEmail;
-use App\Models\QJobsUser;
-use App\Models\QJobsCountry;
+use App\Models\BiraConsultantUser;
+use App\Models\BiraConsultantCountry;
 use App\Http\Controllers\Controller;
 
 use Carbon\Carbon;
@@ -33,12 +33,12 @@ class RegistrationController extends Controller {
            'username' => [
                 'nullable', 'string', 'min:3', 'max:50',
                 'regex:/^[a-zA-Z0-9._-]+$/',
-                'unique:qjobs_users,username',
+                'unique:biraconsultant_users,username',
             ],
            'birthday' => ['required_if:role,0', 'nullable', 'date', 'before:today'],
            'gender' => ['required_if:role,0', 'nullable', 'in:0,1'],
-           'country_id' => ['required_if:role,0', 'nullable', 'integer', 'exists:qjobs_countries,id'],
-           'email' => ['required', 'string', 'email:filter', 'unique:qjobs_users,email', 'max:255'],
+           'country_id' => ['required_if:role,0', 'nullable', 'integer', 'exists:biraconsultant_countries,id'],
+           'email' => ['required', 'string', 'email:filter', 'unique:biraconsultant_users,email', 'max:255'],
            'password' => ['required', 'string', Password::min(8)->mixedCase()->numbers()],
            'role' => ['required', 'in:0,2'],
            'company_name' => ['required_if:role,2', 'nullable', 'string', 'max:255'],
@@ -59,13 +59,13 @@ class RegistrationController extends Controller {
 
         // Generate a unique referral code (retry on the rare unique-index collision).
         $referralCode = Str::random(8);
-        for ($i = 0; $i < 5 && QJobsUser::where('referral_code', $referralCode)->exists(); $i++) {
+        for ($i = 0; $i < 5 && BiraConsultantUser::where('referral_code', $referralCode)->exists(); $i++) {
             $referralCode = Str::random(8);
         }
 
         // Create the new user (transactional so a failure never leaves a partial row).
         $user = DB::transaction(function () use ($request, $email, $username, $referralCode) {
-            $user = new QJobsUser();
+            $user = new BiraConsultantUser();
             $user->name = trim($request->input('name'));
             $user->username = $username;
             $user->birthday = $request->input('birthday');
@@ -85,7 +85,7 @@ class RegistrationController extends Controller {
         // If company role, create an associated company profile.
         $company = null;
         if ($user->role === 2 && $request->filled('company_name')) {
-            $company = \App\Models\QJobsCompany::create([
+            $company = \App\Models\BiraConsultantCompany::create([
                 'name' => trim($request->input('company_name')),
                 'email' => $user->email,
                 'user_id' => $user->id,
@@ -119,7 +119,7 @@ class RegistrationController extends Controller {
     }
 
     public function verifyEmail($token) {
-        $user = QJobsUser::where('email_verification_token', $token)->first();
+        $user = BiraConsultantUser::where('email_verification_token', $token)->first();
 
         if (!$user) {
             return redirect('/')->with('error', 'Invalid verification token.');
@@ -140,7 +140,7 @@ class RegistrationController extends Controller {
     {
         $request->validate(['email' => ['required', 'email:filter', 'max:255']]);
 
-        $exists = QJobsUser::where('email', strtolower(trim($request->input('email'))))->exists();
+        $exists = BiraConsultantUser::where('email', strtolower(trim($request->input('email'))))->exists();
 
         return response()->json(['exists' => $exists]);
     }
@@ -149,7 +149,7 @@ class RegistrationController extends Controller {
     {
         $request->validate(['username' => ['required', 'string', 'min:3', 'max:50']]);
 
-        $exists = QJobsUser::where('username', strtolower(trim($request->input('username'))))->exists();
+        $exists = BiraConsultantUser::where('username', strtolower(trim($request->input('username'))))->exists();
 
         return response()->json(['exists' => $exists]);
     }
@@ -181,7 +181,7 @@ class RegistrationController extends Controller {
     // API endpoint to fetch countries for signup form
     public function getCountries()
     {
-        $countries = QJobsCountry::orderBy('name')->get();
+        $countries = BiraConsultantCountry::orderBy('name')->get();
         return response()->json($countries);
     }
 }

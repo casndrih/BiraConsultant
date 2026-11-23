@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
 
-class QJobsBlog extends Model
+class BiraConsultantBlog extends Model
 {
     use HasFactory;
 
-    protected $table = 'qjobs_blogs';
+    protected $table = 'biraconsultant_blogs';
 
     protected $fillable = [
         'title',
@@ -43,12 +43,12 @@ class QJobsBlog extends Model
 
     public function author()
     {
-        return $this->belongsTo(QJobsUser::class, 'author_id');
+        return $this->belongsTo(BiraConsultantUser::class, 'author_id');
     }
 
     public function category()
     {
-        return $this->belongsTo(QJobsBlogCategory::class, 'category_id');
+        return $this->belongsTo(BiraConsultantBlogCategory::class, 'category_id');
     }
 
     public $timestamps = true;

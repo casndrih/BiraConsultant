@@ -6,10 +6,10 @@
 
 @section('content')
 @include('partials.skeleton-styles')
-<div class="qj-detail-page">
+<div class="bc-detail-page">
     <!-- Skeleton Loading -->
     <div id="job-detail-skeleton">
-        <div class="qj-detail-topbar shadow-sm">
+        <div class="bc-detail-topbar shadow-sm">
             <div class="container mx-auto px-4 py-6">
                 <div class="h-6 skeleton-box rounded w-32"></div>
             </div>
@@ -28,10 +28,10 @@
 
     <!-- Real Content (hidden initially) -->
     <div id="job-detail-content" class="hidden">
-    <div class="qj-detail-topbar shadow-sm">
+    <div class="bc-detail-topbar shadow-sm">
         <div class="container mx-auto px-4 py-6">
             <div class="flex items-center justify-between">
-                <a href="{{ route('jobs') }}" class="qj-inline-link flex items-center">
+                <a href="{{ route('jobs') }}" class="bc-inline-link flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
@@ -50,7 +50,7 @@
             <!-- Main Content -->
             <div class="lg:col-span-2">
                 <!-- Job Title and Company -->
-                <div class="qj-detail-card mb-6">
+                <div class="bc-detail-card mb-6">
                     <div class="flex items-start gap-4 mb-6">
                         <div class="flex-shrink-0">
                             @if($job->company && $job->company->logo)
@@ -100,10 +100,10 @@
 
                         @if($job->deadline)
                             <div class="flex items-center gap-2">
-                                <svg class="w-5 h-5 qj-job-deadline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-5 h-5 bc-job-deadline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                 </svg>
-                                <span class="qj-job-deadline font-medium">
+                                <span class="bc-job-deadline font-medium">
                                     Deadline: {{ \Carbon\Carbon::parse($job->deadline)->format('M d, Y') }}
                                 </span>
                             </div>
@@ -148,11 +148,11 @@
 
                 <!-- Similar Jobs -->
                 @if($similarJobs->count() > 0)
-                <div class="qj-detail-card">
+                <div class="bc-detail-card">
                     <h3 class="text-xl font-semibold text-black dark:text-white mb-4">Similar Jobs</h3>
                     <div class="space-y-4">
                         @foreach($similarJobs as $similarJob)
-                            <div class="qj-detail-row rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="bc-detail-row rounded-lg p-4 hover:shadow-md transition-shadow">
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <h4 class="font-medium text-black dark:text-white hover:text-green-700">
@@ -165,7 +165,7 @@
                                         </p>
                                     </div>
                                     <a href="{{ route('job.detail', $similarJob->slug) }}"
-                                       class="qj-inline-link text-sm">
+                                       class="bc-inline-link text-sm">
                                         View Details →
                                     </a>
                                 </div>
@@ -179,7 +179,7 @@
             <!-- Sidebar -->
             <div class="lg:col-span-1">
                 <!-- Job Application -->
-                <div class="qj-detail-card mb-6 sticky top-4">
+                <div class="bc-detail-card mb-6 sticky top-4">
                     @if($hasApplied)
                         <div class="text-center">
                             <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -189,7 +189,7 @@
                             </div>
                             <h3 class="text-lg font-semibold text-black dark:text-white mb-2">Already Applied</h3>
                             <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">You have already applied for this position.</p>
-                            <a href="{{ route('user.applications') }}" class="qj-inline-link font-medium text-sm">
+                            <a href="{{ route('user.applications') }}" class="bc-inline-link font-medium text-sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                                 </svg>
@@ -211,7 +211,7 @@
                                     <textarea name="cover_letter"
                                               rows="5"
                                               placeholder="Tell us why you're the perfect fit for this role..."
-                                              class="qj-content-form-control qj-content-form-control--textarea text-sm"
+                                              class="bc-content-form-control bc-content-form-control--textarea text-sm"
                                               required minlength="50" maxlength="5000">{{ old('cover_letter') }}</textarea>
                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Minimum 50 characters</p>
                                     @error('cover_letter')
@@ -227,7 +227,7 @@
                                     <div class="relative">
                                         <input type="file" name="cv" id="cv_upload"
                                                accept=".pdf,.doc,.docx"
-                                               class="qj-modal-file-control block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium dark:file:bg-gray-700 dark:file:text-gray-300">
+                                               class="bc-modal-file-control block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium dark:file:bg-gray-700 dark:file:text-gray-300">
                                     </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">PDF, DOC, DOCX — Max 2MB</p>
                                     @error('cv')
@@ -243,7 +243,7 @@
                                     <div class="relative">
                                         <input type="file" name="resume" id="resume_upload"
                                                accept=".pdf,.doc,.docx"
-                                               class="qj-modal-file-control block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium dark:file:bg-gray-700 dark:file:text-gray-300">
+                                               class="bc-modal-file-control block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium dark:file:bg-gray-700 dark:file:text-gray-300">
                                     </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">PDF, DOC, DOCX — Max 2MB</p>
                                     @error('resume')
@@ -259,7 +259,7 @@
                                     <div class="relative">
                                         <input type="file" name="cover_letter_file" id="cover_letter_file_upload"
                                                accept=".pdf,.doc,.docx"
-                                               class="qj-modal-file-control block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium dark:file:bg-gray-700 dark:file:text-gray-300">
+                                               class="bc-modal-file-control block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium dark:file:bg-gray-700 dark:file:text-gray-300">
                                     </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">PDF, DOC, DOCX — Max 2MB</p>
                                     @error('cover_letter_file')
@@ -267,7 +267,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="qj-apply-note rounded-lg p-3 mb-4">
+                                <div class="bc-apply-note rounded-lg p-3 mb-4">
                                     <p class="text-xs">
                                         <strong>Note:</strong> By submitting this application, you confirm that all information provided is accurate. The company will review your profile and contact you if shortlisted.
                                     </p>
@@ -277,7 +277,7 @@
 
                                 <button type="submit"
                                         id="submitBtn"
-                                        class="qj-action-button qj-action-button--primary w-full py-3 px-6 flex items-center justify-center gap-2">
+                                        class="bc-action-button bc-action-button--primary w-full py-3 px-6 flex items-center justify-center gap-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                                     </svg>
@@ -291,7 +291,7 @@
                                 </p>
                                 <button type="button"
                                         data-modal-target="signin-modal" data-modal-show="signin-modal"
-                                        class="qj-action-button qj-action-button--primary cursor-pointer">
+                                        class="bc-action-button bc-action-button--primary cursor-pointer">
                                     Login / Register
                                 </button>
                             </div>
@@ -308,7 +308,7 @@
                         @if($job->company->website)
                             <a href="{{ $job->company->website }}"
                                target="_blank"
-                               class="qj-inline-link text-sm">
+                               class="bc-inline-link text-sm">
                                 Visit Website
                                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>

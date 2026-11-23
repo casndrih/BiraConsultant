@@ -6,11 +6,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class QJobsUser extends Authenticatable
+class BiraConsultantUser extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'qjobs_users';
+    protected $table = 'biraconsultant_users';
 
     protected $fillable = [
         'name',
@@ -105,48 +105,48 @@ class QJobsUser extends Authenticatable
 
     public function skills()
     {
-        return $this->belongsToMany(QJobsJobSkill::class, 'qjobs_user_skills', 'user_id', 'skill_id');
+        return $this->belongsToMany(BiraConsultantJobSkill::class, 'biraconsultant_user_skills', 'user_id', 'skill_id');
     }
 
     public function country()
     {
-        return $this->belongsTo(QJobsCountry::class, 'country_id');
+        return $this->belongsTo(BiraConsultantCountry::class, 'country_id');
     }
 
     public function applications()
     {
-        return $this->hasMany(QJobsApplication::class, 'user_id');
+        return $this->hasMany(BiraConsultantApplication::class, 'user_id');
     }
 
     public function workExperiences()
     {
-        return $this->hasMany(QJobsUserWorkExperience::class, 'user_id');
+        return $this->hasMany(BiraConsultantUserWorkExperience::class, 'user_id');
     }
 
     public function interests()
     {
-        return $this->belongsToMany(QJobsJobCategory::class, 'qjobs_user_category_interests', 'user_id', 'category_id');
+        return $this->belongsToMany(BiraConsultantJobCategory::class, 'biraconsultant_user_category_interests', 'user_id', 'category_id');
     }
 
     public function savedJobs()
     {
-        return $this->belongsToMany(QJobsJob::class, 'qjobs_saved_jobs', 'user_id', 'job_id')
+        return $this->belongsToMany(BiraConsultantJob::class, 'biraconsultant_saved_jobs', 'user_id', 'job_id')
             ->withTimestamps();
     }
 
     public function companies()
     {
-        return $this->hasMany(QJobsCompany::class, 'user_id');
+        return $this->hasMany(BiraConsultantCompany::class, 'user_id');
     }
 
     public function company()
     {
-        return $this->hasOne(QJobsCompany::class, 'user_id');
+        return $this->hasOne(BiraConsultantCompany::class, 'user_id');
     }
 
     public function followingCompanies()
     {
-        return $this->belongsToMany(QJobsCompany::class, 'qjobs_company_followers', 'user_id', 'company_id')
+        return $this->belongsToMany(BiraConsultantCompany::class, 'biraconsultant_company_followers', 'user_id', 'company_id')
             ->withTimestamps();
     }
 
@@ -155,7 +155,7 @@ class QJobsUser extends Authenticatable
         return $this->followingCompanies()->where('company_id', $companyId)->exists();
     }
 
-    public function followCompany(QJobsCompany $company)
+    public function followCompany(BiraConsultantCompany $company)
     {
         return $this->followingCompanies()->syncWithoutDetaching([$company->id]);
     }

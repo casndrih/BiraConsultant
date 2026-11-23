@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\QJobsUser;
-use App\Models\QJobsJobSkill;
-use App\Models\QJobsCountry;
+use App\Models\BiraConsultantUser;
+use App\Models\BiraConsultantJobSkill;
+use App\Models\BiraConsultantCountry;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,13 +17,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = QJobsUser::latest()->paginate(20);
+        $users = BiraConsultantUser::latest()->paginate(20);
         return view('admin.users.index', compact('users'));
     }
 
     public function query(Request $request)
     {
-        $users = QJobsUser::query();
+        $users = BiraConsultantUser::query();
 
         if ($request->filled('search')) {
             $users->where(function ($query) use ($request) {
@@ -38,8 +38,8 @@ class UserController extends Controller
 
     public function edit($slug)
     {
-        $user = QJobsUser::where('slug', $slug)->firstOrFail();
-        $countries = QJobsCountry::all(['id', 'name', 'iso', 'iso3', 'dial']);
+        $user = BiraConsultantUser::where('slug', $slug)->firstOrFail();
+        $countries = BiraConsultantCountry::all(['id', 'name', 'iso', 'iso3', 'dial']);
 
         return response()->json([
                'user' => $user,
@@ -51,12 +51,12 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'edit_user_id' => 'required|exists:qjobs_users,id',
+            'edit_user_id' => 'required|exists:biraconsultant_users,id',
             'edit_user_name' => ['required', 'regex:/^[a-zA-Z\s]+$/u', 'max:255'],
             'edit_user_dob' => 'required|date_format:Y-m-d',
             'edit_user_email' => 'required|email|max:255',
             'edit_user_gender' => 'required|in:male,female,other',
-            'edit_user_country_id' => 'nullable|exists:qjobs_countries,id',
+            'edit_user_country_id' => 'nullable|exists:biraconsultant_countries,id',
             'edit_user_state' => 'nullable|string|max:100',
             'edit_user_phone' => 'nullable|digits_between:1,15',
             'user_role' => 'required|in:0,1,2',
@@ -70,7 +70,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $user = QJobsUser::findOrFail($request->edit_user_id);
+        $user = BiraConsultantUser::findOrFail($request->edit_user_id);
 
         $user->name = $request->edit_user_name;
         $user->birthday = $request->edit_user_dob;
@@ -119,7 +119,7 @@ class UserController extends Controller
     public function delete($slug)
     {
         try {
-            $user = QJobsUser::where('slug', $slug)->firstOrFail();
+            $user = BiraConsultantUser::where('slug', $slug)->firstOrFail();
 
             if ($user->image) {
                 $existingImagePath = str_replace(asset('storage/'), '', $user->image);
@@ -142,7 +142,7 @@ class UserController extends Controller
     
     public function deleteProfilePic($id)
     {
-    $user = QJobsUser::find($id);
+    $user = BiraConsultantUser::find($id);
 
     if (!$user) {
         return response()->json(['error' => 'User not found'], 404);
@@ -165,7 +165,7 @@ class UserController extends Controller
 
     public function deleteCoverPic($id)
     {
-    $user = QJobsUser::find($id);
+    $user = BiraConsultantUser::find($id);
 
     if (!$user) {
         return response()->json(['error' => 'User not found'], 404);
@@ -190,11 +190,11 @@ class UserController extends Controller
     {
     $request->validate([
         'name' => 'required|string|max:255',
-        'user_id' => 'required|exists:qjobs_users,id',
+        'user_id' => 'required|exists:biraconsultant_users,id',
     ]);
 
-    $skill = QJobsJobSkill::firstOrCreate(['name' => $request->name]);
-    $user = QJobsUser::find($request->user_id);
+    $skill = BiraConsultantJobSkill::firstOrCreate(['name' => $request->name]);
+    $user = BiraConsultantUser::find($request->user_id);
     $user->skills()->syncWithoutDetaching([$skill->id]);
 
     return response()->json(['id' => $skill->id, 'name' => $skill->name]);
@@ -203,11 +203,11 @@ class UserController extends Controller
     public function removeSkill(Request $request)
     {
     $request->validate([
-        'skill_id' => 'required|exists:qjobs_job_skills,id',
-        'user_id' => 'required|exists:qjobs_users,id',
+        'skill_id' => 'required|exists:biraconsultant_job_skills,id',
+        'user_id' => 'required|exists:biraconsultant_users,id',
     ]);
 
-    $user = QJobsUser::find($request->user_id);
+    $user = BiraConsultantUser::find($request->user_id);
     $user->skills()->detach($request->skill_id);
 
     return response()->json(['success' => true]);
@@ -219,7 +219,7 @@ class UserController extends Controller
     {
         $tab = $request->query('tab', 'pending');
 
-        $query = QJobsUser::whereNotNull('nid_front_path');
+        $query = BiraConsultantUser::whereNotNull('nid_front_path');
 
         $query->when($tab === 'pending', function ($q) {
             $q->where('identity_verified', 0);
@@ -233,9 +233,9 @@ class UserController extends Controller
 
         // Counts for tabs
         $counts = [
-            'pending'  => QJobsUser::whereNotNull('nid_front_path')->where('identity_verified', 0)->count(),
-            'verified' => QJobsUser::whereNotNull('nid_front_path')->where('identity_verified', 1)->count(),
-            'rejected' => QJobsUser::whereNotNull('nid_front_path')->where('identity_verified', 2)->count(),
+            'pending'  => BiraConsultantUser::whereNotNull('nid_front_path')->where('identity_verified', 0)->count(),
+            'verified' => BiraConsultantUser::whereNotNull('nid_front_path')->where('identity_verified', 1)->count(),
+            'rejected' => BiraConsultantUser::whereNotNull('nid_front_path')->where('identity_verified', 2)->count(),
         ];
 
         $activeTab = $tab;
@@ -244,7 +244,7 @@ class UserController extends Controller
         return view('admin.users.verification', compact('users', 'tab', 'activeTab', 'counts', 'pendingCount'));
     }
 
-    public function approveIdentity(Request $request, QJobsUser $user)
+    public function approveIdentity(Request $request, BiraConsultantUser $user)
     {
         $user->update([
             'identity_verified' => 1,
@@ -255,7 +255,7 @@ class UserController extends Controller
         return redirect()->route('admin.users.verification')->with('success', "{$user->name}'s identity has been verified.");
     }
 
-    public function rejectIdentity(Request $request, QJobsUser $user)
+    public function rejectIdentity(Request $request, BiraConsultantUser $user)
     {
         $request->validate([
             'rejection_reason' => 'required|string|max:500',

@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class QJobsApplicationStatus extends Model
+class BiraConsultantApplicationStatus extends Model
 {
     use HasFactory;
 
-    protected $table = 'qjobs_application_status';
+    protected $table = 'biraconsultant_application_status';
 
     protected $primaryKey = 'id';
     public $incrementing = false;
@@ -21,6 +21,6 @@ class QJobsApplicationStatus extends Model
 
     public function applications()
     {
-        return $this->hasMany(QJobsApplication::class, 'status_id');
+        return $this->hasMany(BiraConsultantApplication::class, 'status_id');
     }
 }

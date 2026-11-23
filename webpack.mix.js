@@ -10,5 +10,5 @@ mix.js('resources/js/app.js', 'public/js')
         postcssImport(),
         autoprefixer(),
     ])
-    .copy('resources/css/qjobs-theme.css', 'public/css/qjobs-theme.css')
+    .copy('resources/css/biraconsultant-theme.css', 'public/css/biraconsultant-theme.css')
     .copy('resources/images', 'public/images');

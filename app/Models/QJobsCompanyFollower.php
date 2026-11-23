@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class QJobsCompanyFollower extends Pivot
+class BiraConsultantCompanyFollower extends Pivot
 {
-    protected $table = 'qjobs_company_followers';
+    protected $table = 'biraconsultant_company_followers';
 
     protected $fillable = [
         'user_id',
@@ -17,11 +17,11 @@ class QJobsCompanyFollower extends Pivot
 
     public function user()
     {
-        return $this->belongsTo(QJobsUser::class, 'user_id');
+        return $this->belongsTo(BiraConsultantUser::class, 'user_id');
     }
 
     public function company()
     {
-        return $this->belongsTo(QJobsCompany::class, 'company_id');
+        return $this->belongsTo(BiraConsultantCompany::class, 'company_id');
     }
 }

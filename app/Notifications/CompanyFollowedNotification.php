@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\QJobsCompany;
+use App\Models\BiraConsultantCompany;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -13,7 +13,7 @@ class CompanyFollowedNotification extends Notification implements ShouldQueue
     use Queueable;
 
     public function __construct(
-        public QJobsCompany $company
+        public BiraConsultantCompany $company
     ) {}
 
     public function via(object $notifiable): array
@@ -32,7 +32,7 @@ class CompanyFollowedNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject('You are now following ' . $this->company->name)
             ->greeting('Hello ' . $notifiable->name . '!')
-            ->line('You are now following **' . $this->company->name . '** on QJobs Job Board.')
+            ->line('You are now following **' . $this->company->name . '** on BiraConsultant Job Board.')
             ->line('You will receive notifications when this company posts new job opportunities.')
             ->action('View Company', route('company.detail', $this->company->id))
             ->line('You can manage your notification preferences in your account settings.');

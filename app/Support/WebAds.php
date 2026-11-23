@@ -2,7 +2,7 @@
 
 namespace App\Support;
 
-use App\Models\QJobsSetting;
+use App\Models\BiraConsultantSetting;
 use Throwable;
 
 final class WebAds
@@ -25,7 +25,7 @@ final class WebAds
         }
 
         try {
-            self::$settings = QJobsSetting::whereIn('key', $keys)->pluck('value', 'key')->all();
+            self::$settings = BiraConsultantSetting::whereIn('key', $keys)->pluck('value', 'key')->all();
         } catch (Throwable) {
             self::$settings = [];
         }
@@ -70,7 +70,7 @@ final class WebAds
         return [
             'enabled' => self::enabled(),
             'test_mode' => $testMode,
-            'test_id' => 'qjobs-web-test-' . $name . '-v1',
+            'test_id' => 'biraconsultant-web-test-' . $name . '-v1',
             'publisher_id' => $publisherId,
             'slot_id' => $slot,
             'has_ad_unit' => $publisherId !== '' && $slot !== '' && self::liveAdsAllowed(),

@@ -1,5 +1,5 @@
 {
-    "name": "qjobs",
+    "name": "biraconsultant",
     "private": true,
     "scripts": {
         "dev": "npm run development",

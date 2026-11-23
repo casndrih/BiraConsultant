@@ -1,11 +1,11 @@
 <!DOCTYPE html>
  <html lang="en">
 <head>
-    <link rel="canonical" href="https://qjobs.com/" />
+    <link rel="canonical" href="https://biraconsultant.com/" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QJobs - Jobs Admin</title>
+    <title>BiraConsultant - Jobs Admin</title>
     
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="{{ URL::asset('images/favicon/apple-icon-57x57.png') }}">
@@ -22,15 +22,15 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{ URL::asset('images/favicon/favicon-96x96.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('images/favicon/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ URL::asset('images/favicon/manifest.json') }}">
-    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileColor" content="#F4C542">
     <meta name="msapplication-TileImage" content="{{ URL::asset('images/favicon/ms-icon-144x144.png') }}">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#F4C542">
     
     <link href="{{ URL::asset('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('/css/qjobs-theme.css') }}?v=20261102.2" rel="stylesheet">
+    <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v=20261102.2" rel="stylesheet">
     
 </head>
-<body class="qj-app-shell">
+<body class="bc-app-shell">
     @include('admin.layouts.header')
     
     @include('flash.index')

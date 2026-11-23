@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsJob;
-use App\Models\QJobsCompany;
-use App\Models\QJobsBlog;
-use App\Models\QJobsCountry;
+use App\Models\BiraConsultantJob;
+use App\Models\BiraConsultantCompany;
+use App\Models\BiraConsultantBlog;
+use App\Models\BiraConsultantCountry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +18,7 @@ class PublicApiController extends Controller
      */
     public function jobs(Request $request)
     {
-        $query = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $query = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->active();
 
         // Filters
@@ -63,7 +63,7 @@ class PublicApiController extends Controller
      */
     public function jobDetail($slug)
     {
-        $job = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $job = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->active()
             ->where('slug', $slug)
             ->first();
@@ -84,7 +84,7 @@ class PublicApiController extends Controller
     public function searchJobs(Request $request)
     {
         $search = $request->input('q', '');
-        $jobs = QJobsJob::with(['company'])
+        $jobs = BiraConsultantJob::with(['company'])
             ->active()
             ->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
@@ -104,7 +104,7 @@ class PublicApiController extends Controller
      */
     public function companies(Request $request)
     {
-        $query = QJobsCompany::withCount(['jobs' => function ($q) {
+        $query = BiraConsultantCompany::withCount(['jobs' => function ($q) {
                 $q->where('status', 1)->where('approval_status', 'approved');
             }])
             ->where('is_approved', 1);
@@ -132,7 +132,7 @@ class PublicApiController extends Controller
      */
     public function companyDetail($slug)
     {
-        $company = QJobsCompany::with(['jobs' => function ($q) {
+        $company = BiraConsultantCompany::with(['jobs' => function ($q) {
                 $q->where('status', 1)->where('approval_status', 'approved')->latest();
             }])
             ->where('slug', $slug)
@@ -154,7 +154,7 @@ class PublicApiController extends Controller
      */
     public function blogs(Request $request)
     {
-        $query = QJobsBlog::with(['author', 'category'])
+        $query = BiraConsultantBlog::with(['author', 'category'])
             ->where('status', 'published');
 
         if ($request->filled('category')) {
@@ -175,7 +175,7 @@ class PublicApiController extends Controller
      */
     public function blogDetail($slug)
     {
-        $blog = QJobsBlog::with(['author', 'category'])
+        $blog = BiraConsultantBlog::with(['author', 'category'])
             ->where('slug', $slug)
             ->where('status', 'published')
             ->first();
@@ -195,7 +195,7 @@ class PublicApiController extends Controller
      */
     public function homeJobs()
     {
-        $jobs = QJobsJob::with(['company', 'category', 'jobType'])
+        $jobs = BiraConsultantJob::with(['company', 'category', 'jobType'])
             ->active()
             ->latest()
             ->limit(6)
@@ -212,7 +212,7 @@ class PublicApiController extends Controller
      */
     public function homeCompanies()
     {
-        $companies = QJobsCompany::withCount(['jobs' => function ($q) {
+        $companies = BiraConsultantCompany::withCount(['jobs' => function ($q) {
                 $q->where('status', 1)->where('approval_status', 'approved');
             }])
             ->where('is_approved', 1)
@@ -231,7 +231,7 @@ class PublicApiController extends Controller
      */
     public function featuredJobs()
     {
-        $jobs = QJobsJob::with(['company', 'category'])
+        $jobs = BiraConsultantJob::with(['company', 'category'])
             ->active()
             ->latest()
             ->limit(6)
@@ -250,7 +250,7 @@ class PublicApiController extends Controller
     {
         $query = $request->input('q', '');
 
-        $jobs = QJobsJob::with(['company'])
+        $jobs = BiraConsultantJob::with(['company'])
             ->active()
             ->where(function ($q) use ($query) {
                 $q->where('title', 'like', "%{$query}%")
@@ -259,7 +259,7 @@ class PublicApiController extends Controller
             ->limit(5)
             ->get(['id', 'slug', 'title', 'location', 'salary']);
 
-        $companies = QJobsCompany::where('is_approved', 1)
+        $companies = BiraConsultantCompany::where('is_approved', 1)
             ->where('name', 'like', "%{$query}%")
             ->limit(5)
             ->get(['id', 'slug', 'name', 'logo', 'industry']);
@@ -278,7 +278,7 @@ class PublicApiController extends Controller
      */
     public function countries()
     {
-        $countries = QJobsCountry::orderBy('name', 'asc')->get(['id', 'name', 'iso', 'dial']);
+        $countries = BiraConsultantCountry::orderBy('name', 'asc')->get(['id', 'name', 'iso', 'dial']);
         return response()->json([
             'success' => true,
             'data' => $countries,
@@ -294,11 +294,11 @@ class PublicApiController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'categories'        => \App\Models\QJobsJobCategory::withCount('jobs')->orderBy('name')->get(['id', 'name', 'slug']),
-                'job_types'         => \App\Models\QJobsJobType::orderBy('name')->get(['id', 'name']),
-                'experience_levels' => \App\Models\QJobsJobExperienceLevel::orderBy('name')->get(['id', 'name']),
-                'countries'         => QJobsCountry::orderBy('name')->get(['id', 'name', 'iso', 'dial']),
-                'application_statuses' => \App\Models\QJobsApplicationStatus::orderBy('id')->get(['id', 'label', 'color_class']),
+                'categories'        => \App\Models\BiraConsultantJobCategory::withCount('jobs')->orderBy('name')->get(['id', 'name', 'slug']),
+                'job_types'         => \App\Models\BiraConsultantJobType::orderBy('name')->get(['id', 'name']),
+                'experience_levels' => \App\Models\BiraConsultantJobExperienceLevel::orderBy('name')->get(['id', 'name']),
+                'countries'         => BiraConsultantCountry::orderBy('name')->get(['id', 'name', 'iso', 'dial']),
+                'application_statuses' => \App\Models\BiraConsultantApplicationStatus::orderBy('id')->get(['id', 'label', 'color_class']),
                 'ads' => $this->mobileAdsSettings(),
             ],
         ]);
@@ -307,7 +307,7 @@ class PublicApiController extends Controller
     /** Public mobile ad settings used by Android. New providers stay disabled until configured. */
     private function mobileAdsSettings(): array
     {
-        $setting = \App\Models\QJobsSetting::class;
+        $setting = \App\Models\BiraConsultantSetting::class;
         $providerValue = strtolower((string) $setting::getValue('mobile_ads_provider', ''));
         $provider = $providerValue;
         if ($providerValue === '') {
@@ -368,7 +368,7 @@ class PublicApiController extends Controller
      */
     public function jobStatus($slug)
     {
-        $job = QJobsJob::where('slug', $slug)->first();
+        $job = BiraConsultantJob::where('slug', $slug)->first();
 
         if (!$job) {
             return response()->json(['success' => false, 'message' => 'Job not found'], 404);

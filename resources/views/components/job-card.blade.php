@@ -9,9 +9,9 @@
         : 'Recently posted';
 @endphp
 
-<article class="qj-job-card">
-    <div class="qj-job-card__top">
-        <div class="qj-company-logo" aria-hidden="true">
+<article class="bc-job-card">
+    <div class="bc-job-card__top">
+        <div class="bc-company-logo" aria-hidden="true">
             @if($company?->logo)
                 <img src="{{ asset('storage/' . $company->logo) }}"
                      alt=""
@@ -21,26 +21,26 @@
             @endif
         </div>
 
-        <div class="qj-job-card__heading">
-            <p class="qj-job-card__company">{{ $companyName }}</p>
-            <h3 class="qj-job-card__title">
+        <div class="bc-job-card__heading">
+            <p class="bc-job-card__company">{{ $companyName }}</p>
+            <h3 class="bc-job-card__title">
                 <a href="{{ route('job.detail', $job->slug) }}">{{ $job->title }}</a>
             </h3>
         </div>
     </div>
 
-    <div class="qj-job-card__badges">
-        <span class="qj-job-badge">{{ $job->jobType->name ?? 'Full time' }}</span>
-        <span class="qj-job-badge qj-job-badge--muted">{{ $job->experienceLevel->name ?? 'Entry level' }}</span>
+    <div class="bc-job-card__badges">
+        <span class="bc-job-badge">{{ $job->jobType->name ?? 'Full time' }}</span>
+        <span class="bc-job-badge bc-job-badge--muted">{{ $job->experienceLevel->name ?? 'Entry level' }}</span>
     </div>
 
     @if($showSalary && $job->salary)
-        <p class="qj-job-card__salary">{{ $job->salary }}</p>
+        <p class="bc-job-card__salary">{{ $job->salary }}</p>
     @endif
 
-    <p class="qj-job-card__description">{{ Str::limit(strip_tags($job->description ?? ''), 150) }}</p>
+    <p class="bc-job-card__description">{{ Str::limit(strip_tags($job->description ?? ''), 150) }}</p>
 
-    <div class="qj-job-card__location">
+    <div class="bc-job-card__location">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.2c0 5.2-7.5 11-7.5 11s-7.5-5.8-7.5-11a7.5 7.5 0 1 1 15 0Z" />
             <circle cx="12" cy="10" r="2.4" />
@@ -48,25 +48,25 @@
         <span>{{ $job->location ?: 'Remote' }}</span>
     </div>
 
-    <div class="qj-job-card__footer">
-        <div class="qj-job-card__labels">
+    <div class="bc-job-card__footer">
+        <div class="bc-job-card__labels">
             @if($job->category)
-                <span class="qj-category-tag">{{ $job->category->name }}</span>
+                <span class="bc-category-tag">{{ $job->category->name }}</span>
             @endif
             @if($job->deadline)
-                <span class="qj-job-card__posted">Closes {{ \Carbon\Carbon::parse($job->deadline)->format('M j') }}</span>
+                <span class="bc-job-card__posted">Closes {{ \Carbon\Carbon::parse($job->deadline)->format('M j') }}</span>
             @else
-                <span class="qj-job-card__posted">{{ $postedLabel }}</span>
+                <span class="bc-job-card__posted">{{ $postedLabel }}</span>
             @endif
         </div>
 
         @if($showApplyButton)
             @if($hasApplied)
-                <button class="qj-action-button qj-action-button--applied" type="button" disabled>
+                <button class="bc-action-button bc-action-button--applied" type="button" disabled>
                     Applied
                 </button>
             @else
-                <a href="{{ route('job.detail', $job->slug) }}" class="qj-action-button qj-action-button--primary">
+                <a href="{{ route('job.detail', $job->slug) }}" class="bc-action-button bc-action-button--primary">
                     View job
                     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 10h11m-4-4 4 4-4 4" />

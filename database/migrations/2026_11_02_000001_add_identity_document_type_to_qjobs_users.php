@@ -8,8 +8,8 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (!Schema::hasColumn('qjobs_users', 'identity_document_type')) {
-            Schema::table('qjobs_users', function (Blueprint $table) {
+        if (!Schema::hasColumn('biraconsultant_users', 'identity_document_type')) {
+            Schema::table('biraconsultant_users', function (Blueprint $table) {
                 $table->string('identity_document_type', 32)->nullable();
             });
         }
@@ -17,8 +17,8 @@ return new class extends Migration
 
     public function down(): void
     {
-        if (Schema::hasColumn('qjobs_users', 'identity_document_type')) {
-            Schema::table('qjobs_users', function (Blueprint $table) {
+        if (Schema::hasColumn('biraconsultant_users', 'identity_document_type')) {
+            Schema::table('biraconsultant_users', function (Blueprint $table) {
                 $table->dropColumn('identity_document_type');
             });
         }

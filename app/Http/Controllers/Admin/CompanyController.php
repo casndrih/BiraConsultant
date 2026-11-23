@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsCompany;
+use App\Models\BiraConsultantCompany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -11,7 +11,7 @@ class CompanyController extends Controller
 {
     public function index()
     {
-    $companies = QJobsCompany::orderBy('name', 'asc')->paginate(15);
+    $companies = BiraConsultantCompany::orderBy('name', 'asc')->paginate(15);
     return view('admin.companies.index', compact('companies'));
     }
 
@@ -19,7 +19,7 @@ class CompanyController extends Controller
     {
     $query = trim($request->input('query-company', ''));
 
-    $companies = QJobsCompany::where('name', 'like', '%' . $query . '%')
+    $companies = BiraConsultantCompany::where('name', 'like', '%' . $query . '%')
         ->orWhere('industry', 'like', '%' . $query . '%')
         ->orWhere('location', 'like', '%' . $query . '%')
         ->orderBy('name', 'asc')
@@ -43,7 +43,7 @@ class CompanyController extends Controller
         'size' => 'nullable|string|max:100',
     ]);
 
-    QJobsCompany::create($request->only([
+    BiraConsultantCompany::create($request->only([
         'name',
         'website',
         'logo',
@@ -62,14 +62,14 @@ class CompanyController extends Controller
 
     public function edit($slug)
     {
-        $company = QJobsCompany::where('slug', $slug)->firstOrFail();
+        $company = BiraConsultantCompany::where('slug', $slug)->firstOrFail();
         return response()->json($company);
     }
 
     public function update(Request $request)
     {
         $request->validate([
-            'edit_company_id' => 'required|exists:qjobs_companies,id',
+            'edit_company_id' => 'required|exists:biraconsultant_companies,id',
             'name' => 'required|string|max:255',
             'website' => 'nullable|url|max:255',
             'logo' => 'nullable|string|max:255',
@@ -82,7 +82,7 @@ class CompanyController extends Controller
             'size' => 'nullable|string|max:100',
         ]);
 
-        $company = QJobsCompany::findOrFail($request->edit_company_id);
+        $company = BiraConsultantCompany::findOrFail($request->edit_company_id);
         $company->update($request->only([
             'name',
             'website',
@@ -102,7 +102,7 @@ class CompanyController extends Controller
 
     public function delete($slug)
     {
-        $company = QJobsCompany::where('slug', $slug)->firstOrFail();
+        $company = BiraConsultantCompany::where('slug', $slug)->firstOrFail();
         $company->delete();
 
         Session::flash('success', 'Company deleted successfully.');
@@ -115,7 +115,7 @@ class CompanyController extends Controller
     {
         $tab = $request->query('tab', 'pending');
 
-        $query = QJobsCompany::whereNotNull('registration_doc_path');
+        $query = BiraConsultantCompany::whereNotNull('registration_doc_path');
 
         $query->when($tab === 'pending', function ($q) {
             $q->where('verification_status', 0);
@@ -128,9 +128,9 @@ class CompanyController extends Controller
         $companies = $query->with('user')->orderBy('created_at', 'desc')->paginate(20);
 
         $counts = [
-            'pending'  => QJobsCompany::whereNotNull('registration_doc_path')->where('verification_status', 0)->count(),
-            'verified' => QJobsCompany::whereNotNull('registration_doc_path')->where('verification_status', 1)->count(),
-            'rejected' => QJobsCompany::whereNotNull('registration_doc_path')->where('verification_status', 2)->count(),
+            'pending'  => BiraConsultantCompany::whereNotNull('registration_doc_path')->where('verification_status', 0)->count(),
+            'verified' => BiraConsultantCompany::whereNotNull('registration_doc_path')->where('verification_status', 1)->count(),
+            'rejected' => BiraConsultantCompany::whereNotNull('registration_doc_path')->where('verification_status', 2)->count(),
         ];
 
         $activeTab = $tab;
@@ -139,7 +139,7 @@ class CompanyController extends Controller
         return view('admin.companies.verification', compact('companies', 'tab', 'activeTab', 'counts', 'pendingCount'));
     }
 
-    public function approveVerification(Request $request, QJobsCompany $company)
+    public function approveVerification(Request $request, BiraConsultantCompany $company)
     {
         $company->update([
             'verification_status' => 1,
@@ -152,7 +152,7 @@ class CompanyController extends Controller
         return redirect()->route('admin.companies.verification')->with('success', "{$company->name} has been verified and approved.");
     }
 
-    public function rejectVerification(Request $request, QJobsCompany $company)
+    public function rejectVerification(Request $request, BiraConsultantCompany $company)
     {
         $request->validate([
             'rejection_reason' => 'required|string|max:500',

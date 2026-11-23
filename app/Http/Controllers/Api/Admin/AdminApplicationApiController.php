@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsApplication;
+use App\Models\BiraConsultantApplication;
 use Illuminate\Http\Request;
 
 class AdminApplicationApiController extends Controller
 {
     public function index(Request $request)
     {
-        $query = QJobsApplication::with(['job.company', 'user']);
+        $query = BiraConsultantApplication::with(['job.company', 'user']);
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -31,7 +31,7 @@ class AdminApplicationApiController extends Controller
 
     public function show($id)
     {
-        $application = QJobsApplication::with(['job.company', 'user'])->findOrFail($id);
+        $application = BiraConsultantApplication::with(['job.company', 'user'])->findOrFail($id);
         return response()->json(['success' => true, 'data' => $application]);
     }
 
@@ -41,7 +41,7 @@ class AdminApplicationApiController extends Controller
             'status_id' => 'required|integer|between:1,6',
         ]);
 
-        $application = QJobsApplication::findOrFail($id);
+        $application = BiraConsultantApplication::findOrFail($id);
         $application->update(['status_id' => $request->status_id]);
 
         return response()->json(['success' => true, 'data' => $application]);
@@ -49,7 +49,7 @@ class AdminApplicationApiController extends Controller
 
     public function destroy($id)
     {
-        $application = QJobsApplication::findOrFail($id);
+        $application = BiraConsultantApplication::findOrFail($id);
         $application->delete();
         return response()->json(['success' => true]);
     }

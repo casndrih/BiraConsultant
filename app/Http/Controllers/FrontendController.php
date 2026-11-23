@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\QJobsJob;
-use App\Models\QJobsCompany;
-use App\Models\QJobsBlog;
-use App\Models\QJobsBlogCategory;
-use App\Models\QJobsJobCategory;
-use App\Models\QJobsJobType;
-use App\Models\QJobsJobExperienceLevel;
-use App\Models\QJobsApplication;
-use App\Models\QJobsApplicationStatus;
-use App\Models\QJobsUser;
-use App\Models\QJobsCountry;
-use App\Models\QJobsUserWorkExperience;
+use App\Models\BiraConsultantJob;
+use App\Models\BiraConsultantCompany;
+use App\Models\BiraConsultantBlog;
+use App\Models\BiraConsultantBlogCategory;
+use App\Models\BiraConsultantJobCategory;
+use App\Models\BiraConsultantJobType;
+use App\Models\BiraConsultantJobExperienceLevel;
+use App\Models\BiraConsultantApplication;
+use App\Models\BiraConsultantApplicationStatus;
+use App\Models\BiraConsultantUser;
+use App\Models\BiraConsultantCountry;
+use App\Models\BiraConsultantUserWorkExperience;
 use App\Notifications\CompanyFollowedNotification;
 use App\Notifications\NewJobFromFollowedCompanyNotification;
 use Illuminate\Http\Request;
@@ -28,24 +28,24 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        $latestJobs = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $latestJobs = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->active()
             ->orderBy('created_at', 'desc')
             ->take(8)
             ->get();
 
-        $featuredJobs = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $featuredJobs = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->active()
             ->inRandomOrder()
             ->take(4)
             ->get();
 
-        $categories = QJobsJobCategory::withCount('jobs')->orderBy('name')->get();
-        $companies = QJobsCompany::withCount('jobs')->orderBy('name')->take(6)->get();
-        $jobTypes = QJobsJobType::orderBy('name')->get();
-        $experienceLevels = QJobsJobExperienceLevel::orderBy('name')->get();
-        $totalJobs = QJobsJob::active()->count();
-        $totalCompanies = QJobsCompany::count();
+        $categories = BiraConsultantJobCategory::withCount('jobs')->orderBy('name')->get();
+        $companies = BiraConsultantCompany::withCount('jobs')->orderBy('name')->take(6)->get();
+        $jobTypes = BiraConsultantJobType::orderBy('name')->get();
+        $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->get();
+        $totalJobs = BiraConsultantJob::active()->count();
+        $totalCompanies = BiraConsultantCompany::count();
 
         $mapLocationDefinitions = [
             ['name' => 'Morobe / Lae', 'query' => 'Morobe, Lae', 'terms' => ['morobe', 'lae'], 'x' => 34.2, 'y' => 52.8, 'badge_offset' => -10],
@@ -58,7 +58,7 @@ class FrontendController extends Controller
             ['name' => 'Kokopo / Rabaul', 'query' => 'Kokopo, Rabaul, East New Britain', 'terms' => ['kokopo', 'rabaul', 'east new britain'], 'x' => 61.4, 'y' => 32.2, 'badge_offset' => 0],
         ];
 
-        $activeJobLocationCounts = QJobsJob::active()
+        $activeJobLocationCounts = BiraConsultantJob::active()
             ->whereNotNull('location')
             ->where('location', '!=', '')
             ->selectRaw('LOWER(location) as normalized_location, COUNT(*) as total')
@@ -90,7 +90,7 @@ class FrontendController extends Controller
     // Job Listing Page
     public function jobs(Request $request)
     {
-        $query = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $query = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->active();
 
         // Apply filters
@@ -129,10 +129,10 @@ class FrontendController extends Controller
         }
 
         $jobs = $query->orderBy('created_at', 'desc')->paginate(12)->appends($request->query());
-        $categories = QJobsJobCategory::orderBy('name')->get();
-        $jobTypes = QJobsJobType::orderBy('name')->get();
-        $experienceLevels = QJobsJobExperienceLevel::orderBy('name')->get();
-        $locations = QJobsJob::active()->distinct()->pluck('location')->filter()->take(10);
+        $categories = BiraConsultantJobCategory::orderBy('name')->get();
+        $jobTypes = BiraConsultantJobType::orderBy('name')->get();
+        $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->get();
+        $locations = BiraConsultantJob::active()->distinct()->pluck('location')->filter()->take(10);
 
         return view('jobs.index', compact('jobs', 'categories', 'jobTypes', 'experienceLevels', 'locations'));
     }
@@ -140,7 +140,7 @@ class FrontendController extends Controller
     // Jobs AJAX listing (returns JSON with HTML)
     public function jobsList(Request $request)
     {
-        $query = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $query = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->active();
 
         if ($request->filled('search')) {
@@ -198,12 +198,12 @@ class FrontendController extends Controller
     // Job Detail Page
     public function jobDetail($id)
     {
-        $job = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $job = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->active()
             ->findOrFail($id);
 
         // Get similar jobs
-        $similarJobs = QJobsJob::with(['company'])
+        $similarJobs = BiraConsultantJob::with(['company'])
             ->where('category_id', $job->category_id)
             ->where('id', '!=', $job->id)
             ->active()
@@ -215,7 +215,7 @@ class FrontendController extends Controller
         $hasApplied = false;
         $hasSaved = false;
         if (Auth::check()) {
-            $hasApplied = QJobsApplication::where('user_id', Auth::id())
+            $hasApplied = BiraConsultantApplication::where('user_id', Auth::id())
                 ->where('job_id', $job->id)
                 ->exists();
             $hasSaved = Auth::user()->hasSavedJob($job->id);
@@ -227,14 +227,14 @@ class FrontendController extends Controller
     // Job Detail by Slug
     public function jobDetailBySlug($slug)
     {
-        $job = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $job = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->active()
             ->where('slug', $slug)
             ->firstOrFail();
 
         // Redirect to the old ID-based URL format for backward compatibility
         // Or just render the view directly
-        $similarJobs = QJobsJob::with(['company'])
+        $similarJobs = BiraConsultantJob::with(['company'])
             ->where('category_id', $job->category_id)
             ->where('id', '!=', $job->id)
             ->active()
@@ -245,7 +245,7 @@ class FrontendController extends Controller
         $hasApplied = false;
         $hasSaved = false;
         if (Auth::check()) {
-            $hasApplied = QJobsApplication::where('user_id', Auth::id())
+            $hasApplied = BiraConsultantApplication::where('user_id', Auth::id())
                 ->where('job_id', $job->id)
                 ->exists();
             $hasSaved = Auth::user()->hasSavedJob($job->id);
@@ -262,7 +262,7 @@ class FrontendController extends Controller
         }
 
         $user = Auth::user();
-        $job = QJobsJob::findOrFail($jobId);
+        $job = BiraConsultantJob::findOrFail($jobId);
 
         if ($user->hasSavedJob($jobId)) {
             $user->savedJobs()->detach($jobId);
@@ -276,7 +276,7 @@ class FrontendController extends Controller
     // Company Listing Page
     public function companies(Request $request)
     {
-        $query = QJobsCompany::withCount(['jobs' => function($q) {
+        $query = BiraConsultantCompany::withCount(['jobs' => function($q) {
             $q->where('status', 1);
         }]);
 
@@ -295,7 +295,7 @@ class FrontendController extends Controller
     // Companies AJAX listing (returns JSON with HTML)
     public function companiesList(Request $request)
     {
-        $query = QJobsCompany::withCount(['jobs' => function($q) {
+        $query = BiraConsultantCompany::withCount(['jobs' => function($q) {
             $q->where('status', 1);
         }]);
 
@@ -327,7 +327,7 @@ class FrontendController extends Controller
 
     public function latestJobsPartial(Request $request)
     {
-        $query = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $query = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->active();
 
         // Apply filters if present
@@ -358,16 +358,16 @@ class FrontendController extends Controller
     // Company Detail Page
     public function companyDetail($id)
     {
-        $company = QJobsCompany::findOrFail($id);
+        $company = BiraConsultantCompany::findOrFail($id);
 
-        $jobs = QJobsJob::with(['category', 'jobType', 'experienceLevel'])
+        $jobs = BiraConsultantJob::with(['category', 'jobType', 'experienceLevel'])
             ->where('company_id', $company->id)
             ->active()
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
-        $mapEnabled = \App\Models\QJobsSetting::getValue('google_maps_enabled', '0') === '1';
-        $mapApiKey = \App\Models\QJobsSetting::getValue('google_maps_api_key', '');
+        $mapEnabled = \App\Models\BiraConsultantSetting::getValue('google_maps_enabled', '0') === '1';
+        $mapApiKey = \App\Models\BiraConsultantSetting::getValue('google_maps_api_key', '');
 
         return view('companies.detail', compact('company', 'jobs', 'mapEnabled', 'mapApiKey'));
     }
@@ -375,16 +375,16 @@ class FrontendController extends Controller
     // Company Detail by Slug
     public function companyDetailBySlug($slug)
     {
-        $company = QJobsCompany::where('slug', $slug)->firstOrFail();
+        $company = BiraConsultantCompany::where('slug', $slug)->firstOrFail();
 
-        $jobs = QJobsJob::with(['category', 'jobType', 'experienceLevel'])
+        $jobs = BiraConsultantJob::with(['category', 'jobType', 'experienceLevel'])
             ->where('company_id', $company->id)
             ->active()
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
-        $mapEnabled = \App\Models\QJobsSetting::getValue('google_maps_enabled', '0') === '1';
-        $mapApiKey = \App\Models\QJobsSetting::getValue('google_maps_api_key', '');
+        $mapEnabled = \App\Models\BiraConsultantSetting::getValue('google_maps_enabled', '0') === '1';
+        $mapApiKey = \App\Models\BiraConsultantSetting::getValue('google_maps_api_key', '');
 
         return view('companies.detail', compact('company', 'jobs', 'mapEnabled', 'mapApiKey'));
     }
@@ -395,23 +395,23 @@ class FrontendController extends Controller
         if (!$id) {
             return redirect()->route('companies');
         }
-        $company = QJobsCompany::findOrFail($id);
+        $company = BiraConsultantCompany::findOrFail($id);
 
-        $jobs = QJobsJob::with(['category', 'jobType', 'experienceLevel'])
+        $jobs = BiraConsultantJob::with(['category', 'jobType', 'experienceLevel'])
             ->where('company_id', $company->id)
             ->active()
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
-        $mapEnabled = \App\Models\QJobsSetting::getValue('google_maps_enabled', '0') === '1';
-        $mapApiKey = \App\Models\QJobsSetting::getValue('google_maps_api_key', '');
+        $mapEnabled = \App\Models\BiraConsultantSetting::getValue('google_maps_enabled', '0') === '1';
+        $mapApiKey = \App\Models\BiraConsultantSetting::getValue('google_maps_api_key', '');
 
         return view('companies.detail', compact('company', 'jobs', 'mapEnabled', 'mapApiKey'));
     }
 
     public function featuredJobsPartial()
     {
-        $featuredJobs = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $featuredJobs = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->active()
             ->inRandomOrder()
             ->take(4)
@@ -430,7 +430,7 @@ class FrontendController extends Controller
 
     public function homeCompaniesPartial()
     {
-        $companies = QJobsCompany::withCount('jobs')->orderBy('name')->take(6)->get();
+        $companies = BiraConsultantCompany::withCount('jobs')->orderBy('name')->take(6)->get();
         return view('partials.companies', compact('companies'));
     }
 
@@ -439,7 +439,7 @@ class FrontendController extends Controller
     {
         $query = $request->input('q', '');
 
-        $jobs = QJobsJob::with(['company', 'category'])
+        $jobs = BiraConsultantJob::with(['company', 'category'])
             ->active()
             ->when($query, function($q) use ($query) {
                 $q->where(function($sub) use ($query) {
@@ -469,7 +469,7 @@ class FrontendController extends Controller
 
         $user = Auth::user();
         $applications = $user->applications()->with(['job.company', 'status'])->orderBy('created_at', 'desc')->take(5)->get();
-        $savedJobs = $user->savedJobs()->with(['company', 'category'])->orderBy('qjobs_saved_jobs.created_at', 'desc')->take(5)->get();
+        $savedJobs = $user->savedJobs()->with(['company', 'category'])->orderBy('biraconsultant_saved_jobs.created_at', 'desc')->take(5)->get();
 
         $stats = [
             'total_applications' => $user->applications()->count(),
@@ -482,7 +482,7 @@ class FrontendController extends Controller
             'saved_jobs' => $user->savedJobs()->count(),
         ];
 
-        $recommendedJobs = QJobsJob::with(['company', 'category'])
+        $recommendedJobs = BiraConsultantJob::with(['company', 'category'])
             ->active()
             ->inRandomOrder()
             ->take(3)
@@ -499,9 +499,9 @@ class FrontendController extends Controller
         }
 
         $user = Auth::user()->load(['country', 'skills', 'workExperiences']);
-        $countries = QJobsCountry::orderBy('name')->get();
+        $countries = BiraConsultantCountry::orderBy('name')->get();
         $workExperiences = $user->workExperiences()->orderBy('start_date', 'desc')->get();
-        $allSkills = \App\Models\QJobsJobSkill::orderBy('name')->get();
+        $allSkills = \App\Models\BiraConsultantJobSkill::orderBy('name')->get();
 
         return view('user.profile', compact('user', 'countries', 'workExperiences', 'allSkills'));
     }
@@ -517,11 +517,11 @@ class FrontendController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:qjobs_users,email,' . $user->id,
+            'email' => 'required|email|unique:biraconsultant_users,email,' . $user->id,
             'phone' => 'nullable|string|max:20',
             'bio' => 'nullable|string|max:1000',
             'website' => 'nullable|url|max:255',
-            'country_id' => 'nullable|exists:qjobs_countries,id',
+            'country_id' => 'nullable|exists:biraconsultant_countries,id',
             'state' => 'nullable|string|max:255',
             'birthday' => 'nullable|date',
             'gender' => 'nullable|string|max:15',
@@ -568,7 +568,7 @@ class FrontendController extends Controller
             'end_date' => 'nullable|date|after_or_equal:start_date',
         ]);
 
-        QJobsUserWorkExperience::create([
+        BiraConsultantUserWorkExperience::create([
             'user_id' => Auth::id(),
             'company_name' => $request->company_name,
             'position' => $request->position,
@@ -587,7 +587,7 @@ class FrontendController extends Controller
             return redirect()->route('home');
         }
 
-        $experience = QJobsUserWorkExperience::where('user_id', Auth::id())->findOrFail($id);
+        $experience = BiraConsultantUserWorkExperience::where('user_id', Auth::id())->findOrFail($id);
         $experience->delete();
 
         return redirect()->route('user.profile')->with('success', 'Work experience removed!');
@@ -604,7 +604,7 @@ class FrontendController extends Controller
             'skill_name' => 'required|string|max:100',
         ]);
 
-        $skill = \App\Models\QJobsJobSkill::firstOrCreate(['name' => $request->skill_name]);
+        $skill = \App\Models\BiraConsultantJobSkill::firstOrCreate(['name' => $request->skill_name]);
         Auth::user()->skills()->syncWithoutDetaching([$skill->id]);
 
         return response()->json(['success' => true, 'skill' => $skill]);
@@ -618,7 +618,7 @@ class FrontendController extends Controller
         }
 
         $request->validate([
-            'skill_id' => 'required|exists:qjobs_job_skills,id',
+            'skill_id' => 'required|exists:biraconsultant_job_skills,id',
         ]);
 
         Auth::user()->skills()->detach($request->skill_id);
@@ -656,7 +656,7 @@ class FrontendController extends Controller
         }
 
         $user = Auth::user();
-        $job = QJobsJob::active()->findOrFail($job_id);
+        $job = BiraConsultantJob::active()->findOrFail($job_id);
 
         // Check if already applied
         if ($user->hasAppliedTo($job->id)) {
@@ -688,7 +688,7 @@ class FrontendController extends Controller
             $data['cover_letter_path'] = $request->file('cover_letter_file')->store('applications/' . $user->id . '/cover_letter', 'public');
         }
 
-        QJobsApplication::create($data);
+        BiraConsultantApplication::create($data);
 
         return redirect()->route('user.applications')->with('success', 'Application submitted successfully! The company will review your profile.');
     }
@@ -700,7 +700,7 @@ class FrontendController extends Controller
             return redirect()->route('home');
         }
 
-        $application = QJobsApplication::where('user_id', Auth::id())
+        $application = BiraConsultantApplication::where('user_id', Auth::id())
             ->where('id', $id)
             ->where('status_id', 1) // Can only withdraw pending applications
             ->firstOrFail();
@@ -724,7 +724,7 @@ class FrontendController extends Controller
             return redirect()->route('company.dashboard')->with('info', 'You already have a registered company.');
         }
 
-        $countries = QJobsCountry::orderBy('name')->get();
+        $countries = BiraConsultantCountry::orderBy('name')->get();
         return view('companies.register', compact('countries'));
     }
 
@@ -749,14 +749,14 @@ class FrontendController extends Controller
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:100',
-            'country_id' => 'nullable|exists:qjobs_countries,id',
+            'country_id' => 'nullable|exists:biraconsultant_countries,id',
             'industry' => 'nullable|string|max:100',
             'logo' => 'nullable|image|max:' . UploadLimitHelper::maxRule('company_logo'),
         ]);
 
         $user = Auth::user();
 
-        $company = QJobsCompany::create([
+        $company = BiraConsultantCompany::create([
             'name' => $request->name,
             'description' => $request->description,
             'website' => $request->website,
@@ -782,7 +782,7 @@ class FrontendController extends Controller
     // Blog Pages
     public function blog(Request $request)
     {
-        $query = QJobsBlog::with(['author', 'category'])
+        $query = BiraConsultantBlog::with(['author', 'category'])
             ->where('status', 'published');
 
         if ($request->filled('category')) {
@@ -790,19 +790,19 @@ class FrontendController extends Controller
         }
 
         $blogs = $query->orderBy('published_at', 'desc')->paginate(9)->appends($request->query());
-        $categories = QJobsBlogCategory::withCount('blogs')->orderBy('name')->get();
+        $categories = BiraConsultantBlogCategory::withCount('blogs')->orderBy('name')->get();
 
         return view('blog.index', compact('blogs', 'categories'));
     }
 
     public function blogDetail($slug)
     {
-        $blog = QJobsBlog::with(['author', 'category'])
+        $blog = BiraConsultantBlog::with(['author', 'category'])
             ->where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
 
-        $relatedBlogs = QJobsBlog::where('category_id', $blog->category_id)
+        $relatedBlogs = BiraConsultantBlog::where('category_id', $blog->category_id)
             ->where('id', '!=', $blog->id)
             ->where('status', 'published')
             ->orderBy('published_at', 'desc')
@@ -828,7 +828,7 @@ class FrontendController extends Controller
     // Privacy Policy Page (DB-driven)
     public function privacy()
     {
-        $policy = \App\Models\QJobsSetting::where('key', 'privacy_policy')->value('value');
+        $policy = \App\Models\BiraConsultantSetting::where('key', 'privacy_policy')->value('value');
         if (empty($policy)) {
             $policy = '<p>Our privacy policy is being updated. Please check back soon.</p>';
         }
@@ -838,7 +838,7 @@ class FrontendController extends Controller
     // Terms of Service Page (DB-driven)
     public function terms()
     {
-        $terms = \App\Models\QJobsSetting::where('key', 'terms_of_service')->value('value');
+        $terms = \App\Models\BiraConsultantSetting::where('key', 'terms_of_service')->value('value');
         if (empty($terms)) {
             $terms = '<p>Our terms of service are being updated. Please check back soon.</p>';
         }
@@ -861,7 +861,7 @@ class FrontendController extends Controller
         ]);
 
         // In production, send email here
-        // Mail::to('admin@qjobs.com')->send(new ContactFormMail($request->all()));
+        // Mail::to('admin@biraconsultant.com')->send(new ContactFormMail($request->all()));
 
         return redirect()->route('contact')->with('success', 'Thank you for your message! We will get back to you soon.');
     }
@@ -939,8 +939,8 @@ class FrontendController extends Controller
 
         // Try to send SMS (falls back to log driver)
         try {
-            $smsDriver = \App\Models\QJobsSetting::where('key', 'verification_sms_driver')->value('value') ?? 'log';
-            $template  = \App\Models\QJobsSetting::where('key', 'sms_verification_template')->value('value') ?? 'Your QJobs verification code is: {code}';
+            $smsDriver = \App\Models\BiraConsultantSetting::where('key', 'verification_sms_driver')->value('value') ?? 'log';
+            $template  = \App\Models\BiraConsultantSetting::where('key', 'sms_verification_template')->value('value') ?? 'Your BiraConsultant verification code is: {code}';
             $message   = str_replace('{code}', $code, $template);
 
             if ($smsDriver === 'log') {
@@ -976,7 +976,7 @@ class FrontendController extends Controller
 
     // ===== Follow / Unfollow Company =====
 
-    public function followCompany(QJobsCompany $company)
+    public function followCompany(BiraConsultantCompany $company)
     {
         if (!Auth::check()) {
             if (request()->wantsJson()) {
@@ -1010,7 +1010,7 @@ class FrontendController extends Controller
         return back()->with('success', 'You are now following ' . $company->name . '! You will receive updates when they post new jobs.');
     }
 
-    public function unfollowCompany(QJobsCompany $company)
+    public function unfollowCompany(BiraConsultantCompany $company)
     {
         if (!Auth::check()) {
             if (request()->wantsJson()) {
@@ -1116,19 +1116,19 @@ class FrontendController extends Controller
 
     public function apiCountries()
     {
-        $countries = \App\Models\QJobsCountry::orderBy('name')->get(['id', 'name']);
+        $countries = \App\Models\BiraConsultantCountry::orderBy('name')->get(['id', 'name']);
         return response()->json($countries);
     }
 
     public function checkUsername(Request $request)
     {
-        $exists = \App\Models\QJobsUser::where('username', $request->query('username'))->exists();
+        $exists = \App\Models\BiraConsultantUser::where('username', $request->query('username'))->exists();
         return response()->json(['exists' => $exists]);
     }
 
     public function checkEmail(Request $request)
     {
-        $exists = \App\Models\QJobsUser::where('email', $request->query('email'))->exists();
+        $exists = \App\Models\BiraConsultantUser::where('email', $request->query('email'))->exists();
         return response()->json(['exists' => $exists]);
     }
 }

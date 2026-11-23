@@ -7,25 +7,25 @@
 @section('content')
 @include('partials.skeleton-styles')
 <div class="min-h-screen bg-gray-50 dark:bg-black">
-    <section class="qj-search-hero qj-search-hero--companies">
-        <div class="qj-search-hero__inner">
-            <span class="qj-search-hero__eyebrow">Meet the teams behind the work</span>
-            <h1 class="qj-search-hero__title">Find your next great team.</h1>
-            <p class="qj-search-hero__subtitle">Explore employers and the opportunities they are building.</p>
+    <section class="bc-search-hero bc-search-hero--companies">
+        <div class="bc-search-hero__inner">
+            <span class="bc-search-hero__eyebrow">Meet the teams behind the work</span>
+            <h1 class="bc-search-hero__title">Find your next great team.</h1>
+            <p class="bc-search-hero__subtitle">Explore employers and the opportunities they are building.</p>
 
-            <form method="GET" action="{{ route('companies') }}" id="search-form" class="qj-search-panel">
-                <div class="qj-search-fields qj-search-fields--companies">
-                    <label class="qj-search-field">
+            <form method="GET" action="{{ route('companies') }}" id="search-form" class="bc-search-panel">
+                <div class="bc-search-fields bc-search-fields--companies">
+                    <label class="bc-search-field">
                         <span>Company name</span>
-                        <span class="qj-search-input-wrap">
+                        <span class="bc-search-input-wrap">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                 <circle cx="10.8" cy="10.8" r="6.8" />
                                 <path stroke-linecap="round" d="m16 16 4.2 4.2" />
                             </svg>
-                            <input type="text" name="search" placeholder="Search companies..." value="{{ request('search') }}" class="qj-search-input">
+                            <input type="text" name="search" placeholder="Search companies..." value="{{ request('search') }}" class="bc-search-input">
                         </span>
                     </label>
-                    <button type="submit" class="qj-search-submit">
+                    <button type="submit" class="bc-search-submit">
                         Search companies
                         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 10h11m-4-4 4 4-4 4" />
@@ -37,10 +37,10 @@
     </section>
 
     <!-- Companies Grid -->
-    <div class="container mx-auto px-4 py-8 qj-results-container">
+    <div class="container mx-auto px-4 py-8 bc-results-container">
         @include('partials.adsense', ['placement' => 'companies'])
         <!-- Results Info -->
-        <div class="qj-results-heading mb-8" id="results-info">
+        <div class="bc-results-heading mb-8" id="results-info">
             <h2 id="results-count">
                 Loading...
             </h2>

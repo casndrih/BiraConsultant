@@ -1,5 +1,5 @@
 <header>
-    <nav class="qj-admin-topbar px-4 lg:px-6 py-2.5">
+    <nav class="bc-admin-topbar px-4 lg:px-6 py-2.5">
         <div class="flex items-center justify-between">
             <div class="flex items-center">
                 <button id="toggleNavigation" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation"
@@ -22,7 +22,7 @@
                 </button>
 
                 <a href="{{ url('/') }}" class="flex items-center">
-                    <img src="{{ URL::asset('images/favicon/logo.svg') }}" class="h-9 mr-1" alt="QJobs Logo" />
+                    <img src="{{ URL::asset('images/favicon/logo.svg') }}" class="h-9 mr-1" alt="BiraConsultant Logo" />
                     <span class="text-xl font-medium whitespace-nowrap text-black dark:text-white">Jobs Admin Portal</span>
                 </a>
             </div>

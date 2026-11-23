@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsBlog;
+use App\Models\BiraConsultantBlog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -12,7 +12,7 @@ class AdminBlogApiController extends Controller
 {
     public function index(Request $request)
     {
-        $query = QJobsBlog::with(['author', 'category']);
+        $query = BiraConsultantBlog::with(['author', 'category']);
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -25,7 +25,7 @@ class AdminBlogApiController extends Controller
 
     public function show($slug)
     {
-        $blog = QJobsBlog::with(['author', 'category'])
+        $blog = BiraConsultantBlog::with(['author', 'category'])
             ->where('slug', $slug)
             ->firstOrFail();
 
@@ -38,12 +38,12 @@ class AdminBlogApiController extends Controller
             'title' => 'required|string|max:255',
             'excerpt' => 'nullable|string|max:255',
             'content' => 'nullable|string',
-            'category_id' => 'nullable|exists:qjobs_blog_categories,id',
+            'category_id' => 'nullable|exists:biraconsultant_blog_categories,id',
             'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
         ]);
 
-        $blog = QJobsBlog::create([
+        $blog = BiraConsultantBlog::create([
             'title' => $request->title,
             'slug' => Str::slug($request->title),
             'excerpt' => $request->excerpt,
@@ -59,13 +59,13 @@ class AdminBlogApiController extends Controller
 
     public function update(Request $request, $slug)
     {
-        $blog = QJobsBlog::where('slug', $slug)->firstOrFail();
+        $blog = BiraConsultantBlog::where('slug', $slug)->firstOrFail();
 
         $request->validate([
             'title' => 'required|string|max:255',
             'excerpt' => 'nullable|string|max:255',
             'content' => 'nullable|string',
-            'category_id' => 'nullable|exists:qjobs_blog_categories,id',
+            'category_id' => 'nullable|exists:biraconsultant_blog_categories,id',
             'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
         ]);
@@ -85,7 +85,7 @@ class AdminBlogApiController extends Controller
 
     public function destroy($slug)
     {
-        $blog = QJobsBlog::where('slug', $slug)->firstOrFail();
+        $blog = BiraConsultantBlog::where('slug', $slug)->firstOrFail();
 
         if ($blog->featured_image) {
             $imagePath = str_replace(asset('storage/') . '/', '', $blog->featured_image);

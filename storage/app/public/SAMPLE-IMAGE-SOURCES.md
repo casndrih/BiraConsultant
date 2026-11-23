@@ -1,4 +1,4 @@
-# QJobs sample image sources
+# BiraConsultant sample image sources
 
 These are square demo placeholders from Unsplash, stored locally under the Laravel public disk so the app can display them without loading remote image URLs. Company images are generic photos for the sample UI, not official company logos.
 

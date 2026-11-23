@@ -7,7 +7,7 @@
 @section('content')
 <div class="min-h-screen bg-gray-50 dark:bg-black">
     <!-- Header -->
-    <div class="qj-dashboard-hero">
+    <div class="bc-dashboard-hero">
         <div class="container mx-auto px-4">
             <h1 class="text-2xl font-bold mb-1">Edit Job</h1>
             <div class="flex items-center gap-3">

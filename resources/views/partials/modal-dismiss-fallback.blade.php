@@ -38,7 +38,7 @@
         }
     };
 
-    class QJobsModalFallback {
+    class BiraConsultantModalFallback {
         constructor(element, options = {}) {
             this.element = typeof element === 'string' ? document.getElementById(element) : element;
             this.options = options;
@@ -54,7 +54,7 @@
         }
     }
 
-    if (typeof window.Modal === 'undefined') window.Modal = QJobsModalFallback;
+    if (typeof window.Modal === 'undefined') window.Modal = BiraConsultantModalFallback;
 
     document.addEventListener('click', (event) => {
         if (!(event.target instanceof Element)) return;

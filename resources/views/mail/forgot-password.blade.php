@@ -11,7 +11,7 @@
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background-color:#ffffff;border-radius:8px;padding:32px;">
                     <tr>
                         <td style="text-align:center;padding-bottom:16px;">
-                            <h2 style="margin:0;color:#111827;font-size:22px;">QJobs</h2>
+                            <h2 style="margin:0;color:#111827;font-size:22px;">BiraConsultant</h2>
                         </td>
                     </tr>
                     <tr>

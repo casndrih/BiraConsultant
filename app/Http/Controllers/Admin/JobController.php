@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsJob;
-use App\Models\QJobsJobType;
-use App\Models\QJobsCompany;
-use App\Models\QJobsJobCategory;
-use App\Models\QJobsJobExperienceLevel;
+use App\Models\BiraConsultantJob;
+use App\Models\BiraConsultantJobType;
+use App\Models\BiraConsultantCompany;
+use App\Models\BiraConsultantJobCategory;
+use App\Models\BiraConsultantJobExperienceLevel;
 use App\Notifications\NewJobFromFollowedCompanyNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +23,7 @@ class JobController extends Controller
         $experienceId = $request->input('experience_id');
         $companyId = $request->input('company_id');
 
-        $query = QJobsJob::with(['company', 'category']);
+        $query = BiraConsultantJob::with(['company', 'category']);
 
         // Status filter
         switch ($filter) {
@@ -58,17 +58,17 @@ class JobController extends Controller
         $jobs = $query->orderBy('created_at', 'desc')->paginate(15)->appends($request->query());
 
         $counts = [
-            'all' => QJobsJob::count(),
-            'pending' => QJobsJob::where('approval_status', 'pending')->count(),
-            'approved' => QJobsJob::where('approval_status', 'approved')->count(),
-            'rejected' => QJobsJob::where('approval_status', 'rejected')->count(),
-            'expired' => QJobsJob::where('deadline', '<', now())->count(),
+            'all' => BiraConsultantJob::count(),
+            'pending' => BiraConsultantJob::where('approval_status', 'pending')->count(),
+            'approved' => BiraConsultantJob::where('approval_status', 'approved')->count(),
+            'rejected' => BiraConsultantJob::where('approval_status', 'rejected')->count(),
+            'expired' => BiraConsultantJob::where('deadline', '<', now())->count(),
         ];
 
-        $jobTypes = QJobsJobType::orderBy('name')->get();
-        $experienceLevels = QJobsJobExperienceLevel::orderBy('name')->get();
-        $companies = QJobsCompany::orderBy('name')->get();
-        $categories = QJobsJobCategory::orderBy('name')->get();
+        $jobTypes = BiraConsultantJobType::orderBy('name')->get();
+        $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->get();
+        $companies = BiraConsultantCompany::orderBy('name')->get();
+        $categories = BiraConsultantJobCategory::orderBy('name')->get();
 
         // If AJAX request, return only the table body fragment
         if ($request->ajax()) {
@@ -85,7 +85,7 @@ class JobController extends Controller
     {
         $query = trim($request->input('query-job', ''));
 
-        $jobs = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])
+        $jobs = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])
             ->where(function ($q) use ($query) {
                 $q->where('title', 'like', '%' . $query . '%')
                   ->orWhere('location', 'like', '%' . $query . '%')
@@ -103,10 +103,10 @@ class JobController extends Controller
             ->paginate(15);
 
         $counts = [
-            'all' => QJobsJob::count(),
-            'pending' => QJobsJob::where('approval_status', 'pending')->count(),
-            'approved' => QJobsJob::where('approval_status', 'approved')->count(),
-            'rejected' => QJobsJob::where('approval_status', 'rejected')->count(),
+            'all' => BiraConsultantJob::count(),
+            'pending' => BiraConsultantJob::where('approval_status', 'pending')->count(),
+            'approved' => BiraConsultantJob::where('approval_status', 'approved')->count(),
+            'rejected' => BiraConsultantJob::where('approval_status', 'rejected')->count(),
         ];
         $filter = 'all';
 
@@ -118,18 +118,18 @@ class JobController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'company_id' => 'required|exists:qjobs_companies,id',
-            'category_id' => 'required|exists:qjobs_job_categories,id',
+            'company_id' => 'required|exists:biraconsultant_companies,id',
+            'category_id' => 'required|exists:biraconsultant_job_categories,id',
             'location' => 'nullable|string|max:255',
-            'job_type_id' => 'required|exists:qjobs_job_types,id',
+            'job_type_id' => 'required|exists:biraconsultant_job_types,id',
             'salary' => 'nullable|string|max:100',
-            'experience_level_id' => 'required|exists:qjobs_job_experience_levels,id',
+            'experience_level_id' => 'required|exists:biraconsultant_job_experience_levels,id',
             'deadline' => 'nullable|date',
             'duration' => 'nullable|integer|min:1|max:365',
             'status' => 'nullable|string|in:0,1',
         ]);
 
-        $job = QJobsJob::create([
+        $job = BiraConsultantJob::create([
             'title' => $request->title,
             'description' => $request->description,
             'company_id' => $request->company_id,
@@ -147,13 +147,13 @@ class JobController extends Controller
         ]);
 
         // Notify followers
-        $company = \App\Models\QJobsCompany::find($request->company_id);
+        $company = \App\Models\BiraConsultantCompany::find($request->company_id);
         if ($company) {
             $followers = $company->followers()
                 ->where('notify_followed_company_jobs', true)
                 ->get();
 
-            $freshJob = QJobsJob::with('company')->find($job->id);
+            $freshJob = BiraConsultantJob::with('company')->find($job->id);
             if ($freshJob) {
                 foreach ($followers as $follower) {
                     $follower->notify(new NewJobFromFollowedCompanyNotification($freshJob));
@@ -167,9 +167,9 @@ class JobController extends Controller
 
     public function edit($slug)
     {
-        $job = QJobsJob::with(['company', 'category', 'jobType', 'experienceLevel'])->where('slug', $slug)->firstOrFail();
-        $jobTypes = QJobsJobType::orderBy('name')->get();
-        $experienceLevels = QJobsJobExperienceLevel::orderBy('name')->get();
+        $job = BiraConsultantJob::with(['company', 'category', 'jobType', 'experienceLevel'])->where('slug', $slug)->firstOrFail();
+        $jobTypes = BiraConsultantJobType::orderBy('name')->get();
+        $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->get();
 
         return response()->json([
             'job' => $job,
@@ -181,21 +181,21 @@ class JobController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'edit_job_id' => 'required|exists:qjobs_jobs,id',
+            'edit_job_id' => 'required|exists:biraconsultant_jobs,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'company_id' => 'required|exists:qjobs_companies,id',
-            'category_id' => 'required|exists:qjobs_job_categories,id',
+            'company_id' => 'required|exists:biraconsultant_companies,id',
+            'category_id' => 'required|exists:biraconsultant_job_categories,id',
             'location' => 'nullable|string|max:255',
-            'job_type_id' => 'required|exists:qjobs_job_types,id',
+            'job_type_id' => 'required|exists:biraconsultant_job_types,id',
             'salary' => 'nullable|string|max:100',
-            'experience_level_id' => 'required|exists:qjobs_job_experience_levels,id',
+            'experience_level_id' => 'required|exists:biraconsultant_job_experience_levels,id',
             'deadline' => 'nullable|date',
             'duration' => 'nullable|integer|min:1|max:365',
             'status' => 'nullable|string|in:0,1',
         ]);
 
-        $job = QJobsJob::findOrFail($request->edit_job_id);
+        $job = BiraConsultantJob::findOrFail($request->edit_job_id);
 
         $job->update([
             'title' => $request->title,
@@ -217,7 +217,7 @@ class JobController extends Controller
 
     // ─── Approval Actions ────────────────────────────────────────────────
 
-    public function approve(QJobsJob $job)
+    public function approve(BiraConsultantJob $job)
     {
         $job->update([
             'approval_status' => 'approved',
@@ -234,7 +234,7 @@ class JobController extends Controller
                 ->where('notify_followed_company_jobs', true)
                 ->get();
 
-            $freshJob = QJobsJob::with('company')->find($job->id);
+            $freshJob = BiraConsultantJob::with('company')->find($job->id);
             if ($freshJob) {
                 foreach ($followers as $follower) {
                     $follower->notify(new NewJobFromFollowedCompanyNotification($freshJob));
@@ -245,7 +245,7 @@ class JobController extends Controller
         return redirect()->back()->with('success', "Job \"{$job->title}\" approved and published.");
     }
 
-    public function reject(Request $request, QJobsJob $job)
+    public function reject(Request $request, BiraConsultantJob $job)
     {
         $request->validate([
             'rejection_reason' => 'required|string|max:500',
@@ -261,7 +261,7 @@ class JobController extends Controller
 
     public function delete(Request $request)
     {
-        $job = QJobsJob::findOrFail($request->delete_job_id);
+        $job = BiraConsultantJob::findOrFail($request->delete_job_id);
         $job->delete();
 
         Session::flash('success', 'Job deleted successfully.');

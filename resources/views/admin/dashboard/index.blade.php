@@ -1,17 +1,17 @@
 @extends('admin.app')
 
 @section('content')
-<section class="qj-dashboard-page">
-    <div class="qj-dashboard-hero">
-        <div class="qj-dashboard-hero__inner">
-            <span class="qj-content-hero__eyebrow">QJobs administration</span>
-            <h1 class="qj-content-hero__title">Platform overview</h1>
-            <p class="qj-content-hero__subtitle">A live snapshot of jobs, applications, employers, and members.</p>
+<section class="bc-dashboard-page">
+    <div class="bc-dashboard-hero">
+        <div class="bc-dashboard-hero__inner">
+            <span class="bc-content-hero__eyebrow">BiraConsultant administration</span>
+            <h1 class="bc-content-hero__title">Platform overview</h1>
+            <p class="bc-content-hero__subtitle">A live snapshot of jobs, applications, employers, and members.</p>
         </div>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Stat Cards -->
-        <div class="qj-dashboard-stats-grid my-7">
+        <div class="bc-dashboard-stats-grid my-7">
             <div class="bg-white dark:bg-custom-dark shadow-sm rounded-lg p-4 text-center">
                 <p class="text-gray-600 dark:text-gray-300">Active Jobs</p>
                 <p class="text-3xl font-medium text-gray-800 dark:text-white">{{ $totalJobs }}</p>
@@ -43,7 +43,7 @@
         </div>
 
         <!-- Jobs, Applications & Users Chart -->
-        <div class="qj-dashboard-panel max-w-full w-full p-6 mb-10">
+        <div class="bc-dashboard-panel max-w-full w-full p-6 mb-10">
             <div class="mb-4">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Monthly Overview</h3>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Comparison of jobs, applications, and user registrations</p>

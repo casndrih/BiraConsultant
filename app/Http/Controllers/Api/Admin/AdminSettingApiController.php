@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsSetting;
+use App\Models\BiraConsultantSetting;
 use Illuminate\Http\Request;
 
 class AdminSettingApiController extends Controller
@@ -35,7 +35,7 @@ class AdminSettingApiController extends Controller
     {
         $settings = [];
         foreach (self::SETTINGS_GROUPS as $group => $keys) {
-            $settings[$group] = QJobsSetting::whereIn('key', $keys)->get()->keyBy('key');
+            $settings[$group] = BiraConsultantSetting::whereIn('key', $keys)->get()->keyBy('key');
             foreach ($keys as $key) {
                 if (!isset($settings[$group][$key])) {
                     $settings[$group][$key] = ['key' => $key, 'value' => ''];
@@ -52,7 +52,7 @@ class AdminSettingApiController extends Controller
 
     public function show($key)
     {
-        $setting = QJobsSetting::where('key', $key)->first();
+        $setting = BiraConsultantSetting::where('key', $key)->first();
         if ($key === 'google_client_secret') {
             return response()->json(['success' => true, 'data' => [
                 'key' => $key,
@@ -114,7 +114,7 @@ class AdminSettingApiController extends Controller
             if ($key === 'google_client_secret' && trim((string) $value) === '') {
                 continue;
             }
-            QJobsSetting::updateOrCreate(
+            BiraConsultantSetting::updateOrCreate(
                 ['key' => $key],
                 ['value' => $value ?? '']
             );

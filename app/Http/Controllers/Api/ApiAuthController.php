@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsUser;
+use App\Models\BiraConsultantUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -123,7 +123,7 @@ class ApiAuthController extends Controller
 
                 return response()->json([
                     'success' => false,
-                    'message' => 'Company and admin accounts must sign in on the QJobs website. The Android app is for job seekers.',
+                    'message' => 'Company and admin accounts must sign in on the BiraConsultant website. The Android app is for job seekers.',
                 ], 403);
             }
 
@@ -167,12 +167,12 @@ class ApiAuthController extends Controller
             'username'     => [
                 'nullable', 'string', 'min:3', 'max:50',
                 'regex:/^[a-zA-Z0-9._-]+$/',
-                'unique:qjobs_users,username',
+                'unique:biraconsultant_users,username',
             ],
             'birthday'     => 'required|date|before:today',
             'gender'       => 'required|in:0,1',
-            'country_id'   => 'required|integer|exists:qjobs_countries,id',
-            'email'        => 'required|email:filter|unique:qjobs_users,email|max:255',
+            'country_id'   => 'required|integer|exists:biraconsultant_countries,id',
+            'email'        => 'required|email:filter|unique:biraconsultant_users,email|max:255',
             'password'     => ['required', 'string', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'],
             'role'         => 'sometimes|in:0',
         ], [
@@ -192,7 +192,7 @@ class ApiAuthController extends Controller
         $username = $request->filled('username') ? strtolower(trim($request->input('username'))) : null;
 
         $user = \Illuminate\Support\Facades\DB::transaction(function () use ($request, $email, $username) {
-            $user = new QJobsUser();
+            $user = new BiraConsultantUser();
             $user->name         = trim($request->input('name'));
             $user->username     = $username;
             $user->birthday     = $request->input('birthday');
@@ -257,13 +257,13 @@ class ApiAuthController extends Controller
     public function googleExchange(Request $request)
     {
         $request->validate(['code' => 'required|string|min:32|max:128']);
-        $cacheKey = 'qjobs:google:exchange:' . hash('sha256', $request->input('code'));
+        $cacheKey = 'biraconsultant:google:exchange:' . hash('sha256', $request->input('code'));
         $userId = Cache::pull($cacheKey);
         if (!$userId) {
             return response()->json(['success' => false, 'message' => 'Google sign-in code expired. Please try again.'], 401);
         }
 
-        $user = QJobsUser::find($userId);
+        $user = BiraConsultantUser::find($userId);
         if (!$user || (int) ($user->is_banned ?? 0) === 1) {
             return response()->json(['success' => false, 'message' => 'This account cannot sign in.'], 403);
         }
@@ -271,7 +271,7 @@ class ApiAuthController extends Controller
         if ((int) $user->role !== 0) {
             return response()->json([
                 'success' => false,
-                'message' => 'Company and admin accounts must sign in on the QJobs website. The Android app is for job seekers.',
+                'message' => 'Company and admin accounts must sign in on the BiraConsultant website. The Android app is for job seekers.',
             ], 403);
         }
 

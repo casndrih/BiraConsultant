@@ -7,7 +7,7 @@
 @section('content')
 <div class="min-h-screen bg-gray-50 dark:bg-black">
     <!-- Header -->
-    <div class="qj-dashboard-hero">
+    <div class="bc-dashboard-hero">
         <div class="container mx-auto px-4">
             <h1 class="text-2xl font-bold mb-1">Company Settings</h1>
             <p class="text-sm opacity-75">{{ $company->name }} — Update your profile and location</p>

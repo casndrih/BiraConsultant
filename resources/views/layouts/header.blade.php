@@ -1,34 +1,29 @@
 <!-- Header -->
-<header class="qj-toolbar text-gray-900 dark:text-white">
-    <div class="qj-toolbar__inner">
+<header class="bc-toolbar text-gray-900 dark:text-white">
+    <div class="bc-toolbar__inner">
             <!-- Left: Logo & Nav -->
-            <div class="qj-toolbar__main">
-                <a href="{{ route('home') }}" class="qj-brand" aria-label="QJobs home">
-                    <span class="qj-brand__mark" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="M19.8 4.2C12.7 4.2 7.2 6.2 5.1 10.2c-1.8 3.4.3 7.1 3.9 7.1 4.8 0 8.7-5.2 10.8-13.1Z" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M3.9 20c2.1-4 5.4-6.8 9.8-8.8" stroke-linecap="round" />
-                        </svg>
-                    </span>
-                    <span class="qj-brand__name">QJobs</span>
+            <div class="bc-toolbar__main">
+                <a href="{{ route('home') }}" class="bc-brand" aria-label="BiraConsultant home">
+                    <img class="bc-brand__logo" src="{{ URL::asset('images/favicon/logo.svg') }}" alt="Bira Consultants logo">
+                    <span class="bc-brand__name">BiraConsultant</span>
                 </a>
-                <nav class="qj-toolbar__nav hidden md:flex" aria-label="Main navigation">
-                    <a href="{{ route('jobs') }}" class="qj-nav-link {{ request()->routeIs('jobs', 'job.*') ? 'is-active' : '' }}">Jobs</a>
-                    <a href="{{ route('companies') }}" class="qj-nav-link {{ request()->routeIs('companies', 'company.detail') ? 'is-active' : '' }}">Companies</a>
-                    <a href="{{ route('blog') }}" class="qj-nav-link {{ request()->routeIs('blog', 'blog.*') ? 'is-active' : '' }}">Blog</a>
-                    <a href="{{ route('contact') }}" class="qj-nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">Contact</a>
+                <nav class="bc-toolbar__nav hidden md:flex" aria-label="Main navigation">
+                    <a href="{{ route('jobs') }}" class="bc-nav-link {{ request()->routeIs('jobs', 'job.*') ? 'is-active' : '' }}">Jobs</a>
+                    <a href="{{ route('companies') }}" class="bc-nav-link {{ request()->routeIs('companies', 'company.detail') ? 'is-active' : '' }}">Companies</a>
+                    <a href="{{ route('blog') }}" class="bc-nav-link {{ request()->routeIs('blog', 'blog.*') ? 'is-active' : '' }}">Blog</a>
+                    <a href="{{ route('contact') }}" class="bc-nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">Contact</a>
                 </nav>
             </div>
 
             <!-- Right: Auth Button or User Image -->
-            <div class="qj-toolbar__actions">
+            <div class="bc-toolbar__actions">
                 @guest
                     <a data-modal-target="signin-modal" data-modal-show="signin-modal"
-                       class="qj-text-action cursor-pointer">
+                       class="bc-text-action cursor-pointer">
                         Sign In
                     </a>
                     <a data-modal-target="signup-modal" data-modal-show="signup-modal"
-                       class="qj-action-button qj-action-button--primary cursor-pointer">
+                       class="bc-action-button bc-action-button--primary cursor-pointer">
                         Sign Up
                     </a>
                 @else

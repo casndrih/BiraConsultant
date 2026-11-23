@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class QJobsCompany extends Model
+class BiraConsultantCompany extends Model
 {
     use HasFactory;
 
-    protected $table = 'qjobs_companies';
+    protected $table = 'biraconsultant_companies';
 
     protected $fillable = [
         'name',
@@ -85,27 +85,27 @@ class QJobsCompany extends Model
 
     public function jobs()
     {
-        return $this->hasMany(QJobsJob::class, 'company_id');
+        return $this->hasMany(BiraConsultantJob::class, 'company_id');
     }
 
     public function country()
     {
-        return $this->belongsTo(QJobsCountry::class, 'country_id');
+        return $this->belongsTo(BiraConsultantCountry::class, 'country_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(QJobsUser::class, 'user_id');
+        return $this->belongsTo(BiraConsultantUser::class, 'user_id');
     }
 
     public function activeJobs()
     {
-        return $this->hasMany(QJobsJob::class)->where('status', 1);
+        return $this->hasMany(BiraConsultantJob::class)->where('status', 1);
     }
 
     public function followers()
     {
-        return $this->belongsToMany(QJobsUser::class, 'qjobs_company_followers', 'company_id', 'user_id')
+        return $this->belongsToMany(BiraConsultantUser::class, 'biraconsultant_company_followers', 'company_id', 'user_id')
             ->withTimestamps();
     }
 

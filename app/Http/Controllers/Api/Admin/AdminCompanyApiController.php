@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsCompany;
+use App\Models\BiraConsultantCompany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -11,7 +11,7 @@ class AdminCompanyApiController extends Controller
 {
     public function index(Request $request)
     {
-        $query = QJobsCompany::withCount(['jobs']);
+        $query = BiraConsultantCompany::withCount(['jobs']);
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -24,7 +24,7 @@ class AdminCompanyApiController extends Controller
 
     public function show($slug)
     {
-        $company = QJobsCompany::with(['jobs', 'user'])
+        $company = BiraConsultantCompany::with(['jobs', 'user'])
             ->where('slug', $slug)
             ->firstOrFail();
 
@@ -42,7 +42,7 @@ class AdminCompanyApiController extends Controller
             'description' => 'nullable|string|max:5000',
         ]);
 
-        $company = QJobsCompany::create([
+        $company = BiraConsultantCompany::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'email' => $request->email,
@@ -58,7 +58,7 @@ class AdminCompanyApiController extends Controller
 
     public function update(Request $request, $slug)
     {
-        $company = QJobsCompany::where('slug', $slug)->firstOrFail();
+        $company = BiraConsultantCompany::where('slug', $slug)->firstOrFail();
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -84,14 +84,14 @@ class AdminCompanyApiController extends Controller
 
     public function destroy($slug)
     {
-        $company = QJobsCompany::where('slug', $slug)->firstOrFail();
+        $company = BiraConsultantCompany::where('slug', $slug)->firstOrFail();
         $company->delete();
         return response()->json(['success' => true]);
     }
 
     public function approveVerification($slug)
     {
-        $company = QJobsCompany::where('slug', $slug)->firstOrFail();
+        $company = BiraConsultantCompany::where('slug', $slug)->firstOrFail();
         $company->update([
             'verification_status' => 1,
             'is_approved' => 1,
@@ -104,7 +104,7 @@ class AdminCompanyApiController extends Controller
 
     public function rejectVerification(Request $request, $slug)
     {
-        $company = QJobsCompany::where('slug', $slug)->firstOrFail();
+        $company = BiraConsultantCompany::where('slug', $slug)->firstOrFail();
         $company->update([
             'verification_status' => 2,
             'is_approved' => 0,

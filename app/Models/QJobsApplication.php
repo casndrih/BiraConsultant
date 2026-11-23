@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class QJobsApplication extends Model
+class BiraConsultantApplication extends Model
 {
     use HasFactory;
 
-    protected $table = 'qjobs_applications';
+    protected $table = 'biraconsultant_applications';
 
     protected $fillable = [
         'user_id',
@@ -43,17 +43,17 @@ class QJobsApplication extends Model
     // Relationships
     public function user()
     {
-        return $this->belongsTo(QJobsUser::class, 'user_id');
+        return $this->belongsTo(BiraConsultantUser::class, 'user_id');
     }
 
     public function job()
     {
-        return $this->belongsTo(QJobsJob::class, 'job_id');
+        return $this->belongsTo(BiraConsultantJob::class, 'job_id');
     }
 
     public function status()
     {
-        return $this->belongsTo(QJobsApplicationStatus::class, 'status_id');
+        return $this->belongsTo(BiraConsultantApplicationStatus::class, 'status_id');
     }
 
     // Human-readable status label

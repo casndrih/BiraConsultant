@@ -1,6 +1,6 @@
 @php
-    $recaptchaEnabled = \App\Models\QJobsSetting::getValue('recaptcha_enabled', '0') === '1';
-    $recaptchaSiteKey = \App\Models\QJobsSetting::getValue('recaptcha_site_key', '');
+    $recaptchaEnabled = \App\Models\BiraConsultantSetting::getValue('recaptcha_enabled', '0') === '1';
+    $recaptchaSiteKey = \App\Models\BiraConsultantSetting::getValue('recaptcha_site_key', '');
 @endphp
 
 @if($recaptchaEnabled && $recaptchaSiteKey)

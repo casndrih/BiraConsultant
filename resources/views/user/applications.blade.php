@@ -5,9 +5,9 @@
 @endsection
 
 @section('content')
-<div class="qj-dashboard-page">
+<div class="bc-dashboard-page">
     <!-- Header -->
-    <div class="qj-detail-topbar shadow-sm">
+    <div class="bc-detail-topbar shadow-sm">
         <div class="container mx-auto px-4 py-5">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-4">

@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-<div class="qj-dashboard-page">
+<div class="bc-dashboard-page">
     <!-- Dashboard Header -->
-    <div class="qj-dashboard-hero">
-        <div class="qj-dashboard-hero__inner">
+    <div class="bc-dashboard-hero">
+        <div class="bc-dashboard-hero__inner">
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-3xl font-bold mb-2">Welcome back, {{ $user->name }}!</h1>
@@ -56,36 +56,36 @@
         @endif
 
         <!-- Stats Cards -->
-        <div class="qj-dashboard-stats-grid mb-8">
-            <div class="qj-dashboard-stat">
+        <div class="bc-dashboard-stats-grid mb-8">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-black dark:text-white">{{ $stats['total_applications'] }}</div>
                 <div class="text-xs text-gray-500">Applications</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-blue-600">{{ $stats['received'] }}</div>
                 <div class="text-xs text-gray-500">Received</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-yellow-600">{{ $stats['under_review'] }}</div>
                 <div class="text-xs text-gray-500">Reviewing</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-purple-600">{{ $stats['interview'] }}</div>
                 <div class="text-xs text-gray-500">Interview</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-green-600">{{ $stats['job_offer'] }}</div>
                 <div class="text-xs text-gray-500">Offers</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-emerald-600">{{ $stats['hired'] }}</div>
                 <div class="text-xs text-gray-500">Hired</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-red-600">{{ $stats['rejected'] }}</div>
                 <div class="text-xs text-gray-500">Rejected</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-yellow-600">{{ $stats['saved_jobs'] }}</div>
                 <div class="text-xs text-gray-500">Saved</div>
             </div>

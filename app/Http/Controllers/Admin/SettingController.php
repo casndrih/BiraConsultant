@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\QJobsSetting;
+use App\Models\BiraConsultantSetting;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -85,12 +85,12 @@ class SettingController extends Controller
         $settings = [];
 
         foreach (self::SETTINGS_GROUPS as $group => $keys) {
-            $settings[$group] = QJobsSetting::whereIn('key', $keys)->get()->keyBy('key');
+            $settings[$group] = BiraConsultantSetting::whereIn('key', $keys)->get()->keyBy('key');
 
-            // Fill missing keys with empty QJobsSetting instances
+            // Fill missing keys with empty BiraConsultantSetting instances
             foreach ($keys as $key) {
                 if (!isset($settings[$group][$key])) {
-                    $settings[$group][$key] = new QJobsSetting(['key' => $key, 'value' => '']);
+                    $settings[$group][$key] = new BiraConsultantSetting(['key' => $key, 'value' => '']);
                 }
             }
         }
@@ -105,7 +105,7 @@ class SettingController extends Controller
     {
         $query = $request->input('query', '');
 
-        $filtered = QJobsSetting::when($query, function ($q) use ($query) {
+        $filtered = BiraConsultantSetting::when($query, function ($q) use ($query) {
             $q->where('key', 'like', "%{$query}%")
               ->orWhere('value', 'like', "%{$query}%");
         })->get()->keyBy('key');
@@ -174,7 +174,7 @@ class SettingController extends Controller
             if ($key === 'google_client_secret' && trim((string) $value) === '') {
                 continue; // Empty form field means keep the currently stored secret.
             }
-            QJobsSetting::updateOrCreate(
+            BiraConsultantSetting::updateOrCreate(
                 ['key' => $key],
                 ['value' => $value ?? '']
             );

@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="min-h-screen bg-gray-50 dark:bg-black">
-    <div class="qj-dashboard-hero">
+    <div class="bc-dashboard-hero">
         <div class="container mx-auto px-4 flex flex-wrap items-center justify-between gap-4">
             <div>
                 <h1 class="text-2xl font-bold">Bulk upload jobs</h1>
@@ -80,7 +80,7 @@
                     <ul class="space-y-1 text-gray-600 dark:text-gray-400">
                         <li><code>title</code> — job title</li>
                         <li><code>description</code> — role description</li>
-                        <li><code>category</code> — QJobs category</li>
+                        <li><code>category</code> — BiraConsultant category</li>
                         <li><code>job_type</code> — employment type</li>
                         <li><code>experience_level</code> — experience level</li>
                     </ul>

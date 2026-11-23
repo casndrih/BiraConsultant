@@ -2,34 +2,34 @@
 
 namespace App\Services;
 
-use App\Models\QJobsSetting;
+use App\Models\BiraConsultantSetting;
 
 class AuthMethodSettings
 {
     public static function emailEnabled(): bool
     {
-        $value = trim(QJobsSetting::getValue('email_login_enabled', '1'));
+        $value = trim(BiraConsultantSetting::getValue('email_login_enabled', '1'));
         return $value === '' || filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
     public static function googleClientId(): string
     {
-        return trim(QJobsSetting::getValue('google_client_id'));
+        return trim(BiraConsultantSetting::getValue('google_client_id'));
     }
 
     public static function googleClientSecret(): string
     {
-        return trim(QJobsSetting::getValue('google_client_secret'));
+        return trim(BiraConsultantSetting::getValue('google_client_secret'));
     }
 
     public static function googleRedirectUri(): string
     {
-        return trim(QJobsSetting::getValue('google_redirect_uri')) ?: url('/auth/google/callback');
+        return trim(BiraConsultantSetting::getValue('google_redirect_uri')) ?: url('/auth/google/callback');
     }
 
     public static function googleEnabled(): bool
     {
-        return filter_var(QJobsSetting::getValue('google_login_enabled', '0'), FILTER_VALIDATE_BOOLEAN)
+        return filter_var(BiraConsultantSetting::getValue('google_login_enabled', '0'), FILTER_VALIDATE_BOOLEAN)
             && self::googleClientId() !== ''
             && self::googleClientSecret() !== '';
     }

@@ -126,7 +126,7 @@
     </div>
 
     <p class="mt-5 text-xs text-gray-500 dark:text-gray-400">
-        Test mode uses Google's demo banner and native IDs. Before going live, register QJobs in AdMob, replace the sample app ID in the Android manifest, enter both live ad unit IDs, then turn test mode off.
+        Test mode uses Google's demo banner and native IDs. Before going live, register BiraConsultant in AdMob, replace the sample app ID in the Android manifest, enter both live ad unit IDs, then turn test mode off.
     </p>
     <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
         Only the provider selected above receives ad requests. LevelPlay requires an app key and banner ad unit ID; Tapjoy requires its SDK key and offerwall placement.
@@ -140,7 +140,7 @@
 <div class="bg-white dark:bg-custom-dark rounded-lg shadow-md p-6 mt-6">
     <div class="mb-6">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Website Ads</h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Show sponsored placements on public QJobs pages. Until an AdSense slot is configured, each enabled placement links visitors to QJobs advertising enquiries.</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Show sponsored placements on public BiraConsultant pages. Until an AdSense slot is configured, each enabled placement links visitors to BiraConsultant advertising enquiries.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -178,7 +178,7 @@
         @endforeach
     </div>
 
-    <p class="mt-5 text-xs text-gray-500 dark:text-gray-400">Local previews use QJobs test IDs and never contact Google. Live AdSense ads load only outside local/testing when a publisher ID and that placement’s slot ID are configured. Google’s AdMob demo IDs are for mobile apps, not website AdSense slots.</p>
+    <p class="mt-5 text-xs text-gray-500 dark:text-gray-400">Local previews use BiraConsultant test IDs and never contact Google. Live AdSense ads load only outside local/testing when a publisher ID and that placement’s slot ID are configured. Google’s AdMob demo IDs are for mobile apps, not website AdSense slots.</p>
     <div class="mt-6 flex justify-end">
         <button type="button" class="save-settings-btn bg-green-400 hover:bg-green-500 text-black font-medium rounded-full px-6 py-2 text-sm">Save Website Ads</button>
     </div>

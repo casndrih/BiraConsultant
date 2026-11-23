@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-<div class="qj-dashboard-page">
+<div class="bc-dashboard-page">
     <!-- Dashboard Header -->
-    <div class="qj-dashboard-hero">
-        <div class="qj-dashboard-hero__inner">
+    <div class="bc-dashboard-hero">
+        <div class="bc-dashboard-hero__inner">
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-2xl font-bold mb-1">{{ $company->name }}</h1>
@@ -50,24 +50,24 @@
         @endif
 
         <!-- Stats Cards -->
-        <div class="qj-dashboard-stats-grid mb-8">
-            <div class="qj-dashboard-stat">
+        <div class="bc-dashboard-stats-grid mb-8">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-black dark:text-white">{{ $stats['total_jobs'] }}</div>
                 <div class="text-xs text-gray-500 dark:text-gray-400">Total Jobs</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-green-600">{{ $stats['active_jobs'] }}</div>
                 <div class="text-xs text-gray-500 dark:text-gray-400">Active</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold ">{{ $stats['pending_jobs'] }}</div>
                 <div class="text-xs text-gray-500 dark:text-gray-400">Pending</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-blue-600">{{ $stats['total_applications'] }}</div>
                 <div class="text-xs text-gray-500 dark:text-gray-400">Applicants</div>
             </div>
-            <div class="qj-dashboard-stat">
+            <div class="bc-dashboard-stat">
                 <div class="text-xl font-bold text-emerald-600">{{ $stats['hired'] }}</div>
                 <div class="text-xs text-gray-500 dark:text-gray-400">Hired</div>
             </div>

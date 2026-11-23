@@ -5,9 +5,9 @@
 @endsection
 
 @section('content')
-<div class="qj-dashboard-page">
-    <div class="qj-dashboard-hero">
-        <div class="qj-dashboard-hero__inner">
+<div class="bc-dashboard-page">
+    <div class="bc-dashboard-hero">
+        <div class="bc-dashboard-hero__inner">
             <h1 class="text-2xl font-bold">Notification Preferences</h1>
             <p class="opacity-80 mt-1">Choose how you want to receive updates</p>
         </div>
