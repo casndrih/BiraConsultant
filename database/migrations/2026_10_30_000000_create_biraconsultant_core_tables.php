@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\\Database\\Migrations\\Migration;
-use Illuminate\\Database\\Schema\\Blueprint;
-use Illuminate\\Support\\Facades\\Schema;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -197,9 +197,9 @@ return new class extends Migration
         });
 
         foreach ([
-            'biraconsultant_user_skills' => ['user_id', 'skill_id', 'biraconsultant_job_skills'],
-            'biraconsultant_user_category_interests' => ['user_id', 'category_id', 'biraconsultant_job_categories'],
-            'biraconsultant_job_skill' => ['job_id', 'skill_id', 'biraconsultant_job_skills'],
+            ['biraconsultant_user_skills', 'user_id', 'skill_id', 'biraconsultant_job_skills'],
+            ['biraconsultant_user_category_interests', 'user_id', 'category_id', 'biraconsultant_job_categories'],
+            ['biraconsultant_job_skill', 'job_id', 'skill_id', 'biraconsultant_job_skills'],
         ] as [$name, $left, $right, $related]) {
             Schema::create($name, function (Blueprint $table) use ($left, $right, $related) {
                 $table->foreignId($left)->constrained(str_starts_with($left, 'user_') || $left === 'user_id' ? 'biraconsultant_users' : 'biraconsultant_jobs')->cascadeOnDelete();
