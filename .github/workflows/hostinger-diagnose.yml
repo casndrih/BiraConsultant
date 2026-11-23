@@ -30,6 +30,8 @@ jobs:
             echo "Public entrypoint: $([ -f "$WEB/index.php" ] && echo present || echo missing)"
             echo "Vendor autoload: $([ -f "$APP/vendor/autoload.php" ] && echo present || echo missing)"
             echo "Environment: $([ -f "$APP/.env" ] && echo present || echo missing)"
+            echo "Home Blade file: $([ -f "$APP/resources/views/home/index.blade.php" ] && echo present || echo missing)"
+            echo "View directory count: $(find "$APP/resources/views" -type f -name "*.blade.php" | wc -l)"
             echo "Storage writable: $([ -w "$APP/storage/logs" ] && echo yes || echo no)"
             echo "Public storage link: $(readlink "$WEB/storage" 2>/dev/null || echo missing)"
             cd "$APP"
@@ -47,5 +49,6 @@ jobs:
               if (preg_match("/([A-Za-z0-9_\\\\]+Exception|Error|Throwable)/",$last,$e)) echo "Latest exception type: ".$e[1].PHP_EOL;
               else echo "Latest production error entry exists (details withheld).".PHP_EOL;
             ' "$APP"
+            echo "Health endpoint HTTP: $(curl -sS -o /dev/null -w '%{http_code}' https://biraconsultants.com/healthz)"
             echo "HTTP response body (first 500 bytes):"
             curl -sS --max-time 30 https://biraconsultants.com/ | head -c 500 || true
