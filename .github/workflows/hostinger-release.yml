@@ -1,5 +1,5 @@
 name: Deploy fresh BiraConsultant release to Hostinger
-# Release builder now uses the package ESM configuration.
+# Vite config uses .mjs; PostCSS and Tailwind remain CommonJS.
 
 on:
   workflow_dispatch:
