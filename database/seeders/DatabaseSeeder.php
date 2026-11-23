@@ -29,25 +29,25 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($settings as $key => $value) {
-            DB::table('biraconsultant_settings')->updateOrInsert(
-                ['key' => $key],
-                ['value' => $value, 'updated_at' => $now, 'created_at' => $now]
-            );
+            DB::table('biraconsultant_settings')->insertOrIgnore([
+                'key' => $key,
+                'value' => $value,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
         }
 
         // Minimal country reference row so initial PNG registrations have a valid option.
-        DB::table('biraconsultant_countries')->updateOrInsert(
-            ['iso' => 'PG'],
-            [
-                'name' => 'Papua New Guinea',
-                'iso3' => 'PNG',
-                'dial' => '+675',
-                'currency' => 'PGK',
-                'currency_name' => 'Papua New Guinean Kina',
-                'updated_at' => $now,
-                'created_at' => $now,
-            ]
-        );
+        DB::table('biraconsultant_countries')->insertOrIgnore([
+            'name' => 'Papua New Guinea',
+            'iso' => 'PG',
+            'iso3' => 'PNG',
+            'dial' => '+675',
+            'currency' => 'PGK',
+            'currency_name' => 'Papua New Guinean Kina',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
 
         $jobCategories = [
             'Administration', 'Accounting & Finance', 'Agriculture',
@@ -66,17 +66,19 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach (['Full Time', 'Part Time', 'Contract', 'Casual', 'Internship', 'Temporary'] as $name) {
-            DB::table('biraconsultant_job_types')->updateOrInsert(
-                ['name' => $name],
-                ['updated_at' => $now, 'created_at' => $now]
-            );
+            DB::table('biraconsultant_job_types')->insertOrIgnore([
+                'name' => $name,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
         }
 
         foreach (['No Experience', 'Entry Level', 'Mid Level', 'Senior Level', 'Executive'] as $name) {
-            DB::table('biraconsultant_job_experience_levels')->updateOrInsert(
-                ['name' => $name],
-                ['updated_at' => $now, 'created_at' => $now]
-            );
+            DB::table('biraconsultant_job_experience_levels')->insertOrIgnore([
+                'name' => $name,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
         }
 
         foreach (['News', 'Career Advice', 'Employer Insights'] as $name) {
@@ -96,10 +98,13 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($statuses as [$id, $label, $color]) {
-            DB::table('biraconsultant_application_status')->updateOrInsert(
-                ['id' => $id],
-                ['label' => $label, 'color_class' => $color, 'updated_at' => $now, 'created_at' => $now]
-            );
+            DB::table('biraconsultant_application_status')->insertOrIgnore([
+                'id' => $id,
+                'label' => $label,
+                'color_class' => $color,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
         }
     }
 }
