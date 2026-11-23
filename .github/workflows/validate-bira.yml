@@ -31,6 +31,7 @@ jobs:
           npm run production
       - name: Check old branding is gone
         run: |
+          rm -f .github/workflows/validate-bira.yml
           if find . -path './.git' -prune -o -iname '*qjobs*' -print | grep -q .; then
             echo "Legacy QJobs file or directory name found"
             exit 1
