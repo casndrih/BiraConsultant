@@ -29,7 +29,6 @@ jobs:
             cd "$APP"
             php artisan about --only=environment
             php artisan migrate:status --no-ansi
-            php artisan tinker --execute='Illuminate\\Support\\Facades\\DB::connection()->getPdo(); echo "Database connection: OK".PHP_EOL;'
             echo "=== Public route checks ==="
             for path in / /healthz /login /jobs /companies; do
               code="$(curl -sS -L --max-time 30 -o /dev/null -w '%{http_code}' "https://biraconsultants.com$path")"
