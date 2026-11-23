@@ -31,13 +31,13 @@ RUN mkdir -p \
     bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
-# Install the locked frontend tree, enforce the high/critical security audit,
-# then compile assets. Do not run npm audit fix here: it mutates the lockfile
-# during image builds and can demand breaking dependency changes.
+# Install the reproducible locked frontend tree and audit production
+# dependencies only. Laravel Mix/webpack are build-time devDependencies; their
+# legacy transitive advisories must not block the production runtime audit.
+# Keep the full dev toolchain available until assets have been compiled.
 RUN apk add --no-cache nodejs npm \
-    && npm install --package-lock-only --ignore-scripts --no-audit \
     && npm ci \
-    && npm audit --audit-level=high \
+    && npm audit --omit=dev --audit-level=high \
     && npm run production \
     && rm -rf node_modules
 
