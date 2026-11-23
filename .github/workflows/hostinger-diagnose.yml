@@ -36,7 +36,7 @@ jobs:
             php artisan about --only=environment || true
             php artisan migrate:status --no-ansi || true
             php artisan route:list --except-vendor --no-ansi >/dev/null && echo "Route registration: OK" || echo "Route registration: FAILED"
-            php artisan tinker --execute='try { app(\\\\App\\\\Http\\\\Controllers\\\\FrontendController::class)->index(); echo "Home controller: OK".PHP_EOL; } catch (\\\\Throwable $e) { echo "Home controller exception: ".get_class($e)." — ".$e->getMessage().PHP_EOL; }'
+            php artisan tinker --execute='try { $c=app("App".chr(92)."Http".chr(92)."Controllers".chr(92)."FrontendController"); $c->index(); echo "Home controller: OK".PHP_EOL; } catch (Throwable $e) { echo "Home controller exception: ".get_class($e)." — ".$e->getMessage().PHP_EOL; }'
             php -r '
               $f=$argv[1]."/storage/logs/laravel.log";
               if (!is_file($f)) { echo "Laravel log: not present".PHP_EOL; exit; }
