@@ -24,6 +24,7 @@ jobs:
       - name: Check PHP syntax and Composer metadata
         run: |
           find app bootstrap config database routes tests -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+          composer update --lock --no-install --no-interaction
           composer validate --no-check-publish
       - name: Build frontend assets
         run: |
