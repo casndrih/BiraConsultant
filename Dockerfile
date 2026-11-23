@@ -34,6 +34,7 @@ RUN mkdir -p \
 # Install the locked frontend tree, apply non-breaking security fixes, audit it,
 # then compile assets. npm audit fix intentionally avoids --force / major bumps.
 RUN apk add --no-cache nodejs npm \
+    && npm install --package-lock-only --ignore-scripts --no-audit \
     && npm ci \
     && npm audit fix \
     && npm audit --audit-level=high \
