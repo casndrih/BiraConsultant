@@ -34,19 +34,29 @@ jobs:
             if [ -f "$ENVFILE" ]; then
               echo "Retained prior DB configuration: present"
               php -r '
-                $v=Dotenv\Dotenv::parse(file_get_contents($argv[1]));
-                foreach (["DB_CONNECTION","DB_HOST","DB_DATABASE","DB_USERNAME"] as $k) echo $k.": ".(isset($v[$k]) && $v[$k]!=="" ? "present" : "missing").PHP_EOL;
-                $port=isset($v["DB_PORT"]) && $v["DB_PORT"]!==""?(int)$v["DB_PORT"]:3306;
-                try {
-                  $m=new mysqli($v["DB_HOST"],$v["DB_USERNAME"],$v["DB_PASSWORD"],"", $port);
-                  echo "MySQL server connection: ".($m->connect_errno?"failed":"success").PHP_EOL;
-                  if (!$m->connect_errno) {
-                    $db=$v["DB_DATABASE"];
-                    $q=$m->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = \"".$m->real_escape_string($db)."\"");
-                    echo "Old database currently exists: ".($q && $q->num_rows ? "yes":"no").PHP_EOL;
-                    echo "Create database privilege: ".(stripos(implode(" ",$m->query("SHOW GRANTS")->fetch_all(MYSQLI_NUM)[0]??[]),"ALL PRIVILEGES")!==false?"possible":"not confirmed").PHP_EOL;
-                  }
-                } catch(Throwable $e) { echo "MySQL test: failed (".get_class($e).")".PHP_EOL; }
+                $v=[];
+                foreach (file($argv[1], FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES) as $line) {
+                  $line=trim($line);
+                  if ($line==="" || $line[0]==="#" || !str_contains($line,"=")) continue;
+                  [$k,$val]=explode("=",$line,2);
+                  $val=trim($val);
+                  if (strlen($val)>=2 && (($val[0]==="\"" && substr($val,-1)==="\"") || ($val[0]==="\x27" && substr($val,-1)==="\x27"))) $val=substr($val,1,-1);
+                  $v[trim($k)]=$val;
+                }
+                foreach (["DB_CONNECTION","DB_HOST","DB_DATABASE","DB_USERNAME"] as $k) echo $k.": ".(!empty($v[$k]) ? "present":"missing").PHP_EOL;
+                if (!extension_loaded("mysqli")) { echo "mysqli: unavailable".PHP_EOL; exit(0); }
+                $port=!empty($v["DB_PORT"])?(int)$v["DB_PORT"]:3306;
+                $m=@new mysqli($v["DB_HOST"]??"", $v["DB_USERNAME"]??"", $v["DB_PASSWORD"]??"", "", $port);
+                echo "MySQL server connection: ".($m->connect_errno?"failed":"success").PHP_EOL;
+                if (!$m->connect_errno) {
+                  $db=$m->real_escape_string($v["DB_DATABASE"]??"");
+                  $q=$m->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = \'".$db."\'");
+                  echo "Old database currently exists: ".($q && $q->num_rows ? "yes":"no").PHP_EOL;
+                  $gr=$m->query("SHOW GRANTS");
+                  $all=[];
+                  if ($gr) while($row=$gr->fetch_row()) $all[]=$row[0];
+                  echo "Database create privilege: ".(preg_match("/ALL PRIVILEGES|CREATE ON \\*\\.\\*/i",implode(" ",$all))?"yes":"not confirmed").PHP_EOL;
+                }
               ' "$ENVFILE"
             else
               echo "Retained prior DB configuration: absent"
