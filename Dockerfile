@@ -19,13 +19,12 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --prefer-dist --no-progress --optimize-autoloader --no-scripts
 
-COPY package.json package-lock.json ./
+COPY . .
 RUN apk add --no-cache nodejs npm \
     && npm ci \
     && npm run production \
     && rm -rf node_modules
 
-COPY . .
 RUN composer dump-autoload --no-dev --optimize \
     && php artisan package:discover --ansi \
     && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
