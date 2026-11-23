@@ -31,12 +31,12 @@ RUN mkdir -p \
     bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
-# Install the locked frontend tree, apply non-breaking security fixes, audit it,
-# then compile assets. npm audit fix intentionally avoids --force / major bumps.
+# Install the locked frontend tree, enforce the high/critical security audit,
+# then compile assets. Do not run npm audit fix here: it mutates the lockfile
+# during image builds and can demand breaking dependency changes.
 RUN apk add --no-cache nodejs npm \
     && npm install --package-lock-only --ignore-scripts --no-audit \
     && npm ci \
-    && npm audit fix \
     && npm audit --audit-level=high \
     && npm run production \
     && rm -rf node_modules
