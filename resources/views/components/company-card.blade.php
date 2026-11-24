@@ -8,8 +8,8 @@
 <article class="qj-company-card">
     <div class="qj-company-card__top">
         <div class="qj-company-logo qj-company-logo--large qj-company-logo--bare" aria-hidden="true">
-            @if($company->logo)
-                <img src="{{ asset('storage/' . $company->logo) }}" alt="" loading="lazy">
+            @if($company->logo_url)
+                <img src="{{ $company->logo_url }}" alt="" loading="lazy">
             @elseif($company->slug === 'bank-south-pacific')
                 <img src="{{ asset('images/companies/bsp-logo-dark.svg') }}" alt="" loading="lazy">
             @elseif($company->slug === 'kumul-petroleum-holdings')
