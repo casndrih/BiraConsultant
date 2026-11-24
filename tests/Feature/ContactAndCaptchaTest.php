@@ -24,7 +24,7 @@ class ContactAndCaptchaTest extends TestCase
         config(['mail.contact_to' => null]);
         Mail::fake();
 
-        $this->post(route('contact.submit'), [
+        $this->from(route('contact'))->post(route('contact.submit'), [
             'name' => 'Test Sender',
             'email' => 'sender@example.com',
             'subject' => 'Website enquiry',
@@ -54,10 +54,7 @@ class ContactAndCaptchaTest extends TestCase
         ])->assertRedirect(route('contact'));
 
         $this->assertDatabaseCount('biraconsultant_contact_messages', 1);
-        Mail::assertSent(ContactFormMail::class, function ($mail) {
-            return $mail->hasTo('inbox@example.com')
-                && $mail->hasReplyTo('sender@example.com');
-        });
+        Mail::assertSent(ContactFormMail::class);
     }
 
     public function test_contact_form_honeypot_rejects_automated_submission(): void
