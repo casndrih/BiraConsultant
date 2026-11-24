@@ -27,7 +27,28 @@ jobs:
           cd "$APP_DIR"
           test -f artisan && test -f package.json && test -f webpack.mix.js
           echo "=== Replace project identifiers in source text ==="
-          grep -RIlZ --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude-dir=storage --exclude-dir=public --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.gif' --exclude='*.webp' --exclude='*.ico' --exclude='*.pdf' --exclude='*.zip' --exclude='*.lock' -E 'Q-Jobs|QJobs|qjobs|q_jobs|QJOBS' . 2>/dev/null | xargs -0 -r perl -0pi -e 's/Q-Jobs/BiraConsultant/g; s/QJobs/BiraConsultant/g; s/qjobs/biraconsultant/g; s/q_jobs/bira_consultant/g; s/QJOBS/BIRACONSULTANT/g'
+          php <<'PHP'
+          <?php
+          $root = getcwd();
+          $skip = ['.git', 'node_modules', 'vendor', 'storage', 'public'];
+          $replace = ['Q-Jobs' => 'BiraConsultant', 'QJobs' => 'BiraConsultant', 'qjobs' => 'biraconsultant', 'q_jobs' => 'bira_consultant', 'QJOBS' => 'BIRACONSULTANT'];
+          $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS));
+          $changed = 0;
+          foreach ($it as $file) {
+              if (!$file->isFile()) continue;
+              $relative = substr($file->getPathname(), strlen($root) + 1);
+              $parts = preg_split('~[\\\\/]~', $relative);
+              if (array_intersect($parts, $skip)) continue;
+              $data = @file_get_contents($file->getPathname());
+              if ($data === false || strpos($data, "\\0") !== false) continue;
+              $next = strtr($data, $replace);
+              if ($next !== $data) {
+                  file_put_contents($file->getPathname(), $next);
+                  $changed++;
+              }
+          }
+          echo "TEXT_FILES_UPDATED=$changed\\n";
+          PHP
           echo "=== Rename source files containing old project name ==="
           find . -depth -type f \( -iname '*qjobs*' -o -iname '*q-jobs*' -o -iname '*q_jobs*' \) -not -path './node_modules/*' -not -path './vendor/*' -not -path './storage/*' -not -path './public/*' -print0 | while IFS= read -r -d '' file; do
             target="$file"
@@ -44,7 +65,7 @@ jobs:
             perl -0pi -e "s/env\('APP_NAME', 'Laravel'\)/env('APP_NAME', 'BiraConsultant')/g" config/app.php
           fi
           if [ -f .env.example ]; then
-            perl -0pi -e 's/^APP_NAME=.*/APP_NAME=BiraConsultant/m' .env.example
+            php -r '$p=file_get_contents(".env.example");$p=preg_replace("/^APP_NAME=.*/m","APP_NAME=BiraConsultant",$p);file_put_contents(".env.example",$p);'
           fi
           echo "=== Update yellow theme tokens ==="
           THEME="resources/css/biraconsultant-theme.css"
@@ -96,6 +117,9 @@ jobs:
           YELLOW_THEME
           echo "=== Refresh Composer autoload map after model renames ==="
           composer dump-autoload --no-dev --optimize
+          echo "=== Update application name defaults ==="
+          php -r '$p=file_get_contents("config/app.php");$p=str_replace("env('"'APP_NAME'"', '"'Laravel'"')","env('"'APP_NAME'"', '"'BiraConsultant'"')",$p);file_put_contents("config/app.php",$p);'
+          if [ -f .env.example ]; then php -r '$p=file_get_contents(".env.example");$p=preg_replace("/^APP_NAME=.*/m","APP_NAME=BiraConsultant",$p);file_put_contents(".env.example",$p);'; fi
           echo "=== Update lockfile metadata ==="
           npm install --package-lock-only --ignore-scripts --no-audit --no-fund
           echo "=== Validate PHP source syntax ==="
@@ -110,6 +134,7 @@ jobs:
           php -r '$p=json_decode(file_get_contents("composer.json"),true);echo "composer.name=".$p["name"].PHP_EOL;'
           grep -RIl --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude-dir=storage --exclude-dir=public -E 'Q-Jobs|QJobs|qjobs|q_jobs|QJOBS' . 2>/dev/null | head -80 || true
           echo "=== Build outputs ==="
-          ls -lh public/css/mix-manifest.json public/js/app.js public/css/app.css public/css/biraconsultant-theme.css 2>/dev/null || true
+          rm -f public/css/qjobs-theme.css
+          ls -lh public/mix-manifest.json public/css/mix-manifest.json public/js/app.js public/css/app.css public/css/biraconsultant-theme.css 2>/dev/null || true
           echo "REBRAND_AND_REBUILD_COMPLETE"
           REMOTE
