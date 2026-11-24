@@ -1,4 +1,5 @@
 name: Rebrand QJobs as BiraConsultant and rebuild
+# Run the source rebranding and production rebuild.
 on:
   push:
     paths:
@@ -93,8 +94,13 @@ jobs:
               border-color: #FDE68A;
           }
           YELLOW_THEME
+          echo "=== Refresh Composer autoload map after model renames ==="
+          composer dump-autoload --no-dev --optimize
           echo "=== Update lockfile metadata ==="
           npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          echo "=== Validate PHP source syntax ==="
+          find app config routes database -type f -name "*.php" -print0 | xargs -0 -r -n1 php -l >/dev/null
+          echo "PHP_SOURCE_SYNTAX_OK"
           echo "=== Rebuild production CSS and JavaScript ==="
           npm run production
           echo "=== Clear Laravel optimized caches ==="
