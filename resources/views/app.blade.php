@@ -56,12 +56,10 @@
 
     @yield('content')
 
-    @include('modals.authentication-modal')
 
     @yield('footer')
     
     <script src="{{ URL::asset('/js/app.js') }}?v={{ filemtime(public_path('js/app.js')) }}"></script>
-    @include('partials.modal-dismiss-fallback')
     @yield('js')
     @stack('scripts')
 </body>
