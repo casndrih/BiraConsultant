@@ -43,7 +43,7 @@
         </div>
 
         <!-- Jobs, Applications & Users Chart -->
-        <div class="qj-dashboard-panel max-w-full w-full p-6 mb-10">
+        <div class="qj-dashboard-panel qj-dashboard-monthly-panel max-w-full w-full p-6 mb-10">
             <div class="mb-4">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Monthly Overview</h3>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Comparison of jobs, applications, and user registrations</p>
