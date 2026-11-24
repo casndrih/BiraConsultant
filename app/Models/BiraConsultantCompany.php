@@ -147,11 +147,11 @@ class BiraConsultantCompany extends Model
             return null;
         }
 
-        if (\\Illuminate\\Support\\Str::startsWith($logo, ['http://', 'https://'])) {
+        if (\Illuminate\Support\Str::startsWith($logo, ['http://', 'https://'])) {
             return $logo;
         }
 
-        if (\\Illuminate\\Support\\Str::startsWith($logo, ['images/', '/images/'])) {
+        if (\Illuminate\Support\Str::startsWith($logo, ['images/', '/images/'])) {
             return asset(ltrim($logo, '/'));
         }
 
