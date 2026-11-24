@@ -1,5 +1,5 @@
-<footer>
-  <div class="w-full bg-white dark:bg-custom-dark fixed flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
+<footer class="qj-admin-footer">
+  <div class="w-full bg-white dark:bg-custom-dark relative flex flex-col sm:flex-row flex-wrap items-center justify-between gap-4 p-6 mx-auto">
  
         <div class="text-center">
                 <a href="{{ url('/') }}" class="flex items-center justify-center mb-2 text-xl font-medium text-black dark:text-white">
