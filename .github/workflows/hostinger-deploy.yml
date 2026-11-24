@@ -21,6 +21,13 @@ on:
       - "app/Http/Controllers/Auth/AuthController.php"
       - "app/Http/Controllers/Admin/DashboardController.php"
       - "database/seeders/DatabaseSeeder.php"
+      - "app/Models/BiraConsultantCompany.php"
+      - "app/Models/BiraConsultantJob.php"
+      - "app/Http/Controllers/FrontendController.php"
+      - "app/Http/Controllers/CompanyDashboardController.php"
+      - "app/Http/Controllers/Admin/CompanyController.php"
+      - "resources/views/company/settings.blade.php"
+      - "resources/views/admin/companies/index.blade.php"
   workflow_dispatch:
 
 permissions:
