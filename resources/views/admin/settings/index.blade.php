@@ -13,8 +13,8 @@
         <div class="relative overflow-x-auto mb-4 shadow-md rounded-lg">
             <div class="flex items-center justify-between py-4 px-4 bg-white dark:bg-custom-dark rounded-lg">
                 <label for="setting-search" class="sr-only">Search Settings</label>
-                <div class="relative flex items-center flex-1 max-w-md">
-                    <div class="absolute inset-y-0 left-0 flex items-center ml-3 pointer-events-none">
+                <div class="qj-admin-settings-search relative flex items-center flex-1 w-full max-w-md min-w-0">
+                    <div class="qj-admin-settings-search__icon absolute inset-y-0 left-0 z-10 flex items-center pl-4 pointer-events-none">
                         <svg class="w-5 h-5 text-gray-600" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                         </svg>
@@ -22,7 +22,7 @@
                     <form action="{{ route('admin.setting.search') }}" method="GET" class="flex-1">
                         <input type="text" id="setting-search" name="query"
                             value="{{ request()->query('query', '') }}"
-                            class="block w-full p-2 pl-10 text-base text-gray-900  rounded-full bg-gray-100 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300 dark:text-white"
+                            class="qj-admin-settings-search__input block w-full min-w-0 p-2 pl-12 text-base text-gray-900 rounded-full bg-gray-100 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300 dark:text-white"
                             placeholder="Search settings by key or value...">
                     </form>
                 </div>
