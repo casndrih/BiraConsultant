@@ -14,7 +14,7 @@
     $sharePageTitle = $job->title . ' at ' . $shareCompanyName . ' | BiraConsultant';
     $shareLocation = $job->location ?? 'Location not specified';
     $shareJobType = $job->jobType->name ?? 'Job opportunity';
-    $shareMetaDescription = $shareCompanyName . ' is hiring: ' . $job->title . '. ' . $shareLocation . '. ' . $shareDescription;
+    $shareMetaDescription = $shareCompanyName . ' is hiring: ' . $job->title . ' (' . $shareJobType . ') in ' . $shareLocation . '. ' . $shareDescription;
 @endphp
 
 @section('title', $sharePageTitle)
