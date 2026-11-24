@@ -85,7 +85,7 @@ class ContactAndCaptchaTest extends TestCase
 
         $this->actingAs($jobSeeker)
             ->get(route('admin.contact-messages.index'))
-            ->assertRedirect();
+            ->assertForbidden();
 
         $this->actingAs($admin)
             ->get(route('admin.contact-messages.index'))
