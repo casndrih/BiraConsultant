@@ -216,7 +216,7 @@ class DatabaseSeeder extends Seeder
         $settings = [
             'site_name' => 'BiraConsultant',
             'maintenance_mode' => '0',
-            'contact_email' => 'info@biraconsultants.com',
+            'contact_email' => 'info@biraconsultant.com',
             'contact_phone' => '+675',
             'default_country' => 'PG',
         ];
