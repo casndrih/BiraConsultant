@@ -265,6 +265,8 @@ jobs:
           $candidate = $provider->retrieveByCredentials(["email" => "martha.kila@biraconsultant.test"]);
           if (!$candidate || !$provider->validateCredentials($candidate, ["password" => getenv("BIRA_DEMO_PASSWORD")])) { exit(36); }
           echo "AUTH_PROVIDER_VALIDATION_PASSED id=".$candidate->getKey()." db=".config("database.connections.mysql.database")."\n";
+          $peter = \\App\\Models\\BiraConsultantUser::where("email", "peter.wama@biraconsultant.test")->first();
+          echo "PETER_DB_CHECK id=".$peter?->getKey()." updated=".$peter?->updated_at?->toIso8601String()." valid=".(\\Illuminate\\Support\\Facades\\Hash::check(getenv("BIRA_DEMO_PASSWORD"), $peter?->password ?? "") ? "1" : "0")."\\n";
           PHP
               echo "BIRA_DEMO_SEED_COMPLETED"
           fi
