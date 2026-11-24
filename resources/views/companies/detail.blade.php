@@ -40,8 +40,8 @@
                 <div class="qj-detail-card qj-company-detail-card mb-6 min-w-0">
                     <div class="flex items-start gap-6 mb-6">
                         <div class="flex-shrink-0">
-                            @if($company->logo)
-                                <img src="{{ asset('storage/' . $company->logo) }}"
+                            @if($company->logo_url)
+                                <img src="{{ $company->logo_url }}"
                                      alt="{{ $company->name }} logo"
                                      class="w-24 h-24 rounded-lg object-contain">
                             @elseif($company->slug === 'bank-south-pacific')
