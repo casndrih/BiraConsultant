@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\BiraConsultantSetting;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class RecaptchaHelper
 {
@@ -43,7 +44,7 @@ class RecaptchaHelper
         $secretKey = self::getSecretKey();
 
         if (empty($secretKey)) {
-            \\Illuminate\\Support\\Facades\\Log::error('reCAPTCHA is enabled but its secret key is not configured.');
+            Log::error('reCAPTCHA is enabled but its secret key is not configured.');
             return false;
         }
 
