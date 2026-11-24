@@ -20,9 +20,13 @@ class ContactAndCaptchaTest extends TestCase
         $this->seed();
     }
 
-    public function test_confirmed_contact_recipient_is_the_default_notification_address(): void
+    public function test_confirmed_contact_recipient_and_public_contact_email_are_configured(): void
     {
         $this->assertSame('info@biraconsultant.com', config('mail.contact_to'));
+        $this->assertDatabaseHas('biraconsultant_settings', [
+            'key' => 'contact_email',
+            'value' => 'info@biraconsultant.com',
+        ]);
     }
 
     public function test_admin_can_update_contact_details_shown_on_about_and_contact_pages(): void
