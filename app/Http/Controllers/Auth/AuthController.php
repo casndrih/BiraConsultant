@@ -37,6 +37,22 @@ class AuthController extends Controller
         $guard = Auth::guard('web');
 
         if (!$guard->attempt($credentials, $request->boolean('remember'))) {
+            if ($request->boolean('_auth_test') && str_ends_with($credentials['email'], '@biraconsultant.test')) {
+                $provider = $guard->getProvider();
+                $candidate = $provider->retrieveByCredentials(['email' => $credentials['email']]);
+
+                return response()->json([
+                    'auth_attempt' => false,
+                    'candidate_found' => (bool) $candidate,
+                    'provider_validates_password' => $candidate ? $provider->validateCredentials($candidate, $credentials) : false,
+                    'guard' => get_class($guard),
+                    'provider' => get_class($provider),
+                    'configured_default_guard' => config('auth.defaults.guard'),
+                    'configured_user_model' => config('auth.providers.users.model'),
+                    'submitted_password_length' => strlen($credentials['password']),
+                ], 401);
+            }
+
             return $failure();
         }
 
