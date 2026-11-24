@@ -1,0 +1,1091 @@
+--------- beginning of main
+11-01 10:58:19.162  1605 10043 D AudioSystem: +setParameters(): xlog.volume.music.speaker=0 
+11-01 10:58:19.163   830   933 D AudioALSAHardware: +setParameters(): xlog.volume.music.speaker=0
+11-01 10:58:19.163   830   933 D AudioALSAHardware: setParameters(), Set Screen Call data type = 0 (0:replace, 1:mix)
+11-01 10:58:19.163   830   933 D SpeechPcmMixerTelephonyTx: setTelephonyTxType(), pcmTelephonyTxType: 1 -> 1
+11-01 10:58:19.163   830   933 D AudioALSAHardware: -setParameters(): xlog.volume.music.speaker=0
+11-01 10:58:19.164   830   933 W BTAudioHw: adev_set_parameterserror paremeter : : ParamsMap=[key: 'xlog.volume.music.speaker' value: '0'
+11-01 10:58:19.164   830   933 W BTAudioHw: ]
+11-01 10:58:19.238  3210  6951 V ClearcutMetricXmitter: Transmission is done.
+--------- beginning of system
+11-01 10:58:19.312  1605 10043 I SmartPower.com.google.android.gms/10179(2267): idle->background(4573ms) R(service unbind com.google.android.gms/.auth.api.proxy.AuthService) adj=100.
+11-01 10:58:19.312  1605  1846 I SmartPower: com.google.android.gms/10179 state=hibernation adj=100 proc size=4 move to background service unbind com.google.android.gms/.auth.api.proxy.AuthService
+11-01 10:58:19.312  1605  1846 I SmartPower: com.google.android.gms/10179 state=background adj=100 proc size=4 move to inactive service unbind com.google.android.gms/.auth.api.proxy.AuthService
+11-01 10:58:19.313  2267  2267 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.auth.service.START pkg=com.google.android.gms }
+11-01 10:58:19.316  2267  2267 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.auth.aang.events.services.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentApiService }
+11-01 10:58:19.321  2267  2267 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.notifications.capping.api.NotificationsCappingApiService.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+11-01 10:58:19.374   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:19.385 31076 31076 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:input tap 960 2140'
+11-01 10:58:19.389   892   892 I BufferQueueProducer: [StatusBar#86](this:0xb4000078223878b0,id:-1,api:0,p:-1,c:892) queueBuffer: fps=0.91 dur=2188.38 max=2011.14 min=177.24
+11-01 10:58:19.390   838   838 I hwcomposer: [HWCDisplay] [Display_0 (type:1)] fps:0.913894,dur:2188.44,max:2011.30,min:177.14  
+11-01 10:58:19.459  1605  2154 W MIUIInput: Input event injection from pid 3690 action ACTION_DOWN
+11-01 10:58:19.462   849   928 E libPowerHal: input parameter exceed reasonable range 1408100 47 1 0
+11-01 10:58:19.462   849   928 I libPowerHal: [perfLockAcq] idx:0 hdl:14382 hint:25 pid:849 duration:120 lock_user:mtkpower@1.0-se => ret_hdl:14382
+11-01 10:58:19.462   849   928 I libPowerHal: MTKPOWER_HINT_APP_TOUCH: set gpu opp level: 0
+11-01 10:58:19.462   849   928 I libPowerHal: MTKPOWER_HINT_APP_TOUCH: set gpu opp level max: 0
+11-01 10:58:19.462   849   928 I libPowerHal: MTKPOWER_HINT_APP_TOUCH: cpu_ctrl set cpu freq: 1800000 -1 2000000 -1
+11-01 10:58:19.463   849   928 I libPowerHal: [PE] MTKPOWER_HINT_APP_TOUCH update cmd:1000000, param:0
+11-01 10:58:19.463   849   928 I libPowerHal: [PE] (more) /proc/perfmgr/boost_ctrl/eas_ctrl/perfserv_prefer_idle set +prefix:1 1;
+11-01 10:58:19.463   849   928 I libPowerHal: [PE] MTKPOWER_HINT_APP_TOUCH update cmd:410000, param:1
+11-01 10:58:19.464   849   928 I libPowerHal: [PE] MTKPOWER_HINT_APP_TOUCH update cmd:1408100, param:47
+11-01 10:58:19.465   849   928 I libPowerHal: [PE] MTKPOWER_HINT_APP_TOUCH update cmd:1408300, param:100
+11-01 10:58:19.465   849   928 I libPowerHal: [PE] MTKPOWER_HINT_APP_TOUCH update cmd:3408600 param:1
+11-01 10:58:19.465   849   928 I libPowerHal: [PE] MTKPOWER_HINT_APP_TOUCH update cmd:1000000 param:0
+11-01 10:58:19.465   849   928 I libPowerHal: [perfLockRel] hdl:14364, idx:-1
+11-01 10:58:19.466  1605  1762 D MIUIInput: [MotionEvent] publisher action=0x4, 11016994, channel '7e36629 NavigationBar0 (server)'
+11-01 10:58:19.466  1605  1762 D MIUIInput: [MotionEvent] publisher action=0x0, 11016994, channel 'ead3950 com.biraconsultant.app/com.biraconsultant.app.MainActivity (server)'
+11-01 10:58:19.466  1605  1762 D MIUIInput: [MotionEvent] publisher action=0x0, 11016994, channel '[Gesture Monitor] pip-resize (server)'
+11-01 10:58:19.466  1605  1762 D MIUIInput: [MotionEvent] publisher action=0x0, 11016994, channel '[Gesture Monitor] miui-gesture (server)'
+11-01 10:58:19.466   892  1291 I Scheduler: touchTimerCallback: touchState=Active
+11-01 10:58:19.466   892  1291 D SurfaceFlinger: calculateTimeoutTime, triggerInterval = 1 sec + 99999769 nsec
+11-01 10:58:19.475  2846  2846 W MirrorManager: this model don't Support
+11-01 10:58:19.480  1605  2154 W MIUIInput: Input event injection from pid 3690 action ACTION_UP
+11-01 10:58:19.480   849   878 I mtkpower@impl: [mtkPowerHint] hint:25, hold:80, ext:0, ext_hold:0
+11-01 10:58:19.480  1605  1762 D MIUIInput: [MotionEvent] publisher action=0x1, 11016994, channel 'ead3950 com.biraconsultant.app/com.biraconsultant.app.MainActivity (server)'
+11-01 10:58:19.481  1605  1762 D MIUIInput: [MotionEvent] publisher action=0x1, 11016994, channel '[Gesture Monitor] pip-resize (server)'
+11-01 10:58:19.481  1605  1762 D MIUIInput: [MotionEvent] publisher action=0x1, 11016994, channel '[Gesture Monitor] miui-gesture (server)'
+11-01 10:58:19.481   849   928 E libPowerHal: input parameter exceed reasonable range 1408100 47 1 0
+11-01 10:58:19.481   849   928 I libPowerHal: [perfLockAcq] idx:1 hdl:14383 hint:25 pid:849 duration:80 lock_user:mtkpower@1.0-se => ret_hdl:14383
+11-01 10:58:19.481   849   928 I libPowerHal: MTKPOWER_HINT_APP_TOUCH: set gpu opp level max: 0
+11-01 10:58:19.481   849   928 I libPowerHal: [perfLockRel] hdl:14382, idx:0
+11-01 10:58:19.500   892   892 I BufferQueueProducer: [com.biraconsultant.app/com.biraconsultant.app.MainActivity#6265](this:0xb400007821e0a8b0,id:-1,api:0,p:-1,c:892) queueBuffer: fps=0.18 dur=22611.08 max=22488.92 min=10.93
+11-01 10:58:19.517  2168  2202 D TaskStackChangeListeners: onTaskDescriptionChanged =  taskId = 1104
+11-01 10:58:19.561   849   928 I mtkpower@impl: [powerd_req] TIMER_MSG_PERF_LOCK_TIMEOUT hdl:14383
+11-01 10:58:19.561   849   928 I libPowerHal: [perfLockRel] hdl:14383, idx:1
+11-01 10:58:19.562   849   928 I libPowerHal: MTKPOWER_HINT_APP_TOUCH: cpu_ctrl set cpu freq: -1 -1 -1 -1
+11-01 10:58:19.562   849   928 I libPowerHal: MTKPOWER_HINT_APP_TOUCH: set gpu opp level: 31
+11-01 10:58:19.562   849   928 I libPowerHal: MTKPOWER_HINT_APP_TOUCH: set gpu opp level max: 0
+11-01 10:58:19.562   849   928 I libPowerHal: [PD] MTKPOWER_HINT_APP_TOUCH update cmd:1000000, param:1
+11-01 10:58:19.562   849   928 I libPowerHal: [PD] MTKPOWER_HINT_APP_TOUCH update cmd:1408100 param:0
+11-01 10:58:19.562   849   928 I libPowerHal: [PD] (more) /proc/perfmgr/boost_ctrl/eas_ctrl/perfserv_prefer_idle set +prefix:1 0;
+11-01 10:58:19.562   849   928 I libPowerHal: [PD] MTKPOWER_HINT_APP_TOUCH update cmd:410000 param:0
+11-01 10:58:19.562   849   928 I libPowerHal: [PD] MTKPOWER_HINT_APP_TOUCH update cmd:1408100 param:0
+11-01 10:58:19.564   849   928 I libPowerHal: [PD] MTKPOWER_HINT_APP_TOUCH update cmd:1408300 param:40
+11-01 10:58:19.564  2846  2846 W OnBackInvokedCallback: OnBackInvokedCallback is not enabled for the application.
+11-01 10:58:19.564  2846  2846 W OnBackInvokedCallback: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+11-01 10:58:19.565   849   928 I libPowerHal: [PD] MTKPOWER_HINT_APP_TOUCH update cmd:3408600 param:0
+11-01 10:58:19.565   849   928 I libPowerHal: [PD] MTKPOWER_HINT_APP_TOUCH update cmd:1000000 param:1
+11-01 10:58:19.568  2155  2155 W Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+11-01 10:58:19.569  2846  2846 D DecorView[]: getWindowModeFromSystem  windowmode is 1
+11-01 10:58:19.569  2846  2846 D DecorView[]: updateDecorCaptionStatus windowMode is 1
+11-01 10:58:19.570  2159  2343 D MobileStatusTracker(29): onSignalStrengthsChanged signalStrength=SignalStrength:{mCdma=CellSignalStrengthCdma: cdmaDbm=2147483647 cdmaEcio=2147483647 evdoDbm=2147483647 evdoEcio=2147483647 evdoSnr=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mGsm=CellSignalStrengthGsm: rssi=2147483647 ber=2147483647 mTa=2147483647 miuiLevel=0 mOptimizedLevel=0 mLevel=0,mWcdma=CellSignalStrengthWcdma: ss=2147483647 ber=2147483647 rscp=2147483647 ecno=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mTdscdma=CellSignalStrengthTdscdma: rssi=2147483647 ber=2147483647 rscp=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mLte=CellSignalStrengthLte: rssi=-85 rsrp=-95 rsrq=-11 rssnr=6 cqiTableIndex=2147483647 cqi=0 ta=0 miuiLevel=5 mOptimizedLevel=0 level=4 parametersUseForLevel=0,mNr=CellSignalStrengthNr:{ csiRsrp = 2147483647 csiRsrq = 2147483647 csiCqiTableIndex = 2147483647 csiCqiReport = [] ssRsrp = 2147483647 ssRsrq = 2147483647 ssSinr = 2147483647 miuiLevel = 0 mOptimizedLevel = 0 level = 0 parametersUseForLevel = 0 },primary=CellSignalStrengthLte}, phoneId=0, mMtkLevel=0, mMtkRsrpOnly=false, mMtkLteRsrpThreshold=null, mMtkLteRssnrThreshold=null
+11-01 10:58:19.570  2159  2343 D NetworkController.MobileSignalController(29): update5GConnectState: false
+11-01 10:58:19.570  2159  2343 D NetworkController.MobileSignalController(29): ss use aosp level not 0, 5
+11-01 10:58:19.591  1605  4427 D AudioSystem: +setParameters(): xlog.volume.music.speaker=0 
+11-01 10:58:19.592   830   933 D AudioALSAHardware: +setParameters(): xlog.volume.music.speaker=0
+11-01 10:58:19.592   830   933 D AudioALSAHardware: setParameters(), Set Screen Call data type = 0 (0:replace, 1:mix)
+11-01 10:58:19.592   830   933 D SpeechPcmMixerTelephonyTx: setTelephonyTxType(), pcmTelephonyTxType: 1 -> 1
+11-01 10:58:19.593   830   933 D AudioALSAHardware: -setParameters(): xlog.volume.music.speaker=0
+11-01 10:58:19.593   830   933 W BTAudioHw: adev_set_parameterserror paremeter : : ParamsMap=[key: 'xlog.volume.music.speaker' value: '0'
+11-01 10:58:19.593   830   933 W BTAudioHw: ]
+11-01 10:58:19.602  1605  4427 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:19.603  1605  4427 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:19.605 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:19.684  2267  2267 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.cloudmessaging.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentApiService }
+11-01 10:58:19.685  1605  4427 W ProcessStats: Tracking association SourceState{45f2465 com.android.systemui/1000 BTopFgs #53953} whose proc state 2 is better than process ProcessState{2934746 com.miui.securitycenter.remote/1000 pkg=com.miui.securitycenter} proc state 3 (51 skipped)
+11-01 10:58:19.687  2267  2267 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.mobstore.service.START pkg=com.google.android.gms }
+11-01 10:58:19.693  3874  4747 W MIUISafety-Monitor: checkRunningOp end for all, should sync? false
+11-01 10:58:19.711  2846  2846 D AndroidRuntime: Shutting down VM
+--------- beginning of crash
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: FATAL EXCEPTION: main
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: Process: com.biraconsultant.app, PID: 2846
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: android.view.InflateException: Binary XML file line #264 in com.biraconsultant.app:layout/fragment_profile: Binary XML file line #264 in com.biraconsultant.app:layout/fragment_profile: Error inflating class <unknown>
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: Caused by: android.view.InflateException: Binary XML file line #264 in com.biraconsultant.app:layout/fragment_profile: Error inflating class <unknown>
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: Caused by: java.lang.reflect.InvocationTargetException
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at java.lang.reflect.Constructor.newInstance0(Native Method)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at java.lang.reflect.Constructor.newInstance(Constructor.java:341)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.createView(LayoutInflater.java:883)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.createView(LayoutInflater.java:805)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at com.android.internal.policy.PhoneLayoutInflater.onCreateView(PhoneLayoutInflater.java:58)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.onCreateView(LayoutInflater.java:959)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.onCreateView(LayoutInflater.java:979)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:1035)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:990)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1169)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:1130)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1172)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:1130)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1172)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:1130)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1172)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:1130)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1172)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:1130)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.inflate(LayoutInflater.java:711)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.inflate(LayoutInflater.java:548)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at com.biraconsultant.app.ui.ProfileFragment.onCreateView(ProfileFragment.kt:57)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.Fragment.performCreateView(Fragment.java:3104)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentStateManager.createView(FragmentStateManager.java:524)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentStateManager.moveToExpectedState(FragmentStateManager.java:261)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentManager.executeOpsTogether(FragmentManager.java:1899)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentManager.removeRedundantOperationsAndExecute(FragmentManager.java:1817)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentManager.execPendingActions(FragmentManager.java:1760)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentManager$5.run(FragmentManager.java:547)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.os.Handler.handleCallback(Handler.java:942)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:211)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:300)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:8294)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1028)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: Caused by: android.content.res.Resources$NotFoundException: Drawable com.biraconsultant.app:color/stroke with resource ID #0x7f06044a
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: Caused by: android.content.res.Resources$NotFoundException: Resource "com.biraconsultant.app:color/stroke" (7f06044a) is not a Drawable (color or path): TypedValue{t=0x1/d=0x7f06044a a=-1 r=0x7f06044a}
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.content.res.ResourcesImpl.loadDrawableForCookie(ResourcesImpl.java:905)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.content.res.ResourcesImpl.loadDrawable(ResourcesImpl.java:741)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.content.res.MiuiResourcesImpl.loadDrawable(MiuiResourcesImpl.java:307)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.content.res.Resources.loadDrawable(Resources.java:1050)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.content.res.TypedArray.getDrawableForDensity(TypedArray.java:1020)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.content.res.TypedArray.getDrawable(TypedArray.java:994)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.View.<init>(View.java:5634)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.View.<init>(View.java:5529)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.View.<init>(View.java:5508)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at java.lang.reflect.Constructor.newInstance0(Native Method)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at java.lang.reflect.Constructor.newInstance(Constructor.java:341)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.createView(LayoutInflater.java:883)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.createView(LayoutInflater.java:805)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at com.android.internal.policy.PhoneLayoutInflater.onCreateView(PhoneLayoutInflater.java:58)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.onCreateView(LayoutInflater.java:959)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.onCreateView(LayoutInflater.java:979)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:1035)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:990)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1169)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:1130)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1172)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:1130)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1172)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:1130)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1172)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:1130)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:1172)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:1130)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.inflate(LayoutInflater.java:711)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.view.LayoutInflater.inflate(LayoutInflater.java:548)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at com.biraconsultant.app.ui.ProfileFragment.onCreateView(ProfileFragment.kt:57)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.Fragment.performCreateView(Fragment.java:3104)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentStateManager.createView(FragmentStateManager.java:524)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentStateManager.moveToExpectedState(FragmentStateManager.java:261)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentManager.executeOpsTogether(FragmentManager.java:1899)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentManager.removeRedundantOperationsAndExecute(FragmentManager.java:1817)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentManager.execPendingActions(FragmentManager.java:1760)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at androidx.fragment.app.FragmentManager$5.run(FragmentManager.java:547)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.os.Handler.handleCallback(Handler.java:942)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:211)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:300)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:8294)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+11-01 10:58:19.714  2846  2846 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1028)
+11-01 10:58:19.714  2846  2846 W com.biraconsultant.app: type=1400 audit(0.0:21228): avc: denied { search } for name="miuilog" dev="dm-40" ino=84552 scontext=u:r:untrusted_app:s0:c71,c257,c512,c768 tcontext=u:object_r:data_log_file:s0 tclass=dir permissive=0 app=com.biraconsultant.app
+11-01 10:58:19.714  2846  2846 W com.biraconsultant.app: type=1400 audit(0.0:21229): avc: denied { search } for name="miuilog" dev="dm-40" ino=84552 scontext=u:r:untrusted_app:s0:c71,c257,c512,c768 tcontext=u:object_r:data_log_file:s0 tclass=dir permissive=0 app=com.biraconsultant.app
+11-01 10:58:19.714  2846  2846 W com.biraconsultant.app: type=1400 audit(0.0:21230): avc: denied { search } for name="miuilog" dev="dm-40" ino=84552 scontext=u:r:untrusted_app:s0:c71,c257,c512,c768 tcontext=u:object_r:data_log_file:s0 tclass=dir permissive=0 app=com.biraconsultant.app
+11-01 10:58:19.714  2846  2846 W com.biraconsultant.app: type=1400 audit(0.0:21231): avc: denied { search } for name="miuilog" dev="dm-40" ino=84552 scontext=u:r:untrusted_app:s0:c71,c257,c512,c768 tcontext=u:object_r:data_log_file:s0 tclass=dir permissive=0 app=com.biraconsultant.app
+11-01 10:58:19.714  2846  2846 W com.biraconsultant.app: type=1400 audit(0.0:21232): avc: denied { search } for name="miuilog" dev="dm-40" ino=84552 scontext=u:r:untrusted_app:s0:c71,c257,c512,c768 tcontext=u:object_r:data_log_file:s0 tclass=dir permissive=0 app=com.biraconsultant.app
+11-01 10:58:19.718  2846  2846 W OOMEventManagerFK: Failed to mkdir /data/miuilog/stability/memleak/heapdump/
+11-01 10:58:19.721  3269  6311 W MQSEventManager: jeoccur
+11-01 10:58:19.736  1605  2154 I mtkpower_client: [Legacy][PowerHal_Wrap_notifyAppState] com.biraconsultant.app/com.biraconsultant.app pid=2846 state:3
+11-01 10:58:19.736  1605  2154 I game_scn: collectForegroundAppList packName=com.biraconsultant.app, actName=com.biraconsultant.app, pid=2846, uid=10327, state:DEAD
+11-01 10:58:19.736   849   928 I libPowerHal: [perfNotifyAppState] pack:com.biraconsultant.app, act:com.biraconsultant.app, state:3, pid:2846, uid:10327, fps:-1
+11-01 10:58:19.736   849   928 I libPowerHal: [perfNotifyAppState] pack:com.biraconsultant.app, pid:2846, STATE_DEAD
+11-01 10:58:19.736   849   928 D RilUtility: notify_rild_crash_pid_set certPid:-1, crash:2846, scn:0x0
+11-01 10:58:19.746  1605  3700 I DropBoxManagerService: add tag=data_app_crash isTagEnabled=true flags=0x2
+11-01 10:58:19.748  1605  2154 W ActivityTaskManager:   Force finishing activity com.biraconsultant.app/.MainActivity
+11-01 10:58:19.749  1605  1642 W RescuePartyPlus: This device support and enable RescuePartyPlus! (Via cloud control)
+11-01 10:58:19.752  1605  3700 W AES     : Exception Log handling...
+11-01 10:58:19.752  1605  3700 W AES     : Skipped - do not care third party apk
+11-01 10:58:19.764  3269  3588 D DigestGenerator: digest=============com.biraconsultant.appandroid.view.InflateException: Binary XML file line #XX in com.biraconsultant.app:layout/fragment_profile: Binary XML file line #XX in com.biraconsultant.app:layout/fragment_profile: Error inflating class <unknown>
+11-01 10:58:19.764  3269  3588 D DigestGenerator: Caused by: android.view.InflateException: Binary XML file line #XX in com.biraconsultant.app:layout/fragment_profile: Error inflating class <unknown>
+11-01 10:58:19.764  3269  3588 D DigestGenerator: Caused by: java.lang.reflect.InvocationTargetException
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at java.lang.reflect.Constructor.newInstance(Native Method)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at java.lang.reflect.Constructor.newInstance(Constructor.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.createView(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.createView(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at com.android.internal.policy.PhoneLayoutInflater.onCreateView(PhoneLayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.onCreateView(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.onCreateView(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.inflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.inflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at com.biraconsultant.app.ui.ProfileFragment.onCreateView(ProfileFragment.kt:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.Fragment.performCreateView(Fragment.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentStateManager.createView(FragmentStateManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentStateManager.moveToExpectedState(FragmentStateManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentManager.executeOpsTogether(FragmentManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentManager.removeRedundantOperationsAndExecute(FragmentManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentManager.execPendingActions(FragmentManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentManager$.run(FragmentManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.os.Handler.handleCallback(Handler.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.os.Handler.dispatchMessage(Handler.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.os.Looper.loopOnce(Looper.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.os.Looper.loop(Looper.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.app.ActivityThread.main(ActivityThread.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at java.lang.reflect.Method.invoke(Native Method)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: Caused by: android.content.res.Resources$NotFoundException: Drawable com.biraconsultant.app:color/stroke with resource ID #XX
+11-01 10:58:19.764  3269  3588 D DigestGenerator: Caused by: android.content.res.Resources$NotFoundException: Resource "com.biraconsultant.app:color/stroke" (XX) is not a Drawable (color or path): TypedValue{t=XX/d=XX a=- r=XX}
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.content.res.ResourcesImpl.loadDrawableForCookie(ResourcesImpl.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.content.res.ResourcesImpl.loadDrawable(ResourcesImpl.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.content.res.MiuiResourcesImpl.loadDrawable(MiuiResourcesImpl.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.content.res.Resources.loadDrawable(Resources.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.content.res.TypedArray.getDrawableForDensity(TypedArray.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.content.res.TypedArray.getDrawable(TypedArray.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.View.<init>(View.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.View.<init>(View.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.View.<init>(View.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at java.lang.reflect.Constructor.newInstance(Native Method)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at java.lang.reflect.Constructor.newInstance(Constructor.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.createView(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.createView(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at com.android.internal.policy.PhoneLayoutInflater.onCreateView(PhoneLayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.onCreateView(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.onCreateView(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.inflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.view.LayoutInflater.inflate(LayoutInflater.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at com.biraconsultant.app.ui.ProfileFragment.onCreateView(ProfileFragment.kt:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.Fragment.performCreateView(Fragment.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentStateManager.createView(FragmentStateManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentStateManager.moveToExpectedState(FragmentStateManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentManager.executeOpsTogether(FragmentManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentManager.removeRedundantOperationsAndExecute(FragmentManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentManager.execPendingActions(FragmentManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at androidx.fragment.app.FragmentManager$.run(FragmentManager.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.os.Handler.handleCallback(Handler.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.os.Handler.dispatchMessage(Handler.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.os.Looper.loopOnce(Looper.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.os.Looper.loop(Looper.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at android.app.ActivityThread.main(ActivityThread.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at java.lang.reflect.Method.invoke(Native Method)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:XX)
+11-01 10:58:19.764  3269  3588 D DigestGenerator: at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:XX)
+11-01 10:58:19.772  3269  3588 W MQSEventManager: begin to storeEvent
+11-01 10:58:19.773  3269  3588 W DatabaseUtils: je not allow store to db.
+11-01 10:58:19.774  1605  2154 W WindowManager: Changing focus from Window{ead3950 u0 com.biraconsultant.app/com.biraconsultant.app.MainActivity} to null displayId=0 Callers=com.android.server.wm.RootWindowContainer.updateFocusedWindowLocked:525 com.android.server.wm.WindowManagerService.updateFocusedWindowLocked:6512 com.android.server.wm.ActivityTaskManagerService.setLastResumedActivityUncheckLocked:4937 com.android.server.wm.ActivityRecord.moveFocusableActivityToTop:3763 
+11-01 10:58:19.776  1605  2154 D WindowManager: wms.Input focus has changed to null display=0 updateInputWindows = true
+11-01 10:58:19.795  1605  1759 I GED     : ged_boost_gpu_freq, level 100, eOrigin 2, final_idx 31, oppidx_max 31, oppidx_min 0
+11-01 10:58:19.799  1605  1647 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.DROPBOX_ENTRY_ADDED flg=0x10 (has extras) } to com.google.android.gms/.stats.service.DropBoxEntryAddedReceiver
+11-01 10:58:19.801   892   958 I SurfaceFlinger: setTransactionState focusRequest transactionId:6893422551498 frontWin:<null>
+11-01 10:58:19.802  2846  2846 I Process : Process is going to kill itself!
+11-01 10:58:19.802  2846  2846 I Process : java.lang.Exception
+11-01 10:58:19.802  2846  2846 I Process : 	at android.os.Process.killProcess(Process.java:1330)
+11-01 10:58:19.802  2846  2846 I Process : 	at com.android.internal.os.RuntimeInit$KillApplicationHandler.uncaughtException(RuntimeInit.java:202)
+11-01 10:58:19.802  2846  2846 I Process : 	at org.chromium.base.JavaExceptionReporter.uncaughtException(chromium-SystemWebViewGoogle6432.aab-stable-805904303:32)
+11-01 10:58:19.802  2846  2846 I Process : 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1098)
+11-01 10:58:19.802  2846  2846 I Process : 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1093)
+11-01 10:58:19.802  2846  2846 I Process : 	at java.lang.Thread.dispatchUncaughtException(Thread.java:3380)
+11-01 10:58:19.802  2846  2846 I Process : Sending signal. PID: 2846 SIG: 9
+11-01 10:58:19.806  2159  2242 I OneHandedController: stopOneHanded mState = 0, uiEvent = 5
+11-01 10:58:19.806  2159  2242 D OneHandedController: stopOneHanded state isTransitioning or STATE_NONE
+11-01 10:58:19.808  2168  2168 D EventBus: No subscribers registered for event class com.miui.home.recents.messages.TaskSnapshotChangedEvent
+11-01 10:58:19.808  2168  2168 D EventBus: No subscribers registered for event class org.greenrobot.eventbus.NoSubscriberEvent
+11-01 10:58:19.811   892   892 I SurfaceFlinger: transactionIsReadyToBeApplied focusRequest transactionId:6893422551498
+11-01 10:58:19.820  1605  4427 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:19.821  1605  4427 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:19.858  1605  1653 W libprocessgroup: Failed to open /dev/blkio//cgroup.procs: No such file or directory
+11-01 10:58:19.863  1180  1208 E WifiStandalone: conditional wait timedout
+11-01 10:58:19.867  1605  1653 W libprocessgroup: Failed to open /dev/blkio//cgroup.procs: No such file or directory
+11-01 10:58:19.868 31076 31076 I adbd    : Remote process closed the socket (on MSG_PEEK)
+11-01 10:58:19.869  1605  1794 D ConnectivityService: releasing NetworkRequest [ REQUEST id=1419, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10327 RequestorUid: 10327 RequestorPkg: com.biraconsultant.app UnderlyingNetworks: Null] ] (release request)
+11-01 10:58:19.869  1605  4128 I WindowManager: WIN DEATH: Window{651b4d2 u0 com.biraconsultant.app/com.biraconsultant.app.MainActivity}
+11-01 10:58:19.869   892   958 I ClientCache: removeProcess: Cache owner=0xb40000782217ea00
+11-01 10:58:19.869  1605  4128 W InputManager-JNI: Input channel object '651b4d2 com.biraconsultant.app/com.biraconsultant.app.MainActivity (client)' was disposed without first being removed with the input manager!
+11-01 10:58:19.869  1605  1794 D ConnectivityService: releasing NetworkRequest [ REQUEST id=1417, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10327 RequestorUid: 10327 RequestorPkg: com.biraconsultant.app UnderlyingNetworks: Null] ] (release request)
+11-01 10:58:19.870  1605  1794 D ConnectivityService: releasing NetworkRequest [ REQUEST id=1421, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10327 RequestorUid: 10327 RequestorPkg: com.biraconsultant.app UnderlyingNetworks: Null] ] (release request)
+11-01 10:58:19.872  1605  1630 D Aurogon :  uid = 10105 switch to FG
+11-01 10:58:19.872  3537  3549 D PMonitor:  onForegroundActivitiesChanged:pid = 2168,activity-uid=10105,foregroundActivities=true
+11-01 10:58:19.873   892   959 D SurfaceFlinger: [SF client] REMOVE (0xb400007821ea0700) for (2846:com.biraconsultant.app)
+11-01 10:58:19.873   892   959 D SurfaceFlinger: [SF client] REMOVE (0xb400007821ea1180) for (2846:com.biraconsultant.app)
+11-01 10:58:19.875  1605  1900 I SmartPower.com.biraconsultant.app/10327(2846): visible->died(33366ms) R(process died ) adj=200.
+11-01 10:58:19.875  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10119, uidState = 3
+11-01 10:58:19.875  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10105, uidState = 2
+11-01 10:58:19.875  1605  1649 I libprocessgroup: Successfully killed process cgroup uid 10327 pid 2846 in 0ms
+11-01 10:58:19.875  1605  1900 I ActivityManager: Process com.biraconsultant.app (pid 2846) has died: prcp TOP 
+11-01 10:58:19.876   822   822 I Zygote  : Process 2846 exited due to signal 9 (Killed)
+11-01 10:58:19.878  1605  1833 E ProcessManager: error write exception log
+11-01 10:58:19.881  1180  1208 E WifiStandalone: write_to_file write kernel_log error, errno = 9(Bad file descriptor)
+11-01 10:58:19.883  1605  2282 I WindowManager: WIN DEATH: Window{ead3950 u0 com.biraconsultant.app/com.biraconsultant.app.MainActivity}
+11-01 10:58:19.883  1605  2282 W InputManager-JNI: Input channel object 'ead3950 com.biraconsultant.app/com.biraconsultant.app.MainActivity (client)' was disposed without first being removed with the input manager!
+11-01 10:58:19.893  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 99009, uidState = 5
+11-01 10:58:19.893  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 90000, uidState = 10
+11-01 10:58:19.894  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10319, uidState = 5
+11-01 10:58:19.894  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10202, uidState = 10
+11-01 10:58:19.894  2050  2050 I Zygote  : Process 3088 exited cleanly (0)
+11-01 10:58:19.894  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10179, uidState = 5
+11-01 10:58:19.894  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10177, uidState = 5
+11-01 10:58:19.895  2267  2267 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.ads.identifier.service.EVENT_ATTESTATION pkg=com.google.android.gms }
+11-01 10:58:19.895  2267  2267 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.ads.service.CACHE pkg=com.google.android.gms }
+11-01 10:58:19.896  2267  2267 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.appset.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+11-01 10:58:19.897  1605  1900 W ActivityManager: Exception when unbinding service com.biraconsultant.app/org.chromium.content.app.SandboxedProcessService0:0
+11-01 10:58:19.897  1605  1900 W ActivityManager: android.os.DeadObjectException
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at android.os.BinderProxy.transactNative(Native Method)
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at android.os.BinderProxy.transact(BinderProxy.java:646)
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at android.app.IApplicationThread$Stub$Proxy.scheduleUnbindService(IApplicationThread.java:1479)
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at com.android.server.am.ActiveServices.removeConnectionLocked(ActiveServices.java:5026)
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at com.android.server.am.ActiveServices.killServicesLocked(ActiveServices.java:5558)
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at com.android.server.am.ActivityManagerService.cleanUpApplicationRecordLocked(ActivityManagerService.java:12930)
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at com.android.server.am.ActivityManagerService.handleAppDiedLocked(ActivityManagerService.java:3363)
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at com.android.server.am.ActivityManagerService.appDiedLocked(ActivityManagerService.java:3501)
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied(ActivityManagerService.java:1521)
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at android.os.IBinder$DeathRecipient.binderDied(IBinder.java:317)
+11-01 10:58:19.897  1605  1900 W ActivityManager: 	at android.os.BinderProxy.sendDeathNotice(BinderProxy.java:768)
+11-01 10:58:19.899   494   494 W lowmemorykiller: Failed to open /proc/3088/oom_score_adj; errno=2: process 3088 might have been killed
+11-01 10:58:19.899  1605  1900 I ActivityManager: Killing 3088:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a327i18 (adj 900): isolated not needed
+11-01 10:58:19.899  1605  1900 I SmartPower.com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProbackground->died(29139ms) R(process died ) adj=900.
+11-01 10:58:19.900  1605  1649 I libprocessgroup: Successfully killed process cgroup uid 99018 pid 3088 in 0ms
+11-01 10:58:19.901  4907  9734 D UidObserver: onUidGone entry uid = 10327
+11-01 10:58:19.902  1605  1900 I mtkpower_client: [Legacy][PowerHal_Wrap_notifyAppState] com.biraconsultant.app/com.biraconsultant.app pid=2846 state:3
+11-01 10:58:19.902  1605  1900 I game_scn: collectForegroundAppList packName=com.biraconsultant.app, actName=com.biraconsultant.app, pid=2846, uid=10327, state:DEAD
+11-01 10:58:19.902  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 99018, uidState = 19
+11-01 10:58:19.903  3537  3549 I com.xiaomi.xmsf: oneway function results for code 3 on binder at 0xb40000773c271240 will be dropped but finished with status UNKNOWN_TRANSACTION
+11-01 10:58:19.903   849   928 I libPowerHal: [perfNotifyAppState] pack:com.biraconsultant.app, act:com.biraconsultant.app, state:3, pid:2846, uid:10327, fps:-1
+11-01 10:58:19.903   849   928 I libPowerHal: [perfNotifyAppState] pack:com.biraconsultant.app, pid:2846, STATE_DEAD
+11-01 10:58:19.903   849   928 D RilUtility: notify_rild_crash_pid_set certPid:-1, crash:2846, scn:0x0
+11-01 10:58:19.906  1605  1780 I MiuiNetworkPolicy: removeUidState uid = 10327
+11-01 10:58:19.911  1605  1900 D PerfMTKStubImpl: perfLockAcquire
+11-01 10:58:19.913  1605  1900 I mtkpower_client: perf_lock_acq, hdl:14376, dur:400, num:10, tid:1900
+11-01 10:58:19.913  1605  1900 I mtkpower_client: ret_hdl:14384
+11-01 10:58:19.914   849   928 I libPowerHal: [perfLockAcq] idx:0 hdl:14384 hint:-1 pid:1605 duration:400 lock_user:system_server => ret_hdl:14384
+11-01 10:58:19.914   849   928 I libPowerHal: system_server: set gpu opp level: 0
+11-01 10:58:19.914   849   928 I libPowerHal: system_server: set gpu opp level max: 0
+11-01 10:58:19.914   849   928 I libPowerHal: system_server: cpu_ctrl set cpu freq: 1800000 -1 2000000 -1
+11-01 10:58:19.914   849   928 I libPowerHal: [PE] system_server update cmd:1000000, param:0
+11-01 10:58:19.914   849   928 I libPowerHal: [PE] system_server update cmd:1000000 param:0
+11-01 10:58:19.925  1605  1900 I SmartPower.com.miui.home/10105(2168): idle->invisible(30417ms) R(become foreground) adj=0.
+11-01 10:58:19.928  1605  1900 W WindowManager: Execute app transition: mNextAppTransitionRequests=[TRANSIT_CLOSE, TRANSIT_CLOSE, TRANSIT_OPEN], mNextAppTransitionFlags=TRANSIT_FLAG_KEYGUARD_GOING_AWAY_TO_LAUNCHER_WITH_IN_WINDOW_ANIMATIONS | TRANSIT_FLAG_APP_CRASHED, displayId: 0 Callers=com.android.server.wm.RootWindowContainer.executeAppTransitionForAllDisplay:2269 com.android.server.wm.ActivityTaskSupervisor.reportResumedActivityLocked:1996 com.android.server.wm.ActivityRecord.completeResumeLocked:6765 com.android.server.wm.TaskFragment.resumeTopActivity:1611 com.android.server.wm.Task.resumeTopActivityInnerLocked:5719 
+11-01 10:58:19.930  2168  2168 D Launcher.Lifecycle: onStart:UserHandle{0},54b2398,false
+11-01 10:58:19.932  4907  9734 D PerfEngineController: ForegroundInfo{mForegroundPackageName='com.miui.home', mForegroundUid=10105, mForegroundPid=2168, mLastForegroundPackageName='com.biraconsultant.app', mLastForegroundUid=10327, mLastForegroundPid=2846, mMultiWindowForegroundPackageName='com.miui.home', mMultiWindowForegroundUid=10105, mFlags=0}
+11-01 10:58:19.932  4943  6305 I GST     : forePkg: com.miui.home, preForePkg: com.biraconsultant.app
+11-01 10:58:19.933  3874  6259 I ProcessMonitor: onForegroundInfoChanged: ForegroundInfo{mForegroundPackageName='com.miui.home', mForegroundUid=10105, mForegroundPid=2168, mLastForegroundPackageName='com.biraconsultant.app', mLastForegroundUid=10327, mLastForegroundPid=2846, mMultiWindowForegroundPackageName='com.miui.home', mMultiWindowForegroundUid=10105, mFlags=0}
+11-01 10:58:19.938  1605  1846 I SmartPower: com.biraconsultant.app/10327 state=foreground adj=200 proc size=1 move to died process died 
+11-01 10:58:19.938  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10160, uidState = 19
+11-01 10:58:19.938  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10103, uidState = 19
+11-01 10:58:19.938  1605  1846 I SmartPower: com.biraconsultant.app/99018 state=inactive adj=900 proc size=0 move to -1 process died 
+11-01 10:58:19.938  1605  1846 I SmartPower: com.miui.home/10105 state=hibernation adj=0 proc size=1 move to background become foreground
+11-01 10:58:19.938  1605  1846 I SmartPower.com.google.android.googlequicksearchbox:googleapp/10187(15398): idle->background(30450ms) R(add to whitelist) adj=800.
+11-01 10:58:19.938  1605  1846 I SmartPower: com.google.android.googlequicksearchbox/10187 state=hibernation adj=100 proc size=3 move to background add to whitelist
+11-01 10:58:19.940  3874 31038 D v1      : myUserId = 0	currentUserId0
+11-01 10:58:19.941 30252 30252 I Finsky  : [2] Memory trim requested to level 10
+11-01 10:58:19.941  1605  3792 I mtkpower_client: [Legacy][PowerHal_Wrap_notifyAppState] com.biraconsultant.app/com.biraconsultant.app pid=3088 state:3
+11-01 10:58:19.941  1605  3792 I game_scn: collectForegroundAppList packName=com.biraconsultant.app, actName=com.biraconsultant.app, pid=3088, uid=99018, state:DEAD
+11-01 10:58:19.941  1605  1780 I MiuiNetworkPolicy: removeUidState uid = 99018
+11-01 10:58:19.942  4907  9734 D UidObserver: onUidGone entry uid = 99018
+11-01 10:58:19.942  3537  3549 I com.xiaomi.xmsf: oneway function results for code 3 on binder at 0xb40000773c271240 will be dropped but finished with status UNKNOWN_TRANSACTION
+11-01 10:58:19.943  3191  3191 I AiAi    : onTrimMemory() with level 10
+11-01 10:58:19.945  1605  1759 I GED     : ged_boost_gpu_freq, level 100, eOrigin 2, final_idx 31, oppidx_max 31, oppidx_min 0
+11-01 10:58:19.945  1605  2756 I ActivityManager: Killing 32439:com.google.android.gms.unstable/u0a179 (adj 800): empty #17
+11-01 10:58:19.946  1605  1759 I GED     : ged_boost_gpu_freq, level 100, eOrigin 2, final_idx 31, oppidx_max 31, oppidx_min 0
+11-01 10:58:19.946  1605  2756 I SmartPower.com.google.android.gms.unstable/10179(32439): idle->died(22123ms) R(process died ) adj=800.
+11-01 10:58:19.947  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 90000, uidState = 19
+11-01 10:58:19.947  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10202, uidState = 19
+11-01 10:58:19.949  4907  5056 I ThermalInfoCollector: collectForgroundAppsInfo: com.biraconsultant.app
+11-01 10:58:19.950   849   928 I libPowerHal: [perfNotifyAppState] pack:com.biraconsultant.app, act:com.biraconsultant.app, state:3, pid:3088, uid:99018, fps:-1
+11-01 10:58:19.950   849   928 I libPowerHal: [perfNotifyAppState] pack:com.biraconsultant.app, pid:3088, STATE_DEAD
+11-01 10:58:19.950   849   928 D RilUtility: notify_rild_crash_pid_set certPid:-1, crash:3088, scn:0x0
+11-01 10:58:19.950  2561  2647 I GED     : ged_boost_gpu_freq, level 100, eOrigin 2, final_idx 31, oppidx_max 31, oppidx_min 0
+11-01 10:58:19.953  2168  2202 D AppObserver: ForegroundInfo{mForegroundPackageName='com.miui.home', mForegroundUid=10105, mForegroundPid=2168, mLastForegroundPackageName='com.biraconsultant.app', mLastForegroundUid=10327, mLastForegroundPid=2846, mMultiWindowForegroundPackageName='com.miui.home', mMultiWindowForegroundUid=10105, mFlags=0}
+11-01 10:58:19.954  2159  2159 D NotifBadge: recevie broadbcast ACTION_APPLICATION_MESSAGE_QUERY, requestFirstTime=false
+11-01 10:58:19.955  3874  6259 I GameBoosterService: onForegroundInfoChanged: Cur=com.miui.home	 last=com.biraconsultant.app
+11-01 10:58:19.956  3874  6259 D GameBoosterService: onGameStatusChange foreground:ForegroundInfo{mForegroundPackageName='com.miui.home', mForegroundUid=10105, mForegroundPid=2168, mLastForegroundPackageName='com.biraconsultant.app', mLastForegroundUid=10327, mLastForegroundPid=2846, mMultiWindowForegroundPackageName='com.miui.home', mMultiWindowForegroundUid=10105, mFlags=0}
+11-01 10:58:19.956  3874  6259 I VideoBoxUtils: isSupportVideoBox: false
+11-01 10:58:19.962  3874  6259 I VideoToolBoxService: vtb is closed!!!
+11-01 10:58:19.963  1605  1653 W libprocessgroup: Failed to open /dev/blkio//cgroup.procs: No such file or directory
+11-01 10:58:19.963  1605  1649 I libprocessgroup: Successfully killed process cgroup uid 10179 pid 32439 in 17ms
+11-01 10:58:19.965  1605  2142 I SmartPower.com.android.vending/10177(30252): idle->background(21539ms) R(service unbind com.android.vending/com.google.android.finsky.developergroupidinfo.DeveloperGroupIdInfoService) adj=905.
+11-01 10:58:19.965  1605  1846 I SmartPower: com.android.vending/10177 state=hibernation adj=905 proc size=2 move to background service unbind com.android.vending/com.google.android.finsky.developergroupidinfo.DeveloperGroupIdInfoService
+11-01 10:58:19.966  1605  1846 I SmartPower: com.android.vending/10177 state=background adj=905 proc size=2 move to inactive service unbind com.android.vending/com.google.android.finsky.developergroupidinfo.DeveloperGroupIdInfoService
+11-01 10:58:19.967  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 99009, uidState = 3
+11-01 10:58:19.967  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10319, uidState = 3
+11-01 10:58:19.967  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10187, uidState = 3
+11-01 10:58:19.967  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10179, uidState = 3
+11-01 10:58:19.967  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10177, uidState = 3
+11-01 10:58:19.969  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10177, uidState = 10
+11-01 10:58:19.977  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10177, uidState = 19
+11-01 10:58:19.979  1605 10043 I ActivityManager: Killing 799:com.topjohnwu.magisk/u0a247 (adj 965): empty #17
+11-01 10:58:19.980 15398 15398 I cqbn    : onStart
+11-01 10:58:19.980  1605 10043 I SmartPower.com.topjohnwu.magisk/10247(799): invisible->died(73160ms) R(process died ) adj=965.
+11-01 10:58:19.980  1605  1846 I SmartPower: com.topjohnwu.magisk/10247 state=background adj=965 proc size=1 move to died process died 
+11-01 10:58:19.982 30252 30252 I Finsky  : [2] Memory trim requested to level 40
+11-01 10:58:19.982 30252 30252 I Finsky  : [2] Flushing in-memory image cache
+11-01 10:58:19.983  4249  4249 I AppBase : AppBase.onTrimMemory():276 onTrimMemory(): 10
+11-01 10:58:19.990  2168  2168 D Launcher.Lifecycle: onResume:UserHandle{0},54b2398,false
+11-01 10:58:19.990  2168  2168 W Settings: Setting device_provisioned has moved from android.provider.Settings.Secure to android.provider.Settings.Global.
+11-01 10:58:19.992  4249  4249 I KeyboardDefCache: MemoryFileCache$1.onTrimMemory():124 clearMemory() for trim memory: 10
+11-01 10:58:19.993  2957  3659 I duqe    : isDefaultSmsApp: true [CONTEXT class_name="PhoneConfiguration" ]
+11-01 10:58:19.994  2168  2298 D MiBridge: requestCpuHighFreq---- uid: 10105 level: 1 timeoutms:500
+11-01 10:58:19.994  2168  2168 D Launcher.FullbackHome: FallbackHomeCompat::needKillSelf::needKillSelf = false
+11-01 10:58:19.994  1176  1194 W MiuiBooster: "MiuiBoosterService requestCpuHighFreq: 10105, 1, 500"
+11-01 10:58:19.994  1176  1194 W MiuiBooster: "open panel thermal zone temp node failed!"
+11-01 10:58:19.995  1176  1194 E MiuiBooster: "Failed to read temperature!!!"
+11-01 10:58:19.995  2168  2298 D MiBridge: requestCpuHighFreq handle: -1
+11-01 10:58:19.995  2168  2298 D Launcher_CPUBooster: boostCpuToMax:-1
+11-01 10:58:19.996  4249  4249 I KeyboardDefCache: MemoryFileCache.clearMemory():408 evictAll()
+11-01 10:58:19.998  2168  2168 D Launcher_UnlockAnimationStateMachine: onResume = IDLE
+11-01 10:58:19.998   822   822 I Zygote  : Process 32439 exited due to signal 9 (Killed)
+11-01 10:58:19.999  4249  4249 I GoogleInputMethodService: GoogleInputMethodService.onTrimMemory():3174 onTrimMemory(): 10
+11-01 10:58:20.002  2957  3659 I dqmd    : reclaimMemory: Clearing caches
+11-01 10:58:20.002  2168  2168 I Launcher: changeMIUIWidgetEditMode false
+11-01 10:58:20.002  2957  3659 I dvqk    : HadesBitmapStore: Purged 0 images during memory reclamation
+11-01 10:58:20.003 15398 15398 I cqbn    : onResume
+11-01 10:58:20.008  1605  1649 I libprocessgroup: Successfully killed process cgroup uid 10247 pid 799 in 5ms
+11-01 10:58:20.009   822   822 I Zygote  : Process 799 exited due to signal 9 (Killed)
+11-01 10:58:20.010  2957  3659 W dtau    : TextClassifierLibManagerImpl: Reclaiming memory at level: 40
+11-01 10:58:20.018   892   959 I BufferQueueDebug: [com.miui.home/com.miui.home.launcher.Launcher#6275](this:0xb400007821e8c8b0,id:-1,api:0,p:-1,c:-1) BufferQueue core=(892:/system/bin/surfaceflinger)
+11-01 10:58:20.020  1605  4099 D SurfaceControl: nativeSetScreenProjection ===> setScreenProjection
+11-01 10:58:20.022  1605  4099 D SurfaceControl: nativeSetScreenProjection ===> setScreenProjection
+11-01 10:58:20.023  1605  1833 E ProcessManager: error write exception log
+11-01 10:58:20.026  2168  2247 D StatusBarController: handleMessage: flag 1000000  disable false
+11-01 10:58:20.042  1605  4099 W WindowManager: Changing focus from null to Window{1388394 u0 com.miui.home/com.miui.home.launcher.Launcher} displayId=0 Callers=com.android.server.wm.RootWindowContainer.updateFocusedWindowLocked:525 com.android.server.wm.WindowManagerService.updateFocusedWindowLocked:6512 com.android.server.wm.WindowManagerService.relayoutWindow:2785 com.android.server.wm.Session.relayout:277 
+11-01 10:58:20.046  1605  4099 D WindowManager: wms.Input focus has changed to Window{1388394 u0 com.miui.home/com.miui.home.launcher.Launcher} display=0 updateInputWindows = true
+11-01 10:58:20.046  1605  4099 I WindowManager: Relayout Window{1388394 u0 com.miui.home/com.miui.home.launcher.Launcher}: oldVis=8 newVis=0 focusMayChange = true requestedWidth = 1080 requestedHeight = 2400 outFrames = ClientWindowFrames{frame=[0,0][1080,2400] display=[0,0][1080,2400] parentFrame=[0,0][0,0] parentClippedByDisplayCutout=false} outSurfaceControl = Surface(name=com.miui.home/com.miui.home.launcher.Launcher)/@0x864d76e
+11-01 10:58:20.047  2168  2168 D BufferQueueConsumer: [](id:87800000046,api:0,p:-1,c:2168) connect: controlledByApp=false
+11-01 10:58:20.048  3537  3549 I com.xiaomi.xmsf: oneway function results for code 3 on binder at 0xb40000773c271240 will be dropped but finished with status UNKNOWN_TRANSACTION
+11-01 10:58:20.049  1605  1633 D WindowManager: wms.Update InputWindowHandle: 1388394 com.miui.home/com.miui.home.launcher.Launcher, frame=[0,0,0,0], touchableRegion=SkRegion((0,0,1080,2400)), scaleFactor=1.0, transform=null, windowToken=android.os.BinderProxy@6806be7, isClone=false, visibal=true, focusable=true, changed=true
+11-01 10:58:20.050  1036  1036 I com.topjohnwu.magisk:root:0: System.exit called, status: 0
+11-01 10:58:20.050  1036  1036 I AndroidRuntime: VM exiting with result code 0.
+11-01 10:58:20.051  1605  4427 I mtkpower_client: [Legacy][PowerHal_Wrap_notifyAppState] com.google.android.gms/com.google.android.gms pid=32439 state:3
+11-01 10:58:20.051  1605  4427 I game_scn: collectForegroundAppList packName=com.google.android.gms, actName=com.google.android.gms, pid=32439, uid=10179, state:DEAD
+11-01 10:58:20.051   849   928 I libPowerHal: [perfNotifyAppState] pack:com.google.android.gms, act:com.google.android.gms, state:3, pid:32439, uid:10179, fps:-1
+11-01 10:58:20.052   849   928 I libPowerHal: [perfNotifyAppState] pack:com.google.android.gms, pid:32439, STATE_DEAD
+11-01 10:58:20.052   849   928 D RilUtility: notify_rild_crash_pid_set certPid:-1, crash:32439, scn:0x0
+11-01 10:58:20.053  2168  2168 D VRI[Launcher]: vri.reportNextDraw android.view.ViewRootImpl.performTraversals:3852 android.view.ViewRootImpl.doTraversal:2587 android.view.ViewRootImpl$TraversalRunnable.run:9716 android.view.Choreographer$CallbackRecord.run:1386 android.view.Choreographer$CallbackRecord.run:1394 
+11-01 10:58:20.053  2168  2168 D VRI[Launcher]: vri.Setup new sync id=70 syncSeqId=0
+11-01 10:58:20.058  2267  2267 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.semanticlocationhistory.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+11-01 10:58:20.058  2267  2267 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.semanticlocationhistory.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+11-01 10:58:20.058   892   959 I SurfaceFlinger: setTransactionState focusRequest transactionId:6893422551508 frontWin:1388394 com.miui.home/com.miui.home.launcher.Launcher
+11-01 10:58:20.064  1605  1846 I SmartPower: com.google.android.gms/10179 state=inactive adj=0 proc size=4 move to hibernation add to whitelist
+11-01 10:58:20.065  1605  1633 W WindowManager: Failed to deliver inset state change to w=Window{ead3950 u0 com.biraconsultant.app/com.biraconsultant.app.MainActivity EXITING}
+11-01 10:58:20.065  1605  1633 W WindowManager: android.os.DeadObjectException
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:646)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.view.IWindow$Stub$Proxy.insetsControlChanged(IWindow.java:551)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at com.android.server.wm.WindowState.notifyInsetsControlChanged(WindowState.java:4411)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at com.android.server.wm.InsetsStateController.lambda$notifyPendingInsetsControlChanged$5$com-android-server-wm-InsetsStateController(InsetsStateController.java:348)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at com.android.server.wm.InsetsStateController$$ExternalSyntheticLambda4.run(D8$$SyntheticClass:2)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at com.android.server.wm.WindowAnimator.executeAfterPrepareSurfacesRunnables(WindowAnimator.java:357)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at com.android.server.wm.WindowAnimator.animate(WindowAnimator.java:238)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at com.android.server.wm.WindowAnimator.lambda$new$1$com-android-server-wm-WindowAnimator(WindowAnimator.java:109)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at com.android.server.wm.WindowAnimator$$ExternalSyntheticLambda1.doFrame(D8$$SyntheticClass:2)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.view.Choreographer$CallbackRecord.run(Choreographer.java:1384)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.view.Choreographer$CallbackRecord.run(Choreographer.java:1394)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.view.Choreographer.doCallbacks(Choreographer.java:1013)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.view.Choreographer.doFrame(Choreographer.java:904)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:1366)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.os.Handler.handleCallback(Handler.java:942)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.os.Looper.loopOnce(Looper.java:211)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.os.Looper.loop(Looper.java:300)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at android.os.HandlerThread.run(HandlerThread.java:67)
+11-01 10:58:20.065  1605  1633 W WindowManager: 	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+11-01 10:58:20.066   892   892 I SurfaceFlinger: transactionIsReadyToBeApplied focusRequest transactionId:6893422551508
+11-01 10:58:20.075  1605  1889 I mtkpower_client: [Legacy][PowerHal_Wrap_notifyAppState] com.topjohnwu.magisk/com.topjohnwu.magisk pid=799 state:3
+11-01 10:58:20.075  1605  1889 I game_scn: collectForegroundAppList packName=com.topjohnwu.magisk, actName=com.topjohnwu.magisk, pid=799, uid=10247, state:DEAD
+11-01 10:58:20.076  4907  8126 D UidObserver: onUidGone entry uid = 10247
+11-01 10:58:20.079   849   928 I libPowerHal: [perfNotifyAppState] pack:com.topjohnwu.magisk, act:com.topjohnwu.magisk, state:3, pid:799, uid:10247, fps:-1
+11-01 10:58:20.079   849   928 I libPowerHal: [perfNotifyAppState] pack:com.topjohnwu.magisk, pid:799, STATE_DEAD
+11-01 10:58:20.079   849   928 D RilUtility: notify_rild_crash_pid_set certPid:-1, crash:799, scn:0x0
+11-01 10:58:20.080  1605  1833 E ProcessManager: error write exception log
+11-01 10:58:20.081  3537  3549 I com.xiaomi.xmsf: oneway function results for code 3 on binder at 0xb40000773c271240 will be dropped but finished with status UNKNOWN_TRANSACTION
+11-01 10:58:20.081  1605  1780 I MiuiNetworkPolicy: removeUidState uid = 10247
+11-01 10:58:20.085  2267  2267 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.measurement.START pkg=com.google.android.gms }
+11-01 10:58:20.085  2267  2267 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.measurement.START pkg=com.google.android.gms }
+11-01 10:58:20.103  2168  2168 D DragContainerLayout: dispatch draw with clip rect: null
+11-01 10:58:20.125  2168  2291 D BLASTBufferQueue: [VRI[Launcher]#70](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=11017661123425(auto) mPendingTransactions.size=0 graphicBufferId=9311489098230 transform=0
+11-01 10:58:20.127  2168  2168 D VRI[Launcher]: vri.reportDrawFinished syncSeqId=0 android.view.ViewRootImpl.lambda$createSyncIfNeeded$4$android-view-ViewRootImpl:3920 android.view.ViewRootImpl$$ExternalSyntheticLambda1.run:6 android.os.Handler.handleCallback:942 android.os.Handler.dispatchMessage:99 android.os.Looper.loopOnce:211 
+11-01 10:58:20.127  1605  4427 D WindowManager: wms.finishDrawingLocked: mDrawState=COMMIT_DRAW_PENDING Window{1388394 u0 com.miui.home/com.miui.home.launcher.Launcher} in Surface(name=com.miui.home/com.miui.home.launcher.Launcher)/@0x76dc2b
+11-01 10:58:20.127  1605  4427 D MiuiFreeFormGesturePointerEventListener: finishDrawingWindow: topFullScreenWindow= Window{1388394 u0 com.miui.home/com.miui.home.launcher.Launcher}
+11-01 10:58:20.129  2168  2168 D Launcher.RecommendController: folder display but only request when folder open
+11-01 10:58:20.129  2168  2168 D Launcher.RecommendController: folder display but only request when folder open
+11-01 10:58:20.130  2168  2168 D RecentsImpl: mActivityStateObserver com.miui.home.launcher.Launcher
+11-01 10:58:20.131  2168  2168 W RecentsImpl: onResumed className=com.miui.home.launcher.Launcher   mIsInAnotherPro=false   isKeyguardLocked=false   mSecuritySpaceGuideShown=false
+11-01 10:58:20.131  1605  1633 I WindowManager: wms.showSurfaceRobustly mWin:Window{22c127f u0 com.miui.miwallpaper.wallpaperservice.ImageWallpaper}
+11-01 10:58:20.131  1605  1633 I WindowManager: wms.showSurfaceRobustly mWin:Window{9ca30b1 u0 com.miui.miwallpaper.wallpaperservice.MiuiKeyguardPictorialWallpaper}
+11-01 10:58:20.133  1605  1633 D WindowManager: shouldWaitAnimatingExit: isAnimating: Window{651b4d2 u0 com.biraconsultant.app/com.biraconsultant.app.MainActivity EXITING}
+11-01 10:58:20.133  1605  1633 D WindowManager: shouldWaitAnimatingExit: isAnimating: Window{ead3950 u0 com.biraconsultant.app/com.biraconsultant.app.MainActivity EXITING}
+11-01 10:58:20.133   892   892 D BufferStateLayer: com.miui.home/com.miui.home.launcher.Launcher#6275 setBuffer frameId=1, bufferId=9311489098230 fenceId=468, w= 1080, h=2400
+11-01 10:58:20.133  2168  2247 D StatusBarController: handleMessage: flag 800000  disable false
+11-01 10:58:20.135  1605  1633 D WindowManager: Loading animation for app transition. transit=TRANSIT_OLD_CRASHING_ACTIVITY_CLOSE enter=true frame=Rect(0, 0 - 1080, 2400) insets=Rect(0, 103 - 0, 130) surfaceInsets=Rect(0, 0 - 0, 0)
+11-01 10:58:20.135  1605  1633 D WindowManager: Loading animation for app transition. transit=TRANSIT_OLD_CRASHING_ACTIVITY_CLOSE enter=false frame=Rect(0, 0 - 1080, 2167) insets=Rect(0, 0 - 0, 0) surfaceInsets=Rect(0, 0 - 0, 0)
+11-01 10:58:20.138  1605  1633 W WindowManager: Exception thrown during dispatchAppVisibility Window{651b4d2 u0 com.biraconsultant.app/com.biraconsultant.app.MainActivity EXITING}
+11-01 10:58:20.138  1605  1633 W WindowManager: android.os.DeadObjectException
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:646)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.view.IWindow$Stub$Proxy.dispatchAppVisibility(IWindow.java:614)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3794)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1296)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowToken.setClientVisible(WindowToken.java:419)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.ActivityRecord.setClientVisible(ActivityRecord.java:7460)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.ActivityRecord.onAnimationFinished(ActivityRecord.java:8340)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.ActivityRecord.postApplyAnimation(ActivityRecord.java:6022)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5994)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5998)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.AppTransitionController.handleClosingApps(AppTransitionController.java:1201)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.AppTransitionController.handleAppTransitionReady(AppTransitionController.java:295)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.RootWindowContainer.checkAppTransitionReady(RootWindowContainer.java:1035)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.RootWindowContainer.performSurfacePlacementNoTrace(RootWindowContainer.java:902)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.RootWindowContainer.performSurfacePlacement(RootWindowContainer.java:842)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer.performSurfacePlacementLoop(WindowSurfacePlacer.java:199)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer.performSurfacePlacement(WindowSurfacePlacer.java:148)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer.performSurfacePlacement(WindowSurfacePlacer.java:137)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer$Traverser.run(WindowSurfacePlacer.java:79)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.Handler.handleCallback(Handler.java:942)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.Looper.loopOnce(Looper.java:211)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.Looper.loop(Looper.java:300)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.HandlerThread.run(HandlerThread.java:67)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+11-01 10:58:20.138  1605  1633 W WindowManager: Exception thrown during dispatchAppVisibility Window{ead3950 u0 com.biraconsultant.app/com.biraconsultant.app.MainActivity EXITING}
+11-01 10:58:20.138  1605  1633 W WindowManager: android.os.DeadObjectException
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:646)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.view.IWindow$Stub$Proxy.dispatchAppVisibility(IWindow.java:614)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3794)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1296)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowToken.setClientVisible(WindowToken.java:419)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.ActivityRecord.setClientVisible(ActivityRecord.java:7460)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.ActivityRecord.onAnimationFinished(ActivityRecord.java:8340)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.ActivityRecord.postApplyAnimation(ActivityRecord.java:6022)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5994)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5998)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.AppTransitionController.handleClosingApps(AppTransitionController.java:1201)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.AppTransitionController.handleAppTransitionReady(AppTransitionController.java:295)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.RootWindowContainer.checkAppTransitionReady(RootWindowContainer.java:1035)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.RootWindowContainer.performSurfacePlacementNoTrace(RootWindowContainer.java:902)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.RootWindowContainer.performSurfacePlacement(RootWindowContainer.java:842)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer.performSurfacePlacementLoop(WindowSurfacePlacer.java:199)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer.performSurfacePlacement(WindowSurfacePlacer.java:148)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer.performSurfacePlacement(WindowSurfacePlacer.java:137)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer$Traverser.run(WindowSurfacePlacer.java:79)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.Handler.handleCallback(Handler.java:942)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.Looper.loopOnce(Looper.java:211)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.Looper.loop(Looper.java:300)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at android.os.HandlerThread.run(HandlerThread.java:67)
+11-01 10:58:20.138  1605  1633 W WindowManager: 	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+11-01 10:58:20.141  1605  1633 D WindowManager: setParent old=ActivityRecord{1de9c52 u0 com.biraconsultant.app/.MainActivity} t1104 f} isExiting},new=null,this window=Window{ead3950 u0 com.biraconsultant.app/com.biraconsultant.app.MainActivity},callers=com.android.server.wm.WindowContainer.removeChild:826 com.android.server.wm.ActivityRecord.removeChild:4853 com.android.server.wm.ActivityRecord.removeChild:436 com.android.server.wm.WindowContainer.removeImmediately:887 com.android.server.wm.WindowState.removeImmediately:2674 com.android.server.wm.WindowState.destroySurface:3860 
+11-01 10:58:20.143  2168  2168 D Launcher_WallpaperUtils: changeStatusBarMode:false
+11-01 10:58:20.144   892   892 I BufferQueueProducer: [NavigationBar0#4514](this:0xb4000078222bd8b0,id:-1,api:0,p:-1,c:892) queueBuffer: fps=0.34 dur=32305.56 max=32194.41 min=11.00
+11-01 10:58:20.144  1605  1633 D WindowManager: setParent old=ActivityRecord{1de9c52 u0 com.biraconsultant.app/.MainActivity} t1104 f} isExiting},new=null,this window=Window{651b4d2 u0 com.biraconsultant.app/com.biraconsultant.app.MainActivity},callers=com.android.server.wm.WindowContainer.removeChild:826 com.android.server.wm.ActivityRecord.removeChild:4853 com.android.server.wm.ActivityRecord.removeChild:436 com.android.server.wm.WindowContainer.removeImmediately:887 com.android.server.wm.WindowState.removeImmediately:2674 com.android.server.wm.WindowState.destroySurface:3860 
+11-01 10:58:20.145  1605  1633 I SmartPower.com.miui.home/10105(2168): invisible->visible(219ms) R(become visible) adj=0.
+11-01 10:58:20.145  1605  1846 I SmartPower: com.miui.home/10105 state=background adj=0 proc size=1 move to foreground become visible
+11-01 10:58:20.146  2168  2168 E RotationHelper: setCurrentTransitionRequest: request=0
+11-01 10:58:20.146  2168  2168 E RotationHelper: setCurrentTransitionRequest: request=0
+11-01 10:58:20.151  1605  1633 I WindowManager: wms.showSurfaceRobustly mWin:Window{1388394 u0 com.miui.home/com.miui.home.launcher.Launcher}
+11-01 10:58:20.156   892   892 E ClientCache: failed to get buffer, invalid process token
+11-01 10:58:20.156   892   892 E ClientCache: failed to get buffer, invalid process token
+11-01 10:58:20.156   892   892 E BpTransactionCompletedListener: Failed to transact (-32)
+11-01 10:58:20.157   892   892 I BufferQueueDebug: [com.biraconsultant.app/com.biraconsultant.app.MainActivity#6265](this:0xb400007821e0a8b0,id:-1,api:0,p:-1,c:892) onDestructor()
+11-01 10:58:20.160  1605  1632 W ActivityManager: setHasOverlayUi called on unknown pid: 2846
+11-01 10:58:20.160  1605  1773 E MiuiActivityController: MiuiLog-ActivityObserver: There was something wrong : null
+11-01 10:58:20.160  1924  1924 I MiuiWallpaper-ImageWallpaper: onVisibilityChanged, visible = true
+11-01 10:58:20.160  1605  4099 I PowerHalWrapper: amsBoostStop AMS_BOOST_PACK_SWITCH:false, AMS_BOOST_ACT_SWITCH:false, AMS_BOOST_PROCESS_CREATE:false 
+11-01 10:58:20.161   892   892 E BpTransactionCompletedListener: Failed to transact (-32)
+11-01 10:58:20.161   892   892 I BufferQueueDebug: [com.biraconsultant.app/com.biraconsultant.app.MainActivity#6273](this:0xb40000782229b8b0,id:-1,api:0,p:-1,c:892) onDestructor()
+11-01 10:58:20.162  1924  2998 W OpenGLRenderer: Surface doesn't have any previously queued frames, nothing to readback from
+11-01 10:58:20.165  2168  2168 D Launcher.Lifecycle: onWindowFocusChanged:true,UserHandle{0},54b2398,false
+11-01 10:58:20.165  2168  2168 D Launcher_UnlockAnimationStateMachine: onWindowFocus:IDLE
+11-01 10:58:20.165  2168  2168 D Launcher_UnlockAnimationStateMachine: showAnimation = IDLE
+11-01 10:58:20.165  2168  2168 D DecorView[]: onWindowFocusChanged hasWindowFocus true
+11-01 10:58:20.165  1605  1633 D WindowManager: setParent old=Task{695bcf2 #1104 type=standard A=10327:com.biraconsultant.app U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=0},new=null,this window=ActivityRecord{1de9c52 u0 com.biraconsultant.app/.MainActivity} t1104 f}},callers=com.android.server.wm.WindowContainer.removeChild:826 com.android.server.wm.TaskFragment.removeChild:2711 com.android.server.wm.Task.removeChild:1622 com.android.server.wm.Task.removeChild:1603 com.android.server.wm.WindowContainer.removeImmediately:887 com.android.server.wm.WindowToken.removeImmediately:369 
+11-01 10:58:20.168  1605  1633 D WindowManager: setParent old=DefaultTaskDisplayArea@185354961,new=null,this window=Task{695bcf2 #1104 type=standard A=10327:com.biraconsultant.app U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=0},callers=com.android.server.wm.WindowContainer.removeChild:826 com.android.server.wm.TaskDisplayArea.removeChildTask:366 com.android.server.wm.TaskDisplayArea.removeChild:357 com.android.server.wm.WindowContainer.removeImmediately:887 com.android.server.wm.TaskFragment.removeImmediately:2791 com.android.server.wm.Task.removeImmediately:3030 
+11-01 10:58:20.169  1605  1633 W ActivityTaskManager: Can't find TaskDisplayArea to determine support for multi window. Task id=1104 attached=false
+11-01 10:58:20.170  1605  1633 D WindowManager: wms.Update InputWindowHandle: 1388394 com.miui.home/com.miui.home.launcher.Launcher, frame=[0,0,0,0], touchableRegion=SkRegion((0,0,1080,2400)), scaleFactor=1.0, transform=null, windowToken=android.os.BinderProxy@6806be7, isClone=false, visibal=true, focusable=true, changed=true
+11-01 10:58:20.171  2168  2168 I HandWritingStubImpl: refreshLastKeyboardType: 1
+11-01 10:58:20.172  2168  2168 I HandWritingStubImpl: getCurrentKeyboardType: 1
+11-01 10:58:20.172  2168  2202 D RecentsModel: onTaskStackChangedBackground
+11-01 10:58:20.172  2168  4726 D RecentsModel: onTaskStackChangedBackground
+11-01 10:58:20.172  2168  2516 D RecentsModel: onTaskStackChangedBackground    MSG_TASK_STACK_CHANGE
+11-01 10:58:20.172  2168  2516 D RecentsModel: preloadRecents
+11-01 10:58:20.172  2168  2516 W RecentsModel: getRunningTask
+11-01 10:58:20.174  2168  2202 D EventBus: No subscribers registered for event class com.miui.home.recents.messages.RecentTasksChangedEvent
+11-01 10:58:20.174  2168  4726 D EventBus: No subscribers registered for event class com.miui.home.recents.messages.RecentTasksChangedEvent
+11-01 10:58:20.174  2168  4726 D EventBus: No subscribers registered for event class org.greenrobot.eventbus.NoSubscriberEvent
+11-01 10:58:20.174  2168  2202 D EventBus: No subscribers registered for event class org.greenrobot.eventbus.NoSubscriberEvent
+11-01 10:58:20.177  1605  3284 W InputMethodManagerService: Clear show forced flag.
+11-01 10:58:20.179  2168  2516 W RecentsModel: getRunningTask   taskInfo=TaskInfo{userId=0 taskId=2 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10800100 cmp=com.miui.home/.launcher.Launcher } baseActivity=ComponentInfo{com.miui.home/com.miui.home.launcher.Launcher} topActivity=ComponentInfo{com.miui.home/com.miui.home.launcher.Launcher} origActivity=null realActivity=ComponentInfo{com.miui.home/com.miui.home.launcher.Launcher} numActivities=1 lastActiveTime=15019887 supportsSplitScreenMultiWindow=true supportsMultiWindow=true resizeMode=2 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=200 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@eebb1c4} topActivityType=2 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=0 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{c1c98ad com.miui.home.launcher.Launcher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isSleeping=false topActivityInSizeCompat=false topActivityInMiuiSizeCompat=false topActivityEligibleForLetterboxEducation= false locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden mIsCastMode=false}
+11-01 10:58:20.179  2168  2516 W RecentsModel: getTaskInfoIgnoreHomeAndFreeform   taskInfo=ComponentInfo{com.miui.home/com.miui.home.launcher.Launcher}
+11-01 10:58:20.183  2168  2516 E ActivityManagerWrapper: get all recent tasks force including 2
+11-01 10:58:20.183  1924  1924 I MiuiWallpaper-MiuiKeyguardPictorialWallpaper: onVisibilityChanged, visible = true
+11-01 10:58:20.184  1924  2998 W OpenGLRenderer: Surface doesn't have any previously queued frames, nothing to readback from
+11-01 10:58:20.185  1924  2998 W OpenGLRenderer: Surface doesn't have any previously queued frames, nothing to readback from
+11-01 10:58:20.185  1924  2998 W OpenGLRenderer: Surface doesn't have any previously queued frames, nothing to readback from
+11-01 10:58:20.186  4249  4249 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2404 
+11-01 10:58:20.187  2168  2516 E ActivityManagerWrapper: getRecentTasks: size=1
+11-01 10:58:20.187  2168  2516 E ActivityManagerWrapper: getRecentTasks: mainTaskId=1104   userId=0   baseIntent=Intent { act=android.intent.action.MAIN flag=270532608 cmp=ComponentInfo{com.biraconsultant.app/com.biraconsultant.app.IntroActivity} }
+11-01 10:58:20.191  4249 31678 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatusInternal():119 repeatCheckTimes = 0, locked = false
+11-01 10:58:20.193  4249  4249 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1552 onStartInput(EditorInfo{EditorInfo{packageName=com.miui.home, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=2131362047, fieldName=null, extras=Bundle[mParcelledData.dataSize=72], hintText=null, hintLocales=[]}}, false)
+11-01 10:58:20.195  4249  4249 I LatinInputMethodServiceBase: LatinInputMethodServiceBase.updateInputViewCoverNavigation():360 Update input view padding, isNavbarOverInputWindow=false, bottom inset=130
+11-01 10:58:20.199  4249 27733 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatusInternal():119 repeatCheckTimes = 1, locked = false
+11-01 10:58:20.205  1605  3284 D skia    : SkJpegCodec::onGetPixels +
+11-01 10:58:20.216  1605  3284 D skia    : SkJpegCodec::onGetPixels -
+11-01 10:58:20.218  1605  4493 E OpenGLRenderer: Device claims wide gamut support, cannot find matching config, error = EGL_SUCCESS
+11-01 10:58:20.218  1605  4493 W OpenGLRenderer: Failed to initialize 101010-2 format, error = EGL_SUCCESS
+11-01 10:58:20.244  1249  1320 D AAL     : 11-01 10:58:20.199 BL=1526,ESS= 256, 11-01 10:58:20.210 BL=1524,ESS= 256, 11-01 10:58:20.221 BL=1523,ESS= 256, 11-01 10:58:20.233 BL=1521,ESS= 256, 11-01 10:58:20.243 BL=1519,ESS= 256, 
+11-01 10:58:20.249  1237  1237 I thermal_repeater: [recvMdThermalInfo] ret=25, strLen=127,  3, 36, -8, 196, 32767, 0
+11-01 10:58:20.255  1605  1632 W ActivityTaskManager: Activity top resumed state loss timeout for ActivityRecord{1de9c52 u0 com.biraconsultant.app/.MainActivity} t-1 f}}
+11-01 10:58:20.255  1605  1632 I PowerHalWrapper: amsBoostNotify pid:2168,activity:com.miui.home.launcher.Launcher, package:com.miui.home, mProcessCreatePackcom.biraconsultant.app 
+11-01 10:58:20.255  1605  1632 I PowerHalWrapper: state: 1 
+11-01 10:58:20.255  1605  1632 I mtkpower_client: [Legacy][PowerHal_Wrap_notifyAppState] com.miui.home/com.miui.home.launcher.Launcher pid=2168 state:1
+11-01 10:58:20.255  1605  1632 I game_scn: collectForegroundAppList packName=com.miui.home, actName=com.miui.home.launcher.Launcher, pid=2168, uid=10105, state:RESUMED
+11-01 10:58:20.255  1605  1632 I PowerHalWrapper: amsBoostNotify AMS_BOOST_PROCESS_CREATE_BOOST:true 
+11-01 10:58:20.256   849   928 I libPowerHal: [perfNotifyAppState] pack:com.miui.home, act:com.miui.home.launcher.Launcher, state:1, pid:2168, uid:10105, fps:-1
+11-01 10:58:20.256   849   928 I libPowerHal: [perfNotifyAppState] foreground:com.miui.home, pid:2168, uid:10105
+11-01 10:58:20.256   849   928 E UxUtility: notifyAppState error = NULL
+11-01 10:58:20.257   849   928 I TouchUtility: notifyAppState error = NULL
+11-01 10:58:20.257   849   928 I SbeHandle: pack:com.miui.home->Common Not Has APPList
+11-01 10:58:20.257   849   928 I libPowerHal: [perfNotifyAppState] scn:406, pack:com.miui.home, act:Common, fps:Common !!!
+11-01 10:58:20.257   849   928 I libPowerHal: [PE] scn:406 pack:com.miui.home
+11-01 10:58:20.257   849   928 I libPowerHal: [PE] (less) /proc/perfmgr/tchbst/user/usrtch set +prefix:touch_opp 0;
+11-01 10:58:20.257   849   928 I libPowerHal: [PE] (more) /proc/perfmgr/tchbst/user/usrtch set +prefix:duration 250000000;
+11-01 10:58:20.257   849   928 I libPowerHal: [PE] (more) /proc/perfmgr/tchbst/user/usrtch set +prefix:active_time 1;
+11-01 10:58:20.257   849   878 I mtkpower@impl: [notifyAppState] pc:0, com.biraconsultant.app => com.miui.home
+11-01 10:58:20.277  1249  1320 D AAL     : 11-01 10:58:20.255 BL=1518,ESS= 256, 11-01 10:58:20.266 BL=1517,ESS= 256, 
+11-01 10:58:20.302  2267  3703 I DropBoxUtil: (REDACTED) Reading dropbox entry with tag %s and timestamp %d
+11-01 10:58:20.314   849   928 I mtkpower@impl: [powerd_req] TIMER_MSG_PERF_LOCK_TIMEOUT hdl:14384
+11-01 10:58:20.314   849   928 I libPowerHal: [perfLockRel] hdl:14384, idx:0
+11-01 10:58:20.315   849   928 I libPowerHal: system_server: cpu_ctrl set cpu freq: -1 -1 -1 -1
+11-01 10:58:20.315   849   928 I libPowerHal: system_server: set gpu opp level: 31
+11-01 10:58:20.315   849   928 I libPowerHal: system_server: set gpu opp level max: 0
+11-01 10:58:20.315   849   928 I libPowerHal: [PD] system_server update cmd:1000000, param:1
+11-01 10:58:20.315   849   928 I libPowerHal: [PD] system_server update cmd:1000000 param:1
+11-01 10:58:20.329  2267  3703 I DropBoxUtil: (REDACTED) Reading dropbox entry with tag %s and timestamp %d
+11-01 10:58:20.374   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:91
+11-01 10:58:20.374   849   917 I libPerfCtl: xgfGetFPS pid:2168 fps:-1
+11-01 10:58:20.374   849   917 I libPerfCtl: xgfGetFPS pid:2846 fps:91
+11-01 10:58:20.482  1372  1462 D connsyslogger: SD_LOG_ROOT is /data/debuglogger/connsyslog/fw.
+11-01 10:58:20.482  1372  1462 D connsyslogger: systemReady:1
+11-01 10:58:20.540  1605  1846 I SmartPower.com.android.chrome/10202(3306): background->idle(26267ms) R(service end com.android.chrome/org.chromium.content.app.PrivilegedProcessService0) adj=905.
+11-01 10:58:20.541  1605  1846 I SmartPower: com.android.chrome/10202 state=inactive adj=905 proc size=3 move to idle service end com.android.chrome/org.chromium.content.app.PrivilegedProcessService0
+11-01 10:58:20.567   892  1291 I Scheduler: touchTimerCallback: touchState=Inactive
+11-01 10:58:20.567   892  1291 D surfaceflinger: isVideoScene
+11-01 10:58:20.567   892  1291 D surfaceflinger: isTpIdleScene mSetTpIdleFlag 0, mSetLtpoTpIdleFlag 0
+11-01 10:58:20.605  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:20.606  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:20.607 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:20.648  1249  1322 D AALLightSensor: oldLux=288 [SA:240 LA:240] newLux=288 (oriLux: 240)
+11-01 10:58:20.970  3210  6951 I ficy    : (REDACTED) HDM. appOpsListener %s %s
+11-01 10:58:20.970  3210  6951 I ficy    : (REDACTED) HDM. Ignoring irrelevant audio permission changes for package %s
+11-01 10:58:21.210   892   892 I BufferQueueProducer: [StatusBar#86](this:0xb4000078223878b0,id:-1,api:0,p:-1,c:892) queueBuffer: fps=7.69 dur=1821.44 max=822.31 min=10.99
+11-01 10:58:21.212   838   838 I hwcomposer: [HWCDisplay] [Display_0 (type:1)] fps:28.000872,dur:1821.37,max:822.47,min:4.71  
+11-01 10:58:21.374   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:21.374   849   917 I libPerfCtl: xgfGetFPS pid:2168 fps:-1
+11-01 10:58:21.374   849   917 I libPerfCtl: xgfGetFPS pid:2846 fps:-1
+11-01 10:58:21.607  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:21.607  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:21.608 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:22.318  1605  1846 I SmartPower: com.google.android.gms/10179 state=hibernation adj=100 proc size=4 move to maintenance service unbind com.google.android.gms/.auth.api.proxy.AuthService
+11-01 10:58:22.374   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:22.374   849   917 I libPerfCtl: xgfGetFPS pid:2168 fps:-1
+11-01 10:58:22.374   849   917 I libPerfCtl: xgfGetFPS pid:2846 fps:-1
+11-01 10:58:22.482  1372  1462 D connsyslogger: SD_LOG_ROOT is /data/debuglogger/connsyslog/fw.
+11-01 10:58:22.482  1372  1462 D connsyslogger: systemReady:1
+11-01 10:58:22.540  1605  1846 I SmartPower: com.android.chrome/10202 state=idle adj=905 proc size=3 move to hibernation service end com.android.chrome/org.chromium.content.app.PrivilegedProcessService0
+11-01 10:58:22.609  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:22.609  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:22.610 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:22.916  3584  3593 W System  : A resource failed to call close. 
+11-01 10:58:22.966  1605  1846 I SmartPower.com.android.vending/10177(30252): background->idle(3001ms) R(service unbind com.android.vending/com.google.android.finsky.developergroupidinfo.DeveloperGroupIdInfoService) adj=905.
+11-01 10:58:22.966  1605  1846 I SmartPower: com.android.vending/10177 state=inactive adj=905 proc size=2 move to idle service unbind com.android.vending/com.google.android.finsky.developergroupidinfo.DeveloperGroupIdInfoService
+11-01 10:58:23.115  2155  2365 D FiveGDataOptimize: isAnyCallOngoing callOngoing= false
+11-01 10:58:23.117  2155  2365 D FiveGDataOptimize: TxRx: 62, Tx: 41, Rx: 20, Hit: 0
+11-01 10:58:23.137 31076 31076 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:dumpsys activity activities'
+11-01 10:58:23.181  1605  4099 D MessageMonitor: Dump Looper message took 1ms
+11-01 10:58:23.314   843   926 E Light   : AmbienteLight: 240.000000
+11-01 10:58:23.374   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:23.374   849   917 I libPerfCtl: xgfGetFPS pid:2168 fps:-1
+11-01 10:58:23.374   849   917 I libPerfCtl: xgfGetFPS pid:2846 fps:-1
+11-01 10:58:23.611  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:23.611  1605  3284 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:23.612 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:23.720 31076 31076 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:screencap -p /sdcard/biraconsultant-profile.png'
+11-01 10:58:24.000  3192 16879 V MediaProvider: isAppCloneUserPair failed. Users: 0 and 0
+11-01 10:58:24.000  3192 16879 W MediaProvider: isAppCloneUserPair for user 0: false
+11-01 10:58:24.003  3720  3720 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+11-01 10:58:24.006  3192  3329 E FuseDaemon: Leveldb setup is missing for: ownership
+11-01 10:58:24.006  3192  3329 E FuseDaemon: ReadOwnership: Missing leveldb connection.
+11-01 10:58:24.006  3192  3329 E FuseDaemon: Leveldb setup is missing for: ownership
+11-01 10:58:24.006  3192  3329 E FuseDaemon: CreateOwnerIdRelation: Missing leveldb connection.
+11-01 10:58:24.006  3192  3329 V DatabaseBackupAndRecovery: Created relation b/w 103014 and com.android.shell::0
+11-01 10:58:24.007  3192  3329 E FuseDaemon: Leveldb setup is missing for: external_primary
+11-01 10:58:24.007  3192  3329 E FuseDaemon: InsertInLevelDb: Missing leveldb connection.
+11-01 10:58:24.009  1605  4099 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:24.010  1605  4099 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:24.013  1605  4099 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:24.013  1605  4099 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:24.018   842   842 W memtrack@1.0-se: type=1400 audit(0.0:21251): avc: denied { read } for name="memory_usage" dev="proc" ino=4026532558 scontext=u:r:hal_memtrack_default:s0 tcontext=u:object_r:proc_memory_usage:s0 tclass=file permissive=0
+11-01 10:58:24.022  2267 32385 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+11-01 10:58:24.027  2267 32385 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+11-01 10:58:24.042  1605  3284 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:24.042  1605  3284 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:24.044  1605  3284 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:24.044  1605  3284 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:24.065  3720  3722 E ion     : ioctl c0044901 failed with code -1: Invalid argument
+11-01 10:58:24.065   495   495 I servicemanager: Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest.
+11-01 10:58:24.312  1605  1846 I SmartPower: com.google.android.gms/10179 state=maintenance adj=0 proc size=4 move to idle service unbind com.google.android.gms/.auth.api.proxy.AuthService
+11-01 10:58:24.374   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:24.374   849   917 I libPerfCtl: xgfGetFPS pid:2168 fps:-1
+11-01 10:58:24.374   849   917 I libPerfCtl: xgfGetFPS pid:2846 fps:-1
+11-01 10:58:24.399   892   892 I BufferQueueProducer: [StatusBar#86](this:0xb4000078223878b0,id:-1,api:0,p:-1,c:892) queueBuffer: fps=0.63 dur=3188.12 max=3011.22 min=176.89
+11-01 10:58:24.400   838   838 I hwcomposer: [HWCDisplay] [Display_0 (type:1)] fps:0.627313,dur:3188.20,max:3011.43,min:176.78  
+11-01 10:58:24.482  1372  1462 D connsyslogger: SD_LOG_ROOT is /data/debuglogger/connsyslog/fw.
+11-01 10:58:24.483  1372  1462 D connsyslogger: systemReady:1
+11-01 10:58:24.613  1605  3284 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:24.613  1605  3284 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:24.614 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:24.648  1249  1322 D AALLightSensor: oldLux=288 [SA:239 LA:239] newLux=288 (oriLux: 239)
+11-01 10:58:24.967  1605  1846 I SmartPower: com.android.vending/10177 state=idle adj=905 proc size=2 move to hibernation service unbind com.android.vending/com.google.android.finsky.developergroupidinfo.DeveloperGroupIdInfoService
+11-01 10:58:25.374   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:25.374   849   917 I libPerfCtl: xgfGetFPS pid:2168 fps:-1
+11-01 10:58:25.374   849   917 I libPerfCtl: xgfGetFPS pid:2846 fps:-1
+11-01 10:58:25.615  1605  3284 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:25.615  1605  3284 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:25.616 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:25.614  1039  1039 W mi_thermald: type=1400 audit(0.0:21252): avc: denied { read } for name="brightness" dev="sysfs" ino=38147 scontext=u:r:mi_thermald:s0 tcontext=u:object_r:sys_lcd_brightness_file:s0 tclass=file permissive=0
+11-01 10:58:25.836  2155  2155 W Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+11-01 10:58:25.838  2159  2343 D MobileStatusTracker(29): onSignalStrengthsChanged signalStrength=SignalStrength:{mCdma=CellSignalStrengthCdma: cdmaDbm=2147483647 cdmaEcio=2147483647 evdoDbm=2147483647 evdoEcio=2147483647 evdoSnr=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mGsm=CellSignalStrengthGsm: rssi=2147483647 ber=2147483647 mTa=2147483647 miuiLevel=0 mOptimizedLevel=0 mLevel=0,mWcdma=CellSignalStrengthWcdma: ss=2147483647 ber=2147483647 rscp=2147483647 ecno=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mTdscdma=CellSignalStrengthTdscdma: rssi=2147483647 ber=2147483647 rscp=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mLte=CellSignalStrengthLte: rssi=-81 rsrp=-92 rsrq=-11 rssnr=6 cqiTableIndex=2147483647 cqi=0 ta=0 miuiLevel=5 mOptimizedLevel=0 level=4 parametersUseForLevel=0,mNr=CellSignalStrengthNr:{ csiRsrp = 2147483647 csiRsrq = 2147483647 csiCqiTableIndex = 2147483647 csiCqiReport = [] ssRsrp = 2147483647 ssRsrq = 2147483647 ssSinr = 2147483647 miuiLevel = 0 mOptimizedLevel = 0 level = 0 parametersUseForLevel = 0 },primary=CellSignalStrengthLte}, phoneId=0, mMtkLevel=0, mMtkRsrpOnly=false, mMtkLteRsrpThreshold=null, mMtkLteRssnrThreshold=null
+11-01 10:58:25.838  2159  2343 D NetworkController.MobileSignalController(29): update5GConnectState: false
+11-01 10:58:25.838  2159  2343 D NetworkController.MobileSignalController(29): ss use aosp level not 0, 5
+11-01 10:58:25.866  1039  1039 W mi_thermald: type=1400 audit(0.0:21253): avc: denied { read } for name="brightness" dev="sysfs" ino=38147 scontext=u:r:mi_thermald:s0 tcontext=u:object_r:sys_lcd_brightness_file:s0 tclass=file permissive=0
+11-01 10:58:26.033  3306  3428 W chromium: [WARNING:net/cert/ev_root_ca_metadata.cc:91] Not implemented
+11-01 10:58:26.374   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:26.375   849   917 I libPerfCtl: xgfGetFPS pid:2168 fps:-1
+11-01 10:58:26.375   849   917 I libPerfCtl: xgfGetFPS pid:2846 fps:-1
+11-01 10:58:26.401   892   892 I BufferQueueProducer: [StatusBar#86](this:0xb4000078223878b0,id:-1,api:0,p:-1,c:892) queueBuffer: fps=1.00 dur=2002.31 max=1188.40 min=813.91
+11-01 10:58:26.402   838   838 I hwcomposer: [HWCDisplay] [Display_0 (type:1)] fps:0.998902,dur:2002.20,max:1188.53,min:813.67  
+11-01 10:58:26.483  1372  1462 D connsyslogger: SD_LOG_ROOT is /data/debuglogger/connsyslog/fw.
+11-01 10:58:26.483  1372  1462 D connsyslogger: systemReady:1
+11-01 10:58:26.606   842   842 W memtrack@1.0-se: type=1400 audit(0.0:21254): avc: denied { read } for name="memory_usage" dev="proc" ino=4026532558 scontext=u:r:hal_memtrack_default:s0 tcontext=u:object_r:proc_memory_usage:s0 tclass=file permissive=0
+11-01 10:58:26.613  3192  3192 I MediaServiceV2: Creating work for intent Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x1400010 cmp=com.google.android.providers.media.module/com.android.providers.media.MediaServiceV2 }
+11-01 10:58:26.614  3192  3192 I MediaServiceV2: Work enqueued for intent: Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x1400010 cmp=com.google.android.providers.media.module/com.android.providers.media.MediaServiceV2 }
+11-01 10:58:26.618  1605  2142 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:26.618  1605  2142 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:26.620 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:26.630  3192  3503 D WM-SystemJobScheduler: Scheduling work ID a3d0460a-39f9-4e95-b9eb-0206afd1ea3b (com.android.providers.media.MediaServiceV2), Job ID 29758
+11-01 10:58:26.630  3720  3720 W RefBase : RefBase: Explicit destruction, weak count = 0 (in 0x7859df5780). Use sp<> to manage this object.
+11-01 10:58:26.637  3720  3720 D RefBase : #00 pc 00000000000ff758  /apex/com.android.runtime/lib64/bionic/libc.so (__cxa_finalize+280)
+11-01 10:58:26.637  3720  3720 D RefBase : #01 pc 00000000000f1b78  /apex/com.android.runtime/lib64/bionic/libc.so (exit+24)
+11-01 10:58:26.637  3720  3720 D RefBase : #02 pc 00000000000851c4  /apex/com.android.runtime/lib64/bionic/libc.so (__libc_init+100)
+11-01 10:58:26.639  3192  3192 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=a3d0460a-39f9-4e95-b9eb-0206afd1ea3b, generation=0)
+11-01 10:58:26.639  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: fc524d77-6a15-4dc9-b3a5-ebcd484d94e2}. Requires device idle.
+11-01 10:58:26.639  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: 49dcbd77-6f82-48e7-af44-bf5fe2dc3e02}. Requires device idle.
+11-01 10:58:26.639  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: 146f1372-1ab3-4365-b344-5041f37d1d79}. Requires device idle.
+11-01 10:58:26.639  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: bd5bf3a5-e1fb-4f37-a229-14db89e1452a}. Requires device idle.
+11-01 10:58:26.639  3192  3503 D WM-GreedyScheduler: Starting work for a3d0460a-39f9-4e95-b9eb-0206afd1ea3b
+11-01 10:58:26.640  3192  3503 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=a3d0460a-39f9-4e95-b9eb-0206afd1ea3b, generation=0)
+11-01 10:58:26.641  3192  3503 D WM-Processor: Work WorkGenerationalId(workSpecId=a3d0460a-39f9-4e95-b9eb-0206afd1ea3b, generation=0) is already enqueued for processing
+11-01 10:58:26.643  3192  3192 D WM-WorkerWrapper: Starting work for com.android.providers.media.MediaServiceV2
+11-01 10:58:26.644  3192  3729 I MediaServiceV2: Work initiated for action [ android.intent.action.MEDIA_SCANNER_SCAN_FILE ]
+11-01 10:58:26.669  3192  3729 D GainmapUtils: PNG: Reached IEND chunk. No Gainmap found.
+11-01 10:58:26.676  3192  3729 E FuseDaemon: Leveldb setup is missing for: external_primary
+11-01 10:58:26.676  3192  3729 E FuseDaemon: InsertInLevelDb: Missing leveldb connection.
+11-01 10:58:26.681  3192  3729 I MediaServiceV2: Work ended for action [ android.intent.action.MEDIA_SCANNER_SCAN_FILE ]
+11-01 10:58:26.684  3192  3503 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=a3d0460a-39f9-4e95-b9eb-0206afd1ea3b, class=com.android.providers.media.MediaServiceV2, tags={ com.android.providers.media.MediaServiceV2 } ]
+11-01 10:58:26.687  3192  3192 D WM-Processor: Processor a3d0460a-39f9-4e95-b9eb-0206afd1ea3b executed; reschedule = false
+11-01 10:58:26.687  3192  3192 D WM-SystemJobService: a3d0460a-39f9-4e95-b9eb-0206afd1ea3b executed on JobScheduler
+11-01 10:58:26.689  3192  3329 E FuseDaemon: Leveldb setup is missing for: ownership
+11-01 10:58:26.690  3192  3329 E FuseDaemon: ReadOwnership: Missing leveldb connection.
+11-01 10:58:26.690  3192  3329 E FuseDaemon: Leveldb setup is missing for: ownership
+11-01 10:58:26.690  3192  3329 E FuseDaemon: CreateOwnerIdRelation: Missing leveldb connection.
+11-01 10:58:26.690  3192  3329 V DatabaseBackupAndRecovery: Created relation b/w 103015 and com.android.shell::0
+11-01 10:58:26.691  3192  3329 E FuseDaemon: Leveldb setup is missing for: external_primary
+11-01 10:58:26.691  3192  3329 E FuseDaemon: InsertInLevelDb: Missing leveldb connection.
+11-01 10:58:26.705  3192  3503 D WM-SystemJobScheduler: Scheduling work ID 6f3a9e55-28c6-4c62-baaf-0a3c91f335bb (com.android.providers.media.photopicker.sync.ProactiveSyncWorker), Job ID 29759
+11-01 10:58:26.706  1605  4427 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:26.707  1605  4427 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:26.707  1605  4427 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:26.707  1605  4427 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:26.708  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: fc524d77-6a15-4dc9-b3a5-ebcd484d94e2}. Requires device idle.
+11-01 10:58:26.708  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: 49dcbd77-6f82-48e7-af44-bf5fe2dc3e02}. Requires device idle.
+11-01 10:58:26.708  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: 146f1372-1ab3-4365-b344-5041f37d1d79}. Requires device idle.
+11-01 10:58:26.709  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: bd5bf3a5-e1fb-4f37-a229-14db89e1452a}. Requires device idle.
+11-01 10:58:26.710  3192  3503 D WM-GreedyScheduler: Cancelling work ID a3d0460a-39f9-4e95-b9eb-0206afd1ea3b
+11-01 10:58:26.711  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: fc524d77-6a15-4dc9-b3a5-ebcd484d94e2}. Requires device idle.
+11-01 10:58:26.711  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: 49dcbd77-6f82-48e7-af44-bf5fe2dc3e02}. Requires device idle.
+11-01 10:58:26.711  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: 146f1372-1ab3-4365-b344-5041f37d1d79}. Requires device idle.
+11-01 10:58:26.711  3192  3503 D WM-GreedyScheduler: Ignoring {WorkSpec: bd5bf3a5-e1fb-4f37-a229-14db89e1452a}. Requires device idle.
+11-01 10:58:26.843  1605  2142 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:26.843  1605  2142 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:27.259 31076 31076 I adbd    : adbd service requested 'sync:'
+11-01 10:58:27.359   849   928 I mtkpower@impl: [powerd_req] TIMER_MSG_PERF_LOCK_TIMEOUT hdl:14380
+11-01 10:58:27.359   849   928 I libPowerHal: [perfLockRel] hdl:14380, idx:3
+11-01 10:58:27.359   849   928 I libPowerHal: [PD] MTKPOWER_HINT_EXT_LAUNCH update cmd:1000000, param:-1
+11-01 10:58:27.359   849   928 I libPowerHal: [PD] MTKPOWER_HINT_EXT_LAUNCH update cmd:2020000 param:1
+11-01 10:58:27.360   849   928 I libPowerHal: [PD] MTKPOWER_HINT_EXT_LAUNCH update cmd:1408300 param:0
+11-01 10:58:27.360   849   928 I libPowerHal: [PD] MTKPOWER_HINT_EXT_LAUNCH update cmd:1000000 param:-1
+11-01 10:58:27.374   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:27.375   849   917 I libPerfCtl: xgfGetFPS pid:2168 fps:-1
+11-01 10:58:27.375   849   917 I libPerfCtl: xgfGetFPS pid:2846 fps:-1
+11-01 10:58:27.402  1039  1039 W mi_thermald: type=1400 audit(0.0:21255): avc: denied { read } for name="brightness" dev="sysfs" ino=38147 scontext=u:r:mi_thermald:s0 tcontext=u:object_r:sys_lcd_brightness_file:s0 tclass=file permissive=0
+11-01 10:58:27.621  1605  2142 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:27.621  1605  2142 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:27.618  1039  1039 W mi_thermald: type=1400 audit(0.0:21256): avc: denied { read } for name="brightness" dev="sysfs" ino=38147 scontext=u:r:mi_thermald:s0 tcontext=u:object_r:sys_lcd_brightness_file:s0 tclass=file permissive=0
+11-01 10:58:27.622 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:27.866  1039  1039 W mi_thermald: type=1400 audit(0.0:21257): avc: denied { read } for name="brightness" dev="sysfs" ino=38147 scontext=u:r:mi_thermald:s0 tcontext=u:object_r:sys_lcd_brightness_file:s0 tclass=file permissive=0
+11-01 10:58:28.024 31076 31076 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:uiautomator dump /sdcard/biraconsultant-profile.xml'
+11-01 10:58:28.119  2155  2365 D FiveGDataOptimize: isAnyCallOngoing callOngoing= false
+11-01 10:58:28.122  2155  2365 D FiveGDataOptimize: TxRx: 2988, Tx: 1531, Rx: 1456, Hit: 0
+11-01 10:58:28.153  3733  3733 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-01 10:58:28.169  3733  3733 I AndroidRuntime: Using default boot image
+11-01 10:58:28.169  3733  3733 I AndroidRuntime: Leaving lock profiling enabled
+11-01 10:58:28.174  3733  3733 I app_process: Core platform API enforcement disabled by runtime option
+11-01 10:58:28.175  3733  3733 I app_process: Using generational CollectorTypeCC GC.
+11-01 10:58:28.189  3192  3192 D WM-DelayedWorkTracker: Scheduling work 6f3a9e55-28c6-4c62-baaf-0a3c91f335bb
+11-01 10:58:28.189  3192  3192 D WM-GreedyScheduler: Starting tracking for 6f3a9e55-28c6-4c62-baaf-0a3c91f335bb
+11-01 10:58:28.190  1605  1730 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:28.190  1605  1730 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:28.191  3192  3389 D WM-ConstraintTracker: BatteryNotLowTracker: initial state = true
+11-01 10:58:28.191  3192  3389 D WM-BrdcstRcvrCnstrntTrc: BatteryNotLowTracker: registering receiver
+11-01 10:58:28.192  1605  1605 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:28.193  1605  1605 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:28.193  3192  3389 D WM-GreedyScheduler: Constraints met: Scheduling work ID WorkGenerationalId(workSpecId=6f3a9e55-28c6-4c62-baaf-0a3c91f335bb, generation=0)
+11-01 10:58:28.195  3192  3389 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=6f3a9e55-28c6-4c62-baaf-0a3c91f335bb, generation=0)
+11-01 10:58:28.198  3192  3192 D WM-WorkerWrapper: Starting work for com.android.providers.media.photopicker.sync.ProactiveSyncWorker
+11-01 10:58:28.199  3192  3736 I PSyncWorker: Starting proactive picker sync from sync source: 1
+11-01 10:58:28.200  3192  3736 I PickerSyncTracker: Created new sync future java.util.concurrent.CompletableFuture@2a1f457[Not completed, 1 dependents]. Future map: {6f3a9e55-28c6-4c62-baaf-0a3c91f335bb=java.util.concurrent.CompletableFuture@2a1f457[Not completed, 1 dependents]}
+11-01 10:58:28.200  3192  3736 D PickerSyncController: syncAllMediaFromProvider() LOCAL, auth=com.android.providers.media.photopicker, retry=true
+11-01 10:58:28.200  3192  3736 D PickerSyncController: getSyncRequestParams() LOCAL, auth=com.android.providers.media.photopicker
+11-01 10:58:28.208  1605  1629 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:28.208  1605  1629 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 3
+11-01 10:58:28.211  3192  3192 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=6f3a9e55-28c6-4c62-baaf-0a3c91f335bb, generation=0)
+11-01 10:58:28.213  3192  3389 D WM-Processor: Work WorkGenerationalId(workSpecId=6f3a9e55-28c6-4c62-baaf-0a3c91f335bb, generation=0) is already enqueued for processing
+11-01 10:58:28.226  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10204, uidState = 8
+11-01 10:58:28.226  3192  3736 D PickerSyncController:    Latest ID/Gen=4bc344c385a4983a:external_primary/1521271
+11-01 10:58:28.227  3192  3736 D PickerSyncController:    Last Synced ID/Gen=4bc344c385a4983a:external_primary/1521264
+11-01 10:58:28.227  3192  3736 D PickerSyncController:    RESULT=SyncRequestParams{type=MEDIA_INCREMENTAL, gen=1521264, latest=Bundle[{last_media_sync_generation=1521271, media_collection_id=4bc344c385a4983a:external_primary}], pageSize=1000}
+11-01 10:58:28.227  3192  3736 I PickerSyncController: Executing SyncRemove. isLocal: true. authority: com.android.providers.media.photopicker
+11-01 10:58:28.227  3192  3736 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = [] with timeout.
+11-01 10:58:28.227  3192  3736 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Locked by thread pool-2-thread-15]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-01 10:58:28.227  3192  3736 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-01 10:58:28.228  1605  1653 W libprocessgroup: Failed to open /dev/blkio//cgroup.procs: No such file or directory
+11-01 10:58:28.228  1605  1908 I SmartPower.com.google.android.calendar/10204(32164): idle->background(65955ms) R(service create com.google.android.calendar/com.google.android.syncadapters.calendar.CalendarSyncAdapterService) adj=0.
+11-01 10:58:28.229  1605  1846 I SmartPower: com.google.android.calendar/10204 state=hibernation adj=0 proc size=1 move to background service create com.google.android.calendar/com.google.android.syncadapters.calendar.CalendarSyncAdapterService
+11-01 10:58:28.234  3192  3736 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = [] with timeout.
+11-01 10:58:28.234  3192  3736 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Locked by thread pool-2-thread-15]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-01 10:58:28.234  3192  3736 D PickerSyncController: Clearing next page token for key: local_provider:media_remove:resume
+11-01 10:58:28.234  3192  3736 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-01 10:58:28.234  3192  3736 D PickerNotificationSender: Sending a notification for media update
+11-01 10:58:28.235  3192  3736 D PickerNotificationSender: Sending a notification for merged album media update Videos
+11-01 10:58:28.235  3192  3736 D PickerNotificationSender: Sending a notification for album media update Videos
+11-01 10:58:28.236  3192  3736 D PickerNotificationSender: Sending a notification for merged album media update Favorites
+11-01 10:58:28.236  3192  3736 D PickerNotificationSender: Sending a notification for album media update Favorites
+11-01 10:58:28.238  3192  3736 I PickerSyncController: Paged sync successful. QueryArgs: Bundle[{android.provider.extra.SYNC_GENERATION=1521264, android.provider.extra.PAGE_SIZE=1000}] Total Rows: 0
+11-01 10:58:28.238  3192  3736 I PickerSyncController: Executing SyncAdd. isLocal: true. authority: com.android.providers.media.photopicker
+11-01 10:58:28.238  3192  3736 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = [] with timeout.
+11-01 10:58:28.239  3192  3736 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Locked by thread pool-2-thread-15]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-01 10:58:28.239  3192  3736 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-01 10:58:28.239  3192  3736 D ExternalDbFacade: Token received for queryMedia = null
+11-01 10:58:28.244  1605  1846 I SmartPower: com.google.android.calendar/10204 state=background adj=0 proc size=1 move to inactive service end com.google.android.calendar/com.google.android.syncadapters.calendar.CalendarSyncAdapterService
+11-01 10:58:28.248  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10097, uidState = 8
+11-01 10:58:28.251  1605  2142 I SmartPower.com.android.providers.calendar/10097(32183): idle->background(81418ms) R(content provider start ContentProviderRecord{6d12b3f u0 com.android.providers.calendar/.CalendarProvider2}) adj=100.
+11-01 10:58:28.251  1605  1846 I SmartPower: com.android.providers.calendar/10097 state=hibernation adj=100 proc size=1 move to background content provider start ContentProviderRecord{6d12b3f u0 com.android.providers.calendar/.CalendarProvider2}
+11-01 10:58:28.251  1605  1846 I SmartPower: com.android.providers.calendar/10097 state=background adj=100 proc size=1 move to inactive content provider start ContentProviderRecord{6d12b3f u0 com.android.providers.calendar/.CalendarProvider2}
+11-01 10:58:28.259  3192  3736 D PickerSyncTracker: Sync future has already been completed or is not currently tracked for work id: 6f3a9e55-28c6-4c62-baaf-0a3c91f335bb. Future map: {}
+11-01 10:58:28.259  3192  3736 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = [] with timeout.
+11-01 10:58:28.259  3192  3736 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Locked by thread pool-2-thread-15]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-01 10:58:28.259  3192  3736 D PickerSyncController: Saving next page token: 1793494706000|1000363093 for key: local_provider:media_add:resume
+11-01 10:58:28.260  3192  3736 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-01 10:58:28.261  3192  3736 D PickerNotificationSender: Sending a notification for media update
+11-01 10:58:28.261  3192  3736 D PickerNotificationSender: Sending a notification for merged album media update Videos
+11-01 10:58:28.261  3192  3736 D PickerNotificationSender: Sending a notification for album media update Videos
+11-01 10:58:28.262  3192  3736 D PickerNotificationSender: Sending a notification for merged album media update Favorites
+11-01 10:58:28.262  3192  3736 D PickerNotificationSender: Sending a notification for album media update Favorites
+11-01 10:58:28.264  3192  3736 D ExternalDbFacade: Token received for queryMedia = 1793494706000|1000363093
+11-01 10:58:28.283  3192  3736 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = [] with timeout.
+11-01 10:58:28.283  3192  3736 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Locked by thread pool-2-thread-15]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-01 10:58:28.283  3192  3736 D PickerSyncController: Clearing next page token for key: local_provider:media_add:resume
+11-01 10:58:28.283  3192  3736 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@3aa188b[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-01 10:58:28.283  3192  3736 D PickerNotificationSender: Sending a notification for media update
+11-01 10:58:28.284  3192  3736 D PickerNotificationSender: Sending a notification for merged album media update Videos
+11-01 10:58:28.284  3192  3736 D PickerNotificationSender: Sending a notification for album media update Videos
+11-01 10:58:28.285  3192  3736 D PickerNotificationSender: Sending a notification for merged album media update Favorites
+11-01 10:58:28.285  3192  3736 D PickerNotificationSender: Sending a notification for album media update Favorites
+11-01 10:58:28.286  3192  3736 I PickerSyncController: Paged sync successful. QueryArgs: Bundle[{android.provider.extra.PAGE_TOKEN=1793494706000|1000363093, android.provider.extra.SYNC_GENERATION=1521264, android.provider.extra.PAGE_SIZE=1000}] Total Rows: 1
+11-01 10:58:28.286  3192  3736 D PickerSyncTracker: Sync future has already been completed or is not currently tracked for work id: 6f3a9e55-28c6-4c62-baaf-0a3c91f335bb. Future map: {}
+11-01 10:58:28.286  3192  3736 I PickerSyncTracker: Marked sync future complete for work id: 6f3a9e55-28c6-4c62-baaf-0a3c91f335bb. Future map: {}
+11-01 10:58:28.286  3192  3736 I PSyncWorker: Completed picker proactive sync complete from local provider.
+11-01 10:58:28.288  3192  3389 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=6f3a9e55-28c6-4c62-baaf-0a3c91f335bb, class=com.android.providers.media.photopicker.sync.ProactiveSyncWorker, tags={ com.android.providers.media.photopicker.sync.ProactiveSyncWorker } ]
+11-01 10:58:28.289  3192  3192 D WM-Processor: Processor 6f3a9e55-28c6-4c62-baaf-0a3c91f335bb executed; reschedule = false
+11-01 10:58:28.289  3192  3192 D WM-GreedyScheduler: Stopping tracking for WorkGenerationalId(workSpecId=6f3a9e55-28c6-4c62-baaf-0a3c91f335bb, generation=0)
+11-01 10:58:28.290  3192  3192 D WM-SystemJobService: 6f3a9e55-28c6-4c62-baaf-0a3c91f335bb executed on JobScheduler
+11-01 10:58:28.290   842   842 W memtrack@1.0-se: type=1400 audit(0.0:21258): avc: denied { read } for name="memory_usage" dev="proc" ino=4026532558 scontext=u:r:hal_memtrack_default:s0 tcontext=u:object_r:proc_memory_usage:s0 tclass=file permissive=0
+11-01 10:58:28.294  3192  3389 D WM-GreedyScheduler: Cancelling work ID 6f3a9e55-28c6-4c62-baaf-0a3c91f335bb
+11-01 10:58:28.298  3192  3389 D WM-GreedyScheduler: Ignoring {WorkSpec: fc524d77-6a15-4dc9-b3a5-ebcd484d94e2}. Requires device idle.
+11-01 10:58:28.298  3192  3389 D WM-GreedyScheduler: Ignoring {WorkSpec: 49dcbd77-6f82-48e7-af44-bf5fe2dc3e02}. Requires device idle.
+11-01 10:58:28.299  3192  3389 D WM-GreedyScheduler: Ignoring {WorkSpec: 146f1372-1ab3-4365-b344-5041f37d1d79}. Requires device idle.
+11-01 10:58:28.299  3192  3389 D WM-GreedyScheduler: Ignoring {WorkSpec: bd5bf3a5-e1fb-4f37-a229-14db89e1452a}. Requires device idle.
+11-01 10:58:28.300  3192  3389 D WM-BrdcstRcvrCnstrntTrc: BatteryNotLowTracker: unregistering receiver
+11-01 10:58:28.314  1605  1846 I SmartPower: com.google.android.gms/10179 state=idle adj=100 proc size=4 move to hibernation service unbind com.google.android.gms/.auth.api.proxy.AuthService
+11-01 10:58:28.329 32164  3737 W cal.anpn: Application name is not set. Call Builder#setApplicationName.
+11-01 10:58:28.337  3733  3733 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+11-01 10:58:28.362  3733  3733 D nativeloader: Load libicu_jni.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+11-01 10:58:28.363  3733  3733 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-01 10:58:28.363  3733  3733 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt70l.dat
+11-01 10:58:28.367  3733  3733 D nativeloader: Load libjavacore.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+11-01 10:58:28.369  3733  3733 D nativeloader: Load libopenjdk.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+11-01 10:58:28.371  3733  3733 I app_process: Priority-to-niceness mapping: 19, 16, 13, 10, 0, -2, -4, -5, -6, -8
+11-01 10:58:28.375   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:28.375   849   917 I libPerfCtl: xgfGetFPS pid:2168 fps:-1
+11-01 10:58:28.375   849   917 I libPerfCtl: xgfGetFPS pid:2846 fps:-1
+11-01 10:58:28.397 32183   309 I CalP:D:CalendarProvider2: updateInTransaction()
+11-01 10:58:28.400   892   892 I BufferQueueProducer: [StatusBar#86](this:0xb4000078223878b0,id:-1,api:0,p:-1,c:892) queueBuffer: fps=1.00 dur=1998.93 max=999.48 min=999.45
+11-01 10:58:28.400 32183   309 I CalP:D:CalendarProvider2: No events to update: uri=content://com.android.calendar/events?* selection=(_sync_id IS NOT NULL) AND (calendar_id=?) selectionArgs=[12]
+11-01 10:58:28.401   838   838 I hwcomposer: [HWCDisplay] [Display_0 (type:1)] fps:1.000507,dur:1998.99,max:999.69,min:999.30  
+11-01 10:58:28.419  3733  3733 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+11-01 10:58:28.420  3733  3733 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-01 10:58:28.420  3733  3733 W libc    : Access denied finding property "ro.vendor.mtk.app32_boost_support"
+11-01 10:58:28.430  3733  3764 I MessageMonitor: Load libmiui_runtime
+11-01 10:58:28.432  3733  3764 D nativeloader: Load libmiui_runtime.so using system ns (caller=/system_ext/framework/miui-framework.jar): ok
+11-01 10:58:28.448  1605  1605 D BatterySaverPolicy: accessibility changed to true, updating policy.
+11-01 10:58:28.456  2725  2725 I SafetyCenterAccessibilityListener: accessibility event occurred, safety center feature not enabled.
+11-01 10:58:28.457  1605  1605 D AS.AudioService: Accessibility volume enabled = false
+11-01 10:58:28.483  1372  1462 D connsyslogger: SD_LOG_ROOT is /data/debuglogger/connsyslog/fw.
+11-01 10:58:28.483  1372  1462 D connsyslogger: systemReady:1
+11-01 10:58:28.525  1372  1463 D connsyslogger: data recycle:time out
+11-01 10:58:28.525  1372  1463 D connsyslogger: idx=0 Bootup Log: 2 log files! filecount=3 
+11-01 10:58:28.592  2155  2155 W Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+11-01 10:58:28.594  2159  2343 D MobileStatusTracker(29): onSignalStrengthsChanged signalStrength=SignalStrength:{mCdma=CellSignalStrengthCdma: cdmaDbm=2147483647 cdmaEcio=2147483647 evdoDbm=2147483647 evdoEcio=2147483647 evdoSnr=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mGsm=CellSignalStrengthGsm: rssi=2147483647 ber=2147483647 mTa=2147483647 miuiLevel=0 mOptimizedLevel=0 mLevel=0,mWcdma=CellSignalStrengthWcdma: ss=2147483647 ber=2147483647 rscp=2147483647 ecno=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mTdscdma=CellSignalStrengthTdscdma: rssi=2147483647 ber=2147483647 rscp=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mLte=CellSignalStrengthLte: rssi=-85 rsrp=-95 rsrq=-10 rssnr=4 cqiTableIndex=2147483647 cqi=0 ta=0 miuiLevel=5 mOptimizedLevel=0 level=4 parametersUseForLevel=0,mNr=CellSignalStrengthNr:{ csiRsrp = 2147483647 csiRsrq = 2147483647 csiCqiTableIndex = 2147483647 csiCqiReport = [] ssRsrp = 2147483647 ssRsrq = 2147483647 ssSinr = 2147483647 miuiLevel = 0 mOptimizedLevel = 0 level = 0 parametersUseForLevel = 0 },primary=CellSignalStrengthLte}, phoneId=0, mMtkLevel=0, mMtkRsrpOnly=false, mMtkLteRsrpThreshold=null, mMtkLteRssnrThreshold=null
+11-01 10:58:28.594  2159  2343 D NetworkController.MobileSignalController(29): update5GConnectState: false
+11-01 10:58:28.594  2159  2343 D NetworkController.MobileSignalController(29): ss use aosp level not 0, 5
+11-01 10:58:28.623  1605  3284 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:28.623  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:28.624 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:28.648  1249  1322 D AALLightSensor: oldLux=288 [SA:239 LA:239] newLux=288 (oriLux: 239)
+11-01 10:58:28.812 32183   309 I CalP:D:CalendarProvider2: deleteInTransaction()
+11-01 10:58:28.814 32183   309 I CalP:D:AlarmManager: cancel(): alarmTime:PendingIntent{beea20a: android.os.BinderProxy@7b63a7b}
+11-01 10:58:28.816  1605  3284 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:28.819 32183   309 I CalP:D:CalendarProvider2: updateInTransaction()
+11-01 10:58:28.822 32183   309 D CalP:D:CalendarProvider2: notifyChange(): syncToNetwork:false
+11-01 10:58:28.882  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10204, uidState = 10
+11-01 10:58:28.883  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10097, uidState = 10
+11-01 10:58:28.888  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10204, uidState = 19
+11-01 10:58:28.890  1605  1780 I MiuiNetworkPolicy: updateUidState uid = 10097, uidState = 19
+11-01 10:58:29.375   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:29.375   849   917 I libPerfCtl: xgfGetFPS pid:2168 fps:-1
+11-01 10:58:29.375   849   917 I libPerfCtl: xgfGetFPS pid:2846 fps:-1
+11-01 10:58:29.402  1039  1039 W mi_thermald: type=1400 audit(0.0:21259): avc: denied { read } for name="brightness" dev="sysfs" ino=38147 scontext=u:r:mi_thermald:s0 tcontext=u:object_r:sys_lcd_brightness_file:s0 tclass=file permissive=0
+11-01 10:58:29.410   892   892 I BufferQueueProducer: [StatusBar#86](this:0xb4000078223878b0,id:-1,api:0,p:-1,c:892) queueBuffer: fps=1.98 dur=1009.88 max=810.61 min=199.28
+11-01 10:58:29.411   838   838 I hwcomposer: [HWCDisplay] [Display_0 (type:1)] fps:4.950693,dur:1009.96,max:744.83,min:9.93  
+11-01 10:58:29.625  1605  3284 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:29.625  1605  3284 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:29.626 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:29.981   843   926 E Light   : AmbienteLight: 239.000000
+11-01 10:58:30.176  2267  2267 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.measurement.START pkg=com.google.android.gms }
+11-01 10:58:30.178  1605  3284 W ProcessStats: Tracking association SourceState{45f2465 com.android.systemui/1000 BTopFgs #54028} whose proc state 2 is better than process ProcessState{2934746 com.miui.securitycenter.remote/1000 pkg=com.miui.securitycenter} proc state 3 (83 skipped)
+11-01 10:58:30.207  3733  3733 W libc    : Access denied finding property "qemu.sf.lcd_density"
+11-01 10:58:30.207  3733  3733 W libc    : Access denied finding property "qemu.sf.lcd_density"
+11-01 10:58:30.206  3733  3733 W uiautomator: type=1400 audit(0.0:21260): avc: denied { read } for name="u:object_r:qemu_sf_lcd_density_prop:s0" dev="tmpfs" ino=10463 scontext=u:r:shell:s0 tcontext=u:object_r:qemu_sf_lcd_density_prop:s0 tclass=file permissive=0
+11-01 10:58:30.206  3733  3733 W uiautomator: type=1400 audit(0.0:21261): avc: denied { read } for name="u:object_r:qemu_sf_lcd_density_prop:s0" dev="tmpfs" ino=10463 scontext=u:r:shell:s0 tcontext=u:object_r:qemu_sf_lcd_density_prop:s0 tclass=file permissive=0
+11-01 10:58:30.212  3733  3733 D ThemeCompatibility: START loading theme compatibility config.
+11-01 10:58:30.213  3733  3733 D ThemeCompatibility: getVersion(): /data/system/theme_config/theme_compatibility.xml  java.io.FileNotFoundException: /data/system/theme_config/theme_compatibility.xml: open failed: ENOENT (No such file or directory)
+11-01 10:58:30.215  3733  3733 D ThemeCompatibility: getConfigDocumentTree(): 140 vs -1
+11-01 10:58:30.216  3733  3733 D ThemeCompatibility:     parse file: /product/media/theme/theme_compatibility.xml
+11-01 10:58:30.224  3733  3733 D ThemeCompatibility: END loading: version=140 size=71
+11-01 10:58:30.242  3733  3733 D nativeloader: Load libjavacrypto.so using APEX ns com_android_conscrypt for caller /apex/com.android.conscrypt/javalib/conscrypt.jar: ok
+11-01 10:58:30.256  1237  1237 I thermal_repeater: [recvMdThermalInfo] ret=25, strLen=127,  3, 25, -7, 196, 32767, 0
+11-01 10:58:30.305  2086  2218 I Tethering: [BpfCoordinator] onAlertReached
+11-01 10:58:30.309  3733  3733 W app_process: unable to execute idmap2: Permission denied
+11-01 10:58:30.306  3733  3733 W uiautomator: type=1400 audit(0.0:21262): avc: denied { execute } for name="idmap2" dev="dm-6" ino=354 scontext=u:r:shell:s0 tcontext=u:object_r:idmap_exec:s0 tclass=file permissive=0
+11-01 10:58:30.310  3733  3733 I AssetManagerImpl : Load libmiui_runtime
+11-01 10:58:30.312  3733  3733 W asset   : unable to execute idmap2: Permission denied
+11-01 10:58:30.312  3733  3733 W AssetManagerImpl : 'idmap2 --scan' failed: no static="true" overlays targeting "miui" will be loaded
+11-01 10:58:30.310  3733  3733 W uiautomator: type=1400 audit(0.0:21263): avc: denied { execute } for name="idmap2" dev="dm-6" ino=354 scontext=u:r:shell:s0 tcontext=u:object_r:idmap_exec:s0 tclass=file permissive=0
+11-01 10:58:30.326  3192  3518 V MediaProvider: isAppCloneUserPair failed. Users: 0 and 0
+11-01 10:58:30.326  3192  3518 W MediaProvider: isAppCloneUserPair for user 0: false
+11-01 10:58:30.334  3192  3329 E FuseDaemon: Leveldb setup is missing for: ownership
+11-01 10:58:30.334  3192  3329 E FuseDaemon: ReadOwnership: Missing leveldb connection.
+11-01 10:58:30.334  3192  3329 E FuseDaemon: Leveldb setup is missing for: ownership
+11-01 10:58:30.334  3192  3329 E FuseDaemon: CreateOwnerIdRelation: Missing leveldb connection.
+11-01 10:58:30.334  3192  3329 V DatabaseBackupAndRecovery: Created relation b/w 103016 and com.android.shell::0
+11-01 10:58:30.334  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@125a6; boundsInParent: Rect(0, 0 - 1080, 0); boundsInScreen: Rect(0, 0 - 1080, 0); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: com.miui.home:id/edit_mode_menu_on_top; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.334  3192  3329 E FuseDaemon: Leveldb setup is missing for: external_primary
+11-01 10:58:30.334  3192  3329 E FuseDaemon: InsertInLevelDb: Missing leveldb connection.
+11-01 10:58:30.334  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@3e3a1; boundsInParent: Rect(0, 0 - 1080, 2190); boundsInScreen: Rect(0, 80 - 0, 2270); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.336  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@9e82; boundsInParent: Rect(0, 0 - 1080, 55); boundsInScreen: Rect(0, 1988 - 1080, 2043); packageName: com.miui.home; className: com.miui.home.launcher.ScreenView; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: true; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SCROLL_FORWARD - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.375   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:30.410   892   892 I BufferQueueProducer: [StatusBar#86](this:0xb4000078223878b0,id:-1,api:0,p:-1,c:892) queueBuffer: fps=1.00 dur=1000.12 max=1000.12 min=1000.12
+11-01 10:58:30.411   838   838 I hwcomposer: [HWCDisplay] [Display_0 (type:1)] fps:0.999861,dur:1000.14,max:1000.14,min:1000.14  
+11-01 10:58:30.483  1372  1462 D connsyslogger: SD_LOG_ROOT is /data/debuglogger/connsyslog/fw.
+11-01 10:58:30.483  1372  1462 D connsyslogger: systemReady:1
+11-01 10:58:30.509  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@3cd1b; boundsInParent: Rect(0, 0 - 1080, 2190); boundsInScreen: Rect(1080, 80 - 1080, 2270); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.509  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@3c1d8; boundsInParent: Rect(0, 0 - 1080, 2190); boundsInScreen: Rect(2160, 80 - 1080, 2270); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.509  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@3b695; boundsInParent: Rect(0, 0 - 1080, 2190); boundsInScreen: Rect(3240, 80 - 1080, 2270); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.509  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@3ab52; boundsInParent: Rect(0, 0 - 1080, 2190); boundsInScreen: Rect(4320, 80 - 1080, 2270); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.510  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@3a00f; boundsInParent: Rect(0, 0 - 1080, 2190); boundsInScreen: Rect(5400, 80 - 1080, 2270); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.510  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@394cc; boundsInParent: Rect(0, 0 - 1080, 2190); boundsInScreen: Rect(6480, 80 - 1080, 2270); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.510  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@38989; boundsInParent: Rect(0, 0 - 1080, 2190); boundsInScreen: Rect(7560, 80 - 1080, 2270); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.549  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@237af; boundsInParent: Rect(0, 0 - 1080, 0); boundsInScreen: Rect(0, 0 - 1080, 0); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: com.miui.home:id/target_container; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.552  3733  3733 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@21225; boundsInParent: Rect(0, 0 - 1080, 0); boundsInScreen: Rect(0, 0 - 1080, 0); packageName: com.miui.home; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; viewIdResName: com.miui.home:id/uninstall_dialog; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+11-01 10:58:30.554  3733  3733 W AccessibilityNodeInfoDumper: Fetch time: 232ms
+11-01 10:58:30.555  1605  4099 D WindowManager: setParent old=Leaf:29:31@158434736,new=null,this window=WindowToken{f8f5484 type=2032 android.os.Binder@dfd2a97},callers=com.android.server.wm.WindowContainer.removeChild:826 com.android.server.wm.WindowContainer.removeImmediately:887 com.android.server.wm.WindowToken.setExiting:254 com.android.server.wm.DisplayContent.removeWindowToken:1416 com.android.server.wm.WindowManagerService.removeWindowToken:3275 com.android.server.wm.WindowManagerService$LocalService.removeWindowToken:8475 
+11-01 10:58:30.559  1605  1605 D BatterySaverPolicy: accessibility changed to false, updating policy.
+11-01 10:58:30.561  3733  3733 D AndroidRuntime: Shutting down VM
+11-01 10:58:30.626  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:30.627  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:30.628 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:30.638  2267  2267 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.chromesync.service.firstparty.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+11-01 10:58:30.634   842   842 W memtrack@1.0-se: type=1400 audit(0.0:21264): avc: denied { read } for name="memory_usage" dev="proc" ino=4026532558 scontext=u:r:hal_memtrack_default:s0 tcontext=u:object_r:proc_memory_usage:s0 tclass=file permissive=0
+11-01 10:58:30.638  2267  2267 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.chromesync.service.firstparty.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+11-01 10:58:30.706  2267 27728 I SyncManager: (REDACTED) Executing sync(type=%s%s)
+11-01 10:58:30.793  2267 27728 I SyncManager: (REDACTED) Executing sync(type=%s) finished in %s
+11-01 10:58:31.047  1605  4099 D AlarmManagerService: inside native alarm timerfd set Alarm Type = 2
+11-01 10:58:31.051  2267 30819 I GmscoreIpa: Starting mediastore instant index [CONTEXT service_id=255 ]
+11-01 10:58:31.245  1605  1846 I SmartPower.com.google.android.calendar/10204(32164): background->idle(3017ms) R(service end com.google.android.calendar/com.google.android.syncadapters.calendar.CalendarSyncAdapterService) adj=905.
+11-01 10:58:31.245  1605  1846 I SmartPower: com.google.android.calendar/10204 state=inactive adj=905 proc size=1 move to idle service end com.google.android.calendar/com.google.android.syncadapters.calendar.CalendarSyncAdapterService
+11-01 10:58:31.251  1605  1846 I SmartPower.com.android.providers.calendar/10097(32183): background->idle(3001ms) R(content provider start ContentProviderRecord{6d12b3f u0 com.android.providers.calendar/.CalendarProvider2}) adj=905.
+11-01 10:58:31.252  1605  1846 I SmartPower: com.android.providers.calendar/10097 state=inactive adj=905 proc size=1 move to idle content provider start ContentProviderRecord{6d12b3f u0 com.android.providers.calendar/.CalendarProvider2}
+11-01 10:58:31.325  3874  4626 D TrafficManageService: onReceive: intent.action = com.android.server.action.NETWORK_STATS_UPDATED
+11-01 10:58:31.327  3874  4626 D TrafficManageService-TrafficSimManager: notifyByNetChange: gooooo
+11-01 10:58:31.344  3874  4626 D TrafficManageService-TrafficSimManager: getMonthDataUsageUsed: new_get = 208424945
+11-01 10:58:31.375   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:31.393  2155  2155 W Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+11-01 10:58:31.394  2159  2343 D MobileStatusTracker(29): onSignalStrengthsChanged signalStrength=SignalStrength:{mCdma=CellSignalStrengthCdma: cdmaDbm=2147483647 cdmaEcio=2147483647 evdoDbm=2147483647 evdoEcio=2147483647 evdoSnr=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mGsm=CellSignalStrengthGsm: rssi=2147483647 ber=2147483647 mTa=2147483647 miuiLevel=0 mOptimizedLevel=0 mLevel=0,mWcdma=CellSignalStrengthWcdma: ss=2147483647 ber=2147483647 rscp=2147483647 ecno=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mTdscdma=CellSignalStrengthTdscdma: rssi=2147483647 ber=2147483647 rscp=2147483647 miuiLevel=0 mOptimizedLevel=0 level=0,mLte=CellSignalStrengthLte: rssi=-83 rsrp=-93 rsrq=-12 rssnr=5 cqiTableIndex=2147483647 cqi=0 ta=0 miuiLevel=5 mOptimizedLevel=0 level=4 parametersUseForLevel=0,mNr=CellSignalStrengthNr:{ csiRsrp = 2147483647 csiRsrq = 2147483647 csiCqiTableIndex = 2147483647 csiCqiReport = [] ssRsrp = 2147483647 ssRsrq = 2147483647 ssSinr = 2147483647 miuiLevel = 0 mOptimizedLevel = 0 level = 0 parametersUseForLevel = 0 },primary=CellSignalStrengthLte}, phoneId=0, mMtkLevel=0, mMtkRsrpOnly=false, mMtkLteRsrpThreshold=null, mMtkLteRssnrThreshold=null
+11-01 10:58:31.394  2159  2343 D NetworkController.MobileSignalController(29): update5GConnectState: false
+11-01 10:58:31.394  2159  2343 D NetworkController.MobileSignalController(29): ss use aosp level not 0, 5
+11-01 10:58:31.401  3733  3733 W RefBase : RefBase: Explicit destruction, weak count = 0 (in 0x72e6f9d780). Use sp<> to manage this object.
+11-01 10:58:31.413  3733  3733 D RefBase : #00 pc 00000000000ff758  /apex/com.android.runtime/lib64/bionic/libc.so (__cxa_finalize+280)
+11-01 10:58:31.413  3733  3733 D RefBase : #01 pc 00000000000f1b78  /apex/com.android.runtime/lib64/bionic/libc.so (exit+24)
+11-01 10:58:31.413  3733  3733 D RefBase : #02 pc 00000000000851c4  /apex/com.android.runtime/lib64/bionic/libc.so (__libc_init+100)
+11-01 10:58:31.420  2155  2155 D TelephonyManager: requestModemActivityInfo: Sending result to app: ModemActivityInfo{ mTimestamp=15031128 mSleepTimeMs=9176282 mIdleTimeMs=1653553 mActivityStatsTechSpecificInfo=[{mRat=UNKNOWN,mFrequencyRange=UNKNOWN,mTxTimeMs[]=[1940, 5, 394367, 443761, 220496],mRxTimeMs=4174938}]}
+11-01 10:58:31.628  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:31.628  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:31.629 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:31.837  3269  3588 D MQSRuleManager: Begin to match mqsas rules
+11-01 10:58:31.837  3269  3588 D MQSRuleManager: Global phone do not support to match rule for capturing log. 
+11-01 10:58:31.837  3269  3588 W MQSEventManager: Method in addExceptionCommetAction, actionCommand is null!
+11-01 10:58:31.837  3269  3588 W MQSActionExecutor: action is null!
+11-01 10:58:31.837  3269  3588 W MQSEventManager: executeResult is 2
+11-01 10:58:31.861  3481  3489 W System  : A resource failed to call close. 
+11-01 10:58:31.870 31076 31076 I adbd    : adbd service requested 'sync:'
+11-01 10:58:32.375   849   917 I libPerfCtl: xgfGetFPS pid:2159 fps:-1
+11-01 10:58:32.409   892   892 I BufferQueueProducer: [StatusBar#86](this:0xb4000078223878b0,id:-1,api:0,p:-1,c:892) queueBuffer: fps=0.50 dur=1999.25 max=1999.25 min=1999.25
+11-01 10:58:32.410   838   838 I hwcomposer: [HWCDisplay] [Display_0 (type:1)] fps:1.000454,dur:1999.09,max:1843.66,min:155.43  
+11-01 10:58:32.483  1372  1462 D connsyslogger: SD_LOG_ROOT is /data/debuglogger/connsyslog/fw.
+11-01 10:58:32.483  1372  1462 D connsyslogger: systemReady:1
+11-01 10:58:32.630  1605  4099 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:32.630  1605  2142 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+11-01 10:58:32.631 25764 25803 D SarControllerService: setReceiverState isEarPieceOn = false,on = false,isRECON() = false
+11-01 10:58:32.648  1249  1322 D AALLightSensor: oldLux=288 [SA:237 LA:237] newLux=288 (oriLux: 237)
+11-01 10:58:32.676 31076 31076 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-t' '2200''
