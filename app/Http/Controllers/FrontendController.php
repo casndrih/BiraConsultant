@@ -297,7 +297,7 @@ class FrontendController extends Controller
     {
         $query = BiraConsultantCompany::publiclyVisible()->withCount(['jobs' => function($q) {
             $q->active();
-        }]);;
+        }]);
 
         if ($request->filled('search')) {
             $query->where(function($q) use ($request) {
