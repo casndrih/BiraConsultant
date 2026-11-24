@@ -37,7 +37,7 @@
                 <p class="text-3xl font-medium text-gray-800 dark:text-white">{{ $todayApplications }}</p>
             </div>
             <div class="bg-white dark:bg-custom-dark shadow-sm rounded-lg p-4 text-center">
-                <p class="text-gray-600 dark:text-gray-3">Users Joined Today</p>
+                <p class="text-gray-600 dark:text-gray-300">Users Joined Today</p>
                 <p class="text-3xl font-medium text-gray-800 dark:text-white">{{ $todayUsers }}</p>
             </div>
         </div>
