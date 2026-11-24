@@ -349,6 +349,7 @@ jobs:
           import time
           import urllib.parse
           import urllib.request
+          import urllib.error
           from html.parser import HTMLParser
           from urllib.parse import urlparse
 
@@ -445,8 +446,6 @@ jobs:
           public_paths = [
               "/jobs", "/companies", "/blog", "/about", "/advertising",
               "/contact", "/privacy", "/terms", "/search?q=administrator",
-              "/jobs/senior-systems-administrator-1",
-              "/companies/bank-south-pacific",
               "/jobs/list", "/companies/list", "/api/countries",
           ]
           for path in public_paths:
@@ -454,6 +453,19 @@ jobs:
                   if response.status != 200:
                       raise SystemExit(f"PUBLIC_ROUTE_FAILED path={path} status={response.status}")
               print(f"PUBLIC_ROUTE_PASSED path={path}")
+
+          demo_public_paths = [
+              "/jobs/senior-systems-administrator-1",
+              "/companies/bank-south-pacific",
+          ]
+          for path in demo_public_paths:
+              try:
+                  with urllib.request.urlopen(BASE + path, timeout=30) as response:
+                      raise SystemExit(f"DEMO_CONTENT_EXPOSED path={path} status={response.status}")
+              except urllib.error.HTTPError as error:
+                  if error.code != 404:
+                      raise SystemExit(f"DEMO_VISIBILITY_CHECK_FAILED path={path} status={error.code}")
+              print(f"DEMO_CONTENT_HIDDEN path={path}")
 
           role_routes = {
               "martha.kila@biraconsultant.test": [
