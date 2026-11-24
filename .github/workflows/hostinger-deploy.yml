@@ -263,7 +263,7 @@ jobs:
           $provider = \Illuminate\Support\Facades\Auth::guard("web")->getProvider();
           $candidate = $provider->retrieveByCredentials(["email" => "martha.kila@biraconsultant.test"]);
           if (!$candidate || !$provider->validateCredentials($candidate, ["password" => getenv("BIRA_DEMO_PASSWORD")])) { exit(36); }
-          echo "AUTH_PROVIDER_VALIDATION_PASSED\n";
+          echo "AUTH_PROVIDER_VALIDATION_PASSED id=".$candidate->getKey()." db=".config("database.connections.mysql.database")."\n";
           PHP
               echo "BIRA_DEMO_SEED_COMPLETED"
           fi
