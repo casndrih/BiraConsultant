@@ -46,7 +46,7 @@
                 <tr class="bg-gray-50 dark:bg-black hover:bg-gray-100 dark:hover:bg-custom-dark"
                     data-id="{{ $company->id }}">
                     <td class="px-auto py-4">
-                        <img class="w-auto h-6 ml-4" src="{{ $company->logo ?? asset('/images/users/userpro.png') }}" alt="Company Logo">
+                        <img class="w-auto h-6 ml-4" src="{{ $company->logo_url ?? asset('/images/users/userpro.png') }}" alt="Company Logo">
                     </td>
                     <td class="px-6 py-4 text-base font-medium text-black dark:text-white">{{ $company->name }}</td>
                     <td class="px-6 py-4 text-base font-medium text-black dark:text-white">{{ $company->industry ?? 'N/A' }}</td>
