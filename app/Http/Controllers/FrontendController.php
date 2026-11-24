@@ -395,7 +395,7 @@ class FrontendController extends Controller
         if (!$id) {
             return redirect()->route('companies');
         }
-        $company = BiraConsultantCompany::findOrFail($id);
+        $company = BiraConsultantCompany::publiclyVisible()->findOrFail($id);
 
         $jobs = BiraConsultantJob::with(['category', 'jobType', 'experienceLevel'])
             ->where('company_id', $company->id)
