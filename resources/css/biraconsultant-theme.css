@@ -1092,6 +1092,17 @@
     }
 }
 @media (max-width: 767px) {
+    .qj-dashboard-page .qj-dashboard-hero__inner .flex.items-center.justify-between {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .qj-dashboard-page .qj-dashboard-hero__inner .text-right {
+        text-align: left;
+    }
+}
+
+@media (max-width: 767px) {
     .qj-dashboard-page form .grid {
         grid-template-columns: minmax(0, 1fr);
     }
