@@ -1,0 +1,64 @@
+name: Deploy footer update to Hostinger
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "resources/views/layouts/footer.blade.php"
+      - ".github/workflows/hostinger-footer-deploy.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-footer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update footer and refresh Laravel caches on Hostinger
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          envs: GH_TOKEN
+          command_timeout: 10m
+          script: |
+            set -eu
+            DOMAIN_DIR="$HOME/domains/biraconsultants.com"
+            WEBROOT="$DOMAIN_DIR/public_html"
+            if [ -f "$DOMAIN_DIR/bira_app/artisan" ]; then
+              APP_DIR="$DOMAIN_DIR/bira_app"
+            elif [ -f "$WEBROOT/artisan" ]; then
+              APP_DIR="$WEBROOT"
+            else
+              echo "Could not safely locate the active Laravel application; stopping without changing files."
+              exit 1
+            fi
+
+            TMP_DIR="$(mktemp -d "$DOMAIN_DIR/footer-update.XXXXXX")"
+            trap 'rm -rf "$TMP_DIR"' EXIT
+            git clone --depth 1 --branch main "https://x-access-token:$GH_TOKEN@github.com/casndrih/BiraConsultant.git" "$TMP_DIR/source"
+            test -s "$TMP_DIR/source/resources/views/layouts/footer.blade.php"
+            test -f "$APP_DIR/artisan"
+            test -f "$APP_DIR/.env"
+
+            install -D -m 0644 "$TMP_DIR/source/resources/views/layouts/footer.blade.php" "$APP_DIR/resources/views/layouts/footer.blade.php"
+            cd "$APP_DIR"
+            php artisan optimize:clear
+            php artisan optimize
+            php artisan --version
+
+            HTTP_CODE="$(curl -sS -L --max-time 45 -o "$TMP_DIR/home.html" -w '%{http_code}' https://biraconsultants.com/)"
+            echo "Homepage HTTP status: $HTTP_CODE"
+            case "$HTTP_CODE" in
+              200|301|302) ;;
+              *) echo "Homepage verification failed; HTTP $HTTP_CODE"; exit 1 ;;
+            esac
+            if grep -Eqi 'Whoops|SQLSTATE\[|ParseError|Fatal error' "$TMP_DIR/home.html"; then
+              echo "Homepage contains an application error marker."
+              exit 1
+            fi
+            echo "Footer source deployed and Laravel caches rebuilt. Database and other application files were not changed."
