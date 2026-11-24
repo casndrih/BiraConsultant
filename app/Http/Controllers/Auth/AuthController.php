@@ -12,7 +12,26 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
-        return redirect()->route('home');
+        if (Auth::check()) {
+            return match ((int) Auth::user()->role) {
+                0 => redirect()->route('user.dashboard'),
+                1 => redirect()->route('admin-dashboard'),
+                2 => redirect()->route('company.dashboard'),
+                default => redirect()->route('home'),
+            };
+        }
+
+        return view('auth.login', [
+            'emailLoginEnabled' => AuthMethodSettings::emailEnabled(),
+            'googleLoginEnabled' => AuthMethodSettings::googleEnabled(),
+        ]);
+    }
+
+    public function showForgotPassword()
+    {
+        return view('auth.forgot-password', [
+            'emailLoginEnabled' => AuthMethodSettings::emailEnabled(),
+        ]);
     }
 
     public function signIn(Request $request)
@@ -81,7 +100,7 @@ class AuthController extends Controller
     public function forgotPassword(Request $request)
     {
         if (!AuthMethodSettings::emailEnabled()) {
-            return redirect('/')->with('error', 'Password reset is unavailable while email sign-in is disabled.');
+            return redirect()->route('password.request')->with('error', 'Password reset is unavailable while email sign-in is disabled.');
         }
 
         $request->validate([
@@ -96,6 +115,6 @@ class AuthController extends Controller
         }
 
         // Identical response either way: prevents account enumeration.
-        return redirect('/')->with('status', 'If that email address exists in our records, a password reset link has been sent.');
+        return redirect()->route('password.request')->with('status', 'If that email address exists in our records, a password reset link has been sent.');
     }
 }
