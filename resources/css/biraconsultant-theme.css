@@ -1403,3 +1403,34 @@
     .qj-app-shell .qj-admin-data-table tbody td:first-child > div,
     .qj-app-shell .qj-admin-data-table tbody th[scope="row"] > div { grid-column: 2; grid-row: 2; }
 }
+
+
+/* Admin navigation drawer must cover the full visible viewport height. */
+.qj-app-shell #drawer-navigation {
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    padding-bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+}
+.qj-app-shell #drawer-navigation > div:first-child {
+    flex: 0 0 auto;
+    min-height: 48px;
+    position: relative;
+}
+.qj-app-shell #drawer-navigation > div:last-child {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
