@@ -1,6 +1,16 @@
 @extends('admin.app')
 
 @section('content')
+    @php($fallbackUserAvatars = [
+        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&h=240&q=85'
+    ])
     <section class="bg-gray-100 dark:bg-black py-2">
         <!-- Search -->
         <div class="relative overflow-x-auto mx-4 shadow-md rounded-t-lg">
@@ -44,8 +54,8 @@
                         <tr data-href="{{ $user->slug }}" class="bg-gray-50 dark:bg-black hover:bg-gray-100 dark:hover:bg-custom-dark cursor-pointer">
                             <td class="flex items-center px-6 py-4 whitespace-nowrap">
                                 <img class="w-10 h-10 border-gray-200 dark:border-custom-dark rounded-full object-cover"
-                                    src="{{ $user->image ?? asset('/images/users/userpro.png') }}"
-                                    alt="{{ $user->name }} image" onerror="this.onerror=null;this.src='{{ asset('/images/users/userpro.png') }}';">
+                                    src="{{ $user->image ?: $fallbackUserAvatars[$user->id % count($fallbackUserAvatars)] }}"
+                                    alt="{{ $user->name }} image" onerror="this.onerror=null;this.src='{{ $fallbackUserAvatars[$user->id % count($fallbackUserAvatars)] }}';">
                                 <div class="pl-3">
                                     <div class="text-base font-semibold">{{ $user->name }}</div>
                                     <div class="font-normal">{{ $user->email }}</div>
