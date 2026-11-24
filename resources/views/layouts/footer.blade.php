@@ -4,7 +4,7 @@
     <div class="xl:grid xl:grid-cols-3 xl:gap-8">
       <div class="space-y-2">
         <div class="flex gap-1 items-center">
-        <img class="bc-footer__logo" src="{{ URL::asset('images/favicon/logo.svg') }}" alt="Bira Consultants logo">
+
         <h2 class="text-xl font-ubuntu font-medium text-black dark:text-white">BiraConsultant</h2>
         </div>
         <p class="text-sm leading-6 text-black dark:text-gray-300">Your Gateway to Better Career Opportunities!</p>
