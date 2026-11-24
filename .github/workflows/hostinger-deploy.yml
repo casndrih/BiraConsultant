@@ -106,6 +106,7 @@ jobs:
           DB_PASSWORD_A: ${{ secrets.HOSTINGER_DB_PASSWORD }}
           DB_PASSWORD_B: ${{ secrets.DB_PASSWORD }}
           SEED_DEMO_DATA: ${{ contains(github.event.head_commit.message, '[seed-demo-data]') }}
+          BIRA_DEMO_PASSWORD: ${{ secrets.BIRA_DEMO_PASSWORD }}
         shell: bash
         run: |
           set -euo pipefail
@@ -117,13 +118,13 @@ jobs:
           test -n "$DB_NAME" && test -n "$DB_USER" && test -n "$DB_PASSWORD"
           DEMO_PASSWORD=""
           if [[ "$SEED_DEMO_DATA" == "true" ]]; then
-            DEMO_PASSWORD="BiraTemp-$(openssl rand -hex 8)"
+            test -n "$BIRA_DEMO_PASSWORD" || { echo "BIRA_DEMO_PASSWORD secret is missing"; exit 31; }
+            DEMO_PASSWORD="$BIRA_DEMO_PASSWORD"
             {
-              echo "### Demo account credentials"
+              echo "### Demo accounts"
               echo
-              echo "Shared temporary password: `$DEMO_PASSWORD`"
-              echo
-              echo "Applies only to the 17 `@biraconsultant.test` demo accounts."
+              echo "A shared temporary password was applied to the 17 @biraconsultant.test demo accounts."
+              echo "No credential value is printed in this summary or the deployment logs."
             } >> "$GITHUB_STEP_SUMMARY"
           fi
           ARCHIVE="/tmp/biraconsultant-release-${GITHUB_RUN_ID}.tar.gz"
