@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/hostinger-deploy.yml"
+      - "resources/css/biraconsultant-theme.css"
+      - "resources/views/home/index.blade.php"
+      - "resources/views/layouts/footer.blade.php"
+      - "resources/views/app.blade.php"
   workflow_dispatch:
 
 permissions:
