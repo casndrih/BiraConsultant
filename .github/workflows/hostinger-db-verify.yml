@@ -23,7 +23,7 @@ jobs:
           set -euo pipefail
           D='u269358615_bira'
           U='u269358615_bira'
-          H='srv1785.hstgr.io'
+          H='localhost'
           if command -v mysql >/dev/null 2>&1; then
             MYSQL_PWD="$DB_PASSWORD" mysql --connect-timeout=15 -h "$H" -P 3306 -u "$U" "$D" -N -e "SELECT CONCAT('DATABASE_OK=',DATABASE()); SELECT CONCAT('TABLE_COUNT=',COUNT(*)) FROM information_schema.tables WHERE table_schema=DATABASE(); SELECT CONCAT('TABLE=',table_name) FROM information_schema.tables WHERE table_schema=DATABASE() ORDER BY table_name LIMIT 80;"
           elif command -v php >/dev/null 2>&1; then
