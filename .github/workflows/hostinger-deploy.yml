@@ -325,3 +325,105 @@ jobs:
             esac
           done < "$RUNNER_TEMP/bira-assets.txt"
           echo "PUBLIC_CSS_JS_ASSET_CHECK_PASSED"
+
+      - name: Verify demo account authentication and role dashboards
+        env:
+          BIRA_DEMO_PASSWORD: ${{ secrets.BIRA_DEMO_PASSWORD }}
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          import http.cookiejar
+          import os
+          import re
+          import time
+          import urllib.parse
+          import urllib.request
+          from html.parser import HTMLParser
+          from urllib.parse import urlparse
+
+          BASE = "https://biraconsultants.com"
+          PASSWORD = os.environ.get("BIRA_DEMO_PASSWORD", "")
+          if not PASSWORD:
+              raise SystemExit("Demo authentication test cannot run: secret is missing.")
+
+          accounts = [
+              ("martha.kila@biraconsultant.test", "/user/dashboard"),
+              ("company1@biraconsultant.test", "/company/dashboard"),
+              ("admin@biraconsultant.test", "/admin/dashboard"),
+              ("peter.wama@biraconsultant.test", "/user/dashboard"),
+              ("lydia.saro@biraconsultant.test", "/user/dashboard"),
+              ("daniel.kora@biraconsultant.test", "/user/dashboard"),
+              ("ruth.mako@biraconsultant.test", "/user/dashboard"),
+              ("simon.gari@biraconsultant.test", "/user/dashboard"),
+              ("anna.buka@biraconsultant.test", "/user/dashboard"),
+              ("james.nori@biraconsultant.test", "/user/dashboard"),
+              ("grace.toma@biraconsultant.test", "/user/dashboard"),
+              ("michael.ravu@biraconsultant.test", "/user/dashboard"),
+              ("helen.kila@biraconsultant.test", "/user/dashboard"),
+              ("joseph.daro@biraconsultant.test", "/user/dashboard"),
+              ("company2@biraconsultant.test", "/company/dashboard"),
+              ("company3@biraconsultant.test", "/company/dashboard"),
+              ("company4@biraconsultant.test", "/company/dashboard"),
+          ]
+
+          class TokenParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.token = None
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() == "input":
+                      fields = dict(attrs)
+                      if fields.get("name") == "_token":
+                          self.token = fields.get("value")
+
+          for index, (email, expected_path) in enumerate(accounts):
+              jar = http.cookiejar.CookieJar()
+              opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+              request = urllib.request.Request(BASE + "/", headers={"User-Agent": "BiraConsultant-Production-SmokeTest/1.0"})
+              with opener.open(request, timeout=30) as response:
+                  html = response.read().decode("utf-8", "replace")
+              parser = TokenParser()
+              parser.feed(html)
+              token = parser.token or re.search(r'<meta[^>]+name=["\\']csrf-token["\\'][^>]+content=["\\']([^"\\']+)', html, re.I)
+              if hasattr(token, "group"):
+                  token = token.group(1)
+              if not token:
+                  raise SystemExit("LOGIN_TEST_FAILED: CSRF token was not present in the sign-in page.")
+
+              payload = urllib.parse.urlencode({
+                  "_token": token,
+                  "email": email,
+                  "password": PASSWORD,
+              }).encode()
+              post = urllib.request.Request(
+                  BASE + "/signin",
+                  data=payload,
+                  headers={"Content-Type": "application/x-www-form-urlencoded", "Referer": BASE + "/"},
+                  method="POST",
+              )
+              try:
+                  with opener.open(post, timeout=30) as response:
+                      final_url = response.geturl()
+                      body = response.read().decode("utf-8", "replace")
+                      status = response.status
+              except urllib.error.HTTPError as error:
+                  final_url = error.geturl()
+                  body = error.read().decode("utf-8", "replace")
+                  status = error.code
+
+              actual_path = urlparse(final_url).path.rstrip("/") or "/"
+              if status != 200 or actual_path != expected_path.rstrip("/"):
+                  reason = "invalid credentials" if "Invalid email or password" in body else (
+                      "reCAPTCHA required" if "reCAPTCHA" in body else
+                      "rate limited" if status == 429 else
+                      "unexpected redirect or HTTP response"
+                  )
+                  print(f"LOGIN_FAILED account={email} status={status} path={actual_path} reason={reason}")
+                  raise SystemExit(43)
+
+              print(f"LOGIN_PASSED account={email} role_dashboard={actual_path}")
+              if index < len(accounts) - 1:
+                  time.sleep(13)
+
+          print("ALL_17_DEMO_LOGINS_AND_ROLE_REDIRECTS_PASSED")
+          PY
