@@ -135,6 +135,12 @@ class SettingController extends Controller
 
         $rules = [];
         $messages = [];
+        if (array_key_exists('mobile_ads_provider', $data)) {
+            $rules['settings.mobile_ads_provider'] = 'required|in:google,ironsource,tapjoy,none';
+        }
+        foreach ($data as $key => $value) {
+            $rules["settings.{$key}"] = 'nullable|string|max:1000';
+        }
         if (array_key_exists('contact_email', $data)) {
             $rules['settings.contact_email'] = 'nullable|email|max:255';
         }
@@ -145,12 +151,6 @@ class SettingController extends Controller
             $rules['settings.contact_address'] = 'nullable|string|max:255';
         }
 
-        if (array_key_exists('mobile_ads_provider', $data)) {
-            $rules['settings.mobile_ads_provider'] = 'required|in:google,ironsource,tapjoy,none';
-        }
-        foreach ($data as $key => $value) {
-            $rules["settings.{$key}"] = 'nullable|string|max:1000';
-        }
         if (array_key_exists('website_ads_enabled', $data)) {
             $rules['settings.website_ads_enabled'] = 'required|in:0,1';
         }
