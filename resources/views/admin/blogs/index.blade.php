@@ -65,15 +65,11 @@
                     <td class="px-6 py-4 text-base text-black dark:text-white">
                         {{ $blog->published_at ? \Carbon\Carbon::parse($blog->published_at)->format('Y-m-d') : 'N/A' }}
                     </td>
-                    <td class="px-6 py-4">
-                        <button onclick="openEditBlogModal('{{ $blog->slug }}')"
-                            class="px-3 py-1 text-sm font-medium text-black bg-yellow-300 hover:bg-yellow-400 rounded-full mr-1">
-                            Edit
-                        </button>
-                        <button onclick="confirmDeleteBlog({{ $blog->id }}, '{{ addslashes($blog->title) }}')"
-                            class="px-3 py-1 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-full">
-                            Delete
-                        </button>
+                    <td class="px-4 py-4">
+                        <div class="qj-admin-table-actions">
+                            <button type="button" onclick="openEditBlogModal('{{ $blog->slug }}')" class="qj-admin-action-btn text-sm font-medium text-black bg-yellow-300 hover:bg-yellow-400 rounded-full">Edit</button>
+                            <button type="button" onclick="confirmDeleteBlog({{ $blog->id }}, @js($blog->title))" class="qj-admin-action-btn text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-full">Delete</button>
+                        </div>
                     </td>
                 </tr>
             @empty
