@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+// Stores public contact submissions for the authenticated administrator inbox.
 return new class extends Migration
 {
     public function up(): void
