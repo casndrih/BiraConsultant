@@ -24,7 +24,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $now = now();
-        $password = Hash::make(env('BIRA_DEMO_PASSWORD') ?: Str::random(48));
+        $demoPassword = env('BIRA_DEMO_PASSWORD');
+
+        if (app()->environment('production') && empty($demoPassword)) {
+            throw new \\RuntimeException('BIRA_DEMO_PASSWORD must be configured before seeding demo accounts in production.');
+        }
+
+        $password = Hash::make($demoPassword ?: Str::random(48));
 
         $png = BiraConsultantCountry::updateOrCreate(['iso' => 'PG'], [
             'name' => 'Papua New Guinea', 'iso3' => 'PNG', 'dial' => '+675',
