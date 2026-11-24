@@ -2152,3 +2152,50 @@
         content: none !important;
     }
 }
+
+
+/* Admin Settings search: reserve a fixed icon gutter so the placeholder and
+   entered text never render underneath the magnifier. */
+.qj-admin-settings-search {
+    width: 100%;
+    min-width: 0;
+}
+.qj-admin-settings-search form {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+.qj-admin-settings-search__icon {
+    left: 0;
+    width: 44px;
+    justify-content: center;
+    color: #6b7280;
+}
+.qj-admin-settings-search__icon svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+}
+.qj-admin-settings-search__input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding-left: 48px !important;
+    padding-right: 16px !important;
+    line-height: 1.5;
+}
+@media (max-width: 767px) {
+    .qj-admin-settings-search {
+        max-width: none;
+    }
+    .qj-admin-settings-search__input {
+        padding-left: 46px !important;
+        font-size: 15px;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    .qj-admin-settings-search__icon {
+        color: #a1a1aa;
+    }
+}
