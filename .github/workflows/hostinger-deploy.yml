@@ -12,6 +12,8 @@ on:
       - "resources/views/app.blade.php"
       - "resources/views/companies/detail.blade.php"
       - "resources/views/partials/companies.blade.php"
+      - "resources/views/components/company-card.blade.php"
+      - "public/images/companies/highlands-engineering-services.svg"
       - "public/images/companies/bsp-logo.svg"
       - "public/images/companies/bsp-logo-dark.svg"
       - "resources/views/jobs/detail.blade.php"
