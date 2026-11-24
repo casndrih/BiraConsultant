@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\BiraConsultantSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class SettingController extends Controller
 {
@@ -150,6 +152,30 @@ class SettingController extends Controller
         if (array_key_exists('contact_address', $data)) {
             $rules['settings.contact_address'] = 'nullable|string|max:255';
         }
+        if (array_key_exists('mail_driver', $data)) {
+            $rules['settings.mail_driver'] = 'required|in:smtp,sendmail,mailgun,ses,log';
+        }
+        if (array_key_exists('mail_host', $data)) {
+            $rules['settings.mail_host'] = 'nullable|string|max:255';
+        }
+        if (array_key_exists('mail_port', $data)) {
+            $rules['settings.mail_port'] = 'nullable|integer|between:1,65535';
+        }
+        if (array_key_exists('mail_username', $data)) {
+            $rules['settings.mail_username'] = 'nullable|string|max:255';
+        }
+        if (array_key_exists('mail_password', $data)) {
+            $rules['settings.mail_password'] = 'nullable|string|max:1000';
+        }
+        if (array_key_exists('mail_encryption', $data)) {
+            $rules['settings.mail_encryption'] = 'nullable|in:tls,ssl';
+        }
+        if (array_key_exists('mail_from_address', $data)) {
+            $rules['settings.mail_from_address'] = 'nullable|email|max:255';
+        }
+        if (array_key_exists('mail_from_name', $data)) {
+            $rules['settings.mail_from_name'] = 'nullable|string|max:255';
+        }
 
         if (array_key_exists('website_ads_enabled', $data)) {
             $rules['settings.website_ads_enabled'] = 'required|in:0,1';
@@ -182,7 +208,7 @@ class SettingController extends Controller
         $updatedCount = 0;
 
         foreach ($data as $key => $value) {
-            if ($key === 'google_client_secret' && trim((string) $value) === '') {
+            if (in_array($key, ['google_client_secret', 'mail_password'], true) && trim((string) $value) === '') {
                 continue; // Empty form field means keep the currently stored secret.
             }
             BiraConsultantSetting::updateOrCreate(
@@ -195,5 +221,51 @@ class SettingController extends Controller
         return redirect()
             ->route('admin.settings.index')
             ->with('success', "Settings updated successfully. ({$updatedCount} setting(s) saved)");
+    }
+
+    /**
+     * Send a real test message using the saved administrator mail settings.
+     */
+    public function testEmail()
+    {
+        $recipient = BiraConsultantSetting::getValue(
+            'contact_email',
+            config('mail.contact_to', 'info@biraconsultant.com')
+        );
+
+        if (!filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+            return redirect()->route('admin.settings.index')
+                ->with('error', 'Set a valid contact email in General Settings before testing SMTP.');
+        }
+
+        if (config('mail.default') === 'smtp') {
+            $smtp = config('mail.mailers.smtp', []);
+            if (empty($smtp['host']) || empty($smtp['username']) || empty($smtp['password']) || empty($smtp['port'])) {
+                return redirect()->route('admin.settings.index')
+                    ->with('error', 'SMTP is incomplete. Check the host, port, username and password in Email Settings.');
+            }
+        }
+
+        try {
+            Mail::raw(
+                "This is a test email from BiraConsultant. Your administrator-configured mail transport accepted this message for delivery.\n\nSent at: " . now()->toDateTimeString(),
+                function ($message) use ($recipient) {
+                    $message->to($recipient)
+                        ->subject('BiraConsultant SMTP configuration test');
+                }
+            );
+
+            return redirect()->route('admin.settings.index')
+                ->with('success', "Test email handed to the configured mail transport for {$recipient}. Check that inbox and spam folder.");
+        } catch (Throwable $exception) {
+            Log::error('BiraConsultant SMTP test failed', [
+                'recipient' => $recipient,
+                'mailer' => config('mail.default'),
+                'exception' => $exception->getMessage(),
+            ]);
+
+            return redirect()->route('admin.settings.index')
+                ->with('error', 'SMTP test failed. Check the saved mail host, port, encryption and mailbox credentials, then review the application log for the server response.');
+        }
     }
 }
