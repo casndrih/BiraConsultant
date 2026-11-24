@@ -32,6 +32,7 @@ on:
       - "resources/views/mail/contact-form.blade.php"
       - "resources/views/admin/contact-messages/**"
       - "app/Http/Controllers/Admin/SettingController.php"
+      - "app/Providers/AppServiceProvider.php"
       - "resources/views/admin/settings/general/index.blade.php"
       - "resources/views/pages/about.blade.php"
       - "resources/views/admin/layouts/drawer.blade.php"
