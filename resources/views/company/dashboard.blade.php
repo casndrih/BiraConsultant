@@ -50,7 +50,7 @@
         @endif
 
         <!-- Stats Cards -->
-        <div class="qj-dashboard-stats-grid mb-8">
+        <div class="qj-dashboard-stats-grid qj-dashboard-stats-grid--company mb-8">
             <div class="qj-dashboard-stat">
                 <div class="text-xl font-bold text-black dark:text-white">{{ $stats['total_jobs'] }}</div>
                 <div class="text-xs text-gray-500 dark:text-gray-400">Total Jobs</div>
