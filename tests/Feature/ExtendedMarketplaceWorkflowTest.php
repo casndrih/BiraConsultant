@@ -132,8 +132,17 @@ class ExtendedMarketplaceWorkflowTest extends TestCase
         $owner = $this->companyUser();
         $company = BiraConsultantCompany::where('user_id', $owner->id)->firstOrFail();
         $admin = BiraConsultantUser::where('email', 'admin@biraconsultant.test')->firstOrFail();
+        $company->update([
+            'verification_status' => 0,
+            'is_approved' => 0,
+            'registration_number' => null,
+            'registration_doc_path' => null,
+            'tax_id_number' => null,
+            'tax_doc_path' => null,
+        ]);
 
-        $this->actingAs($admin)->patch('/admin/companies/' . $company->id . '/verification/approve')
+        $this->actingAs($admin)->from(route('admin.companies.verification'))
+            ->patch('/admin/companies/' . $company->id . '/verification/approve')
             ->assertRedirect(route('admin.companies.verification'));
         $this->assertSame(0, (int) $company->fresh()->verification_status);
 
