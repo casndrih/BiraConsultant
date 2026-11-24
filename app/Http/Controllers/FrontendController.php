@@ -40,7 +40,7 @@ class FrontendController extends Controller
             ->take(4)
             ->get();
 
-        $categories = BiraConsultantJobCategory::withCount('jobs')->orderBy('name')->get();
+        $categories = BiraConsultantJobCategory::withCount(['jobs' => function ($query) { $query->active(); }])->orderBy('name')->get();
         $companies = BiraConsultantCompany::publiclyVisible()->withCount(['jobs' => function ($q) { $q->active(); }])->orderBy('name')->take(6)->get();
         $jobTypes = BiraConsultantJobType::orderBy('name')->get();
         $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->get();
