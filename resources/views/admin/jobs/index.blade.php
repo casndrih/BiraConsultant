@@ -5,7 +5,7 @@
     <div class="relative overflow-x-auto mx-4 shadow-md rounded-t-lg">
         <div class="flex items-center justify-between py-4 bg-white dark:bg-custom-dark">
             <label for="table-search" class="sr-only">Search Job</label>
-            <div class="ml-4 relative flex items-center">
+            <div class="qj-admin-search ml-4 relative flex items-center">
                 <div class="absolute inset-y-0 left-0 flex items-center ml-3 pointer-events-none">
                     <svg class="w-5 h-5 text-gray-600" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -13,7 +13,7 @@
                             clip-rule="evenodd"></path>
                     </svg>
                 </div>
-                <form action="{{ route('admin.job.search') }}" method="GET">
+                <form class="qj-admin-search__form" action="{{ route('admin.job.search') }}" method="GET">
                     <input type="text" id="query-job" name="query-job"
                         value="{{ request()->query('query-job') }}"
                         class="block w-full p-2 pl-10 text-base text-gray-900  rounded-full bg-gray-100 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300"
@@ -57,7 +57,7 @@
 
 
     <div class="overflow-x-auto mx-4 shadow-md rounded-b-lg">
-        <table class="w-full text-sm text-left text-black">
+        <table class="w-full text-sm text-left text-black qj-admin-data-table qj-admin-data-table--jobs">
             <thead class="text-md text-black dark:text-white font-medium uppercase bg-white dark:bg-custom-dark">
                 <tr>
                     <th class="px-6 py-4">Company</th>
@@ -78,7 +78,7 @@
                                 <div class="flex items-center">
                                     <img class="w-auto h-6 mr-2"
                                     src="{{ $job->company->logo ?? asset('/images/users/userpro.png') }}"
-                                    alt="Company image">
+                                    alt="Company image" onerror="this.onerror=null;this.src='{{ asset('/images/providers/default.png') }}';">
                                     <div class="text-base font-semibold text-black dark:text-white">
                                         {{ $job->company->name ?? 'Unknown Company' }}
                                     </div>
