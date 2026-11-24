@@ -1,4 +1,5 @@
 name: Prepare fresh QJobs source on Hostinger
+# Run the one-time fresh-source preparation pipeline.
 on:
   push:
     paths:
