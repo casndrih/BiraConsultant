@@ -385,6 +385,11 @@ jobs:
               parser = TokenParser()
               parser.feed(html)
               token = parser.token
+              if not token:
+                  for cookie in jar:
+                      if cookie.name == 'XSRF-TOKEN':
+                          token = urllib.parse.unquote(cookie.value)
+                          break
                   token = token.group(1)
               if not token:
                   raise SystemExit("LOGIN_TEST_FAILED: CSRF token was not present in the sign-in page.")
