@@ -1,0 +1,66 @@
+name: Export rebuilt BiraConsultant source from Hostinger
+
+on:
+  push:
+    paths:
+      - ".github/workflows/hostinger-source-sync.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Create clean source archive on Hostinger and download it
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_USER: ${{ secrets.HOSTINGER_USER }}
+          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$HOSTINGER_HOST" && test -n "$HOSTINGER_USER" && test -n "$HOSTINGER_PASSWORD"
+          REMOTE_ARCHIVE="/tmp/biraconsultant-source-${GITHUB_RUN_ID}.tar.gz"
+          sshpass -p "$HOSTINGER_PASSWORD" ssh -p "${HOSTINGER_PORT:-22}" -o StrictHostKeyChecking=no -o ConnectTimeout=25 "$HOSTINGER_USER@$HOSTINGER_HOST" "bash -s -- '$REMOTE_ARCHIVE'" <<'REMOTE'
+          set -euo pipefail
+          ARCHIVE="$1"
+          APP_DIR="$HOME/domains/biraconsultants.com/bira_app"
+          test -f "$APP_DIR/artisan"
+          test -f "$APP_DIR/composer.json"
+          test -f "$APP_DIR/package.json"
+          test -f "$APP_DIR/webpack.mix.js"
+          cd "$APP_DIR"
+          tar -czf "$ARCHIVE" \
+            --exclude='./.git' \
+            --exclude='./.env' \
+            --exclude='./.env.*' \
+            --exclude='./vendor' \
+            --exclude='./node_modules' \
+            --exclude='./storage/logs' \
+            --exclude='./storage/framework/cache' \
+            --exclude='./storage/framework/sessions' \
+            --exclude='./storage/framework/views' \
+            --exclude='./storage/debugbar' \
+            --exclude='./bootstrap/cache/*.php' \
+            --exclude='./public/storage' \
+            .
+          echo "ARCHIVE_CREATED=$ARCHIVE"
+          du -h "$ARCHIVE"
+          REMOTE
+          mkdir -p export
+          sshpass -p "$HOSTINGER_PASSWORD" scp -P "${HOSTINGER_PORT:-22}" -o StrictHostKeyChecking=no "$HOSTINGER_USER@$HOSTINGER_HOST:$REMOTE_ARCHIVE" export/biraconsultant-source.tar.gz
+          test -s export/biraconsultant-source.tar.gz
+          tar -tzf export/biraconsultant-source.tar.gz | head -30
+
+      - name: Upload source archive artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: biraconsultant-source
+          path: export/biraconsultant-source.tar.gz
+          if-no-files-found: error
+          retention-days: 3
