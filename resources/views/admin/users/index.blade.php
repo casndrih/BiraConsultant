@@ -6,7 +6,7 @@
         <div class="relative overflow-x-auto mx-4 shadow-md rounded-t-lg">
             <div class="flex items-center justify-between py-4 bg-white dark:bg-custom-dark">
                     <label for="search" class="sr-only">Search User</label>
-                    <div class="ml-4 relative flex items-center">
+                    <div class="qj-admin-search ml-4 relative flex items-center">
                     <div class="absolute inset-y-0 left-0 flex items-center ml-3 pointer-events-none">
                         <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd"
@@ -15,7 +15,7 @@
                         </svg>
                     </div>
                      
-                    <form action="{{ route('admin.user.search') }}" method="GET">
+                    <form class="qj-admin-search__form" action="{{ route('admin.user.search') }}" method="GET">
                     <input type="text" name="search"
                         class="block w-full p-2 pl-10 text-base text-gray-900 rounded-full bg-gray-100 dark:bg-black focus:ring-yellow-300 focus:ring-2 focus:ring-yellow-300"
                         placeholder="Search User">
@@ -26,7 +26,7 @@
 
         <!-- Table -->
         <div class="overflow-x-auto mx-4 shadow-md rounded-b-lg">
-            <table class="w-full text-left text-black dark:text-white">
+            <table class="w-full text-left text-black dark:text-white qj-admin-data-table qj-admin-data-table--users">
                 <thead class="text-md font-medium uppercase bg-white dark:bg-custom-dark">
                     <tr>
                         <th class="px-6 py-4">Users</th>
@@ -45,7 +45,7 @@
                             <td class="flex items-center px-6 py-4 whitespace-nowrap">
                                 <img class="w-10 h-10 border-gray-200 dark:border-custom-dark rounded-full object-cover"
                                     src="{{ $user->image ?? asset('/images/users/userpro.png') }}"
-                                    alt="{{ $user->name }} image">
+                                    alt="{{ $user->name }} image" onerror="this.onerror=null;this.src='{{ asset('/images/users/userpro.png') }}';">
                                 <div class="pl-3">
                                     <div class="text-base font-semibold">{{ $user->name }}</div>
                                     <div class="font-normal">{{ $user->email }}</div>
