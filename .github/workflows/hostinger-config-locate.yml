@@ -1,0 +1,36 @@
+name: Locate BiraConsultant production config safely
+on:
+  push:
+    paths:
+      - ".github/workflows/hostinger-config-locate.yml"
+jobs:
+  locate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+      - name: Locate config and database files without reading secrets
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_USER: ${{ secrets.HOSTINGER_USER }}
+          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        run: |
+          set -euo pipefail
+          sshpass -p "$HOSTINGER_PASSWORD" ssh -p "${HOSTINGER_PORT:-22}" -o StrictHostKeyChecking=no "$HOSTINGER_USER@$HOSTINGER_HOST" 'bash -s' <<'REMOTE'
+          set -euo pipefail
+          D="$HOME/domains/biraconsultants.com"
+          echo "DOMAIN_DIRECTORY_ENTRIES:"
+          find "$D" -maxdepth 3 -mindepth 1 -printf '%y %p\n' 2>/dev/null | head -150
+          echo "POSSIBLE_ENV_FILES (paths only):"
+          find "$HOME/domains" -maxdepth 5 -type f \( -name '.env' -o -name '.env.production' -o -name '.env.local' -o -name 'env.production' \) -print 2>/dev/null | head -100
+          echo "POSSIBLE_DATABASE_DUMPS (paths only):"
+          find "$D" "$HOME/backups" -maxdepth 5 -type f \( -iname '*.sql' -o -iname '*.sql.gz' -o -iname '*.dump' \) -print 2>/dev/null | head -100
+          echo "HOSTING_DB_ENV_KEYS:"
+          for f in "$HOME/.my.cnf" "$HOME/.config/hostinger/.env"; do
+            [ -f "$f" ] && echo "present:$f" || true
+          done
+          echo "APP_STORAGE:"
+          find "$D/bira_app/storage" -maxdepth 3 -type d -printf '%p\n' 2>/dev/null | head -60
+          echo "CONFIG_LOCATION_CHECK_COMPLETE"
+          REMOTE
