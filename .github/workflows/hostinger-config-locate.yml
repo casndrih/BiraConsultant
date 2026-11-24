@@ -21,9 +21,9 @@ jobs:
           set -euo pipefail
           D="$HOME/domains/biraconsultants.com"
           echo "DOMAIN_DIRECTORY_ENTRIES:"
-          find "$D" -maxdepth 3 -mindepth 1 -printf '%y %p\n' 2>/dev/null | head -150
+          find "$D" -maxdepth 3 -mindepth 1 -printf '%y %p\n' 2>/dev/null | sed -n '1,150p'
           echo "POSSIBLE_ENV_FILES (paths only):"
-          find "$HOME/domains" -maxdepth 5 -type f \( -name '.env' -o -name '.env.production' -o -name '.env.local' -o -name 'env.production' \) -print 2>/dev/null | head -100
+          find "$HOME/domains" -maxdepth 5 -type f \( -name '.env' -o -name '.env.production' -o -name '.env.local' -o -name 'env.production' \) -print 2>/dev/null | sed -n '1,100p'
           echo "POSSIBLE_DATABASE_DUMPS (paths only):"
           find "$D" "$HOME/backups" -maxdepth 5 -type f \( -iname '*.sql' -o -iname '*.sql.gz' -o -iname '*.dump' \) -print 2>/dev/null | head -100
           echo "HOSTING_DB_ENV_KEYS:"
