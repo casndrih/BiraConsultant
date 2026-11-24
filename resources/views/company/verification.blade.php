@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="min-h-screen bg-gray-50 dark:bg-black">
+<div class="qj-dashboard-page min-h-screen bg-gray-50 dark:bg-black">
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-2xl mx-auto">
             <h1 class="text-3xl font-bold text-black dark:text-white mb-2">Company Verification</h1>
