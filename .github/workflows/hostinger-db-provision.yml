@@ -12,7 +12,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: hostinger-production-database
+  group: hostinger-biraconsultant-production
   cancel-in-progress: false
 
 jobs:
@@ -97,6 +97,7 @@ jobs:
           DB_USER_C: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD_A: ${{ secrets.HOSTINGER_DB_PASSWORD }}
           DB_PASSWORD_B: ${{ secrets.DB_PASSWORD }}
+          BIRA_DEMO_PASSWORD: ${{ secrets.BIRA_DEMO_PASSWORD }}
         shell: bash
         run: |
           set -euo pipefail
@@ -105,12 +106,14 @@ jobs:
           DB_NAME="${DB_NAME_A:-${DB_NAME_B:-${DB_NAME_C:-}}}"
           DB_USER="${DB_USER_A:-${DB_USER_B:-${DB_USER_C:-}}}"
           DB_PASSWORD="${DB_PASSWORD_A:-${DB_PASSWORD_B:-}}"
+          test -n "$BIRA_DEMO_PASSWORD" || { echo "BIRA_DEMO_PASSWORD secret is missing"; exit 13; }
           printf -v Q_DB_HOST '%q' "$DB_HOST"
           printf -v Q_DB_PORT '%q' "$DB_PORT"
           printf -v Q_DB_NAME '%q' "$DB_NAME"
           printf -v Q_DB_USER '%q' "$DB_USER"
           printf -v Q_DB_PASSWORD '%q' "$DB_PASSWORD"
-          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD"
+          printf -v Q_DEMO_PASSWORD '%q' "$BIRA_DEMO_PASSWORD"
+          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD BIRA_DEMO_PASSWORD=$Q_DEMO_PASSWORD"
           sshpass -p "$SSH_PASSWORD" ssh -T -p "${SSH_PORT:-65002}" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 \
             "$SSH_USER@$SSH_HOST" "$REMOTE_ENV bash -s" <<'REMOTE'
           set -euo pipefail
@@ -135,7 +138,41 @@ jobs:
           php artisan config:clear
           php artisan migrate --force --no-interaction
           echo "Seeding synthetic companies, job seekers, jobs, applications and lookup data..."
-          php artisan db:seed --force --no-interaction
+          BIRA_DEMO_PASSWORD="$BIRA_DEMO_PASSWORD" php artisan db:seed --force --no-interaction
+          BIRA_DEMO_PASSWORD="$BIRA_DEMO_PASSWORD" php <<'PHP'
+          <?php
+          require getcwd().'/vendor/autoload.php';
+          $app = require getcwd().'/bootstrap/app.php';
+          $kernel = $app->make(\\Illuminate\\Contracts\\Console\\Kernel::class);
+          $kernel->bootstrap();
+          $expected = [
+              'admin@biraconsultant.test' => 1,
+              'company1@biraconsultant.test' => 2,
+              'company2@biraconsultant.test' => 2,
+              'company3@biraconsultant.test' => 2,
+              'company4@biraconsultant.test' => 2,
+              'martha.kila@biraconsultant.test' => 0,
+              'peter.wama@biraconsultant.test' => 0,
+              'lydia.saro@biraconsultant.test' => 0,
+              'daniel.kora@biraconsultant.test' => 0,
+              'ruth.mako@biraconsultant.test' => 0,
+              'simon.gari@biraconsultant.test' => 0,
+              'anna.buka@biraconsultant.test' => 0,
+              'james.nori@biraconsultant.test' => 0,
+              'grace.toma@biraconsultant.test' => 0,
+              'michael.ravu@biraconsultant.test' => 0,
+              'helen.kila@biraconsultant.test' => 0,
+              'joseph.daro@biraconsultant.test' => 0,
+          ];
+          foreach ($expected as $email => $role) {
+              $user = \\App\\Models\\BiraConsultantUser::where('email', $email)->first();
+              if (!$user || (int) $user->role !== $role || !\\Illuminate\\Support\\Facades\\Hash::check(getenv('BIRA_DEMO_PASSWORD'), $user->password)) {
+                  fwrite(STDERR, "DEMO_CREDENTIAL_CHECK_FAILED: {$email}\\n");
+                  exit(35);
+              }
+          }
+          echo "DEMO_CREDENTIALS_VERIFIED=17\\n";
+          PHP
           php artisan migrate:status
           echo "PRODUCTION_TABLE_COUNTS:"
           mysql --connect-timeout=20 --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" "$DB_NAME" -Nse "SELECT CONCAT('users=', (SELECT COUNT(*) FROM biraconsultant_users)), CONCAT('companies=', (SELECT COUNT(*) FROM biraconsultant_companies)), CONCAT('jobs=', (SELECT COUNT(*) FROM biraconsultant_jobs)), CONCAT('applications=', (SELECT COUNT(*) FROM biraconsultant_applications)), CONCAT('countries=', (SELECT COUNT(*) FROM biraconsultant_countries)), CONCAT('settings=', (SELECT COUNT(*) FROM biraconsultant_settings))"
