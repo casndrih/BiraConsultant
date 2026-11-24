@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>BiraConsultant - @yield('title', 'Authentication')</title>
-    <link href="{{ URL::asset('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v=20261103.1" rel="stylesheet">
+    <link href="{{ URL::asset('/css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}" rel="stylesheet">
+    <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v={{ filemtime(public_path('css/biraconsultant-theme.css')) }}" rel="stylesheet">
 </head>
 <body class="qj-app-shell qj-auth-screen">
     <div class="qj-auth-card">
         @yield('content')
     </div>
-    <script src="{{ URL::asset('/js/app.js') }}"></script>
+    <script src="{{ URL::asset('/js/app.js') }}?v={{ filemtime(public_path('js/app.js')) }}"></script>
 </body>
 </html>
