@@ -31,6 +31,7 @@ on:
       - "resources/views/contact.blade.php"
       - "resources/views/mail/contact-form.blade.php"
       - "resources/views/admin/contact-messages/**"
+      - "resources/views/admin/layouts/drawer.blade.php"
       - "routes/web.php"
       - "config/mail.php"
       - "database/migrations/**"
