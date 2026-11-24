@@ -44,6 +44,12 @@
                                 <img src="{{ asset('storage/' . $company->logo) }}" 
                                      alt="{{ $company->name }}" 
                                      class="w-24 h-24 rounded-lg object-cover">
+                            @elseif($company->slug === 'bank-south-pacific')
+                                <div class="w-24 h-24 rounded-lg bg-[#24523B] flex items-center justify-center p-3">
+                                    <img src="{{ URL::asset('images/companies/bsp-logo.svg') }}"
+                                         alt="Bank South Pacific logo"
+                                         class="w-full h-auto object-contain">
+                                </div>
                             @else
                                 <img src="{{ URL::asset('images/favicon/logo.svg') }}" 
                                      alt="Company Logo" 
