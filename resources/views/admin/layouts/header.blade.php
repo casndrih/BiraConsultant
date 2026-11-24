@@ -7,7 +7,7 @@
                     class="hidden p-2 mr-3 text-black dark:text-white rounded cursor-pointer lg:inline hover:text-yellow-300 dark:text-gray-400 dark:hover:text-white">
                     <svg aria-hidden="true" class="h-6 w-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                         width="24" height="24" viewBox="0 0 24 24">
-                        <path fill="@android:color/white" d="M3,18h18v-2L3,16v2zM3,13h18v-2L3,11v2zM3,6v2h18L21,6L3,6z" />
+                        <path fill="currentColor" d="M3,18h18v-2L3,16v2zM3,13h18v-2L3,11v2zM3,6v2h18L21,6L3,6z" />
                     </svg>
                 </button>
 
@@ -16,7 +16,7 @@
                     class="p-2 mr-2 text-black dark:text-white rounded-lg cursor-pointer lg:hidden hover:text-yellow-300">
                     <svg aria-hidden="true" class="h-6 w-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                         width="24" height="24" viewBox="0 0 24 24">
-                        <path fill="@android:color/white" d="M3,18h18v-2L3,16v2zM3,13h18v-2L3,11v2zM3,6v2h18L21,6L3,6z" />
+                        <path fill="currentColor" d="M3,18h18v-2L3,16v2zM3,13h18v-2L3,11v2zM3,6v2h18L21,6L3,6z" />
                     </svg>
                     <span class="sr-only">Toggle sidebar</span>
                 </button>
@@ -37,7 +37,7 @@
                         <img class="w-8 h-8 object-cover rounded-full" src="{{ asset(Auth::user()->image) }}"
                             alt="{{ Auth::user()->name }} photo">
                     @else
-                        <div class="w-8 h-8 rounded-full bg-gray-100 dark:bg-black"></div>
+                        <span class="flex w-8 h-8 items-center justify-center rounded-full bg-gray-200 text-sm font-semibold text-gray-700 dark:bg-gray-700 dark:text-white" aria-hidden="true">{{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}</span>
                     @endif
                 </button>
             </div>
