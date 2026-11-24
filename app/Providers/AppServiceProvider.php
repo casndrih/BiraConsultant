@@ -107,7 +107,8 @@ class AppServiceProvider extends ServiceProvider
      } catch (Throwable $exception) {
          // Keep the environment-based mail configuration available during
          // first installation or while the settings database is unavailable.
-         report($exception);
+         // Do not report from inside provider boot: package discovery and
+         // early console bootstrap may not have a fully initialized logger.
      }
     }
 }
