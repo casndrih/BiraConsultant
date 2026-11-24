@@ -31,7 +31,7 @@
 
     <!-- Filter Tabs -->
     <div class="mx-4 mt-2">
-        <div class="flex items-center gap-2 bg-white dark:bg-custom-dark rounded-lg p-2 shadow-sm">
+        <div class="flex flex-wrap items-center gap-2 bg-white dark:bg-custom-dark rounded-lg p-2 shadow-sm">
             <a href="{{ route('admin.jobs.index', ['filter' => 'all']) }}"
                 class="px-3 py-1.5 rounded-full text-sm font-medium transition {{ $filter === 'all' ? 'bg-black text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                 All ({{ $counts['all'] }})
@@ -41,7 +41,7 @@
                 Pending ({{ $counts['pending'] }})
             </a>
             <a href="{{ route('admin.jobs.index', ['filter' => 'approved']) }}"
-                class="px-3 py-1.5 rounded-full text-sm font-medium transition {{ $filter === 'approved' ? 'bg-green-500 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}>
+                class="px-3 py-1.5 rounded-full text-sm font-medium transition {{ $filter === 'approved' ? 'bg-green-500 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                 Approved ({{ $counts['approved'] }})
             </a>
             <a href="{{ route('admin.jobs.index', ['filter' => 'rejected']) }}"
