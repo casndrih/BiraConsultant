@@ -1659,3 +1659,93 @@
     .qj-app-shell [id$="Modal"]:not(#removeImageModal) *,
     .qj-app-shell #removeImageModal * { scroll-behavior: auto !important; }
 }
+
+
+
+/* Consistent mobile search controls and responsive admin listing tables.
+   Search controls stay inside their own coordinate space; data rows become
+   readable labelled cards on narrow screens without page-level overflow. */
+.qj-app-shell .qj-admin-search {
+    flex: 1 1 280px;
+    width: min(100%, 460px);
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 16px;
+}
+.qj-app-shell .qj-admin-search__form {
+    position: relative !important;
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+.qj-app-shell .qj-admin-search__form > div:first-child {
+    left: 14px !important;
+}
+.qj-app-shell .qj-admin-search__form input {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 48px;
+    padding: 10px 16px 10px 48px !important;
+    font-size: 16px !important;
+    line-height: 1.35;
+    box-sizing: border-box !important;
+}
+.qj-app-shell .qj-admin-data-table--blogs tbody td:nth-child(1)::before { content: "Title"; }
+.qj-app-shell .qj-admin-data-table--blogs tbody td:nth-child(2)::before { content: "Author"; }
+.qj-app-shell .qj-admin-data-table--blogs tbody td:nth-child(3)::before { content: "Category"; }
+.qj-app-shell .qj-admin-data-table--blogs tbody td:nth-child(4)::before { content: "Status"; }
+.qj-app-shell .qj-admin-data-table--blogs tbody td:nth-child(5)::before { content: "Published"; }
+.qj-app-shell .qj-admin-data-table--blogs tbody td:nth-child(6)::before { content: "Actions"; }
+.qj-app-shell .qj-admin-data-table--messages tbody td:nth-child(1)::before { content: "Status"; }
+.qj-app-shell .qj-admin-data-table--messages tbody td:nth-child(2)::before { content: "Sender"; }
+.qj-app-shell .qj-admin-data-table--messages tbody td:nth-child(3)::before { content: "Subject"; }
+.qj-app-shell .qj-admin-data-table--messages tbody td:nth-child(4)::before { content: "Received"; }
+.qj-app-shell .qj-admin-data-table--messages tbody td:nth-child(5)::before { content: "Action"; }
+.qj-app-shell .qj-admin-data-table tbody td:last-child { min-width: 0; }
+.qj-app-shell .qj-admin-data-table tbody td:last-child button,
+.qj-app-shell .qj-admin-data-table tbody td:last-child a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    white-space: normal;
+}
+@media (max-width: 767px) {
+    .qj-app-shell section > .relative.overflow-x-auto > .flex.items-center.justify-between {
+        display: flex;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 14px;
+        padding: 16px !important;
+    }
+    .qj-app-shell .qj-admin-search {
+        flex: 1 1 100%;
+        width: 100%;
+        max-width: none;
+        margin: 0 !important;
+    }
+    .qj-app-shell section > .relative.overflow-x-auto > .flex.items-center.justify-between > .flex.items-center {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+        margin: 0 !important;
+    }
+    .qj-app-shell section > .relative.overflow-x-auto > .flex.items-center.justify-between > .flex.items-center button {
+        width: auto;
+        max-width: 100%;
+        margin: 0 !important;
+    }
+    .qj-app-shell .qj-admin-data-table tbody td,
+    .qj-app-shell .qj-admin-data-table tbody th[scope="row"] {
+        grid-template-columns: minmax(76px, 31%) minmax(0, 1fr);
+        gap: 8px;
+    }
+    .qj-app-shell .qj-admin-data-table--blogs tbody td:first-child,
+    .qj-app-shell .qj-admin-data-table--messages tbody td:nth-child(2) {
+        overflow-wrap: anywhere;
+    }
+}
+@media (min-width: 768px) {
+    .qj-app-shell .qj-admin-search { margin-left: 16px; }
+    .qj-app-shell .qj-admin-data-table { table-layout: auto; }
+}
