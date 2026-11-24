@@ -92,7 +92,7 @@
         <div>
             <label for="setting-contact_phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Public Contact Phone</label>
             <input type="text" id="setting-contact_phone" name="settings[contact_phone]"
-                value="{{ $settings['general']['contact_phone']->value ?? '+1 (555) 123-4567' }}"
+                value="{{ $settings['general']['contact_phone']->value ?? '+675' }}"
                 class="block w-full p-2.5 text-gray-900 rounded-lg bg-gray-50 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300 dark:text-white"
                 placeholder="+675 ...">
         </div>
