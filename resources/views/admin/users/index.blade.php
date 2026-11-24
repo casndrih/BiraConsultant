@@ -35,7 +35,7 @@
         </div>
 
         <!-- Table -->
-        <div class="overflow-x-auto mx-4 shadow-md rounded-b-lg">
+        <div class="qj-admin-users-table-wrap overflow-x-auto mx-4 shadow-md rounded-b-lg">
             <table class="w-full text-left text-black dark:text-white qj-admin-data-table qj-admin-data-table--users">
                 <thead class="text-md font-medium uppercase bg-white dark:bg-custom-dark">
                     <tr>
@@ -52,13 +52,15 @@
                 <tbody>
                     @forelse ($users as $user)
                         <tr data-href="{{ $user->slug }}" class="bg-gray-50 dark:bg-black hover:bg-gray-100 dark:hover:bg-custom-dark cursor-pointer">
-                            <td class="flex items-center px-6 py-4 whitespace-nowrap">
-                                <img class="w-10 h-10 border-gray-200 dark:border-custom-dark rounded-full object-cover"
-                                    src="{{ $user->image ?: $fallbackUserAvatars[$user->id % count($fallbackUserAvatars)] }}"
-                                    alt="{{ $user->name }} image" onerror="this.onerror=null;this.src='{{ $fallbackUserAvatars[$user->id % count($fallbackUserAvatars)] }}';">
-                                <div class="pl-3">
-                                    <div class="text-base font-semibold">{{ $user->name }}</div>
-                                    <div class="font-normal">{{ $user->email }}</div>
+                            <td class="qj-admin-users-identity-cell px-6 py-4">
+                                <div class="qj-admin-users-identity flex items-center gap-3 min-w-0">
+                                    <img class="w-10 h-10 shrink-0 border border-gray-200 dark:border-gray-700 rounded-full object-cover"
+                                        src="{{ $user->image ?: $fallbackUserAvatars[$user->id % count($fallbackUserAvatars)] }}"
+                                        alt="{{ $user->name }} image" onerror="this.onerror=null;this.src='{{ $fallbackUserAvatars[$user->id % count($fallbackUserAvatars)] }}';">
+                                    <div class="qj-admin-users-identity-copy min-w-0">
+                                        <div class="text-base font-semibold text-gray-900 dark:text-gray-100">{{ $user->name }}</div>
+                                        <div class="font-normal text-gray-600 dark:text-gray-400">{{ $user->email }}</div>
+                                    </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-base font-medium">{{ $user->skills->count() }}</td>
