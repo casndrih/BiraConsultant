@@ -381,6 +381,20 @@ jobs:
           echo "HOSTINGER_LARAVEL_DEPLOYMENT_COMPLETE"
           REMOTE
 
+      - name: Collect sanitized SMTP failure diagnostic
+        if: always()
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          PORT="${SSH_PORT:-65002}"
+          REMOTE="${SSH_USER}@${SSH_HOST}"
+          sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 -o ServerAliveInterval=15 -o ServerAliveCountMax=8 "$REMOTE" 'APP="$HOME/domains/biraconsultants.com/bira_app"; LOG="$APP/storage/logs/laravel.log"; if [ -f "$LOG" ]; then grep -a "BiraConsultant SMTP test failed" "$LOG" | tail -n 5 | sed -E "s/.*\"exception\":\"([^\"]*)\".*/SMTP_EXCEPTION=\1/" | cut -c1-800; else echo "SMTP_DIAGNOSTIC=laravel_log_not_found"; fi'
+
       - name: Verify public HTTPS response
         run: |
           set -euo pipefail
