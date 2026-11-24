@@ -151,7 +151,7 @@ class DatabaseSeeder extends Seeder
         $jobs = [];
         foreach ($jobSpecs as $i => [$title, $category, $type, $level, $companyIndex]) {
             $slug = Str::slug($title).'-'.($i + 1);
-            $jobs[] = BiraConsultantJob::updateOrCreate(['slug' => $slug], [
+            $job = BiraConsultantJob::updateOrCreate(['slug' => $slug], [
                 'title' => $title, 'description' => 'This is a synthetic sample vacancy created to test BiraConsultant job discovery, job detail, application and company dashboard workflows. The successful applicant will meet the role requirements and work collaboratively with the team.',
                 'requirements' => 'Relevant qualification or equivalent experience; strong communication skills; ability to work safely and professionally.',
                 'how_to_apply' => 'Submit your application through the BiraConsultant application form.',
@@ -164,6 +164,7 @@ class DatabaseSeeder extends Seeder
                 'approved_at' => $i < 10 ? $now : null,
                 'approved_by' => $i < 10 ? $admin->id : null, 'duration' => 30,
             ]);
+            $jobs[] = $job;
             $job->skills()->syncWithoutDetaching(array_slice(array_map(fn ($skill) => $skill->id, array_values($skills)), $i % 5, 3));
         }
 
