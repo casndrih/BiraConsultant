@@ -312,4 +312,5 @@ class SettingController extends Controller
             return redirect()->route('admin.settings.index')
                 ->with('error', 'SMTP test failed: the mail transport could not send the message. Check the saved SMTP host, port, encryption and mailbox credentials.');
         }
-    }}
+    }
+}
