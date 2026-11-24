@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class MobileApiSurfaceTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_mobile_user_api_routes_are_registered(): void
     {
         $routeNames = [
