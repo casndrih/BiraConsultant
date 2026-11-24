@@ -2281,3 +2281,71 @@
         text-align: center;
     }
 }
+
+
+/* Contact Messages responsive table: avoid nested row-cards inside the
+   rounded table container. Keep one continuous, horizontally scrollable grid. */
+.qj-app-shell .qj-admin-data-table--messages {
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--qj-admin-surface, #fff);
+    color: var(--qj-admin-text, #1f2937);
+}
+.qj-app-shell .qj-admin-data-table--messages thead th {
+    background: var(--qj-admin-card, #f9fafb);
+    color: var(--qj-admin-muted, #4b5563);
+    border-bottom: 1px solid var(--qj-admin-border, #e5e7eb);
+    white-space: nowrap;
+}
+.qj-app-shell .qj-admin-data-table--messages tbody tr {
+    background: var(--qj-admin-row, #fff);
+}
+.qj-app-shell .qj-admin-data-table--messages tbody tr:hover {
+    background: var(--qj-admin-row-hover, #f9fafb);
+}
+.qj-app-shell .qj-admin-data-table--messages tbody td {
+    color: var(--qj-admin-text, #1f2937);
+    border-bottom: 1px solid var(--qj-admin-border, #e5e7eb);
+    vertical-align: middle;
+}
+@media (max-width: 767px) {
+    .qj-app-shell .qj-admin-data-table--messages {
+        display: table !important;
+        width: max-content !important;
+        min-width: 760px !important;
+        table-layout: auto;
+    }
+    .qj-app-shell .qj-admin-data-table--messages thead {
+        display: table-header-group !important;
+    }
+    .qj-app-shell .qj-admin-data-table--messages tbody {
+        display: table-row-group !important;
+        padding: 0 !important;
+    }
+    .qj-app-shell .qj-admin-data-table--messages tbody tr {
+        display: table-row !important;
+        width: auto !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+    .qj-app-shell .qj-admin-data-table--messages tbody td {
+        display: table-cell !important;
+        min-width: 120px;
+        padding: 14px 16px !important;
+        white-space: normal !important;
+    }
+    .qj-app-shell .qj-admin-data-table--messages tbody td::before {
+        display: none !important;
+        content: none !important;
+    }
+    .qj-app-shell .qj-admin-data-table--messages tbody td:nth-child(2) {
+        min-width: 210px;
+    }
+    .qj-app-shell .qj-admin-data-table--messages tbody td[colspan] {
+        display: table-cell !important;
+        text-align: center;
+    }
+}
