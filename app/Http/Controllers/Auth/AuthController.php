@@ -54,6 +54,8 @@ class AuthController extends Controller
                     'candidate_id' => $candidate?->getKey(),
                     'database_connection' => config('database.default'),
                     'database_name' => config('database.connections.'.config('database.default').'.database'),
+                    'database_host' => config('database.connections.'.config('database.default').'.host'),
+                    'candidate_updated_at' => $candidate?->updated_at?->toIso8601String(),
                     'hash_driver' => \Illuminate\Support\Facades\Hash::getDefaultDriver(),
                 ], 401);
             }
