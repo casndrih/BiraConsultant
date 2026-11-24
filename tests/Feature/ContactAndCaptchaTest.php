@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\\Feature;
+namespace Tests\Feature;
 
-use App\\Mail\\ContactFormMail;
-use App\\Models\\BiraConsultantContactMessage;
-use App\\Models\\BiraConsultantSetting;
-use Illuminate\\Foundation\\Testing\\RefreshDatabase;
-use Illuminate\\Support\\Facades\\Mail;
-use Tests\\TestCase;
+use App\Mail\ContactFormMail;
+use App\Models\BiraConsultantContactMessage;
+use App\Models\BiraConsultantSetting;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
+use Tests\TestCase;
 
 class ContactAndCaptchaTest extends TestCase
 {
