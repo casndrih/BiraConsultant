@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\RegistrationController;
