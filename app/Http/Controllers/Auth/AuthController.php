@@ -55,6 +55,7 @@ class AuthController extends Controller
                     'database_connection' => config('database.default'),
                     'database_name' => config('database.connections.'.config('database.default').'.database'),
                     'database_host' => config('database.connections.'.config('database.default').'.host'),
+                    'database_fingerprint' => substr(hash('sha256', config('database.connections.'.config('database.default').'.host').'|'.config('database.connections.'.config('database.default').'.database').'|'.config('database.connections.'.config('database.default').'.username')), 0, 12),
                     'candidate_updated_at' => $candidate?->updated_at?->toIso8601String(),
                     'hash_driver' => \Illuminate\Support\Facades\Hash::getDefaultDriver(),
                 ], 401);
