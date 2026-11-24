@@ -9,12 +9,23 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   provision-production-database:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
+      - name: Verify the triggering database test run succeeded
+        if: github.event_name == 'workflow_run'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TEST_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+          CONCLUSION="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$TEST_RUN_ID" --jq '.conclusion')"
+          echo "Database test workflow conclusion: $CONCLUSION"
+          test "$CONCLUSION" = "success" || { echo "Refusing production provisioning because CI did not pass."; exit 1; }
+
       - name: Checkout tested repository
         uses: actions/checkout@v4
         with:
