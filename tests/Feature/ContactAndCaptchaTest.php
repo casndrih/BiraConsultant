@@ -75,7 +75,7 @@ class ContactAndCaptchaTest extends TestCase
         BiraConsultantSetting::updateOrCreate(['key' => 'recaptcha_enabled'], ['value' => '1']);
         BiraConsultantSetting::updateOrCreate(['key' => 'recaptcha_secret_key'], ['value' => '']);
 
-        $this->post(route('contact.submit'), [
+        $this->from(route('contact'))->post(route('contact.submit'), [
             'name' => 'Test Sender',
             'email' => 'sender@example.com',
             'subject' => 'Website enquiry',
