@@ -819,7 +819,13 @@ class FrontendController extends Controller
     // About Page
     public function about()
     {
-        return view('pages.about');
+        $contactDetails = [
+            'email' => \\App\\Models\\BiraConsultantSetting::getValue('contact_email', 'info@biraconsultant.com'),
+            'phone' => \\App\\Models\\BiraConsultantSetting::getValue('contact_phone', '+1 (555) 123-4567'),
+            'address' => \\App\\Models\\BiraConsultantSetting::getValue('contact_address', 'Port Moresby, PNG'),
+        ];
+
+        return view('pages.about', compact('contactDetails'));
     }
 
     // Advertising information and sponsored placement enquiries.
@@ -851,7 +857,13 @@ class FrontendController extends Controller
     // Contact Page
     public function contact()
     {
-        return view('contact');
+        $contactDetails = [
+            'email' => \\App\\Models\\BiraConsultantSetting::getValue('contact_email', 'info@biraconsultant.com'),
+            'phone' => \\App\\Models\\BiraConsultantSetting::getValue('contact_phone', '+1 (555) 123-4567'),
+            'address' => \\App\\Models\\BiraConsultantSetting::getValue('contact_address', 'Port Moresby, PNG'),
+        ];
+
+        return view('contact', compact('contactDetails'));
     }
 
     public function submitContact(Request $request)
