@@ -17,7 +17,7 @@ jobs:
       - name: Install SSH client
         run: sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
 
-      - name: Inspect dump, replace existing production tables, and import project database
+      - name: Locate SQL dump inside QJobs.zip, inspect it, and import
         env:
           SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
           SSH_USER: ${{ secrets.HOSTINGER_USER }}
@@ -56,12 +56,24 @@ jobs:
             "$SSH_USER@$SSH_HOST" "$REMOTE_ENV bash -s" <<'REMOTE'
           set -euo pipefail
           APP="$HOME/domains/biraconsultants.com/bira_app"
-          DUMP="$APP/bira_full_dump_with_maintenance.sql"
           test -f "$APP/artisan" || { echo "Laravel app not found at $APP"; exit 20; }
-          test -s "$DUMP" || { echo "Project SQL dump missing or empty: $DUMP"; exit 21; }
           command -v mysql >/dev/null 2>&1 || { echo "mysql client unavailable on Hostinger"; exit 22; }
+          command -v unzip >/dev/null 2>&1 || { echo "unzip command unavailable on Hostinger"; exit 24; }
 
-          echo "DUMP_FILE=$DUMP"
+          echo "Searching for QJobs.zip under the Hostinger account..."
+          ZIP="$(find "$HOME" -maxdepth 7 -type f -iname 'QJobs.zip' -print -quit 2>/dev/null || true)"
+          test -n "$ZIP" || { echo "QJobs.zip not found under HOME"; exit 25; }
+          echo "QJOBS_ARCHIVE=$ZIP"
+
+          MEMBERS="$(unzip -Z1 "$ZIP" | grep -E '(^|/)bira_full_dump_with_maintenance[.]sql$' || true)"
+          MEMBER_COUNT="$(printf '%s\\n' "$MEMBERS" | sed '/^$/d' | wc -l)"
+          test "$MEMBER_COUNT" -eq 1 || { echo "Expected exactly one bira_full_dump_with_maintenance.sql in QJobs.zip; found $MEMBER_COUNT"; printf '%s\\n' "$MEMBERS"; exit 26; }
+          MEMBER="$(printf '%s\\n' "$MEMBERS" | sed -n '1p')"
+          DUMP="/tmp/bira_full_dump_with_maintenance.sql"
+          unzip -p "$ZIP" "$MEMBER" > "$DUMP"
+          test -s "$DUMP" || { echo "Extracted SQL dump is empty"; exit 27; }
+
+          echo "DUMP_ARCHIVE_MEMBER=$MEMBER"
           echo "DUMP_SIZE_BYTES=$(wc -c < "$DUMP")"
           echo "DUMP_SHA256=$(sha256sum "$DUMP" | cut -d' ' -f1)"
           echo "DUMP_SQL_DIRECTIVES:"
@@ -83,7 +95,7 @@ jobs:
               echo 'SET FOREIGN_KEY_CHECKS=0;'
               while IFS= read -r table; do
                 [ -n "$table" ] || continue
-                printf 'DROP TABLE IF EXISTS \`%s\`;\\n' "$table"
+                printf 'DROP TABLE IF EXISTS `%s`;\\n' "$table"
               done <<< "$TABLES"
               echo 'SET FOREIGN_KEY_CHECKS=1;'
             } | "${MYSQL[@]}"
@@ -94,4 +106,5 @@ jobs:
           echo "IMPORT_COMPLETED"
           "${MYSQL[@]}" -Nse "SELECT CONCAT('IMPORTED_TABLE_COUNT=', COUNT(*)) FROM information_schema.tables WHERE table_schema=DATABASE(); SELECT CONCAT('IMPORTED_TABLE=', table_name) FROM information_schema.tables WHERE table_schema=DATABASE() ORDER BY table_name LIMIT 100;"
           echo "PRODUCTION_DATABASE_REPLACEMENT_SUCCESS"
+          rm -f "$DUMP"
           REMOTE
