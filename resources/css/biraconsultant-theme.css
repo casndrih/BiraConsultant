@@ -1394,3 +1394,12 @@
     .qj-app-shell .qj-admin-data-table tbody td[colspan]::before { content: none !important; }
     .qj-app-shell section .overflow-x-auto { max-width: 100%; }
 }
+
+@media (max-width: 767px) {
+    .qj-app-shell .qj-admin-data-table tbody td:first-child::before,
+    .qj-app-shell .qj-admin-data-table tbody th[scope="row"]::before { grid-column: 1 / -1; }
+    .qj-app-shell .qj-admin-data-table tbody td:first-child > img,
+    .qj-app-shell .qj-admin-data-table tbody th[scope="row"] > img { grid-column: 1; grid-row: 2; }
+    .qj-app-shell .qj-admin-data-table tbody td:first-child > div,
+    .qj-app-shell .qj-admin-data-table tbody th[scope="row"] > div { grid-column: 2; grid-row: 2; }
+}
