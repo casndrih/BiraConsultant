@@ -17,12 +17,12 @@
                 <div>
                     <p class="text-sm text-gray-600 dark:text-gray-400">Require email verification for new users</p>
                 </div>
-                <label class="relative inline-flex items-center cursor-pointer">
+                <label class="qj-setting-switch">
                     <input type="hidden" name="settings[email_verification_required]" value="0">
                     <input type="checkbox" name="settings[email_verification_required]" value="1"
                         {{ $getVal('email_verification_required') == '1' ? 'checked' : '' }}
-                        class="sr-only peer">
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-400"></div>
+                        class="qj-setting-switch-input">
+                    <span class="qj-setting-switch-track" aria-hidden="true"></span>
                 </label>
             </div>
         </div>
@@ -35,24 +35,24 @@
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Enable phone verification</p>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
+                    <label class="qj-setting-switch">
                         <input type="hidden" name="settings[phone_verification_enabled]" value="0">
                         <input type="checkbox" name="settings[phone_verification_enabled]" value="1"
                             {{ $getVal('phone_verification_enabled') == '1' ? 'checked' : '' }}
-                            class="sr-only peer">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-400"></div>
+                            class="qj-setting-switch-input">
+                        <span class="qj-setting-switch-track" aria-hidden="true"></span>
                     </label>
                 </div>
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Require phone verification for users</p>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
+                    <label class="qj-setting-switch">
                         <input type="hidden" name="settings[phone_verification_required]" value="0">
                         <input type="checkbox" name="settings[phone_verification_required]" value="1"
                             {{ $getVal('phone_verification_required') == '1' ? 'checked' : '' }}
-                            class="sr-only peer">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-400"></div>
+                            class="qj-setting-switch-input">
+                        <span class="qj-setting-switch-track" aria-hidden="true"></span>
                     </label>
                 </div>
                 <div>
@@ -72,36 +72,36 @@
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Enable identity verification (NID upload)</p>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
+                    <label class="qj-setting-switch">
                         <input type="hidden" name="settings[identity_verification_enabled]" value="0">
                         <input type="checkbox" name="settings[identity_verification_enabled]" value="1"
                             {{ $getVal('identity_verification_enabled') == '1' ? 'checked' : '' }}
-                            class="sr-only peer">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-400"></div>
+                            class="qj-setting-switch-input">
+                        <span class="qj-setting-switch-track" aria-hidden="true"></span>
                     </label>
                 </div>
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Require identity verification for users</p>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
+                    <label class="qj-setting-switch">
                         <input type="hidden" name="settings[identity_verification_required]" value="0">
                         <input type="checkbox" name="settings[identity_verification_required]" value="1"
                             {{ $getVal('identity_verification_required') == '1' ? 'checked' : '' }}
-                            class="sr-only peer">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-400"></div>
+                            class="qj-setting-switch-input">
+                        <span class="qj-setting-switch-track" aria-hidden="true"></span>
                     </label>
                 </div>
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Auto-approve verified users</p>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
+                    <label class="qj-setting-switch">
                         <input type="hidden" name="settings[auto_approve_users]" value="0">
                         <input type="checkbox" name="settings[auto_approve_users]" value="1"
                             {{ $getVal('auto_approve_users') == '1' ? 'checked' : '' }}
-                            class="sr-only peer">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-400"></div>
+                            class="qj-setting-switch-input">
+                        <span class="qj-setting-switch-track" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
@@ -115,24 +115,24 @@
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Require company verification</p>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
+                    <label class="qj-setting-switch">
                         <input type="hidden" name="settings[company_verification_required]" value="0">
                         <input type="checkbox" name="settings[company_verification_required]" value="1"
                             {{ $getVal('company_verification_required') == '1' ? 'checked' : '' }}
-                            class="sr-only peer">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-400"></div>
+                            class="qj-setting-switch-input">
+                        <span class="qj-setting-switch-track" aria-hidden="true"></span>
                     </label>
                 </div>
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Auto-approve companies after verification</p>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
+                    <label class="qj-setting-switch">
                         <input type="hidden" name="settings[auto_approve_companies]" value="0">
                         <input type="checkbox" name="settings[auto_approve_companies]" value="1"
                             {{ $getVal('auto_approve_companies') == '1' ? 'checked' : '' }}
-                            class="sr-only peer">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-400"></div>
+                            class="qj-setting-switch-input">
+                        <span class="qj-setting-switch-track" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
