@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#ffffff">
     
     <link href="{{ URL::asset('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v=20261102.2" rel="stylesheet">
+    <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v={{ filemtime(public_path('css/biraconsultant-theme.css')) }}" rel="stylesheet">
     
 </head>
 <body class="qj-app-shell">
