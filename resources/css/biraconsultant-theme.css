@@ -1282,3 +1282,11 @@
         padding-inline: 16px;
     }
 }
+
+@media (max-width: 767px) {
+    .qj-dashboard-page .flex.items-center.justify-between.p-4.border-b {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
