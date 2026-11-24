@@ -27,9 +27,10 @@
     @else
         <div class="w-8 h-8 rounded-full bg-gray-500"></div>
     @endif
-    <span class="text-xl font-regular ml-4 line-clamp-1 whitespace-nowrap text-black dark:text-white">
-        {{ $greeting }} <div class="font-medium text-yellow-300">{{ $userName }}!</div>
-    </span>
+    <div id="drawer-navigation-label" class="ml-4 flex min-w-0 flex-col text-black dark:text-white">
+        <span class="truncate text-sm font-normal">{{ $greeting }}</span>
+        <span class="truncate text-base font-semibold text-yellow-600 dark:text-yellow-300">{{ $userName }}!</span>
+    </div>
     </a>
     <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation"
         class="text-black dark:text-white bg-transparent hover:text-yellow-300 rounded-full text-sm p-1.5 absolute right-2.5 inline-flex items-center">
