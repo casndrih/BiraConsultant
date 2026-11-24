@@ -19,30 +19,36 @@ class DashboardController extends Controller
             return Carbon::create()->month($month)->format('M');
         });
 
-        $usersPerMonth = BiraConsultantUser::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
+        // Use SQL date functions supported by both the production MySQL database
+        // and the SQLite database used by the automated test suite.
+        $monthExpression = DB::connection()->getDriverName() === 'sqlite'
+            ? "CAST(strftime('%m', created_at) AS INTEGER)"
+            : "MONTH(created_at)";
+
+        $usersPerMonth = BiraConsultantUser::selectRaw("$monthExpression as month, COUNT(*) as count")
             ->whereYear('created_at', now()->year)
             ->where('role', 0)
-            ->groupBy(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER)'))
+            ->groupBy('month')
             ->pluck('count', 'month');
 
-        $applicationsPerMonth = BiraConsultantApplication::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
+        $applicationsPerMonth = BiraConsultantApplication::selectRaw("$monthExpression as month, COUNT(*) as count")
             ->whereYear('created_at', now()->year)
-            ->groupBy(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER)'))
+            ->groupBy('month')
             ->pluck('count', 'month');
 
-        $jobsPerMonth = BiraConsultantJob::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
+        $jobsPerMonth = BiraConsultantJob::selectRaw("$monthExpression as month, COUNT(*) as count")
             ->whereYear('created_at', now()->year)
-            ->groupBy(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER)'))
+            ->groupBy('month')
             ->pluck('count', 'month');
 
-        $companiesPerMonth = BiraConsultantCompany::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
+        $companiesPerMonth = BiraConsultantCompany::selectRaw("$monthExpression as month, COUNT(*) as count")
             ->whereYear('created_at', now()->year)
-            ->groupBy(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER)'))
+            ->groupBy('month')
             ->pluck('count', 'month');
 
-        $blogsPerMonth = BiraConsultantBlog::select(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER) as month'), DB::raw('COUNT(*) as count'))
+        $blogsPerMonth = BiraConsultantBlog::selectRaw("$monthExpression as month, COUNT(*) as count")
             ->whereYear('created_at', now()->year)
-            ->groupBy(DB::raw('CAST(strftime(\'%m\', created_at) AS INTEGER)'))
+            ->groupBy('month')
             ->pluck('count', 'month');
 
         return view('admin.dashboard.index', [
