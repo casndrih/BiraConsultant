@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Mail\ContactFormMail;
+use App\Providers\AppServiceProvider;
 use App\Models\BiraConsultantContactMessage;
 use App\Models\BiraConsultantSetting;
 use App\Models\BiraConsultantUser;
@@ -68,6 +69,49 @@ class ContactAndCaptchaTest extends TestCase
             ->assertSee('hello@biraconsultant.com')
             ->assertSee('+675 7000 1234')
             ->assertSee('Lae, Morobe Province, Papua New Guinea');
+    }
+
+    public function test_admin_saved_smtp_settings_are_loaded_into_laravel_mail_configuration(): void
+    {
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_driver'], ['value' => 'smtp']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_host'], ['value' => 'smtp.example.test']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_port'], ['value' => '465']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_username'], ['value' => 'mailer@example.test']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_password'], ['value' => 'test-secret']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_encryption'], ['value' => 'ssl']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_from_address'], ['value' => 'mailer@example.test']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_from_name'], ['value' => 'BiraConsultant Test']);
+
+        app(AppServiceProvider::class)->boot();
+
+        $this->assertSame('smtp', config('mail.default'));
+        $this->assertSame('smtp.example.test', config('mail.mailers.smtp.host'));
+        $this->assertSame(465, config('mail.mailers.smtp.port'));
+        $this->assertSame('mailer@example.test', config('mail.mailers.smtp.username'));
+        $this->assertSame('test-secret', config('mail.mailers.smtp.password'));
+        $this->assertSame('ssl', config('mail.mailers.smtp.encryption'));
+        $this->assertSame('mailer@example.test', config('mail.from.address'));
+        $this->assertSame('BiraConsultant Test', config('mail.from.name'));
+    }
+
+    public function test_blank_mail_password_submission_keeps_existing_saved_password(): void
+    {
+        $admin = BiraConsultantUser::where('email', 'admin@biraconsultant.test')->firstOrFail();
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_password'], ['value' => 'existing-secret']);
+
+        $this->actingAs($admin)
+            ->post(route('admin.setting.update'), [
+                'settings' => [
+                    'mail_driver' => 'smtp',
+                    'mail_password' => '',
+                ],
+            ])
+            ->assertRedirect(route('admin.settings.index'));
+
+        $this->assertDatabaseHas('biraconsultant_settings', [
+            'key' => 'mail_password',
+            'value' => 'existing-secret',
+        ]);
     }
 
     public function test_admin_contact_email_setting_rejects_invalid_email(): void
