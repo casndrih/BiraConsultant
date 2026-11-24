@@ -1,0 +1,39 @@
+name: Hostinger database connection check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/hostinger-db-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH and MySQL clients
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq sshpass default-mysql-client
+
+      - name: Test MySQL from the Hostinger account without exposing credentials
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+          DB_NAME: u269358615_bira
+          DB_USER: u269358615_bira
+          DB_PASSWORD: ${{ secrets.HOSTINGER_DB_PASSWORD }}
+        shell: bash
+        run: |
+          set +x
+          test -n "$SSH_HOST" && test -n "$SSH_USER" && test -n "$SSH_PASSWORD" && test -n "$DB_PASSWORD"
+          PORT="${SSH_PORT:-65002}"
+          printf '%s\\n' "$DB_PASSWORD" | sshpass -p "$SSH_PASSWORD" ssh \
+            -p "$PORT" -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=15 "$SSH_USER@$SSH_HOST" \
+            "DB_USER='$DB_USER' DB_NAME='$DB_NAME' bash -c 'IFS= read -r DB_PASSWORD; export MYSQL_PWD=\\"\$DB_PASSWORD\\"; if mysql --connect-timeout=10 -h localhost -u \$DB_USER \$DB_NAME -Nse \\\"SELECT 1\\\" >/dev/null 2>&1; then echo MYSQL_LOCAL_AUTH_OK; else echo MYSQL_LOCAL_AUTH_FAILED; exit 21; fi; php -r \\\"\\$p=new PDO(\\\"mysql:host=localhost;dbname=\$DB_NAME;charset=utf8mb4\\\", \$argv[1], getenv(\\\"MYSQL_PWD\\\")); echo \\\"PDO_OK\\\\n\\\";\\\" \$DB_USER' "
