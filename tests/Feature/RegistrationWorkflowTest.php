@@ -67,16 +67,15 @@ class RegistrationWorkflowTest extends TestCase
         Mail::assertSent(VerifyEmail::class);
     }
 
-
     public function test_existing_user_password_reset_request_dispatches_reset_notification(): void
     {
         Notification::fake();
 
         $user = BiraConsultantUser::where('email', 'martha.kila@biraconsultant.test')->firstOrFail();
 
-        $this->from('/')->post('/forgotpassword', [
+        $this->from('/forgot-password')->post('/forgotpassword', [
             'email' => $user->email,
-        ])->assertRedirect('/')->assertSessionHas('status');
+        ])->assertRedirect(route('password.request'))->assertSessionHas('status');
 
         Notification::assertSentTo($user, ResetPassword::class);
     }
@@ -85,9 +84,9 @@ class RegistrationWorkflowTest extends TestCase
     {
         Notification::fake();
 
-        $this->from('/')->post('/forgotpassword', [
+        $this->from('/forgot-password')->post('/forgotpassword', [
             'email' => 'not-registered@example.com',
-        ])->assertRedirect('/')->assertSessionHas('status');
+        ])->assertRedirect(route('password.request'))->assertSessionHas('status');
 
         Notification::assertNothingSent();
     }
