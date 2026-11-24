@@ -295,9 +295,9 @@ class FrontendController extends Controller
     // Companies AJAX listing (returns JSON with HTML)
     public function companiesList(Request $request)
     {
-        $query = BiraConsultantCompany::withCount(['jobs' => function($q) {
-            $q->where('status', 1);
-        }]);
+        $query = BiraConsultantCompany::publiclyVisible()->withCount(['jobs' => function($q) {
+            $q->active();
+        }]);;
 
         if ($request->filled('search')) {
             $query->where(function($q) use ($request) {
