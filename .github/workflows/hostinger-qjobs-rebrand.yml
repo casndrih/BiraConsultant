@@ -41,7 +41,7 @@ jobs:
               if (array_intersect($parts, $skip)) continue;
               $data = @file_get_contents($file->getPathname());
               if ($data === false || strpos($data, "\0") !== false) continue;
-              $next = strtr($data, $replace);
+              $next = str_replace(array_keys($replace), array_values($replace), $data);
               if ($next !== $data) {
                   file_put_contents($file->getPathname(), $next);
                   $changed++;
@@ -83,6 +83,7 @@ jobs:
           <?php
           $f = 'resources/css/biraconsultant-theme.css';
           $css = file_get_contents($f);
+          $css = preg_replace('~/\\* BiraConsultant yellow brand overrides \\*/.*$~s', '', $css);
           $tokens = [
               '--qj-brand' => '#FACC15',
               '--qj-brand-hover' => '#EAB308',
@@ -157,6 +158,9 @@ jobs:
           node -e 'const p=require("./package.json");console.log("package.name="+p.name)'
           php -r '$p=json_decode(file_get_contents("composer.json"),true);echo "composer.name=".$p["name"].PHP_EOL;'
           grep -RIl --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude-dir=storage --exclude-dir=public -E 'Q-Jobs|QJobs|qjobs|q_jobs|QJOBS' . 2>/dev/null | head -80 || true
+          echo "=== Rebranded model files ==="
+          find app/Models -maxdepth 1 -type f -iname '*BiraConsultant*' -printf '%f\\n' | head -40
+          grep -RIn 'class BiraConsultant' app/Models 2>/dev/null | head -40 || true
           echo "=== Build outputs ==="
           ls -lh public/mix-manifest.json public/css/mix-manifest.json public/js/app.js public/css/app.css public/css/biraconsultant-theme.css 2>/dev/null || true
           echo "REBRAND_AND_REBUILD_COMPLETE"
