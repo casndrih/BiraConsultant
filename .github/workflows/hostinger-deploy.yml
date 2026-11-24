@@ -10,6 +10,7 @@ on:
       - "resources/views/layouts/footer.blade.php"
       - "resources/views/layouts/header.blade.php"
       - "resources/views/app.blade.php"
+      - "resources/views/companies/detail.blade.php"
       - "resources/views/layouts/app.blade.php"
   workflow_dispatch:
 
