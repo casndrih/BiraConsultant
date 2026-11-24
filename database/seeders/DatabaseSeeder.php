@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             BiraConsultantCountry::updateOrCreate(['iso' => $country['iso']], $country);
         }
 
-        $admin = BiraConsultantUser::firstOrCreate(['email' => 'admin@biraconsultant.test'], [
+        $admin = BiraConsultantUser::updateOrCreate(['email' => 'admin@biraconsultant.test'], [
             'name' => 'BiraConsultant Administrator', 'slug' => 'biraconsultant-administrator',
             'username' => 'bira-admin', 'password' => $password, 'role' => 1,
             'gender' => '0', 'country_id' => $png->id, 'email_verified_at' => $now,
@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
             ['Joseph Daro', 'joseph.daro@biraconsultant.test', 'joseph-daro'],
         ];
         foreach ($people as $i => [$name, $email, $slug]) {
-            $jobSeekers[] = BiraConsultantUser::firstOrCreate(['email' => $email], [
+            $jobSeekers[] = BiraConsultantUser::updateOrCreate(['email' => $email], [
                 'name' => $name, 'slug' => $slug, 'username' => str_replace('-', '.', $slug),
                 'password' => $password, 'role' => 0, 'gender' => (string) ($i % 2),
                 'birthday' => now()->subYears(22 + ($i % 15))->toDateString(),
@@ -116,7 +116,7 @@ class DatabaseSeeder extends Seeder
         $companies = [];
         foreach ($companyData as $i => [$name, $slug, $industry, $city, $email]) {
             $ownerEmail = 'company'.($i + 1).'@biraconsultant.test';
-            $owner = BiraConsultantUser::firstOrCreate(['email' => $ownerEmail], [
+            $owner = BiraConsultantUser::updateOrCreate(['email' => $ownerEmail], [
                 'name' => $name.' Recruitment', 'slug' => 'company-owner-'.($i + 1),
                 'username' => 'company-owner-'.($i + 1), 'password' => $password,
                 'role' => 2, 'gender' => '0', 'country_id' => $png->id,
