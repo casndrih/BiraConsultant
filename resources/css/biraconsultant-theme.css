@@ -1474,7 +1474,7 @@
 
 /* Admin modal layout: viewport-bounded dialogs with a scrollable body and
    a footer that remains in the document flow (never over the form content). */
-.qj-app-shell [id$="Modal"]:not(#removeImageModal) {
+.qj-app-shell [id$="Modal"]:not(#removeImageModal):not(.hidden) {
     position: fixed !important;
     inset: 0 !important;
     display: flex;
