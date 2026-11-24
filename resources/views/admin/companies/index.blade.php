@@ -4,7 +4,7 @@
 <section class="bg-gray-100 dark:bg-black py-2">
     <div class="relative overflow-x-auto mx-4 shadow-md rounded-t-lg">
         <div class="flex items-center justify-between py-4 bg-white dark:bg-custom-dark">
-            <div class="ml-4 relative flex items-center">
+            <div class="qj-admin-search ml-4 relative flex items-center">
                 <div class="absolute inset-y-0 left-0 flex items-center ml-3 pointer-events-none">
                     <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -12,7 +12,7 @@
                               clip-rule="evenodd"></path>
                     </svg>
                 </div>
-                <form action="{{ route('admin.company.search') }}" method="GET">
+                <form class="qj-admin-search__form" action="{{ route('admin.company.search') }}" method="GET">
                     <input type="text" id="query-company" name="query-company"
                            value="{{ request()->query('query-company') }}"
                            class="block w-full p-2 pl-10 text-base text-gray-900  rounded-full bg-gray-100 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300"
@@ -31,7 +31,7 @@
     </div>
 
     <div class="overflow-x-auto mx-4 shadow-md rounded-b-lg">
-        <table class="w-full text-sm text-left text-black">
+        <table class="w-full text-sm text-left text-black qj-admin-data-table qj-admin-data-table--companies">
             <thead class="text-md text-black dark:text-white font-medium uppercase bg-white dark:bg-custom-dark">
             <tr>
                 <th class="px-6 py-4">Logo</th>
@@ -46,7 +46,7 @@
                 <tr class="bg-gray-50 dark:bg-black hover:bg-gray-100 dark:hover:bg-custom-dark"
                     data-id="{{ $company->id }}">
                     <td class="px-auto py-4">
-                        <img class="w-auto h-6 ml-4" src="{{ $company->logo_url ?? asset('/images/users/userpro.png') }}" alt="Company Logo">
+                        <img class="w-auto h-6 ml-4" src="{{ $company->logo_url ?? asset('/images/users/userpro.png') }}" alt="Company Logo" onerror="this.onerror=null;this.src='{{ asset('/images/providers/default.png') }}';">
                     </td>
                     <td class="px-6 py-4 text-base font-medium text-black dark:text-white">{{ $company->name }}</td>
                     <td class="px-6 py-4 text-base font-medium text-black dark:text-white">{{ $company->industry ?? 'N/A' }}</td>
