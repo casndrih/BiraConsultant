@@ -156,7 +156,7 @@ return new class extends Migration
             $table->string('resume_path')->nullable();
             $table->string('cover_letter_path')->nullable();
             $table->timestamps();
-            $table->unique(['user_id', 'job_id']);
+            $table->unique(['user_id', 'job_id'], 'bira_saved_job_unique');
         });
 
         Schema::create('biraconsultant_user_work_experiences', function (Blueprint $table) {
@@ -204,7 +204,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('biraconsultant_users')->cascadeOnDelete();
             $table->foreignId('skill_id')->constrained('biraconsultant_job_skills')->cascadeOnDelete();
             $table->timestamps();
-            $table->unique(['user_id', 'skill_id']);
+            $table->unique(['user_id', 'skill_id'], 'bira_user_skill_unique');
         });
 
         Schema::create('biraconsultant_user_category_interests', function (Blueprint $table) {
@@ -212,7 +212,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('biraconsultant_users')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('biraconsultant_job_categories')->cascadeOnDelete();
             $table->timestamps();
-            $table->unique(['user_id', 'category_id']);
+            $table->unique(['user_id', 'category_id'], 'bira_user_category_unique');
         });
 
         Schema::create('biraconsultant_saved_jobs', function (Blueprint $table) {
@@ -228,7 +228,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('biraconsultant_users')->cascadeOnDelete();
             $table->foreignId('company_id')->constrained('biraconsultant_companies')->cascadeOnDelete();
             $table->timestamps();
-            $table->unique(['user_id', 'company_id']);
+            $table->unique(['user_id', 'company_id'], 'bira_company_follower_unique');
         });
 
         Schema::create('biraconsultant_job_skill', function (Blueprint $table) {
@@ -236,7 +236,7 @@ return new class extends Migration
             $table->foreignId('job_id')->constrained('biraconsultant_jobs')->cascadeOnDelete();
             $table->foreignId('skill_id')->constrained('biraconsultant_job_skills')->cascadeOnDelete();
             $table->timestamps();
-            $table->unique(['job_id', 'skill_id']);
+            $table->unique(['job_id', 'skill_id'], 'bira_job_skill_unique');
         });
 
         Schema::create('personal_access_tokens', function (Blueprint $table) {
