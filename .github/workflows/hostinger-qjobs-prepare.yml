@@ -77,5 +77,13 @@ jobs:
           grep -RInE --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude-dir=storage --exclude='*.svg' --exclude='*.png' --exclude='*.jpg' --exclude='*.map' --exclude='*.lock' 'QJobs|Q-Jobs|qjobs|q_jobs' . 2>/dev/null | head -180 || true
           echo "THEME TOP"
           sed -n '1,40p' resources/css/qjobs-theme.css
+          echo "=== Exact source files containing QJobs identifiers ==="
+          grep -RIlE --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude-dir=storage --exclude-dir=public --exclude='*.lock' 'QJobs|Q-Jobs|qjobs|q_jobs' . 2>/dev/null | head -120 || true
+          echo "=== Key project metadata ==="
+          cat package.json
+          sed -n '1,100p' config/app.php
+          sed -n '1,100p' webpack.mix.js
+          echo "=== Existing theme source ==="
+          sed -n '1,240p' resources/css/qjobs-theme.css
           echo "PREPARATION_COMPLETE"
           REMOTE
