@@ -74,6 +74,10 @@ class CompanyDashboardController extends Controller
             return redirect()->route('company.register')->with('error', 'Please register your company first.');
         }
 
+        if (!$company->canPostJobs()) {
+            return redirect()->route('company.verification')->with('error', 'Your company must be approved, verified, and have a logo before posting jobs.');
+        }
+
         $jobTypes = BiraConsultantJobType::orderBy('name')->get();
         $categories = BiraConsultantJobCategory::orderBy('name')->get();
         $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->get();
@@ -86,6 +90,10 @@ class CompanyDashboardController extends Controller
         $company = $this->getCompany();
         if (!$company) {
             return redirect()->route('company.register')->with('error', 'Please register your company first.');
+        }
+
+        if (!$company->canPostJobs()) {
+            return redirect()->route('company.verification')->with('error', 'Your company must be approved, verified, and have a logo before posting jobs.');
         }
 
         $request->validate([
@@ -129,6 +137,10 @@ class CompanyDashboardController extends Controller
             return redirect()->route('company.register')->with('error', 'Please register your company first.');
         }
 
+        if (!$company->canPostJobs()) {
+            return redirect()->route('company.verification')->with('error', 'Your company must be approved, verified, and have a logo before posting jobs.');
+        }
+
         $categories = BiraConsultantJobCategory::orderBy('name')->pluck('name');
         $jobTypes = BiraConsultantJobType::orderBy('name')->pluck('name');
         $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->pluck('name');
@@ -156,6 +168,10 @@ class CompanyDashboardController extends Controller
         $company = $this->getCompany();
         if (!$company) {
             return redirect()->route('company.register')->with('error', 'Please register your company first.');
+        }
+
+        if (!$company->canPostJobs()) {
+            return redirect()->route('company.verification')->with('error', 'Your company must be approved, verified, and have a logo before posting jobs.');
         }
 
         $request->validate(['jobs_file' => 'required|file|max:10240']);
