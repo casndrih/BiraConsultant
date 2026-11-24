@@ -22,6 +22,23 @@
             Founded in 2025, we focus on transparency, fast matching, and a seamless user experience. Our platform supports resume uploads, identity verification, and a multi-stage application workflow.
         </p>
         </div>
+        <div class="mt-8">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Get in Touch</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="qj-content-panel qj-content-panel--compact qj-contact-info">
+                    <h3 class="font-medium text-black dark:text-white mb-1">Email</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400"><a href="mailto:{{ $contactDetails['email'] }}" class="hover:underline">{{ $contactDetails['email'] }}</a></p>
+                </div>
+                <div class="qj-content-panel qj-content-panel--compact qj-contact-info">
+                    <h3 class="font-medium text-black dark:text-white mb-1">Phone</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ $contactDetails['phone'] }}</p>
+                </div>
+                <div class="qj-content-panel qj-content-panel--compact qj-contact-info">
+                    <h3 class="font-medium text-black dark:text-white mb-1">Location</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ $contactDetails['address'] }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
