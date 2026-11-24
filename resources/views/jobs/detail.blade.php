@@ -79,6 +79,22 @@
                         </div>
                     </div>
 
+                    @php
+                        $shareUrl = urlencode(route('job.detail', $job->slug));
+                        $shareTitle = urlencode($job->title . ' - ' . ($job->company->name ?? 'BiraConsultant'));
+                        $shareText = urlencode('Check out this job opportunity: ' . $job->title . ' - ' . route('job.detail', $job->slug));
+                    @endphp
+
+                    <!-- Share Job -->
+                    <div class="mb-6 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+                        <h3 class="text-base font-semibold text-black dark:text-white mb-3">Share this Job</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ $shareUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Share job on LinkedIn" class="flex items-center justify-center gap-2 rounded-lg bg-[#0A66C2] px-3 py-2.5 text-sm font-medium text-white hover:opacity-90 transition"><span aria-hidden="true" class="font-bold">in</span> LinkedIn</a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ $shareUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Share job on Facebook" class="flex items-center justify-center gap-2 rounded-lg bg-[#1877F2] px-3 py-2.5 text-sm font-medium text-white hover:opacity-90 transition"><span aria-hidden="true" class="font-bold">f</span> Facebook</a>
+                            <a href="https://twitter.com/intent/tweet?url={{ $shareUrl }}&text={{ $shareTitle }}" target="_blank" rel="noopener noreferrer" aria-label="Share job on X" class="flex items-center justify-center gap-2 rounded-lg bg-black px-3 py-2.5 text-sm font-medium text-white hover:opacity-90 transition"><span aria-hidden="true" class="font-bold">𝕏</span> X</a>
+                            <a href="https://wa.me/?text={{ $shareText }}" target="_blank" rel="noopener noreferrer" aria-label="Share job on WhatsApp" class="flex items-center justify-center gap-2 rounded-lg bg-[#25D366] px-3 py-2.5 text-sm font-medium text-white hover:opacity-90 transition"><span aria-hidden="true" class="font-bold">☎</span> WhatsApp</a>
+                        </div>
+                    </div>
                     <!-- Job Details -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div class="flex items-center gap-2">
