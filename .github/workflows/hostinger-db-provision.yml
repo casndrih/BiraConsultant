@@ -11,6 +11,10 @@ permissions:
   contents: read
   actions: read
 
+concurrency:
+  group: hostinger-production-database
+  cancel-in-progress: false
+
 jobs:
   provision-production-database:
     runs-on: ubuntu-latest
@@ -22,8 +26,13 @@ jobs:
           TEST_RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
           set -euo pipefail
+          LATEST_RUN_ID="$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/laravel-database-tests.yml/runs?branch=main&per_page=1" --jq '.workflow_runs[0].id')"
+          if [ "$LATEST_RUN_ID" != "$TEST_RUN_ID" ]; then
+            echo "A newer database test run exists ($LATEST_RUN_ID); skipping this stale deployment event."
+            exit 1
+          fi
           CONCLUSION="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$TEST_RUN_ID" --jq '.conclusion')"
-          echo "Database test workflow conclusion: $CONCLUSION"
+          echo "Latest database test workflow conclusion: $CONCLUSION"
           test "$CONCLUSION" = "success" || { echo "Refusing production provisioning because CI did not pass."; exit 1; }
 
       - name: Checkout tested repository
