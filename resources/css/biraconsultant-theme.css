@@ -1434,3 +1434,39 @@
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
 }
+
+
+/* Keep admin search icon inside its own form coordinate system. */
+.qj-app-shell .qj-admin-search { display: block; width: 100%; }
+.qj-app-shell .qj-admin-search__form { position: relative !important; display: block; width: 100%; }
+.qj-app-shell .qj-admin-search__form > div:first-child {
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 12px !important;
+    right: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    z-index: 2;
+    pointer-events: none;
+}
+.qj-app-shell .qj-admin-search__form > div:first-child svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+}
+.qj-app-shell .qj-admin-search__form input {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding-left: 48px !important;
+    padding-right: 16px !important;
+    text-indent: 0 !important;
+    box-sizing: border-box !important;
+}
+@media (max-width: 767px) {
+    .qj-app-shell .qj-admin-search { margin: 0 !important; width: 100%; }
+    .qj-app-shell .qj-admin-search__form { width: 100%; }
+    .qj-app-shell .qj-admin-search__form input { min-height: 48px; font-size: 16px !important; }
+}
