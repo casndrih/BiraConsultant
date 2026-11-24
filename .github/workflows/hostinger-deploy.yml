@@ -31,6 +31,9 @@ on:
       - "resources/views/contact.blade.php"
       - "resources/views/mail/contact-form.blade.php"
       - "resources/views/admin/contact-messages/**"
+      - "app/Http/Controllers/Admin/SettingController.php"
+      - "resources/views/admin/settings/general/index.blade.php"
+      - "resources/views/pages/about.blade.php"
       - "resources/views/admin/layouts/drawer.blade.php"
       - "routes/web.php"
       - "config/mail.php"
@@ -231,12 +234,18 @@ jobs:
               'SESSION_DRIVER' => 'file',
               'CACHE_STORE' => 'file',
               'QUEUE_CONNECTION' => 'sync',
-              'MAIL_MAILER' => 'log',
+              'CONTACT_FORM_RECIPIENT' => 'info@biraconsultant.com',
               'FILESYSTEM_DISK' => 'public',
           ];
           $quote = static function ($value) {
               return '"'.str_replace(["\\", '"', "\n", "\r"], ["\\\\", '\\"', '\\n', '\\r'], (string) $value).'"';
           };
+          // Use SMTP when production already has a host and sender configured.
+          // Preserve existing transport settings instead of forcing Laravel's log mailer.
+          $existingEnv = parse_ini_string($content, false, INI_SCANNER_RAW) ?: [];
+          if (!empty($existingEnv['MAIL_HOST']) && !empty($existingEnv['MAIL_FROM_ADDRESS'])) {
+              $values['MAIL_MAILER'] = 'smtp';
+          }
           foreach ($values as $name => $value) {
               $line = $name.'='.$quote($value);
               $pattern = '/^'.preg_quote($name, '/').'=.*$/m';
@@ -251,6 +260,12 @@ jobs:
               exit(32);
           }
           chmod($path, 0600);
+          $mailEnv = parse_ini_file($path, false, INI_SCANNER_RAW) ?: [];
+          $smtpReady = !empty($mailEnv['MAIL_HOST']) && !empty($mailEnv['MAIL_FROM_ADDRESS']);
+          echo "CONTACT_FORM_RECIPIENT_CONFIGURED=" . (!empty($mailEnv['CONTACT_FORM_RECIPIENT']) ? "yes" : "no") . PHP_EOL;
+          echo "SMTP_HOST_AND_SENDER_CONFIGURED=" . ($smtpReady ? "yes" : "no") . PHP_EOL;
+          echo "SMTP_USERNAME_CONFIGURED=" . (!empty($mailEnv['MAIL_USERNAME']) ? "yes" : "no") . PHP_EOL;
+          echo "SMTP_PASSWORD_CONFIGURED=" . (!empty($mailEnv['MAIL_PASSWORD']) ? "yes" : "no") . PHP_EOL;
           echo "PRODUCTION_ENV_CONFIGURED\n";
           PHP
 
