@@ -61,7 +61,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/about', 'about')->name('about');
     Route::get('/advertising', 'advertising')->name('advertising');
     Route::get('/contact', 'contact')->name('contact');
-    Route::post('/contact', 'submitContact')->name('contact.submit')->middleware('recaptcha');
+    Route::post('/contact', 'submitContact')->name('contact.submit')->middleware(['recaptcha', 'throttle:5,1']);
     Route::get('/latest-jobs', [FrontendController::class, 'latestJobsPartial'])->name('latest.jobs');
     Route::get('/featured-jobs', [FrontendController::class, 'featuredJobsPartial'])->name('featured.jobs');
     Route::get('/home-companies', [FrontendController::class, 'homeCompaniesPartial'])->name('home.companies');
@@ -172,6 +172,9 @@ Route::prefix('company')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::group(['middleware' => ['auth:web', 'role:1']], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
+
+        Route::get('/contact-messages', [ContactMessageController::class, 'index'])->name('admin.contact-messages.index');
+        Route::get('/contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])->name('admin.contact-messages.show');
 
         Route::controller(JobController::class)->group(function () {
             Route::get('/jobs', 'index')->name('admin.jobs.index');
