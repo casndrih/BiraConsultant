@@ -141,6 +141,19 @@ class CompanyController extends Controller
 
     public function approveVerification(Request $request, BiraConsultantCompany $company)
     {
+        if (blank($company->logo)) {
+            return back()->with('error', 'A company logo is required before this company can be approved.');
+        }
+
+        if (
+            blank($company->registration_number)
+            || blank($company->registration_doc_path)
+            || blank($company->tax_id_number)
+            || blank($company->tax_doc_path)
+        ) {
+            return back()->with('error', 'Complete company registration and tax verification documents before approval.');
+        }
+
         $company->update([
             'verification_status' => 1,
             'is_approved' => 1,
