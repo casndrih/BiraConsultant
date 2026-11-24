@@ -79,7 +79,7 @@
         </div>
     </div>
 </div>
-<div class="mt-16 border-t border-gray-200 dark:border-gray-700 pt-8 sm:mt-20 lg:mt-24">
+<div class="mt-16 border-t border-gray-200 dark:border-gray-700 pt-8 px-6 sm:mt-20 lg:mt-24 lg:px-8">
     <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">© {{ now()->format('Y') }} BiraConsultant. All rights reserved.</p>
 </div>
 </footer>
