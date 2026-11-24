@@ -73,6 +73,7 @@ Route::controller(FrontendController::class)->group(function () {
 // Auth routes
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLogin')->name('login');
+    Route::get('/forgot-password', 'showForgotPassword')->name('password.request');
     Route::post('/signin', 'signIn')->name('signIn')->middleware(['recaptcha', 'throttle:auth']);
     Route::get('/signout', 'signOut')->name('signOut');
     Route::post('/forgotpassword', 'forgotPassword')->name('forgot-password')->middleware(['recaptcha', 'throttle:auth']);
@@ -85,6 +86,7 @@ Route::controller(GoogleAuthController::class)->prefix('auth/google')->group(fun
 
 // Signup routes
 Route::controller(RegistrationController::class)->group(function () {
+    Route::get('/register', 'showRegistrationForm')->name('register');
     Route::get('/reset-password/{token}', 'showResetForm')->name('password.reset');
     Route::post('/reset-password', 'reset')->name('password.update')->middleware('throttle:auth');
     Route::post('/signup', 'signUp')->name('signUp')->middleware(['recaptcha', 'throttle:auth']);
