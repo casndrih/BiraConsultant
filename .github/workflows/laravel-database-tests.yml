@@ -50,6 +50,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Prepare Laravel environment file
+        run: touch .env
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -69,5 +71,4 @@ jobs:
           DB_DATABASE: bira_test
           DB_USERNAME: root
           DB_PASSWORD: root
-          BIRA_DEMO_PASSWORD: 'TestOnly-Bira-2026!'
         run: php artisan test
