@@ -377,7 +377,7 @@ jobs:
                       if fields.get("name") == "_token":
                           self.token = fields.get("value")
 
-          for index, (email, expected_path) in enumerate(accounts):
+          role_openers = {}\n          for index, (email, expected_path) in enumerate(accounts):
               jar = http.cookiejar.CookieJar()
               opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
               request = urllib.request.Request(BASE + "/", headers={"User-Agent": "BiraConsultant-Production-SmokeTest/1.0"})
@@ -426,8 +426,48 @@ jobs:
                   raise SystemExit(43)
 
               print(f"LOGIN_PASSED account={email} role_dashboard={actual_path}")
+              if email in ("martha.kila@biraconsultant.test", "company1@biraconsultant.test", "admin@biraconsultant.test"):
+                  role_openers[email] = opener
               if index < len(accounts) - 1:
                   time.sleep(13)
 
+          public_paths = [
+              "/jobs", "/companies", "/blog", "/about", "/advertising",
+              "/contact", "/privacy", "/terms", "/search?q=administrator",
+              "/jobs/senior-systems-administrator-1",
+              "/companies/bank-south-pacific",
+              "/jobs/list", "/companies/list", "/api/countries",
+          ]
+          for path in public_paths:
+              with urllib.request.urlopen(BASE + path, timeout=30) as response:
+                  if response.status != 200:
+                      raise SystemExit(f"PUBLIC_ROUTE_FAILED path={path} status={response.status}")
+              print(f"PUBLIC_ROUTE_PASSED path={path}")
+
+          role_routes = {
+              "martha.kila@biraconsultant.test": [
+                  "/user/profile", "/user/applications", "/user/notifications",
+                  "/user/notifications/preferences",
+              ],
+              "company1@biraconsultant.test": [
+                  "/company/applications", "/company/verification", "/company/settings",
+                  "/company/jobs/create", "/company/jobs/import",
+              ],
+              "admin@biraconsultant.test": [
+                  "/admin/jobs", "/admin/companies", "/admin/blogs", "/admin/users",
+                  "/admin/applications", "/admin/settings", "/admin/users/verification",
+                  "/admin/companies/verification",
+              ],
+          }
+          for email, paths in role_routes.items():
+              opener = role_openers[email]
+              for path in paths:
+                  with opener.open(BASE + path, timeout=30) as response:
+                      final_path = urlparse(response.geturl()).path.rstrip("/") or "/"
+                      if response.status != 200 or final_path != path.rstrip("/"):
+                          raise SystemExit(f"ROLE_ROUTE_FAILED account={email} path={path} final={final_path} status={response.status}")
+                  print(f"ROLE_ROUTE_PASSED role_account={email} path={path}")
+
           print("ALL_17_DEMO_LOGINS_AND_ROLE_REDIRECTS_PASSED")
+          print("PUBLIC_AND_ROLE_ROUTE_SMOKE_TESTS_PASSED")
           PY
