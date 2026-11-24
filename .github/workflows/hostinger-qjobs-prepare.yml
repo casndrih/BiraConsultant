@@ -50,6 +50,7 @@ jobs:
           cp -a "$ROOT"/. "$APP_DIR"/
           rm -rf "$STAGE"
           cd "$APP_DIR"
+          mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
           echo "=== Laravel / Composer identity ==="
           php -r '$j=json_decode(file_get_contents("composer.json"),true); echo "composer.name=".($j["name"]??"").PHP_EOL;'
           echo "=== Package metadata and Vite scripts ==="
