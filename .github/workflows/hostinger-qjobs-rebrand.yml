@@ -1,0 +1,109 @@
+name: Rebrand QJobs as BiraConsultant and rebuild
+on:
+  push:
+    paths:
+      - ".github/workflows/hostinger-qjobs-rebrand.yml"
+jobs:
+  rebrand:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+      - name: Rename source identifiers, apply yellow brand, rebuild and clear caches
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_USER: ${{ secrets.HOSTINGER_USER }}
+          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$HOSTINGER_HOST" && test -n "$HOSTINGER_USER" && test -n "$HOSTINGER_PASSWORD"
+          sshpass -p "$HOSTINGER_PASSWORD" ssh -p "${HOSTINGER_PORT:-22}" -o StrictHostKeyChecking=no -o ConnectTimeout=25 "$HOSTINGER_USER@$HOSTINGER_HOST" 'bash -s' <<'REMOTE'
+          set -euo pipefail
+          APP_DIR="$HOME/domains/biraconsultants.com/bira_app"
+          cd "$APP_DIR"
+          test -f artisan && test -f package.json && test -f webpack.mix.js
+          echo "=== Replace project identifiers in source text ==="
+          grep -RIlZ --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude-dir=storage --exclude-dir=public --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.gif' --exclude='*.webp' --exclude='*.ico' --exclude='*.pdf' --exclude='*.zip' --exclude='*.lock' -E 'Q-Jobs|QJobs|qjobs|q_jobs|QJOBS' . 2>/dev/null | xargs -0 -r perl -0pi -e 's/Q-Jobs/BiraConsultant/g; s/QJobs/BiraConsultant/g; s/qjobs/biraconsultant/g; s/q_jobs/bira_consultant/g; s/QJOBS/BIRACONSULTANT/g'
+          echo "=== Rename source files containing old project name ==="
+          find . -depth -type f \( -iname '*qjobs*' -o -iname '*q-jobs*' -o -iname '*q_jobs*' \) -not -path './node_modules/*' -not -path './vendor/*' -not -path './storage/*' -not -path './public/*' -print0 | while IFS= read -r -d '' file; do
+            target="$file"
+            target="${target//QJobs/BiraConsultant}"
+            target="${target//qjobs/biraconsultant}"
+            target="${target//Q-Jobs/BiraConsultant}"
+            target="${target//q_jobs/bira_consultant}"
+            if [ "$target" != "$file" ]; then mv "$file" "$target"; fi
+          done
+          echo "=== Set application package identity ==="
+          node -e 'const fs=require("fs");const p=JSON.parse(fs.readFileSync("package.json","utf8"));p.name="biraconsultant";fs.writeFileSync("package.json",JSON.stringify(p,null,4)+"\n")'
+          php -r '$p=json_decode(file_get_contents("composer.json"),true);$p["name"]="biraconsultant/portal";file_put_contents("composer.json",json_encode($p,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES).PHP_EOL);'
+          if [ -f config/app.php ]; then
+            perl -0pi -e "s/env\('APP_NAME', 'Laravel'\)/env('APP_NAME', 'BiraConsultant')/g" config/app.php
+          fi
+          if [ -f .env.example ]; then
+            perl -0pi -e 's/^APP_NAME=.*/APP_NAME=BiraConsultant/m' .env.example
+          fi
+          echo "=== Update yellow theme tokens ==="
+          THEME="resources/css/biraconsultant-theme.css"
+          test -f "$THEME"
+          perl -0pi -e 's/--qj-brand:\s*#[0-9a-fA-F]+;/--qj-brand: #FACC15;/; s/--qj-brand-hover:\s*#[0-9a-fA-F]+;/--qj-brand-hover: #EAB308;/; s/--qj-brand-soft:\s*#[0-9a-fA-F]+;/--qj-brand-soft: #FEF9C3;/; s/--qj-brand-ink:\s*#[0-9a-fA-F]+;/--qj-brand-ink: #713F12;/; s/--qj-deep:\s*#[0-9a-fA-F]+;/--qj-deep: #422006;/; s/--qj-shadow:\s*[^;]+;/--qj-shadow: 0 14px 36px rgba(120, 53, 15, .12);/' "$THEME"
+          cat >> "$THEME" <<'YELLOW_THEME'
+          
+          /* BiraConsultant yellow brand overrides */
+          .qj-search-hero {
+              background:
+                  radial-gradient(circle at 88% 10%, rgba(250, 204, 21, .22), transparent 25%),
+                  radial-gradient(circle at 7% 100%, rgba(234, 179, 8, .16), transparent 31%),
+                  linear-gradient(122deg, #292524 0%, #422006 57%, #713f12 100%);
+          }
+          .qj-action-button--primary,
+          .qj-modal-primary,
+          .qj-modal-button--green-hover:hover,
+          .qj-modal-file-control::file-selector-button,
+          .qj-blog-accent,
+          .qj-search-submit {
+              color: #422006 !important;
+              background-color: var(--qj-brand) !important;
+          }
+          .qj-action-button--primary:hover,
+          .qj-modal-primary:hover,
+          .qj-search-submit:hover,
+          .qj-blog-accent:hover {
+              color: #422006 !important;
+              background-color: var(--qj-brand-hover) !important;
+          }
+          .qj-job-deadline,
+          .qj-job-card__salary,
+          .qj-company-card__website,
+          .qj-inline-link,
+          .qj-company-tile__arrow {
+              color: #A16207 !important;
+          }
+          .qj-job-badge,
+          .qj-filter-panel__icon,
+          .qj-company-card__count {
+              color: #713F12 !important;
+              background-color: #FEF9C3 !important;
+          }
+          .qj-company-logo {
+              color: #713F12;
+              background: linear-gradient(145deg, #FEF9C3, #FDE68A);
+              border-color: #FDE68A;
+          }
+          YELLOW_THEME
+          echo "=== Update lockfile metadata ==="
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          echo "=== Rebuild production CSS and JavaScript ==="
+          npm run production
+          echo "=== Clear Laravel optimized caches ==="
+          php artisan optimize:clear
+          echo "=== Verify source identity and old-name references ==="
+          node -e 'const p=require("./package.json");console.log("package.name="+p.name)'
+          php -r '$p=json_decode(file_get_contents("composer.json"),true);echo "composer.name=".$p["name"].PHP_EOL;'
+          grep -RIl --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude-dir=storage --exclude-dir=public -E 'Q-Jobs|QJobs|qjobs|q_jobs|QJOBS' . 2>/dev/null | head -80 || true
+          echo "=== Build outputs ==="
+          ls -lh public/css/mix-manifest.json public/js/app.js public/css/app.css public/css/biraconsultant-theme.css 2>/dev/null || true
+          echo "REBRAND_AND_REBUILD_COMPLETE"
+          REMOTE
