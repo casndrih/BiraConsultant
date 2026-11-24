@@ -41,7 +41,7 @@ class FrontendController extends Controller
             ->get();
 
         $categories = BiraConsultantJobCategory::withCount('jobs')->orderBy('name')->get();
-        $companies = BiraConsultantCompany::publiclyVisible()->withCount(['jobs' => function ($q) { $q->where('status', 1)->where('approval_status', 'approved'); }])->orderBy('name')->take(6)->get();
+        $companies = BiraConsultantCompany::publiclyVisible()->withCount(['jobs' => function ($q) { $q->active(); }])->orderBy('name')->take(6)->get();
         $jobTypes = BiraConsultantJobType::orderBy('name')->get();
         $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->get();
         $totalJobs = BiraConsultantJob::active()->count();
@@ -277,7 +277,7 @@ class FrontendController extends Controller
     public function companies(Request $request)
     {
         $query = BiraConsultantCompany::publiclyVisible()->withCount(['jobs' => function($q) {
-            $q->where('status', 1)->where('approval_status', 'approved');
+            $q->active();
         }]);
 
         if ($request->filled('search')) {
