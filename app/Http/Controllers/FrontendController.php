@@ -821,7 +821,7 @@ class FrontendController extends Controller
     {
         $contactDetails = [
             'email' => \App\Models\BiraConsultantSetting::getValue('contact_email', 'info@biraconsultant.com'),
-            'phone' => \App\Models\BiraConsultantSetting::getValue('contact_phone', '+1 (555) 123-4567'),
+            'phone' => \App\Models\BiraConsultantSetting::getValue('contact_phone', '+675'),
             'address' => \App\Models\BiraConsultantSetting::getValue('contact_address', 'Port Moresby, PNG'),
         ];
 
@@ -859,7 +859,7 @@ class FrontendController extends Controller
     {
         $contactDetails = [
             'email' => \App\Models\BiraConsultantSetting::getValue('contact_email', 'info@biraconsultant.com'),
-            'phone' => \App\Models\BiraConsultantSetting::getValue('contact_phone', '+1 (555) 123-4567'),
+            'phone' => \App\Models\BiraConsultantSetting::getValue('contact_phone', '+675'),
             'address' => \App\Models\BiraConsultantSetting::getValue('contact_address', 'Port Moresby, PNG'),
         ];
 
