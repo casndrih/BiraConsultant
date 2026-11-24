@@ -83,7 +83,7 @@
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Logo</label>
                         @if($company->logo)
                             <div class="mb-2">
-                                <img src="{{ asset('storage/' . $company->logo) }}" alt="Logo" class="w-16 h-16 rounded-lg object-cover">
+                                <img src="{{ $company->logo_url }}" alt="Logo" class="w-16 h-16 rounded-lg object-cover">
                             </div>
                         @endif
                         <input type="file" name="logo" accept="image/*"
