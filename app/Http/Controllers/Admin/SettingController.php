@@ -7,6 +7,7 @@ use App\Models\BiraConsultantSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class SettingController extends Controller
 {
