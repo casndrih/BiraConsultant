@@ -1037,7 +1037,12 @@
 }
 .qj-app-shell section table {
     width: 100%;
-    min-width: 760px;
+    min-width: 0;
+}
+
+/* Keep wide data tables scrollable inside their own wrapper, not across the page. */
+.qj-app-shell section .overflow-x-auto table {
+    min-width: 680px;
 }
 .qj-app-shell section .grid,
 .qj-app-shell section .grid > *,
