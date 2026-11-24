@@ -28,7 +28,7 @@
     <title>BiraConsultant</title>
     @include('partials.adsense-script')
     <link href="{{ URL::asset('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v=20261103.1" rel="stylesheet">
+    <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v=20261124.1" rel="stylesheet">
 </head>
 <body class="qj-app-shell">
     @yield('header')
