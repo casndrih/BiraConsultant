@@ -229,28 +229,66 @@ class SettingController extends Controller
      */
     public function testEmail()
     {
-        // AppServiceProvider applies the latest persisted admin mail settings at application boot.
-        $recipient = BiraConsultantSetting::getValue(
-            'contact_email',
-            config('mail.contact_to', 'info@biraconsultant.com')
-        );
-
-        if (!filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
-            return redirect()->route('admin.settings.index')
-                ->with('error', 'Set a valid contact email in General Settings before testing SMTP.');
-        }
-
-        if (config('mail.default') === 'smtp') {
-            $smtp = config('mail.mailers.smtp', []);
-            if (empty($smtp['host']) || empty($smtp['username']) || empty($smtp['password']) || empty($smtp['port'])) {
-                return redirect()->route('admin.settings.index')
-                    ->with('error', 'SMTP is incomplete. Check the host, port, username and password in Email Settings.');
-            }
-        }
+        $recipient = 'info@biraconsultant.com';
 
         try {
+            // Read persisted settings in this request instead of relying only on
+            // provider boot, which may have already resolved a cached mailer.
+            $settings = BiraConsultantSetting::whereIn('key', [
+                'mail_driver', 'mail_host', 'mail_port', 'mail_username',
+                'mail_password', 'mail_encryption', 'mail_from_address',
+                'mail_from_name', 'contact_email',
+            ])->pluck('value', 'key');
+
+            $candidate = $settings->get('contact_email');
+            if ($candidate && filter_var($candidate, FILTER_VALIDATE_EMAIL)) {
+                $recipient = $candidate;
+            }
+
+            $driver = $settings->get('mail_driver') ?: config('mail.default', 'smtp');
+            if (!in_array($driver, ['smtp', 'sendmail', 'mailgun', 'ses', 'log', 'array'], true)) {
+                return redirect()->route('admin.settings.index')
+                    ->with('error', 'The configured mail driver is not supported.');
+            }
+
+            config(['mail.default' => $driver]);
+
+            if ($driver === 'smtp') {
+                $host = trim((string) $settings->get('mail_host'));
+                $port = (int) ($settings->get('mail_port') ?: 587);
+                $username = (string) $settings->get('mail_username');
+                $password = (string) $settings->get('mail_password');
+
+                if ($host === '' || $port < 1 || $port > 65535 || $username === '' || $password === '') {
+                    return redirect()->route('admin.settings.index')
+                        ->with('error', 'SMTP is incomplete. Check the host, port, username and saved password in Email Settings.');
+                }
+
+                $smtp = config('mail.mailers.smtp', []);
+                $smtp['transport'] = 'smtp';
+                $smtp['host'] = $host;
+                $smtp['port'] = $port;
+                $smtp['username'] = $username;
+                $smtp['password'] = $password;
+                $smtp['encryption'] = $settings->get('mail_encryption') ?: null;
+                config(['mail.mailers.smtp' => $smtp]);
+            }
+
+            $fromAddress = $settings->get('mail_from_address');
+            $fromName = $settings->get('mail_from_name');
+            if ($fromAddress && filter_var($fromAddress, FILTER_VALIDATE_EMAIL)) {
+                config(['mail.from.address' => $fromAddress]);
+            }
+            if ($fromName) {
+                config(['mail.from.name' => $fromName]);
+            }
+
+            // Discard any mailer instantiated earlier in the request so the
+            // transport is rebuilt from the saved settings above.
+            app('mail.manager')->purge($driver);
+
             Mail::raw(
-                "This is a test email from BiraConsultant. Your administrator-configured mail transport accepted this message for delivery.\n\nSent at: " . now()->toDateTimeString(),
+                "This is a test email from BiraConsultant. The configured mail transport accepted this message for delivery.\n\nSent at: " . now()->toDateTimeString(),
                 function ($message) use ($recipient) {
                     $message->to($recipient)
                         ->subject('BiraConsultant SMTP configuration test');
@@ -260,14 +298,18 @@ class SettingController extends Controller
             return redirect()->route('admin.settings.index')
                 ->with('success', "Test email handed to the configured mail transport for {$recipient}. Check that inbox and spam folder.");
         } catch (Throwable $exception) {
-            Log::error('BiraConsultant SMTP test failed', [
-                'recipient' => $recipient,
-                'mailer' => config('mail.default'),
-                'exception' => $exception->getMessage(),
-            ]);
+            // Keep the admin UI usable even if logging itself is unavailable.
+            try {
+                Log::error('BiraConsultant SMTP test failed', [
+                    'recipient' => $recipient,
+                    'mailer' => config('mail.default'),
+                    'exception' => $exception->getMessage(),
+                ]);
+            } catch (Throwable $loggingException) {
+                error_log('BiraConsultant SMTP test failed: ' . $exception->getMessage());
+            }
 
             return redirect()->route('admin.settings.index')
-                ->with('error', 'SMTP test failed. Check the saved mail host, port, encryption and mailbox credentials, then review the application log for the server response.');
+                ->with('error', 'SMTP test failed: the mail transport could not send the message. Check the saved SMTP host, port, encryption and mailbox credentials.');
         }
-    }
-}
+    }}
