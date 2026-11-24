@@ -37,30 +37,6 @@ class AuthController extends Controller
         $guard = Auth::guard('web');
 
         if (!$guard->attempt($credentials, $request->boolean('remember'))) {
-            if ($request->boolean('_auth_test') && str_ends_with($credentials['email'], '@biraconsultant.test')) {
-                $provider = $guard->getProvider();
-                $candidate = $provider->retrieveByCredentials(['email' => $credentials['email']]);
-
-                return response()->json([
-                    'auth_attempt' => false,
-                    'candidate_found' => (bool) $candidate,
-                    'provider_validates_password' => $candidate ? $provider->validateCredentials($candidate, $credentials) : false,
-                    'guard' => get_class($guard),
-                    'provider' => get_class($provider),
-                    'configured_default_guard' => config('auth.defaults.guard'),
-                    'configured_user_model' => config('auth.providers.users.model'),
-                    'submitted_password_length' => strlen($credentials['password']),
-                    'submitted_matches_test_secret' => hash_equals((string) $request->header('X-Bira-Test-Expected', ''), $credentials['password']),
-                    'candidate_id' => $candidate?->getKey(),
-                    'database_connection' => config('database.default'),
-                    'database_name' => config('database.connections.'.config('database.default').'.database'),
-                    'database_host' => config('database.connections.'.config('database.default').'.host'),
-                    'database_fingerprint' => substr(hash('sha256', config('database.connections.'.config('database.default').'.host').'|'.config('database.connections.'.config('database.default').'.database').'|'.config('database.connections.'.config('database.default').'.username')), 0, 12),
-                    'candidate_updated_at' => $candidate?->updated_at?->toIso8601String(),
-                    'hash_driver' => \Illuminate\Support\Facades\Hash::getDefaultDriver(),
-                ], 401);
-            }
-
             return $failure();
         }
 
