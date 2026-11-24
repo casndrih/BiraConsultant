@@ -107,6 +107,9 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    // Contact-form notifications are disabled until an explicit recipient is configured.
+    'contact_to' => env('CONTACT_FORM_RECIPIENT'),
+
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings
