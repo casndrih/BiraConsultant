@@ -853,17 +853,34 @@ class FrontendController extends Controller
 
     public function submitContact(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'subject' => 'required|string|max:255',
             'message' => 'required|string|min:20|max:5000',
+            'website' => 'nullable|size:0',
         ]);
 
-        // In production, send email here
-        // Mail::to('admin@biraconsultant.com')->send(new ContactFormMail($request->all()));
+        $contactMessage = BiraConsultantContactMessage::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'subject' => $validated['subject'],
+            'message' => $validated['message'],
+        ]);
 
-        return redirect()->route('contact')->with('success', 'Thank you for your message! We will get back to you soon.');
+        $recipient = config('mail.contact_to');
+        if (is_string($recipient) && filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+            try {
+                Mail::to($recipient)->send(new ContactFormMail($contactMessage));
+            } catch (\\Throwable $exception) {
+                Log::error('Contact form notification delivery failed.', [
+                    'contact_message_id' => $contactMessage->id,
+                    'exception' => $exception::class,
+                ]);
+            }
+        }
+
+        return redirect()->route('contact')->with('success', 'Thank you. Your message has been received and saved.');
     }
 
     // Change Password
