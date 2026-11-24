@@ -1,0 +1,77 @@
+name: Safely clear Hostinger application source
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/hostinger-clear-source-safe.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  clear-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Preserve production data and remove application source only
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          command_timeout: 10m
+          script: |
+            set -eu
+            DOMAIN_DIR="$HOME/domains/biraconsultants.com"
+            WEBROOT="$DOMAIN_DIR/public_html"
+            APP_DIR="$DOMAIN_DIR/bira_app"
+            PRESERVED_UPLOADS="$DOMAIN_DIR/bira_preserved_uploads"
+            ENV_BACKUP="$HOME/.biraconsultant-production.env"
+
+            test -d "$DOMAIN_DIR"
+            test -d "$WEBROOT"
+
+            echo "=== Preserve production environment ==="
+            if [ -f "$APP_DIR/.env" ]; then
+              cp -p "$APP_DIR/.env" "$ENV_BACKUP"
+              chmod 600 "$ENV_BACKUP"
+            elif [ -f "$WEBROOT/.env" ]; then
+              cp -p "$WEBROOT/.env" "$ENV_BACKUP"
+              chmod 600 "$ENV_BACKUP"
+            fi
+
+            echo "=== Preserve uploaded files ==="
+            if [ -d "$APP_DIR/storage/app/public" ] && [ ! -L "$APP_DIR/storage/app/public" ]; then
+              if [ ! -e "$PRESERVED_UPLOADS" ]; then
+                mv "$APP_DIR/storage/app/public" "$PRESERVED_UPLOADS"
+              else
+                cp -a "$APP_DIR/storage/app/public/." "$PRESERVED_UPLOADS/"
+              fi
+            fi
+            if [ -d "$WEBROOT/storage" ] && [ ! -L "$WEBROOT/storage" ]; then
+              mkdir -p "$PRESERVED_UPLOADS"
+              cp -a "$WEBROOT/storage/." "$PRESERVED_UPLOADS/"
+            fi
+
+            echo "=== Remove Laravel application source and old release copies ==="
+            rm -rf -- "$APP_DIR" "$DOMAIN_DIR/releases" "$DOMAIN_DIR/bira_release_staging"
+            find "$WEBROOT" -mindepth 1 -maxdepth 1 ! -name '.well-known' ! -name 'storage' -exec rm -rf -- {} +
+
+            if [ -d "$PRESERVED_UPLOADS" ]; then
+              rm -rf -- "$WEBROOT/storage"
+              ln -s "$PRESERVED_UPLOADS" "$WEBROOT/storage"
+            fi
+
+            echo "=== Verify source-only cleanup ==="
+            test ! -e "$APP_DIR"
+            test ! -d "$DOMAIN_DIR/releases"
+            test ! -e "$DOMAIN_DIR/bira_release_staging"
+            test ! -f "$WEBROOT/artisan"
+            test ! -f "$WEBROOT/index.php"
+            test ! -f "$WEBROOT/build/manifest.json"
+            test -f "$ENV_BACKUP"
+            echo "Hostinger application source cleared. Database and production environment preserved."
+            if [ -d "$PRESERVED_UPLOADS" ]; then
+              echo "Uploaded files preserved at: $PRESERVED_UPLOADS"
+            fi
