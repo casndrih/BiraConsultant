@@ -264,12 +264,7 @@ jobs:
           $provider = \Illuminate\Support\Facades\Auth::guard("web")->getProvider();
           $candidate = $provider->retrieveByCredentials(["email" => "martha.kila@biraconsultant.test"]);
           if (!$candidate || !$provider->validateCredentials($candidate, ["password" => getenv("BIRA_DEMO_PASSWORD")])) { exit(36); }
-          echo "AUTH_PROVIDER_VALIDATION_PASSED id=".$candidate->getKey()." db=".config("database.connections.mysql.database")."\n";
-          echo "CLI_DB_FINGERPRINT=".substr(hash("sha256", config("database.connections.mysql.host")."|".config("database.connections.mysql.database")."|".config("database.connections.mysql.username")), 0, 12)."\n";
-          $peter = \App\Models\BiraConsultantUser::where("email", "peter.wama@biraconsultant.test")->first();
-          echo "PETER_DB_CHECK id=".$peter?->getKey()." updated=".$peter?->updated_at?->toIso8601String()." valid=".(\Illuminate\Support\Facades\Hash::check(getenv("BIRA_DEMO_PASSWORD"), $peter?->password ?? "") ? "1" : "0")."\n";
-          $lydia = \App\Models\BiraConsultantUser::where("email", "lydia.saro@biraconsultant.test")->first();
-          echo "LYDIA_DB_CHECK id=".$lydia?->getKey()." updated=".$lydia?->updated_at?->toIso8601String()." valid=".(\Illuminate\Support\Facades\Hash::check(getenv("BIRA_DEMO_PASSWORD"), $lydia?->password ?? "") ? "1" : "0")."\n";
+          echo "AUTH_PROVIDER_VALIDATION_PASSED\n";
           PHP
               echo "BIRA_DEMO_SEED_COMPLETED"
           fi
@@ -341,7 +336,6 @@ jobs:
           python3 <<'PY'
           import http.cookiejar
           import os
-          import re
           import time
           import urllib.parse
           import urllib.request
@@ -397,7 +391,6 @@ jobs:
                       if cookie.name == 'XSRF-TOKEN':
                           token = urllib.parse.unquote(cookie.value)
                           break
-                  token = token.group(1)
               if not token:
                   raise SystemExit("LOGIN_TEST_FAILED: CSRF token was not present in the sign-in page.")
 
@@ -405,12 +398,11 @@ jobs:
                   "_token": token,
                   "email": email,
                   "password": PASSWORD,
-              "_auth_test": "1",
               }).encode()
               post = urllib.request.Request(
                   BASE + "/signin",
                   data=payload,
-                  headers={"Content-Type": "application/x-www-form-urlencoded", "Referer": BASE + "/", "X-Bira-Test-Expected": PASSWORD},
+                  headers={"Content-Type": "application/x-www-form-urlencoded", "Referer": BASE + "/"},
                   method="POST",
               )
               try:
@@ -430,12 +422,6 @@ jobs:
                       "rate limited" if status == 429 else
                       "unexpected redirect or HTTP response"
                   )
-                  try:
-                      diagnostic = __import__("json").loads(body)
-                      if "auth_attempt" in diagnostic:
-                          print("AUTH_DIAGNOSTIC " + __import__("json").dumps(diagnostic, sort_keys=True))
-                  except Exception:
-                      pass
                   print(f"LOGIN_FAILED account={email} status={status} path={actual_path} reason={reason}")
                   raise SystemExit(43)
 
