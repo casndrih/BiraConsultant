@@ -10,7 +10,7 @@
     </div>
 
     <div class="overflow-x-auto rounded-lg bg-white dark:bg-custom-dark shadow">
-        <table class="w-full text-sm text-left text-gray-700 dark:text-gray-200">
+        <table class="w-full text-sm text-left text-gray-700 dark:text-gray-200 qj-admin-data-table qj-admin-data-table--messages">
             <thead class="text-xs uppercase bg-gray-50 dark:bg-black">
                 <tr>
                     <th class="px-5 py-4">Status</th>
