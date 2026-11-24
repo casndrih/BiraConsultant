@@ -103,6 +103,14 @@ jobs:
           command -v mysql >/dev/null 2>&1 || { echo "MySQL client unavailable"; exit 22; }
           export MYSQL_PWD="$DB_PASSWORD"
           mysql --connect-timeout=20 --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" "$DB_NAME" -Nse 'SELECT CONCAT("CONNECTED_DATABASE=", DATABASE())'
+          MIGRATIONS_TABLE="$(mysql --connect-timeout=20 --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" "$DB_NAME" -Nse "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = 'migrations'")"
+          if [ "$MIGRATIONS_TABLE" -eq 0 ]; then
+            EXISTING_TABLES="$(mysql --connect-timeout=20 --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" "$DB_NAME" -Nse "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_type = 'BASE TABLE'")"
+            if [ "$EXISTING_TABLES" -ne 0 ]; then
+              echo "Database has $EXISTING_TABLES tables but no Laravel migrations ledger; refusing to modify an unknown schema."
+              exit 23
+            fi
+          fi
           echo "Running Laravel migrations (no tables will be dropped)..."
           php artisan config:clear
           php artisan migrate --force --no-interaction
