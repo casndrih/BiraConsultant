@@ -5,14 +5,14 @@
         <div class="relative overflow-x-auto mx-4 shadow-md rounded-t-lg">
             <div class="flex items-center justify-between py-4 bg-white dark:bg-custom-dark">
                 <label for="table-search" class="sr-only">Search Application</label>
-                <div class="ml-4 relative flex items-center">
+                <div class="qj-admin-search ml-4 relative flex items-center">
                     <div class="absolute inset-y-0 left-0 flex items-center ml-3 pointer-events-none">
                         <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 
                                 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                         </svg>
                     </div>
-                    <form action="{{ route('admin.application.search') }}" method="GET">
+                    <form class="qj-admin-search__form" action="{{ route('admin.application.search') }}" method="GET">
                         <input type="text" id="query-application" name="query-application"
                             value="{{ request()->query('query-application') }}"
                             class="block w-full p-2 pl-10 text-base text-gray-900  rounded-full bg-gray-100 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300"
@@ -23,7 +23,7 @@
         </div>
 
         <div class="overflow-x-auto mx-4 shadow-md rounded-b-lg">
-            <table class="w-full text-sm text-left text-black">
+            <table class="w-full text-sm text-left text-black qj-admin-data-table qj-admin-data-table--applications">
                 <thead class="text-md text-black dark:text-white font-medium uppercase bg-white dark:bg-custom-dark">
                     <tr>
                         <th class="px-6 py-4">User</th>
@@ -41,7 +41,7 @@
                                 @if ($application->user)
                                     <img class="w-10 h-10 border-2 border-gray-200 dark:border-custom-dark rounded-full"
                                         src="{{ $application->user->image ?? asset('/images/users/userpro.png') }}"
-                                        alt="User image">
+                                        alt="User image" onerror="this.onerror=null;this.src='{{ asset('/images/users/userpro.png') }}';">
                                     <div class="pl-3">
                                         <div class="text-base md:text-lg font-semibold text-black dark:text-white">{{ $application->user->name }}</div>
                                         <div class="text-md font-normal text-gray-500">{{ $application->user->email }}</div>
@@ -60,7 +60,7 @@
                                        <div class="pl-3">
                                         <img class="w-auto h-6"
                                             src="{{ $application->job->company->logo ?? asset('/images/providers/default.png') }}"
-                                            alt="Company image">
+                                            alt="Company image" onerror="this.onerror=null;this.src='{{ asset('/images/providers/default.png') }}';">
                                         <p class="text-base text-black dark:text-white font-medium">
                                             {{ $application->job->company->name }}</p>
                                         </div>
