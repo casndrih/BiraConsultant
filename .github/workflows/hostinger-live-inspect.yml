@@ -1,0 +1,58 @@
+name: Inspect BiraConsultant Hostinger live paths
+on:
+  push:
+    paths:
+      - ".github/workflows/hostinger-live-inspect.yml"
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+      - name: Inspect production paths without changing them
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_USER: ${{ secrets.HOSTINGER_USER }}
+          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$HOSTINGER_HOST" && test -n "$HOSTINGER_USER" && test -n "$HOSTINGER_PASSWORD"
+          sshpass -p "$HOSTINGER_PASSWORD" ssh -p "${HOSTINGER_PORT:-22}" -o StrictHostKeyChecking=no -o ConnectTimeout=25 "$HOSTINGER_USER@$HOSTINGER_HOST" 'bash -s' <<'REMOTE'
+          set -euo pipefail
+          D="$HOME/domains/biraconsultants.com"
+          A="$D/bira_app"
+          W="$D/public_html"
+          echo "HOME_DOMAIN_DIR_EXISTS=$([ -d "$D" ] && echo yes || echo no)"
+          echo "APP_DIR_EXISTS=$([ -d "$A" ] && echo yes || echo no)"
+          echo "APP_ARTISAN_EXISTS=$([ -f "$A/artisan" ] && echo yes || echo no)"
+          echo "APP_VENDOR_EXISTS=$([ -f "$A/vendor/autoload.php" ] && echo yes || echo no)"
+          echo "APP_PUBLIC_EXISTS=$([ -d "$A/public" ] && echo yes || echo no)"
+          echo "APP_ENV_EXISTS=$([ -f "$A/.env" ] && echo yes || echo no)"
+          echo "WEBROOT_EXISTS=$([ -d "$W" ] && echo yes || echo no)"
+          echo "WEBROOT_REALPATH=$(readlink -f "$W" 2>/dev/null || true)"
+          echo "WEBROOT_INDEX_EXISTS=$([ -f "$W/index.php" ] && echo yes || echo no)"
+          echo "WEBROOT_HTACCESS_EXISTS=$([ -f "$W/.htaccess" ] && echo yes || echo no)"
+          echo "WEBROOT_INDEX_HEAD:"
+          if [ -f "$W/index.php" ]; then sed -n '1,35p' "$W/index.php"; else echo absent; fi
+          echo "APP_PUBLIC_INDEX_HEAD:"
+          if [ -f "$A/public/index.php" ]; then sed -n '1,35p' "$A/public/index.php"; else echo absent; fi
+          echo "APP_ENV_SAFE_SETTINGS:"
+          if [ -f "$A/.env" ]; then
+            awk -F= '/^(APP_ENV|APP_DEBUG|APP_URL|DB_CONNECTION)=/ {print $1"="$2}' "$A/.env" | sed -E 's#(APP_URL=https?://)[^/]+#\1[domain]#'
+            grep -q '^DB_DATABASE=' "$A/.env" && echo DB_DATABASE_CONFIGURED=yes || echo DB_DATABASE_CONFIGURED=no
+            grep -q '^DB_USERNAME=' "$A/.env" && echo DB_USERNAME_CONFIGURED=yes || echo DB_USERNAME_CONFIGURED=no
+            grep -q '^DB_PASSWORD=' "$A/.env" && echo DB_PASSWORD_CONFIGURED=yes || echo DB_PASSWORD_CONFIGURED=no
+          else echo missing; fi
+          echo "WEBROOT_TOP_LEVEL:"
+          find "$W" -maxdepth 1 -mindepth 1 -printf '%f %y\n' 2>/dev/null | sort | head -80
+          echo "APP_BUILD_OUTPUTS:"
+          for f in public/mix-manifest.json public/js/app.js public/css/app.css public/css/biraconsultant-theme.css; do
+            if [ -f "$A/$f" ]; then echo "present $f"; else echo "missing $f"; fi
+          done
+          echo "HOSTINGER_LOCAL_HTTP_CHECK:"
+          curl -ksS -o /tmp/bira-home-body -w 'http_code=%{http_code} content_type=%{content_type} redirect=%{redirect_url}\n' --max-time 20 -H 'Host: biraconsultants.com' http://127.0.0.1/ || true
+          head -c 300 /tmp/bira-home-body 2>/dev/null | tr '\n' ' ' || true
+          echo
+          echo "INSPECTION_COMPLETE"
+          REMOTE
