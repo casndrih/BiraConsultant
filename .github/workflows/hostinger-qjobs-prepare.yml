@@ -54,19 +54,19 @@ jobs:
           php -r '$j=json_decode(file_get_contents("composer.json"),true); echo "composer.name=".($j["name"]??"").PHP_EOL;'
           echo "=== Package metadata and Vite scripts ==="
           if [ -f package.json ]; then node -e 'const p=require("./package.json"); console.log(JSON.stringify({name:p.name,scripts:p.scripts},null,2))'; else echo "package.json missing"; fi
+          echo "=== Install PHP dependencies ==="
+          if [ ! -f vendor/autoload.php ]; then composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader; fi
           echo "=== Initial Laravel cache clear ==="
           php artisan optimize:clear
-          echo "=== Install PHP dependencies if vendor is absent ==="
-          if [ ! -f vendor/autoload.php ]; then composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader; fi
-          echo "=== Install Node dependencies and initial Vite build ==="
+          echo "=== Install Node dependencies and initial Laravel Mix production build ==="
           if [ -f package.json ]; then
             if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
-            npm run build
+            npm run production
           else
             echo "ERROR: package.json missing; cannot run Vite build"
             exit 4
           fi
-          echo "=== Laravel cache clear after initial build ==="
+          echo "=== Laravel cache clear after initial Mix build ==="
           php artisan optimize:clear
           echo "=== Branding and color references for targeted update ==="
           grep -RInE --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude='*.map' --exclude='*.lock' 'QJobs|Q-Jobs|qjobs|q_jobs|#([0-9A-Fa-f]{3,8})|rgb\(|hsl\(' resources public css sass tailwind.config.* vite.config.* package.json composer.json 2>/dev/null | head -260 || true
