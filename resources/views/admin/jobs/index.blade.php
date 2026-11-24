@@ -45,11 +45,11 @@
                 Approved ({{ $counts['approved'] }})
             </a>
             <a href="{{ route('admin.jobs.index', ['filter' => 'rejected']) }}"
-                class="px-3 py-1.5 rounded-full text-sm font-medium transition {{ $filter === 'rejected' ? 'bg-red-500 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}>
+                class="px-3 py-1.5 rounded-full text-sm font-medium transition {{ $filter === 'rejected' ? 'bg-red-500 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                 Rejected ({{ $counts['rejected'] }})
             </a>
             <a href="{{ route('admin.jobs.index', ['filter' => 'expired']) }}"
-                class="px-3 py-1.5 rounded-full text-sm font-medium transition {{ $filter === 'expired' ? 'bg-gray-500 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}>
+                class="px-3 py-1.5 rounded-full text-sm font-medium transition {{ $filter === 'expired' ? 'bg-gray-500 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                 Expired ({{ $counts['expired'] }})
             </a>
         </div>
