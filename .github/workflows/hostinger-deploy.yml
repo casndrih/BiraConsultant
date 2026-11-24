@@ -20,6 +20,7 @@ on:
       - "resources/views/layouts/app.blade.php"
       - "app/Http/Controllers/Auth/AuthController.php"
       - "app/Http/Controllers/Admin/DashboardController.php"
+      - "database/seeders/DatabaseSeeder.php"
   workflow_dispatch:
 
 permissions:
