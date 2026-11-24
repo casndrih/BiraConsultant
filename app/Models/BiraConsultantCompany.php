@@ -138,4 +138,24 @@ class BiraConsultantCompany extends Model
     {
         return (int) $this->verification_status === 1;
     }
+
+    public function isPubliclyVisible(): bool
+    {
+        return (bool) $this->is_approved
+            && $this->isVerified()
+            && filled($this->logo);
+    }
+
+    public function canPostJobs(): bool
+    {
+        return $this->isPubliclyVisible();
+    }
+
+    public function scopePubliclyVisible($query)
+    {
+        return $query->where('is_approved', 1)
+            ->where('verification_status', 1)
+            ->whereNotNull('logo')
+            ->where('logo', '!=', '');
+    }
 }
