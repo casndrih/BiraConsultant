@@ -115,6 +115,15 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
+        const fallbackUserAvatars = [
+            'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&h=240&q=85',
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&h=240&q=85',
+            'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&h=240&q=85',
+            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=240&h=240&q=85',
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&h=240&q=85',
+            'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=240&h=240&q=85',
+            'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=240&h=240&q=85'
+        ];
         const rows = document.querySelectorAll('tr[data-href]');
         rows.forEach(row => {
             row.addEventListener('click', () => {
@@ -142,10 +151,11 @@
                         $('#view_application_sub_date').text(formattedDate);
 
                         const userImage = $('#view_user_image');
+                        const fallbackAvatar = fallbackUserAvatars[(Number(data.user?.id || 0)) % fallbackUserAvatars.length];
                         userImage.off('error').on('error', function () {
                             this.onerror = null;
-                            this.src = '/images/users/userpro.png';
-                        }).attr('src', data.user?.image || '/images/users/userpro.png');
+                            this.src = fallbackAvatar;
+                        }).attr('src', data.user?.image || fallbackAvatar);
                         $('#view_user_name').text(data.user?.name || 'Unknown');
                         $('#view_user_email').text(data.user?.email || 'Unknown');
                         
