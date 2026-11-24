@@ -27,8 +27,8 @@
     
     <title>BiraConsultant</title>
     @include('partials.adsense-script')
-    <link href="{{ URL::asset('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v=20261124.1" rel="stylesheet">
+    <link href="{{ URL::asset('/css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}" rel="stylesheet">
+    <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v={{ filemtime(public_path('css/biraconsultant-theme.css')) }}" rel="stylesheet">
 </head>
 <body class="qj-app-shell">
     @yield('header')
@@ -59,7 +59,7 @@
 
     @yield('footer')
     
-    <script src="{{ URL::asset('/js/app.js') }}"></script>
+    <script src="{{ URL::asset('/js/app.js') }}?v={{ filemtime(public_path('js/app.js')) }}"></script>
     @include('partials.modal-dismiss-fallback')
     @yield('js')
     @stack('scripts')
