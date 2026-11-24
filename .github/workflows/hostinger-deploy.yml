@@ -11,6 +11,7 @@ on:
       - "resources/views/layouts/header.blade.php"
       - "resources/views/app.blade.php"
       - "resources/views/companies/detail.blade.php"
+      - "resources/views/partials/companies.blade.php"
       - "public/images/companies/bsp-logo.svg"
       - "resources/views/jobs/detail.blade.php"
       - "resources/views/layouts/app.blade.php"
