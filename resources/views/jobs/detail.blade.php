@@ -1,5 +1,42 @@
 @extends('app')
 
+@php
+    $shareCompanyName = $job->company->name ?? 'BiraConsultant';
+    $shareDescription = trim(preg_replace('/\\s+/', ' ', strip_tags($job->description ?? '')));
+    $shareDescription = \Illuminate\Support\Str::limit(
+        $shareDescription !== '' ? $shareDescription : 'Explore this job opportunity at ' . $shareCompanyName . ' on BiraConsultant.',
+        240
+    );
+    $shareImage = ($job->company && $job->company->logo)
+        ? asset('storage/' . ltrim($job->company->logo, '/'))
+        : asset('images/favicon/logo.svg');
+    $shareCanonicalUrl = route('job.detail', $job->slug);
+    $sharePageTitle = $job->title . ' at ' . $shareCompanyName . ' | BiraConsultant';
+    $shareLocation = $job->location ?? 'Location not specified';
+    $shareJobType = $job->jobType->name ?? 'Job opportunity';
+    $shareMetaDescription = $shareCompanyName . ' is hiring: ' . $job->title . '. ' . $shareLocation . '. ' . $shareDescription;
+@endphp
+
+@section('title', $sharePageTitle)
+
+@section('meta')
+    <meta name="description" content="{{ $shareMetaDescription }}">
+    <link rel="canonical" href="{{ $shareCanonicalUrl }}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="BiraConsultant">
+    <meta property="og:title" content="{{ $sharePageTitle }}">
+    <meta property="og:description" content="{{ $shareMetaDescription }}">
+    <meta property="og:url" content="{{ $shareCanonicalUrl }}">
+    <meta property="og:image" content="{{ $shareImage }}">
+    <meta property="og:image:alt" content="{{ $shareCompanyName }} company logo">
+    <meta property="article:published_time" content="{{ optional($job->created_at)->toIso8601String() }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $sharePageTitle }}">
+    <meta name="twitter:description" content="{{ $shareMetaDescription }}">
+    <meta name="twitter:image" content="{{ $shareImage }}">
+    <meta name="twitter:image:alt" content="{{ $shareCompanyName }} company logo">
+@endsection
+
 @section('header')
     @include('layouts.header')
 @endsection
