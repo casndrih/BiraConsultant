@@ -106,6 +106,44 @@ class CompanyPublicationRulesTest extends TestCase
             ->assertRedirect('/company/verification');
     }
 
+    public function test_admin_requires_company_logo_and_complete_documents_before_approval(): void
+    {
+        $admin = BiraConsultantUser::where('email', 'admin@biraconsultant.test')->firstOrFail();
+
+        $company = BiraConsultantCompany::create([
+            'name' => 'Verification Gate Smoke Test',
+            'slug' => 'verification-gate-smoke-test',
+            'is_approved' => false,
+            'verification_status' => 0,
+            'registration_number' => 'REG-SMOKE-001',
+            'registration_doc_path' => 'company_docs/test/registration.pdf',
+            'tax_id_number' => 'TAX-SMOKE-001',
+            'tax_doc_path' => 'company_docs/test/tax.pdf',
+        ]);
+
+        $this->actingAs($admin)
+            ->patch(route('admin.companies.verification.approve', $company))
+            ->assertSessionHas('error');
+
+        $this->assertDatabaseHas('biraconsultant_companies', [
+            'id' => $company->id,
+            'is_approved' => 0,
+            'verification_status' => 0,
+        ]);
+
+        $company->update(['logo' => 'images/companies/bsp-logo.svg']);
+
+        $this->actingAs($admin)
+            ->patch(route('admin.companies.verification.approve', $company))
+            ->assertRedirect(route('admin.companies.verification'));
+
+        $this->assertDatabaseHas('biraconsultant_companies', [
+            'id' => $company->id,
+            'is_approved' => 1,
+            'verification_status' => 1,
+        ]);
+    }
+
     public function test_verified_demo_company_with_logo_can_open_job_creation_form(): void
     {
         $owner = BiraConsultantUser::where('email', 'company1@biraconsultant.test')->firstOrFail();
