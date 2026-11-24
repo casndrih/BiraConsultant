@@ -37,17 +37,17 @@ jobs:
           foreach ($it as $file) {
               if (!$file->isFile()) continue;
               $relative = substr($file->getPathname(), strlen($root) + 1);
-              $parts = preg_split('~[\\\\/]~', $relative);
+              $parts = explode(DIRECTORY_SEPARATOR, $relative);
               if (array_intersect($parts, $skip)) continue;
               $data = @file_get_contents($file->getPathname());
-              if ($data === false || strpos($data, "\\0") !== false) continue;
+              if ($data === false || strpos($data, "\0") !== false) continue;
               $next = strtr($data, $replace);
               if ($next !== $data) {
                   file_put_contents($file->getPathname(), $next);
                   $changed++;
               }
           }
-          echo "TEXT_FILES_UPDATED=$changed\\n";
+          echo "TEXT_FILES_UPDATED=$changed\n";
           PHP
           echo "=== Rename source files containing old project name ==="
           find . -depth -type f \( -iname '*qjobs*' -o -iname '*q-jobs*' -o -iname '*q_jobs*' \) -not -path './node_modules/*' -not -path './vendor/*' -not -path './storage/*' -not -path './public/*' -print0 | while IFS= read -r -d '' file; do
@@ -61,18 +61,44 @@ jobs:
           echo "=== Set application package identity ==="
           node -e 'const fs=require("fs");const p=JSON.parse(fs.readFileSync("package.json","utf8"));p.name="biraconsultant";fs.writeFileSync("package.json",JSON.stringify(p,null,4)+"\n")'
           php -r '$p=json_decode(file_get_contents("composer.json"),true);$p["name"]="biraconsultant/portal";file_put_contents("composer.json",json_encode($p,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES).PHP_EOL);'
-          if [ -f config/app.php ]; then
-            perl -0pi -e "s/env\('APP_NAME', 'Laravel'\)/env('APP_NAME', 'BiraConsultant')/g" config/app.php
-          fi
-          if [ -f .env.example ]; then
-            php -r '$p=file_get_contents(".env.example");$p=preg_replace("/^APP_NAME=.*/m","APP_NAME=BiraConsultant",$p);file_put_contents(".env.example",$p);'
-          fi
+          php <<'PHP'
+          <?php
+          $f = 'config/app.php';
+          if (is_file($f)) {
+              $p = file_get_contents($f);
+              $p = str_replace("env('APP_NAME', 'Laravel')", "env('APP_NAME', 'BiraConsultant')", $p);
+              file_put_contents($f, $p);
+          }
+          $f = '.env.example';
+          if (is_file($f)) {
+              $p = file_get_contents($f);
+              $p = preg_replace('/^APP_NAME=.*/m', 'APP_NAME=BiraConsultant', $p);
+              file_put_contents($f, $p);
+          }
+          PHP
           echo "=== Update yellow theme tokens ==="
           THEME="resources/css/biraconsultant-theme.css"
           test -f "$THEME"
-          perl -0pi -e 's/--qj-brand:\s*#[0-9a-fA-F]+;/--qj-brand: #FACC15;/; s/--qj-brand-hover:\s*#[0-9a-fA-F]+;/--qj-brand-hover: #EAB308;/; s/--qj-brand-soft:\s*#[0-9a-fA-F]+;/--qj-brand-soft: #FEF9C3;/; s/--qj-brand-ink:\s*#[0-9a-fA-F]+;/--qj-brand-ink: #713F12;/; s/--qj-deep:\s*#[0-9a-fA-F]+;/--qj-deep: #422006;/; s/--qj-shadow:\s*[^;]+;/--qj-shadow: 0 14px 36px rgba(120, 53, 15, .12);/' "$THEME"
+          php <<'PHP'
+          <?php
+          $f = 'resources/css/biraconsultant-theme.css';
+          $css = file_get_contents($f);
+          $tokens = [
+              '--qj-brand' => '#FACC15',
+              '--qj-brand-hover' => '#EAB308',
+              '--qj-brand-soft' => '#FEF9C3',
+              '--qj-brand-ink' => '#713F12',
+              '--qj-deep' => '#422006',
+              '--qj-shadow' => '0 14px 36px rgba(120, 53, 15, .12)',
+          ];
+          foreach ($tokens as $name => $value) {
+              $pattern = '/' . preg_quote($name, '/') . '\\s*:\\s*[^;]+;/';
+              $css = preg_replace($pattern, $name . ': ' . $value . ';', $css);
+          }
+          file_put_contents($f, $css);
+          PHP
           cat >> "$THEME" <<'YELLOW_THEME'
-          
+
           /* BiraConsultant yellow brand overrides */
           .qj-search-hero {
               background:
@@ -117,16 +143,14 @@ jobs:
           YELLOW_THEME
           echo "=== Refresh Composer autoload map after model renames ==="
           composer dump-autoload --no-dev --optimize
-          echo "=== Update application name defaults ==="
-          php -r '$p=file_get_contents("config/app.php");$p=str_replace("env('"'APP_NAME'"', '"'Laravel'"')","env('"'APP_NAME'"', '"'BiraConsultant'"')",$p);file_put_contents("config/app.php",$p);'
-          if [ -f .env.example ]; then php -r '$p=file_get_contents(".env.example");$p=preg_replace("/^APP_NAME=.*/m","APP_NAME=BiraConsultant",$p);file_put_contents(".env.example",$p);'; fi
-          echo "=== Update lockfile metadata ==="
+          echo "=== Update package lockfile ==="
           npm install --package-lock-only --ignore-scripts --no-audit --no-fund
           echo "=== Validate PHP source syntax ==="
           find app config routes database -type f -name "*.php" -print0 | xargs -0 -r -n1 php -l >/dev/null
           echo "PHP_SOURCE_SYNTAX_OK"
           echo "=== Rebuild production CSS and JavaScript ==="
           npm run production
+          rm -f public/css/qjobs-theme.css
           echo "=== Clear Laravel optimized caches ==="
           php artisan optimize:clear
           echo "=== Verify source identity and old-name references ==="
@@ -134,7 +158,6 @@ jobs:
           php -r '$p=json_decode(file_get_contents("composer.json"),true);echo "composer.name=".$p["name"].PHP_EOL;'
           grep -RIl --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude-dir=storage --exclude-dir=public -E 'Q-Jobs|QJobs|qjobs|q_jobs|QJOBS' . 2>/dev/null | head -80 || true
           echo "=== Build outputs ==="
-          rm -f public/css/qjobs-theme.css
           ls -lh public/mix-manifest.json public/css/mix-manifest.json public/js/app.js public/css/app.css public/css/biraconsultant-theme.css 2>/dev/null || true
           echo "REBRAND_AND_REBUILD_COMPLETE"
           REMOTE
