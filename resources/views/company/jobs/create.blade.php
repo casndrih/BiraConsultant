@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="min-h-screen bg-gray-50 dark:bg-black">
+<div class="qj-dashboard-page min-h-screen bg-gray-50 dark:bg-black">
     <!-- Header -->
     <div class="qj-dashboard-hero">
         <div class="container mx-auto px-4">
