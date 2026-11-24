@@ -58,7 +58,573 @@ jobs:
             --exclude='./database/*.sqlite' \
             .
           test -s "$RUNNER_TEMP/biraconsultant-release.tar.gz"
-          tar -tzf "$RUNNER_TEMP/biraconsultant-release.tar.gz" | grep -q '^artisan$'
+          tar -tzf "$RUNNER_TEMP/biraconsultant-release.tar.gz" | grep -Eq '(^|/)artisan
+          tar -tzf "$RUNNER_TEMP/biraconsultant-release.tar.gz" | grep -Eq '(^|/)public/index.php
+
+      - name: Upload release to Hostinger
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$SSH_HOST" && test -n "$SSH_USER" && test -n "$SSH_PASSWORD"
+          PORT="${SSH_PORT:-65002}"
+          REMOTE="$SSH_USER@$SSH_HOST"
+          ARCHIVE="/tmp/biraconsultant-release-${GITHUB_RUN_ID}.tar.gz"
+          sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 "$REMOTE" "mkdir -p '$HOME/deployments' && rm -f '$ARCHIVE'"
+          sshpass -p "$SSH_PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=accept-new "$RUNNER_TEMP/biraconsultant-release.tar.gz" "$REMOTE:$ARCHIVE"
+
+      - name: Deploy Laravel, configure production environment and publish webroot
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+          DB_HOST_A: ${{ secrets.HOSTINGER_DB_HOST }}
+          DB_HOST_B: ${{ secrets.DB_HOST }}
+          DB_PORT_SECRET: ${{ secrets.HOSTINGER_DB_PORT }}
+          DB_NAME_A: ${{ secrets.HOSTINGER_DB_NAME }}
+          DB_NAME_B: ${{ secrets.HOSTINGER_DB_DATABASE }}
+          DB_NAME_C: ${{ secrets.DB_DATABASE }}
+          DB_USER_A: ${{ secrets.HOSTINGER_DB_USER }}
+          DB_USER_B: ${{ secrets.HOSTINGER_DB_USERNAME }}
+          DB_USER_C: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD_A: ${{ secrets.HOSTINGER_DB_PASSWORD }}
+          DB_PASSWORD_B: ${{ secrets.DB_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DB_HOST="${DB_HOST_A:-${DB_HOST_B:-localhost}}"
+          DB_PORT="${DB_PORT_SECRET:-3306}"
+          DB_NAME="${DB_NAME_A:-${DB_NAME_B:-${DB_NAME_C:-}}}"
+          DB_USER="${DB_USER_A:-${DB_USER_B:-${DB_USER_C:-}}}"
+          DB_PASSWORD="${DB_PASSWORD_A:-${DB_PASSWORD_B:-}}"
+          test -n "$DB_NAME" && test -n "$DB_USER" && test -n "$DB_PASSWORD"
+          printf -v Q_DB_HOST '%q' "$DB_HOST"
+          printf -v Q_DB_PORT '%q' "$DB_PORT"
+          printf -v Q_DB_NAME '%q' "$DB_NAME"
+          printf -v Q_DB_USER '%q' "$DB_USER"
+          printf -v Q_DB_PASSWORD '%q' "$DB_PASSWORD"
+          printf -v Q_ARCHIVE '%q' "$ARCHIVE"
+          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD ARCHIVE=$Q_ARCHIVE"
+          PORT="${SSH_PORT:-65002}"
+          REMOTE="$SSH_USER@$SSH_HOST"
+          ARCHIVE="/tmp/biraconsultant-release-${GITHUB_RUN_ID}.tar.gz"
+          sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 "$REMOTE" "$REMOTE_ENV bash -s" <<'REMOTE'
+          set -euo pipefail
+          DOMAIN="$HOME/domains/biraconsultants.com"
+          APP="$DOMAIN/bira_app"
+          WEBROOT="$DOMAIN/public_html"
+          STAGE="$HOME/deployments/biraconsultant-${GITHUB_RUN_ID:-manual}"
+          mkdir -p "$APP" "$WEBROOT" "$HOME/deployments"
+          test "$(readlink -f "$DOMAIN")" = "$DOMAIN"
+          mkdir -p "$STAGE"
+          tar -xzf "$ARCHIVE" -C "$STAGE"
+          test -f "$STAGE/artisan"
+          test -f "$STAGE/composer.json"
+          test -f "$STAGE/public/index.php"
+          test -f "$STAGE/composer.lock"
+
+          # Keep persistent runtime data and secrets while replacing tracked application source.
+          command -v rsync >/dev/null 2>&1 || { echo "Hostinger rsync is required for a safe source sync"; exit 31; }
+          rsync -a --delete \
+            --exclude='.env' \
+            --exclude='vendor/' \
+            --exclude='storage/' \
+            --exclude='node_modules/' \
+            --exclude='.git/' \
+            --exclude='bootstrap/cache/*.php' \
+            "$STAGE/" "$APP/"
+
+          mkdir -p "$APP/bootstrap/cache" "$APP/storage/framework/cache/data" "$APP/storage/framework/sessions" "$APP/storage/framework/views" "$APP/storage/logs" "$APP/storage/app/public"
+
+          # Write a persistent production .env, preserving an existing APP_KEY if one exists.
+          cd "$APP"
+          export DB_HOST DB_PORT DB_NAME DB_USER DB_PASSWORD
+          php <<'PHP'
+          <?php
+          $path = getcwd().'/.env';
+          $content = is_file($path) ? file_get_contents($path) : '';
+          $key = '';
+          if (preg_match('/^APP_KEY=(.*)$/m', $content, $m)) {
+              $key = trim($m[1], " \"'\t\r\n");
+          }
+          if ($key === '') {
+              $key = 'base64:'.base64_encode(random_bytes(32));
+          }
+          $values = [
+              'APP_NAME' => 'BiraConsultant',
+              'APP_ENV' => 'production',
+              'APP_KEY' => $key,
+              'APP_DEBUG' => 'false',
+              'APP_URL' => 'https://biraconsultants.com',
+              'LOG_CHANNEL' => 'stack',
+              'LOG_LEVEL' => 'warning',
+              'DB_CONNECTION' => 'mysql',
+              'DB_HOST' => getenv('DB_HOST') ?: 'localhost',
+              'DB_PORT' => getenv('DB_PORT') ?: '3306',
+              'DB_DATABASE' => getenv('DB_NAME') ?: '',
+              'DB_USERNAME' => getenv('DB_USER') ?: '',
+              'DB_PASSWORD' => getenv('DB_PASSWORD') ?: '',
+              'SESSION_DRIVER' => 'file',
+              'CACHE_STORE' => 'file',
+              'QUEUE_CONNECTION' => 'sync',
+              'MAIL_MAILER' => 'log',
+              'FILESYSTEM_DISK' => 'public',
+          ];
+          $quote = static function ($value) {
+              return '"'.str_replace(["\\", '"', "\n", "\r"], ["\\\\", '\\"', '\\n', '\\r'], (string) $value).'"';
+          };
+          foreach ($values as $name => $value) {
+              $line = $name.'='.$quote($value);
+              $pattern = '/^'.preg_quote($name, '/').'=.*$/m';
+              if (preg_match($pattern, $content)) {
+                  $content = preg_replace_callback($pattern, static fn () => $line, $content, 1);
+              } else {
+                  $content = rtrim($content)."\n".$line."\n";
+              }
+          }
+          if (file_put_contents($path, $content, LOCK_EX) === false) {
+              fwrite(STDERR, "Unable to write production .env\n");
+              exit(32);
+          }
+          chmod($path, 0600);
+          echo "PRODUCTION_ENV_CONFIGURED\n";
+          PHP
+
+          if command -v composer >/dev/null 2>&1; then
+              composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+          elif [ ! -f "$APP/vendor/autoload.php" ]; then
+              echo "Composer is unavailable and vendor/autoload.php is missing"
+              exit 33
+          else
+              echo "Composer unavailable; retaining the existing vendor directory"
+          fi
+          test -f "$APP/vendor/autoload.php"
+          php artisan optimize:clear
+          php artisan migrate --force --no-interaction
+          php artisan storage:link --force
+          php artisan config:cache
+          php artisan view:cache
+          php artisan about --only=environment
+
+          # Publish only Laravel's public directory into the domain document root.
+          test "$(readlink -f "$WEBROOT")" = "$DOMAIN/public_html"
+          find "$WEBROOT" -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +
+          cp -a "$APP/public/." "$WEBROOT/"
+          # The app/public storage link is relative to the app directory; replace it with a webroot-safe link.
+          if [ -e "$WEBROOT/storage" ] || [ -L "$WEBROOT/storage" ]; then rm -rf -- "$WEBROOT/storage"; fi
+          ln -s ../bira_app/storage/app/public "$WEBROOT/storage"
+          # Point the copied front controller at the private Laravel application directory.
+          php -r '
+          $p = $argv[1];
+          $s = file_get_contents($p);
+          $s = str_replace("__DIR__.'/../storage/framework/maintenance.php'", "__DIR__.'/../bira_app/storage/framework/maintenance.php'", $s);
+          $s = str_replace("__DIR__.'/../vendor/autoload.php'", "__DIR__.'/../bira_app/vendor/autoload.php'", $s);
+          $s = str_replace("__DIR__.'/../bootstrap/app.php'", "__DIR__.'/../bira_app/bootstrap/app.php'", $s);
+          if (strpos($s, "../bira_app/vendor/autoload.php") === false || strpos($s, "../bira_app/bootstrap/app.php") === false) {
+              fwrite(STDERR, "Unable to patch public index.php paths\n");
+              exit(34);
+          }
+          file_put_contents($p, $s);
+          ' "$WEBROOT/index.php"
+          chmod -R u+rwX,g+rwX "$APP/storage" "$APP/bootstrap/cache"
+          chmod 0644 "$WEBROOT/index.php"
+          rm -rf "$STAGE" "$ARCHIVE"
+          echo "HOSTINGER_LARAVEL_DEPLOYMENT_COMPLETE"
+          REMOTE
+
+      - name: Verify public HTTPS response
+        run: |
+          set -euo pipefail
+          CODE="$(curl -sS -L --max-time 60 -o "$RUNNER_TEMP/bira-home.html" -w '%{http_code}' https://biraconsultants.com/)"
+          echo "PUBLIC_HTTP_STATUS=$CODE"
+          head -c 500 "$RUNNER_TEMP/bira-home.html" | tr '\n' ' '
+          echo
+          case "$CODE" in
+            200|301|302) echo "PUBLIC_SITE_HTTP_CHECK_PASSED" ;;
+            *) echo "Public site did not return a successful page response"; exit 40 ;;
+          esac
+
+          tar -tzf "$RUNNER_TEMP/biraconsultant-release.tar.gz" | grep -q '^public/index.php$'
+
+      - name: Upload release to Hostinger
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$SSH_HOST" && test -n "$SSH_USER" && test -n "$SSH_PASSWORD"
+          PORT="${SSH_PORT:-65002}"
+          REMOTE="$SSH_USER@$SSH_HOST"
+          ARCHIVE="/tmp/biraconsultant-release-${GITHUB_RUN_ID}.tar.gz"
+          sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 "$REMOTE" "mkdir -p '$HOME/deployments' && rm -f '$ARCHIVE'"
+          sshpass -p "$SSH_PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=accept-new "$RUNNER_TEMP/biraconsultant-release.tar.gz" "$REMOTE:$ARCHIVE"
+
+      - name: Deploy Laravel, configure production environment and publish webroot
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+          DB_HOST_A: ${{ secrets.HOSTINGER_DB_HOST }}
+          DB_HOST_B: ${{ secrets.DB_HOST }}
+          DB_PORT_SECRET: ${{ secrets.HOSTINGER_DB_PORT }}
+          DB_NAME_A: ${{ secrets.HOSTINGER_DB_NAME }}
+          DB_NAME_B: ${{ secrets.HOSTINGER_DB_DATABASE }}
+          DB_NAME_C: ${{ secrets.DB_DATABASE }}
+          DB_USER_A: ${{ secrets.HOSTINGER_DB_USER }}
+          DB_USER_B: ${{ secrets.HOSTINGER_DB_USERNAME }}
+          DB_USER_C: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD_A: ${{ secrets.HOSTINGER_DB_PASSWORD }}
+          DB_PASSWORD_B: ${{ secrets.DB_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DB_HOST="${DB_HOST_A:-${DB_HOST_B:-localhost}}"
+          DB_PORT="${DB_PORT_SECRET:-3306}"
+          DB_NAME="${DB_NAME_A:-${DB_NAME_B:-${DB_NAME_C:-}}}"
+          DB_USER="${DB_USER_A:-${DB_USER_B:-${DB_USER_C:-}}}"
+          DB_PASSWORD="${DB_PASSWORD_A:-${DB_PASSWORD_B:-}}"
+          test -n "$DB_NAME" && test -n "$DB_USER" && test -n "$DB_PASSWORD"
+          printf -v Q_DB_HOST '%q' "$DB_HOST"
+          printf -v Q_DB_PORT '%q' "$DB_PORT"
+          printf -v Q_DB_NAME '%q' "$DB_NAME"
+          printf -v Q_DB_USER '%q' "$DB_USER"
+          printf -v Q_DB_PASSWORD '%q' "$DB_PASSWORD"
+          printf -v Q_ARCHIVE '%q' "$ARCHIVE"
+          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD ARCHIVE=$Q_ARCHIVE"
+          PORT="${SSH_PORT:-65002}"
+          REMOTE="$SSH_USER@$SSH_HOST"
+          ARCHIVE="/tmp/biraconsultant-release-${GITHUB_RUN_ID}.tar.gz"
+          sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 "$REMOTE" "$REMOTE_ENV bash -s" <<'REMOTE'
+          set -euo pipefail
+          DOMAIN="$HOME/domains/biraconsultants.com"
+          APP="$DOMAIN/bira_app"
+          WEBROOT="$DOMAIN/public_html"
+          STAGE="$HOME/deployments/biraconsultant-${GITHUB_RUN_ID:-manual}"
+          mkdir -p "$APP" "$WEBROOT" "$HOME/deployments"
+          test "$(readlink -f "$DOMAIN")" = "$DOMAIN"
+          mkdir -p "$STAGE"
+          tar -xzf "$ARCHIVE" -C "$STAGE"
+          test -f "$STAGE/artisan"
+          test -f "$STAGE/composer.json"
+          test -f "$STAGE/public/index.php"
+          test -f "$STAGE/composer.lock"
+
+          # Keep persistent runtime data and secrets while replacing tracked application source.
+          command -v rsync >/dev/null 2>&1 || { echo "Hostinger rsync is required for a safe source sync"; exit 31; }
+          rsync -a --delete \
+            --exclude='.env' \
+            --exclude='vendor/' \
+            --exclude='storage/' \
+            --exclude='node_modules/' \
+            --exclude='.git/' \
+            --exclude='bootstrap/cache/*.php' \
+            "$STAGE/" "$APP/"
+
+          mkdir -p "$APP/bootstrap/cache" "$APP/storage/framework/cache/data" "$APP/storage/framework/sessions" "$APP/storage/framework/views" "$APP/storage/logs" "$APP/storage/app/public"
+
+          # Write a persistent production .env, preserving an existing APP_KEY if one exists.
+          cd "$APP"
+          export DB_HOST DB_PORT DB_NAME DB_USER DB_PASSWORD
+          php <<'PHP'
+          <?php
+          $path = getcwd().'/.env';
+          $content = is_file($path) ? file_get_contents($path) : '';
+          $key = '';
+          if (preg_match('/^APP_KEY=(.*)$/m', $content, $m)) {
+              $key = trim($m[1], " \"'\t\r\n");
+          }
+          if ($key === '') {
+              $key = 'base64:'.base64_encode(random_bytes(32));
+          }
+          $values = [
+              'APP_NAME' => 'BiraConsultant',
+              'APP_ENV' => 'production',
+              'APP_KEY' => $key,
+              'APP_DEBUG' => 'false',
+              'APP_URL' => 'https://biraconsultants.com',
+              'LOG_CHANNEL' => 'stack',
+              'LOG_LEVEL' => 'warning',
+              'DB_CONNECTION' => 'mysql',
+              'DB_HOST' => getenv('DB_HOST') ?: 'localhost',
+              'DB_PORT' => getenv('DB_PORT') ?: '3306',
+              'DB_DATABASE' => getenv('DB_NAME') ?: '',
+              'DB_USERNAME' => getenv('DB_USER') ?: '',
+              'DB_PASSWORD' => getenv('DB_PASSWORD') ?: '',
+              'SESSION_DRIVER' => 'file',
+              'CACHE_STORE' => 'file',
+              'QUEUE_CONNECTION' => 'sync',
+              'MAIL_MAILER' => 'log',
+              'FILESYSTEM_DISK' => 'public',
+          ];
+          $quote = static function ($value) {
+              return '"'.str_replace(["\\", '"', "\n", "\r"], ["\\\\", '\\"', '\\n', '\\r'], (string) $value).'"';
+          };
+          foreach ($values as $name => $value) {
+              $line = $name.'='.$quote($value);
+              $pattern = '/^'.preg_quote($name, '/').'=.*$/m';
+              if (preg_match($pattern, $content)) {
+                  $content = preg_replace_callback($pattern, static fn () => $line, $content, 1);
+              } else {
+                  $content = rtrim($content)."\n".$line."\n";
+              }
+          }
+          if (file_put_contents($path, $content, LOCK_EX) === false) {
+              fwrite(STDERR, "Unable to write production .env\n");
+              exit(32);
+          }
+          chmod($path, 0600);
+          echo "PRODUCTION_ENV_CONFIGURED\n";
+          PHP
+
+          if command -v composer >/dev/null 2>&1; then
+              composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+          elif [ ! -f "$APP/vendor/autoload.php" ]; then
+              echo "Composer is unavailable and vendor/autoload.php is missing"
+              exit 33
+          else
+              echo "Composer unavailable; retaining the existing vendor directory"
+          fi
+          test -f "$APP/vendor/autoload.php"
+          php artisan optimize:clear
+          php artisan migrate --force --no-interaction
+          php artisan storage:link --force
+          php artisan config:cache
+          php artisan view:cache
+          php artisan about --only=environment
+
+          # Publish only Laravel's public directory into the domain document root.
+          test "$(readlink -f "$WEBROOT")" = "$DOMAIN/public_html"
+          find "$WEBROOT" -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +
+          cp -a "$APP/public/." "$WEBROOT/"
+          # The app/public storage link is relative to the app directory; replace it with a webroot-safe link.
+          if [ -e "$WEBROOT/storage" ] || [ -L "$WEBROOT/storage" ]; then rm -rf -- "$WEBROOT/storage"; fi
+          ln -s ../bira_app/storage/app/public "$WEBROOT/storage"
+          # Point the copied front controller at the private Laravel application directory.
+          php -r '
+          $p = $argv[1];
+          $s = file_get_contents($p);
+          $s = str_replace("__DIR__.'/../storage/framework/maintenance.php'", "__DIR__.'/../bira_app/storage/framework/maintenance.php'", $s);
+          $s = str_replace("__DIR__.'/../vendor/autoload.php'", "__DIR__.'/../bira_app/vendor/autoload.php'", $s);
+          $s = str_replace("__DIR__.'/../bootstrap/app.php'", "__DIR__.'/../bira_app/bootstrap/app.php'", $s);
+          if (strpos($s, "../bira_app/vendor/autoload.php") === false || strpos($s, "../bira_app/bootstrap/app.php") === false) {
+              fwrite(STDERR, "Unable to patch public index.php paths\n");
+              exit(34);
+          }
+          file_put_contents($p, $s);
+          ' "$WEBROOT/index.php"
+          chmod -R u+rwX,g+rwX "$APP/storage" "$APP/bootstrap/cache"
+          chmod 0644 "$WEBROOT/index.php"
+          rm -rf "$STAGE" "$ARCHIVE"
+          echo "HOSTINGER_LARAVEL_DEPLOYMENT_COMPLETE"
+          REMOTE
+
+      - name: Verify public HTTPS response
+        run: |
+          set -euo pipefail
+          CODE="$(curl -sS -L --max-time 60 -o "$RUNNER_TEMP/bira-home.html" -w '%{http_code}' https://biraconsultants.com/)"
+          echo "PUBLIC_HTTP_STATUS=$CODE"
+          head -c 500 "$RUNNER_TEMP/bira-home.html" | tr '\n' ' '
+          echo
+          case "$CODE" in
+            200|301|302) echo "PUBLIC_SITE_HTTP_CHECK_PASSED" ;;
+            *) echo "Public site did not return a successful page response"; exit 40 ;;
+          esac
+
+
+      - name: Upload release to Hostinger
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$SSH_HOST" && test -n "$SSH_USER" && test -n "$SSH_PASSWORD"
+          PORT="${SSH_PORT:-65002}"
+          REMOTE="$SSH_USER@$SSH_HOST"
+          ARCHIVE="/tmp/biraconsultant-release-${GITHUB_RUN_ID}.tar.gz"
+          sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 "$REMOTE" "mkdir -p '$HOME/deployments' && rm -f '$ARCHIVE'"
+          sshpass -p "$SSH_PASSWORD" scp -P "$PORT" -o StrictHostKeyChecking=accept-new "$RUNNER_TEMP/biraconsultant-release.tar.gz" "$REMOTE:$ARCHIVE"
+
+      - name: Deploy Laravel, configure production environment and publish webroot
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+          DB_HOST_A: ${{ secrets.HOSTINGER_DB_HOST }}
+          DB_HOST_B: ${{ secrets.DB_HOST }}
+          DB_PORT_SECRET: ${{ secrets.HOSTINGER_DB_PORT }}
+          DB_NAME_A: ${{ secrets.HOSTINGER_DB_NAME }}
+          DB_NAME_B: ${{ secrets.HOSTINGER_DB_DATABASE }}
+          DB_NAME_C: ${{ secrets.DB_DATABASE }}
+          DB_USER_A: ${{ secrets.HOSTINGER_DB_USER }}
+          DB_USER_B: ${{ secrets.HOSTINGER_DB_USERNAME }}
+          DB_USER_C: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD_A: ${{ secrets.HOSTINGER_DB_PASSWORD }}
+          DB_PASSWORD_B: ${{ secrets.DB_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DB_HOST="${DB_HOST_A:-${DB_HOST_B:-localhost}}"
+          DB_PORT="${DB_PORT_SECRET:-3306}"
+          DB_NAME="${DB_NAME_A:-${DB_NAME_B:-${DB_NAME_C:-}}}"
+          DB_USER="${DB_USER_A:-${DB_USER_B:-${DB_USER_C:-}}}"
+          DB_PASSWORD="${DB_PASSWORD_A:-${DB_PASSWORD_B:-}}"
+          test -n "$DB_NAME" && test -n "$DB_USER" && test -n "$DB_PASSWORD"
+          printf -v Q_DB_HOST '%q' "$DB_HOST"
+          printf -v Q_DB_PORT '%q' "$DB_PORT"
+          printf -v Q_DB_NAME '%q' "$DB_NAME"
+          printf -v Q_DB_USER '%q' "$DB_USER"
+          printf -v Q_DB_PASSWORD '%q' "$DB_PASSWORD"
+          printf -v Q_ARCHIVE '%q' "$ARCHIVE"
+          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD ARCHIVE=$Q_ARCHIVE"
+          PORT="${SSH_PORT:-65002}"
+          REMOTE="$SSH_USER@$SSH_HOST"
+          ARCHIVE="/tmp/biraconsultant-release-${GITHUB_RUN_ID}.tar.gz"
+          sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 "$REMOTE" "$REMOTE_ENV bash -s" <<'REMOTE'
+          set -euo pipefail
+          DOMAIN="$HOME/domains/biraconsultants.com"
+          APP="$DOMAIN/bira_app"
+          WEBROOT="$DOMAIN/public_html"
+          STAGE="$HOME/deployments/biraconsultant-${GITHUB_RUN_ID:-manual}"
+          mkdir -p "$APP" "$WEBROOT" "$HOME/deployments"
+          test "$(readlink -f "$DOMAIN")" = "$DOMAIN"
+          mkdir -p "$STAGE"
+          tar -xzf "$ARCHIVE" -C "$STAGE"
+          test -f "$STAGE/artisan"
+          test -f "$STAGE/composer.json"
+          test -f "$STAGE/public/index.php"
+          test -f "$STAGE/composer.lock"
+
+          # Keep persistent runtime data and secrets while replacing tracked application source.
+          command -v rsync >/dev/null 2>&1 || { echo "Hostinger rsync is required for a safe source sync"; exit 31; }
+          rsync -a --delete \
+            --exclude='.env' \
+            --exclude='vendor/' \
+            --exclude='storage/' \
+            --exclude='node_modules/' \
+            --exclude='.git/' \
+            --exclude='bootstrap/cache/*.php' \
+            "$STAGE/" "$APP/"
+
+          mkdir -p "$APP/bootstrap/cache" "$APP/storage/framework/cache/data" "$APP/storage/framework/sessions" "$APP/storage/framework/views" "$APP/storage/logs" "$APP/storage/app/public"
+
+          # Write a persistent production .env, preserving an existing APP_KEY if one exists.
+          cd "$APP"
+          export DB_HOST DB_PORT DB_NAME DB_USER DB_PASSWORD
+          php <<'PHP'
+          <?php
+          $path = getcwd().'/.env';
+          $content = is_file($path) ? file_get_contents($path) : '';
+          $key = '';
+          if (preg_match('/^APP_KEY=(.*)$/m', $content, $m)) {
+              $key = trim($m[1], " \"'\t\r\n");
+          }
+          if ($key === '') {
+              $key = 'base64:'.base64_encode(random_bytes(32));
+          }
+          $values = [
+              'APP_NAME' => 'BiraConsultant',
+              'APP_ENV' => 'production',
+              'APP_KEY' => $key,
+              'APP_DEBUG' => 'false',
+              'APP_URL' => 'https://biraconsultants.com',
+              'LOG_CHANNEL' => 'stack',
+              'LOG_LEVEL' => 'warning',
+              'DB_CONNECTION' => 'mysql',
+              'DB_HOST' => getenv('DB_HOST') ?: 'localhost',
+              'DB_PORT' => getenv('DB_PORT') ?: '3306',
+              'DB_DATABASE' => getenv('DB_NAME') ?: '',
+              'DB_USERNAME' => getenv('DB_USER') ?: '',
+              'DB_PASSWORD' => getenv('DB_PASSWORD') ?: '',
+              'SESSION_DRIVER' => 'file',
+              'CACHE_STORE' => 'file',
+              'QUEUE_CONNECTION' => 'sync',
+              'MAIL_MAILER' => 'log',
+              'FILESYSTEM_DISK' => 'public',
+          ];
+          $quote = static function ($value) {
+              return '"'.str_replace(["\\", '"', "\n", "\r"], ["\\\\", '\\"', '\\n', '\\r'], (string) $value).'"';
+          };
+          foreach ($values as $name => $value) {
+              $line = $name.'='.$quote($value);
+              $pattern = '/^'.preg_quote($name, '/').'=.*$/m';
+              if (preg_match($pattern, $content)) {
+                  $content = preg_replace_callback($pattern, static fn () => $line, $content, 1);
+              } else {
+                  $content = rtrim($content)."\n".$line."\n";
+              }
+          }
+          if (file_put_contents($path, $content, LOCK_EX) === false) {
+              fwrite(STDERR, "Unable to write production .env\n");
+              exit(32);
+          }
+          chmod($path, 0600);
+          echo "PRODUCTION_ENV_CONFIGURED\n";
+          PHP
+
+          if command -v composer >/dev/null 2>&1; then
+              composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+          elif [ ! -f "$APP/vendor/autoload.php" ]; then
+              echo "Composer is unavailable and vendor/autoload.php is missing"
+              exit 33
+          else
+              echo "Composer unavailable; retaining the existing vendor directory"
+          fi
+          test -f "$APP/vendor/autoload.php"
+          php artisan optimize:clear
+          php artisan migrate --force --no-interaction
+          php artisan storage:link --force
+          php artisan config:cache
+          php artisan view:cache
+          php artisan about --only=environment
+
+          # Publish only Laravel's public directory into the domain document root.
+          test "$(readlink -f "$WEBROOT")" = "$DOMAIN/public_html"
+          find "$WEBROOT" -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +
+          cp -a "$APP/public/." "$WEBROOT/"
+          # The app/public storage link is relative to the app directory; replace it with a webroot-safe link.
+          if [ -e "$WEBROOT/storage" ] || [ -L "$WEBROOT/storage" ]; then rm -rf -- "$WEBROOT/storage"; fi
+          ln -s ../bira_app/storage/app/public "$WEBROOT/storage"
+          # Point the copied front controller at the private Laravel application directory.
+          php -r '
+          $p = $argv[1];
+          $s = file_get_contents($p);
+          $s = str_replace("__DIR__.'/../storage/framework/maintenance.php'", "__DIR__.'/../bira_app/storage/framework/maintenance.php'", $s);
+          $s = str_replace("__DIR__.'/../vendor/autoload.php'", "__DIR__.'/../bira_app/vendor/autoload.php'", $s);
+          $s = str_replace("__DIR__.'/../bootstrap/app.php'", "__DIR__.'/../bira_app/bootstrap/app.php'", $s);
+          if (strpos($s, "../bira_app/vendor/autoload.php") === false || strpos($s, "../bira_app/bootstrap/app.php") === false) {
+              fwrite(STDERR, "Unable to patch public index.php paths\n");
+              exit(34);
+          }
+          file_put_contents($p, $s);
+          ' "$WEBROOT/index.php"
+          chmod -R u+rwX,g+rwX "$APP/storage" "$APP/bootstrap/cache"
+          chmod 0644 "$WEBROOT/index.php"
+          rm -rf "$STAGE" "$ARCHIVE"
+          echo "HOSTINGER_LARAVEL_DEPLOYMENT_COMPLETE"
+          REMOTE
+
+      - name: Verify public HTTPS response
+        run: |
+          set -euo pipefail
+          CODE="$(curl -sS -L --max-time 60 -o "$RUNNER_TEMP/bira-home.html" -w '%{http_code}' https://biraconsultants.com/)"
+          echo "PUBLIC_HTTP_STATUS=$CODE"
+          head -c 500 "$RUNNER_TEMP/bira-home.html" | tr '\n' ' '
+          echo
+          case "$CODE" in
+            200|301|302) echo "PUBLIC_SITE_HTTP_CHECK_PASSED" ;;
+            *) echo "Public site did not return a successful page response"; exit 40 ;;
+          esac
+
           tar -tzf "$RUNNER_TEMP/biraconsultant-release.tar.gz" | grep -q '^public/index.php$'
 
       - name: Upload release to Hostinger
