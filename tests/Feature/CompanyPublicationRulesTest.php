@@ -40,11 +40,13 @@ class CompanyPublicationRulesTest extends TestCase
             'logo' => null,
         ]);
 
-        $this->get('/companies')
-            ->assertOk()
-            ->assertSee('Bank South Pacific')
-            ->assertDontSee('Pending Smoke Test Employer')
-            ->assertDontSee('Logo Missing Smoke Test Employer');
+        $response = $this->getJson('/companies/list')->assertOk();
+
+        $html = $response->json('html');
+
+        $this->assertStringContainsString('Bank South Pacific', $html);
+        $this->assertStringNotContainsString('Pending Smoke Test Employer', $html);
+        $this->assertStringNotContainsString('Logo Missing Smoke Test Employer', $html);
     }
 
     public function test_active_job_scope_hides_jobs_from_unapproved_companies(): void
