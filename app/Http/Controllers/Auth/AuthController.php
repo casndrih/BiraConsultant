@@ -34,16 +34,18 @@ class AuthController extends Controller
             'password' => (string) $request->input('password'),
         ];
 
-        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
+        $guard = Auth::guard('web');
+
+        if (!$guard->attempt($credentials, $request->boolean('remember'))) {
             return $failure();
         }
 
         $request->session()->regenerate();
-        $user = Auth::user();
+        $user = $guard->user();
 
         // Banned accounts are terminated immediately, even if credentials were valid.
         if ((int) ($user->is_banned ?? 0) === 1) {
-            Auth::logout();
+            $guard->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
