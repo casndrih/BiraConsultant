@@ -7,6 +7,7 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // Apply the owner-confirmed public contact address during the production rollout.
         $now = now();
 
         if (DB::table('biraconsultant_settings')->where('key', 'contact_email')->exists()) {
