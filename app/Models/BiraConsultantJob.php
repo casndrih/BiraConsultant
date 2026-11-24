@@ -109,7 +109,7 @@ class BiraConsultantJob extends Model
 
     public function isSavedBy($userId)
     {
-        return $this->savedBy()->where('biraconsultant_user_id', $userId)->exists();
+        return $this->savedBy()->where('user_id', $userId)->exists();
     }
 
     // Scopes
