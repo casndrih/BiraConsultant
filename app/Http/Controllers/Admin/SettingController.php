@@ -228,6 +228,7 @@ class SettingController extends Controller
      */
     public function testEmail()
     {
+        // AppServiceProvider applies the latest persisted admin mail settings at application boot.
         $recipient = BiraConsultantSetting::getValue(
             'contact_email',
             config('mail.contact_to', 'info@biraconsultant.com')
