@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout tested repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Install SSH client
         run: sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
