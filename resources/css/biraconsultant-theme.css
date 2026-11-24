@@ -727,3 +727,32 @@
 .qj-company-logo.qj-company-logo--bare img {
     object-fit: contain !important;
 }
+
+/* Keep Top Companies in a compact two-column grid on every mobile width. */
+@media (max-width: 767px) {
+    .qj-home-company-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+    }
+    .qj-home-company-grid .qj-company-tile {
+        gap: 8px;
+        padding: 10px;
+        border-radius: 12px;
+    }
+    .qj-home-company-grid .qj-company-logo--tile {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+    }
+    .qj-home-company-grid .qj-company-tile__arrow {
+        width: 12px;
+        height: 12px;
+        flex-basis: 12px;
+    }
+    .qj-home-company-grid .qj-company-tile__copy h3 {
+        font-size: 11px;
+    }
+    .qj-home-company-grid .qj-company-tile__copy p {
+        font-size: 9px;
+    }
+}
