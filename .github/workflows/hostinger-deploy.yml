@@ -117,7 +117,7 @@ jobs:
           test -n "$DB_NAME" && test -n "$DB_USER" && test -n "$DB_PASSWORD"
           DEMO_PASSWORD=""
           if [[ "$SEED_DEMO_DATA" == "true" ]]; then
-            DEMO_PASSWORD="Qwerty""525"'
+            DEMO_PASSWORD="Qwerty525$(printf '\\x24')"
             {
               echo "### Demo account credentials"
               echo
