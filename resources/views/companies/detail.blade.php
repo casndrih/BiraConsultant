@@ -54,7 +54,7 @@
                             <h1 class="text-3xl font-bold text-black dark:text-white mb-2">
                                 {{ $company->name }}
                             </h1>
-                            <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600 dark:text-gray-400 mb-4 min-w-0">
                                 <span class="flex items-center gap-1">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -62,7 +62,7 @@
                                     </svg>
                                     {{ $company->city }}, {{ optional($company->country)->name }}
                                 </span>
-                                <span class="flex items-center gap-1">
+                                <span class="flex items-start gap-1 min-w-0 max-w-full break-all">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                     </svg>
