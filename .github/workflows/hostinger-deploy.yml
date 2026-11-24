@@ -384,8 +384,7 @@ jobs:
                   html = response.read().decode("utf-8", "replace")
               parser = TokenParser()
               parser.feed(html)
-              token = parser.token or re.search(r'<meta[^>]+name=["\\']csrf-token["\\'][^>]+content=["\\']([^"\\']+)', html, re.I)
-              if hasattr(token, "group"):
+              token = parser.token
                   token = token.group(1)
               if not token:
                   raise SystemExit("LOGIN_TEST_FAILED: CSRF token was not present in the sign-in page.")
