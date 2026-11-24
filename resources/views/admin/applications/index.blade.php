@@ -1,6 +1,16 @@
 @extends('admin.app')
 
 @section('content')
+    @php($fallbackUserAvatars = [
+        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=240&h=240&q=85',
+        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&h=240&q=85'
+    ])
     <section class="bg-gray-100 dark:bg-black py-2">
         <div class="relative overflow-x-auto mx-4 shadow-md rounded-t-lg">
             <div class="flex items-center justify-between py-4 bg-white dark:bg-custom-dark">
@@ -40,8 +50,8 @@
                             <th scope="row" class="flex items-center px-6 py-4 text-gray-900">
                                 @if ($application->user)
                                     <img class="w-10 h-10 border-2 border-gray-200 dark:border-custom-dark rounded-full"
-                                        src="{{ $application->user->image ?? asset('/images/users/userpro.png') }}"
-                                        alt="User image" onerror="this.onerror=null;this.src='{{ asset('/images/users/userpro.png') }}';">
+                                        src="{{ $application->user->image ?: $fallbackUserAvatars[$application->user->id % count($fallbackUserAvatars)] }}"
+                                        alt="User image" onerror="this.onerror=null;this.src='{{ $fallbackUserAvatars[$application->user->id % count($fallbackUserAvatars)] }}';">
                                     <div class="pl-3">
                                         <div class="text-base md:text-lg font-semibold text-black dark:text-white">{{ $application->user->name }}</div>
                                         <div class="text-md font-normal text-gray-500">{{ $application->user->email }}</div>
