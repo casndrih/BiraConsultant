@@ -65,6 +65,31 @@ class RegistrationWorkflowTest extends TestCase
         Mail::assertSent(VerifyEmail::class);
     }
 
+
+    public function test_existing_user_password_reset_request_dispatches_reset_notification(): void
+    {
+        Notification::fake();
+
+        $user = BiraConsultantUser::where('email', 'martha.kila@biraconsultant.test')->firstOrFail();
+
+        $this->from('/')->post('/forgotpassword', [
+            'email' => $user->email,
+        ])->assertRedirect('/')->assertSessionHas('status');
+
+        Notification::assertSentTo($user, ResetPassword::class);
+    }
+
+    public function test_password_reset_request_uses_same_response_for_unknown_email(): void
+    {
+        Notification::fake();
+
+        $this->from('/')->post('/forgotpassword', [
+            'email' => 'not-registered@example.com',
+        ])->assertRedirect('/')->assertSessionHas('status');
+
+        Notification::assertNothingSent();
+    }
+
     public function test_registration_cannot_self_assign_administrator_role(): void
     {
         Mail::fake();
