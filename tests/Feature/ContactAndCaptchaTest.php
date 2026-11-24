@@ -112,7 +112,7 @@ class ContactAndCaptchaTest extends TestCase
         $this->actingAs($admin)
             ->post(route('admin.settings.email.test'))
             ->assertRedirect(route('admin.settings.index'))
-            ->assertSessionHas('error', 'SMTP test failed. Check the saved mail host, port, encryption and mailbox credentials, then review the application log for the server response.');
+            ->assertSessionHas('error', 'SMTP test failed: the mail transport could not send the message. Check the saved SMTP host, port, encryption and mailbox credentials.');
     }
 
     public function test_blank_mail_password_submission_keeps_existing_saved_password(): void
