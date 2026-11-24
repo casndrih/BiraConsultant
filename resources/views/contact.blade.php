@@ -25,6 +25,10 @@
             <div class="qj-content-panel">
                 <form method="POST" action="{{ route('contact.submit') }}">
                     @csrf
+                    <div class="hidden" aria-hidden="true">
+                        <label for="website">Leave this field empty</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name</label>
