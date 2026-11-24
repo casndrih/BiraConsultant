@@ -18,6 +18,7 @@ on:
       - "public/images/companies/bsp-logo-dark.svg"
       - "resources/views/jobs/detail.blade.php"
       - "resources/views/layouts/app.blade.php"
+      - "app/Http/Controllers/Auth/AuthController.php"
   workflow_dispatch:
 
 permissions:
