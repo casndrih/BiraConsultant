@@ -131,7 +131,11 @@
                         });
                         $('#view_application_sub_date').text(formattedDate);
 
-                        $('#view_user_image').attr('src', data.user?.image || '/images/users/userpro.png');
+                        const userImage = $('#view_user_image');
+                        userImage.off('error').on('error', function () {
+                            this.onerror = null;
+                            this.src = '/images/users/userpro.png';
+                        }).attr('src', data.user?.image || '/images/users/userpro.png');
                         $('#view_user_name').text(data.user?.name || 'Unknown');
                         $('#view_user_email').text(data.user?.email || 'Unknown');
                         
