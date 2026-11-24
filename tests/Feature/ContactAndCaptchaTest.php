@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Mail\ContactFormMail;
 use App\Models\BiraConsultantContactMessage;
 use App\Models\BiraConsultantSetting;
+use App\Models\BiraConsultantUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
