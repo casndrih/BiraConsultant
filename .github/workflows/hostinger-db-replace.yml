@@ -66,9 +66,9 @@ jobs:
           echo "QJOBS_ARCHIVE=$ZIP"
 
           MEMBERS="$(unzip -Z1 "$ZIP" | grep -E '(^|/)bira_full_dump_with_maintenance[.]sql$' || true)"
-          MEMBER_COUNT="$(printf '%s\\n' "$MEMBERS" | sed '/^$/d' | wc -l)"
-          test "$MEMBER_COUNT" -eq 1 || { echo "Expected exactly one bira_full_dump_with_maintenance.sql in QJobs.zip; found $MEMBER_COUNT"; printf '%s\\n' "$MEMBERS"; exit 26; }
-          MEMBER="$(printf '%s\\n' "$MEMBERS" | sed -n '1p')"
+          MEMBER_COUNT="$(printf '%s\n' "$MEMBERS" | sed '/^$/d' | wc -l)"
+          test "$MEMBER_COUNT" -eq 1 || { echo "Expected exactly one bira_full_dump_with_maintenance.sql in QJobs.zip; found $MEMBER_COUNT"; printf '%s\n' "$MEMBERS"; exit 26; }
+          MEMBER="$(printf '%s\n' "$MEMBERS" | sed -n '1p')"
           DUMP="/tmp/bira_full_dump_with_maintenance.sql"
           unzip -p "$ZIP" "$MEMBER" > "$DUMP"
           test -s "$DUMP" || { echo "Extracted SQL dump is empty"; exit 27; }
@@ -87,7 +87,7 @@ jobs:
           MYSQL=(mysql --connect-timeout=20 --host="$DB_HOST" --user="$DB_USER" "$DB_NAME")
           "${MYSQL[@]}" -Nse 'SELECT CONCAT("CONNECTED_DATABASE=", DATABASE())'
           TABLES="$("${MYSQL[@]}" -Nse "SELECT table_name FROM information_schema.tables WHERE table_schema = DATABASE() AND table_type = 'BASE TABLE'")"
-          COUNT="$(printf '%s\\n' "$TABLES" | sed '/^$/d' | wc -l)"
+          COUNT="$(printf '%s\n' "$TABLES" | sed '/^$/d' | wc -l)"
           echo "EXISTING_TABLE_COUNT=$COUNT"
 
           if [ -n "$TABLES" ]; then
@@ -95,7 +95,7 @@ jobs:
               echo 'SET FOREIGN_KEY_CHECKS=0;'
               while IFS= read -r table; do
                 [ -n "$table" ] || continue
-                printf 'DROP TABLE IF EXISTS `%s`;\\n' "$table"
+                printf 'DROP TABLE IF EXISTS `%s`;\n' "$table"
               done <<< "$TABLES"
               echo 'SET FOREIGN_KEY_CHECKS=1;'
             } | "${MYSQL[@]}"
