@@ -9,7 +9,6 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Pagination\Paginator;
 use App\Models\BiraConsultantSetting;
-use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class AppServiceProvider extends ServiceProvider
