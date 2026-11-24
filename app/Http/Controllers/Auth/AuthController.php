@@ -29,6 +29,15 @@ class AuthController extends Controller
 
     public function showForgotPassword()
     {
+        if (Auth::check()) {
+            return match ((int) Auth::user()->role) {
+                0 => redirect()->route('user.dashboard'),
+                1 => redirect()->route('admin-dashboard'),
+                2 => redirect()->route('company.dashboard'),
+                default => redirect()->route('home'),
+            };
+        }
+
         return view('auth.forgot-password', [
             'emailLoginEnabled' => AuthMethodSettings::emailEnabled(),
         ]);
