@@ -139,6 +139,25 @@ class BiraConsultantCompany extends Model
         return (int) $this->verification_status === 1;
     }
 
+    public function getLogoUrlAttribute(): ?string
+    {
+        $logo = trim((string) $this->logo);
+
+        if ($logo === '') {
+            return null;
+        }
+
+        if (\\Illuminate\\Support\\Str::startsWith($logo, ['http://', 'https://'])) {
+            return $logo;
+        }
+
+        if (\\Illuminate\\Support\\Str::startsWith($logo, ['images/', '/images/'])) {
+            return asset(ltrim($logo, '/'));
+        }
+
+        return asset('storage/' . ltrim($logo, '/'));
+    }
+
     public function isPubliclyVisible(): bool
     {
         return (bool) $this->is_approved
