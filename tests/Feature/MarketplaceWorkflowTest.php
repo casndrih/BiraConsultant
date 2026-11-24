@@ -23,10 +23,50 @@ class MarketplaceWorkflowTest extends TestCase
         $this->seed();
     }
 
+    private function createPublicTestCompany(): BiraConsultantCompany
+    {
+        $owner = BiraConsultantUser::create([
+            'name' => 'Workflow Test Employer Owner',
+            'slug' => 'workflow-test-employer-owner',
+            'username' => 'workflow-test-employer-owner',
+            'email' => 'workflow.owner@example.com',
+            'password' => bcrypt('test-password'),
+            'role' => 2,
+            'gender' => '0',
+        ]);
+
+        return BiraConsultantCompany::create([
+            'name' => 'Workflow Test Employer',
+            'slug' => 'workflow-test-employer',
+            'user_id' => $owner->id,
+            'is_approved' => true,
+            'verification_status' => 1,
+            'logo' => 'images/companies/bsp-logo.svg',
+        ]);
+    }
+
+    private function createPublicTestJob(string $title = 'Workflow Public Test Vacancy', string $approvalStatus = 'approved'): BiraConsultantJob
+    {
+        $company = $this->createPublicTestCompany();
+
+        return BiraConsultantJob::create([
+            'title' => $title,
+            'slug' => str()->slug($title),
+            'description' => 'Synthetic vacancy used to verify job seeker and moderation workflows.',
+            'company_id' => $company->id,
+            'category_id' => BiraConsultantJobCategory::query()->firstOrFail()->id,
+            'job_type_id' => BiraConsultantJobType::query()->firstOrFail()->id,
+            'experience_level_id' => BiraConsultantJobExperienceLevel::query()->firstOrFail()->id,
+            'deadline' => now()->addDays(14)->toDateString(),
+            'status' => 1,
+            'approval_status' => $approvalStatus,
+        ]);
+    }
+
     public function test_job_seeker_can_save_and_unsave_a_job_without_changing_the_final_state(): void
     {
         $user = BiraConsultantUser::where('email', 'martha.kila@biraconsultant.test')->firstOrFail();
-        $job = BiraConsultantJob::active()->firstOrFail();
+        $job = $this->createPublicTestJob();
         $wasSaved = $user->hasSavedJob($job->id);
 
         $first = $this->actingAs($user)->postJson("/user/job/{$job->id}/toggle-save")->assertOk();
@@ -40,11 +80,7 @@ class MarketplaceWorkflowTest extends TestCase
     public function test_job_seeker_can_apply_to_and_withdraw_from_an_active_job(): void
     {
         $user = BiraConsultantUser::where('email', 'martha.kila@biraconsultant.test')->firstOrFail();
-        $job = BiraConsultantJob::active()
-            ->whereDoesntHave('applications', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            })
-            ->firstOrFail();
+        $job = $this->createPublicTestJob('Workflow Application Test Vacancy');
 
         $this->actingAs($user)
             ->post("/user/application/{$job->id}", [
@@ -99,7 +135,7 @@ class MarketplaceWorkflowTest extends TestCase
         Notification::fake();
 
         $admin = BiraConsultantUser::where('email', 'admin@biraconsultant.test')->firstOrFail();
-        $company = BiraConsultantCompany::where('slug', 'bank-south-pacific')->firstOrFail();
+        $company = $this->createPublicTestCompany();
 
         $job = BiraConsultantJob::create([
             'title' => 'Admin Moderation Smoke Test',
