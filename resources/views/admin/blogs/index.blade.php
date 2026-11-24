@@ -4,18 +4,16 @@
 <section class="bg-gray-100 dark:bg-black py-2">
     <div class="relative overflow-x-auto mx-4 shadow-md rounded-t-lg">
         <div class="flex items-center justify-between py-4 bg-white dark:bg-custom-dark">
-            <div class="ml-4 relative flex items-center">
-                <div class="absolute inset-y-0 left-0 flex items-center ml-3 pointer-events-none">
-                    <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                              clip-rule="evenodd"></path>
-                    </svg>
-                </div>
-                <form action="{{ route('admin.blog.search') }}" method="GET">
+            <div class="qj-admin-search relative flex items-center">
+                <form class="qj-admin-search__form relative" action="{{ route('admin.blog.search') }}" method="GET">
+                    <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
                     <input type="text" id="query-blog" name="query-blog"
                            value="{{ request()->query('query-blog') }}"
-                           class="block w-full p-2 pl-10 text-base text-gray-900  rounded-full bg-gray-100 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300"
+                           class="block w-full p-2 text-base text-gray-900 rounded-full bg-gray-100 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300"
                            placeholder="Search Blog">
                 </form>
             </div>
@@ -31,7 +29,7 @@
     </div>
 
     <div class="overflow-x-auto mx-4 shadow-md rounded-b-lg">
-        <table class="w-full text-sm text-left text-black">
+        <table class="w-full text-sm text-left text-black qj-admin-data-table qj-admin-data-table--blogs">
             <thead class="text-md text-black dark:text-white font-medium uppercase bg-white dark:bg-custom-dark">
             <tr>
                 <th class="px-6 py-4">Title</th>
