@@ -1,0 +1,75 @@
+name: Prepare fresh QJobs source on Hostinger
+on:
+  push:
+    paths:
+      - ".github/workflows/hostinger-qjobs-prepare.yml"
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+      - name: Extract and inspect QJobs source, build assets, clear Laravel cache
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_USER: ${{ secrets.HOSTINGER_USER }}
+          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$HOSTINGER_HOST" && test -n "$HOSTINGER_USER" && test -n "$HOSTINGER_PASSWORD"
+          sshpass -p "$HOSTINGER_PASSWORD" ssh -p "${HOSTINGER_PORT:-22}" -o StrictHostKeyChecking=no -o ConnectTimeout=25 "$HOSTINGER_USER@$HOSTINGER_HOST" 'bash -s' <<'REMOTE'
+          set -euo pipefail
+          DOMAIN_DIR="$HOME/domains/biraconsultants.com"
+          APP_DIR="$DOMAIN_DIR/bira_app"
+          WEBROOT="$DOMAIN_DIR/public_html"
+          ZIP="$(find "$DOMAIN_DIR" -maxdepth 5 -type f -iname 'QJobs.zip' -printf '%T@ %p\n' 2>/dev/null | sort -nr | head -1 | cut -d' ' -f2-)"
+          if [ -z "$ZIP" ]; then
+            echo "ERROR: QJobs.zip was not found under $DOMAIN_DIR"
+            echo "Files currently in domain directory:"
+            find "$DOMAIN_DIR" -maxdepth 3 -type f | head -100
+            exit 2
+          fi
+          echo "ZIP_FOUND=$ZIP"
+          STAGE="$DOMAIN_DIR/qjobs_extract_stage"
+          rm -rf "$STAGE"
+          mkdir -p "$STAGE"
+          unzip -q "$ZIP" -d "$STAGE"
+          ROOT="$(find "$STAGE" -type f -name artisan -printf '%h\n' | head -1)"
+          if [ -z "$ROOT" ]; then
+            echo "ERROR: extracted archive does not contain a Laravel artisan file"
+            find "$STAGE" -maxdepth 3 -type f | head -100
+            exit 3
+          fi
+          echo "LARAVEL_ROOT=$ROOT"
+          rm -rf "$APP_DIR"
+          mkdir -p "$APP_DIR"
+          cp -a "$ROOT"/. "$APP_DIR"/
+          rm -rf "$STAGE"
+          cd "$APP_DIR"
+          echo "=== Laravel / Composer identity ==="
+          php -r '$j=json_decode(file_get_contents("composer.json"),true); echo "composer.name=".($j["name"]??"").PHP_EOL;'
+          echo "=== Package metadata and Vite scripts ==="
+          if [ -f package.json ]; then node -e 'const p=require("./package.json"); console.log(JSON.stringify({name:p.name,scripts:p.scripts},null,2))'; else echo "package.json missing"; fi
+          echo "=== Initial Laravel cache clear ==="
+          php artisan optimize:clear
+          echo "=== Install PHP dependencies if vendor is absent ==="
+          if [ ! -f vendor/autoload.php ]; then composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader; fi
+          echo "=== Install Node dependencies and initial Vite build ==="
+          if [ -f package.json ]; then
+            if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
+            npm run build
+          else
+            echo "ERROR: package.json missing; cannot run Vite build"
+            exit 4
+          fi
+          echo "=== Laravel cache clear after initial build ==="
+          php artisan optimize:clear
+          echo "=== Branding and color references for targeted update ==="
+          grep -RInE --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude='*.map' --exclude='*.lock' 'QJobs|Q-Jobs|qjobs|q_jobs|#([0-9A-Fa-f]{3,8})|rgb\(|hsl\(' resources public css sass tailwind.config.* vite.config.* package.json composer.json 2>/dev/null | head -260 || true
+          echo "=== Extracted Laravel source summary ==="
+          find . -maxdepth 2 -type f \( -name 'composer.json' -o -name 'package.json' -o -name 'vite.config.*' -o -name 'tailwind.config.*' -o -name 'webpack.mix.js' -o -name 'artisan' \) -print
+          echo "PREPARATION_COMPLETE"
+          REMOTE
