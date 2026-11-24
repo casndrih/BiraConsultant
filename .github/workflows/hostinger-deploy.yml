@@ -375,8 +375,12 @@ jobs:
 
           chmod -R u+rwX,g+rwX "$APP/storage" "$APP/bootstrap/cache"
           chmod 0644 "$WEBROOT/index.php"
-          echo "DEPLOY_STAGE=migration_status_check"
-          php artisan migrate:status
+          if [ "$RUN_MIGRATIONS" = "true" ]; then
+            echo "DEPLOY_STAGE=migration_status_check"
+            php artisan migrate:status
+          else
+            echo "Skipping migration-status DB query: no migration files changed in this release."
+          fi
           rm -rf "$STAGE" "$ARCHIVE"
           echo "DEPLOY_STAGE=cleanup_complete"
           echo "HOSTINGER_LARAVEL_DEPLOYMENT_COMPLETE"
