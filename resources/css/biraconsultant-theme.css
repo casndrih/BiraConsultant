@@ -959,3 +959,167 @@
         padding-inline: 12px;
     }
 }
+
+
+/* Responsive finishing pass for every authenticated dashboard view. */
+.qj-dashboard-page .qj-dashboard-stats-grid--company {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.qj-dashboard-page .grid,
+.qj-dashboard-page .grid > *,
+.qj-dashboard-page form,
+.qj-dashboard-page form .grid > *,
+.qj-dashboard-page form .flex > * {
+    min-width: 0;
+}
+.qj-dashboard-page .rounded-lg.shadow-md,
+.qj-dashboard-page .rounded-lg.shadow-sm,
+.qj-dashboard-page .rounded-xl {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.qj-dashboard-page form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+.qj-dashboard-page form select,
+.qj-dashboard-page form textarea {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.qj-dashboard-page form input[type="file"] {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+.qj-dashboard-page form label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.qj-dashboard-page form button,
+.qj-dashboard-page form input[type="submit"],
+.qj-dashboard-page button {
+    max-width: 100%;
+    min-height: 40px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+.qj-dashboard-page .overflow-x-auto {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+}
+.qj-dashboard-page .overflow-x-auto table {
+    min-width: 640px;
+    width: 100%;
+}
+.qj-dashboard-page .qj-dashboard-panel,
+.qj-dashboard-page #dashboardChart,
+.qj-dashboard-page .apexcharts-canvas,
+.qj-dashboard-page .apexcharts-svg {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+.qj-app-shell section {
+    width: 100%;
+    min-width: 0;
+}
+.qj-app-shell section .relative.overflow-x-auto,
+.qj-app-shell section > .overflow-x-auto,
+.qj-app-shell section > div.overflow-x-auto {
+    width: calc(100% - 2rem);
+    max-width: calc(100% - 2rem);
+    margin-inline: 1rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+}
+.qj-app-shell section table {
+    width: 100%;
+    min-width: 760px;
+}
+.qj-app-shell section .grid,
+.qj-app-shell section .grid > *,
+.qj-app-shell section form,
+.qj-app-shell section form .grid > *,
+.qj-app-shell section form .flex > * {
+    min-width: 0;
+}
+.qj-app-shell section form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+.qj-app-shell section form select,
+.qj-app-shell section form textarea {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+.qj-app-shell section form input[type="file"] {
+    display: block;
+    max-width: 100%;
+    min-width: 0;
+}
+.qj-app-shell section button,
+.qj-app-shell section input[type="submit"] {
+    max-width: 100%;
+    min-height: 40px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+.qj-app-shell section .rounded-lg,
+.qj-app-shell section .rounded-xl {
+    min-width: 0;
+}
+.qj-app-shell #dashboardChart,
+.qj-app-shell .apexcharts-canvas,
+.qj-app-shell .apexcharts-svg {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+@media (min-width: 1024px) {
+    .qj-dashboard-page .qj-dashboard-stats-grid--company {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+    .qj-dashboard-page .qj-dashboard-stats-grid--company {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+@media (max-width: 767px) {
+    .qj-dashboard-page form .grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .qj-dashboard-page form .flex.items-center.justify-between {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .qj-dashboard-page form button,
+    .qj-dashboard-page form input[type="submit"] {
+        width: auto;
+        max-width: 100%;
+    }
+    .qj-app-shell section .relative.overflow-x-auto,
+    .qj-app-shell section > .overflow-x-auto,
+    .qj-app-shell section > div.overflow-x-auto {
+        width: calc(100% - 1.25rem);
+        max-width: calc(100% - 1.25rem);
+        margin-inline: .625rem;
+    }
+    .qj-app-shell section form .grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .qj-app-shell section form .flex.items-center.justify-between {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .qj-app-shell section form button,
+    .qj-app-shell section form input[type="submit"] {
+        width: auto;
+    }
+    .qj-app-shell #dashboardChart {
+        min-height: 220px;
+    }
+}
