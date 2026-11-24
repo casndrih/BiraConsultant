@@ -636,3 +636,55 @@
 .border-green-100,.border-green-200,.border-green-300,.border-green-400,.border-green-500,.border-green-600,.border-green-700 { border-color: var(--bc-brand-hover) !important; }
 .hover\:bg-green-50:hover,.hover\:bg-green-100:hover,.hover\:bg-green-200:hover,.hover\:bg-green-500:hover,.hover\:bg-green-600:hover,.hover\:bg-green-700:hover { background-color: var(--bc-brand-hover) !important; }
 .focus\:ring-green-500:focus,.focus\:border-green-500:focus { --tw-ring-color: var(--bc-brand) !important; border-color: var(--bc-brand) !important; }
+
+
+/* Responsive layout hardening — shared across public, account and dashboard views. */
+*, *::before, *::after { box-sizing: border-box; }
+img, svg, video, canvas { max-width: 100%; }
+.min-w-0 { min-width: 0; }
+.bc-app-shell { width: 100%; overflow-x: clip; }
+.bc-app-shell main, .bc-app-shell section, .bc-app-shell .container { min-width: 0; }
+.bc-job-card, .bc-company-card, .bc-company-tile, .bc-category-card { min-width: 0; }
+.bc-job-card__footer { flex-wrap: wrap; }
+.bc-jobs-map__canvas { isolation: isolate; }
+.bc-jobs-map__pin { max-width: 12%; }
+.bc-jobs-map__pin-count { min-width: 28px; height: 20px; padding-inline: 5px; font-size: 10px; }
+.bc-footer-link { overflow-wrap: anywhere; }
+
+@media (max-width: 767px) {
+  .bc-toolbar__inner { gap: 10px; min-height: 68px; padding-inline: 16px; }
+  .bc-toolbar__main { gap: 10px; }
+  .bc-brand { gap: 8px; }
+  .bc-brand__name { font-size: clamp(16px, 4.2vw, 20px); }
+  .bc-toolbar__actions { gap: 9px; }
+  .bc-search-hero { padding: 38px 18px 44px; }
+  .bc-search-fields--home, .bc-search-fields--jobs, .bc-search-fields--companies { grid-template-columns: minmax(0, 1fr); }
+  .bc-search-submit { width: 100%; }
+  .bc-filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bc-filter-clear-cell { grid-column: 1 / -1; }
+  .bc-results-heading, .bc-jobs-map__header { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .bc-jobs-map-card { padding: 20px 16px; border-radius: 20px; }
+  .bc-jobs-map__layout { grid-template-columns: minmax(0, 1fr); }
+  .bc-jobs-map__canvas { min-height: 190px; }
+  .bc-jobs-map__pin-count { min-width: 25px; height: 18px; padding-inline: 4px; font-size: 9px; }
+  .bc-jobs-map__pin svg { width: 17px; height: 21px; }
+  .bc-job-card, .bc-company-card { padding: 17px; }
+  .bc-job-card__footer { align-items: flex-start; }
+  .bc-home-cta { padding: 26px 18px !important; }
+  .bc-home-cta h2 { font-size: clamp(22px, 6vw, 30px) !important; line-height: 1.2 !important; }
+  .bc-home-cta p { font-size: 14px !important; line-height: 1.55 !important; }
+  .bc-home-cta__actions { display: flex; width: 100%; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .bc-home-cta__actions > a { flex: 1 1 145px; min-width: 0; max-width: 220px; min-height: 48px; padding: 0 14px !important; white-space: normal; text-align: center; }
+  footer .bc-footer-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  footer .bc-footer-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 18px; }
+  footer .bc-footer-links ul { margin-top: 12px; }
+  footer .bc-footer-social { flex-wrap: wrap; gap: 20px; }
+  footer .bc-footer-bottom { margin-top: 28px; padding-top: 18px; }
+}
+@media (max-width: 380px) {
+  .bc-brand__name { font-size: 15px; }
+  .bc-toolbar__inner { padding-inline: 12px; }
+  .bc-toolbar__actions { gap: 6px; }
+  .bc-filter-grid { grid-template-columns: minmax(0, 1fr); }
+  footer .bc-footer-links { grid-template-columns: minmax(0, 1fr); }
+}
