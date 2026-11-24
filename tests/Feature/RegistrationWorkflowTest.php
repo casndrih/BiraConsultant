@@ -8,6 +8,8 @@ use App\Models\BiraConsultantCountry;
 use App\Models\BiraConsultantUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Tests\TestCase;
 
 class RegistrationWorkflowTest extends TestCase
