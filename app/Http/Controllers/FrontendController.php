@@ -41,11 +41,11 @@ class FrontendController extends Controller
             ->get();
 
         $categories = BiraConsultantJobCategory::withCount('jobs')->orderBy('name')->get();
-        $companies = BiraConsultantCompany::withCount('jobs')->orderBy('name')->take(6)->get();
+        $companies = BiraConsultantCompany::publiclyVisible()->withCount(['jobs' => function ($q) { $q->where('status', 1)->where('approval_status', 'approved'); }])->orderBy('name')->take(6)->get();
         $jobTypes = BiraConsultantJobType::orderBy('name')->get();
         $experienceLevels = BiraConsultantJobExperienceLevel::orderBy('name')->get();
         $totalJobs = BiraConsultantJob::active()->count();
-        $totalCompanies = BiraConsultantCompany::count();
+        $totalCompanies = BiraConsultantCompany::publiclyVisible()->count();
 
         $mapLocationDefinitions = [
             ['name' => 'Morobe / Lae', 'query' => 'Morobe, Lae', 'terms' => ['morobe', 'lae'], 'x' => 34.2, 'y' => 52.8, 'badge_offset' => -10],
@@ -276,8 +276,8 @@ class FrontendController extends Controller
     // Company Listing Page
     public function companies(Request $request)
     {
-        $query = BiraConsultantCompany::withCount(['jobs' => function($q) {
-            $q->where('status', 1);
+        $query = BiraConsultantCompany::publiclyVisible()->withCount(['jobs' => function($q) {
+            $q->where('status', 1)->where('approval_status', 'approved');
         }]);
 
         if ($request->filled('search')) {
@@ -358,7 +358,7 @@ class FrontendController extends Controller
     // Company Detail Page
     public function companyDetail($id)
     {
-        $company = BiraConsultantCompany::findOrFail($id);
+        $company = BiraConsultantCompany::publiclyVisible()->findOrFail($id);
 
         $jobs = BiraConsultantJob::with(['category', 'jobType', 'experienceLevel'])
             ->where('company_id', $company->id)
@@ -375,7 +375,7 @@ class FrontendController extends Controller
     // Company Detail by Slug
     public function companyDetailBySlug($slug)
     {
-        $company = BiraConsultantCompany::where('slug', $slug)->firstOrFail();
+        $company = BiraConsultantCompany::publiclyVisible()->where('slug', $slug)->firstOrFail();
 
         $jobs = BiraConsultantJob::with(['category', 'jobType', 'experienceLevel'])
             ->where('company_id', $company->id)
@@ -430,7 +430,7 @@ class FrontendController extends Controller
 
     public function homeCompaniesPartial()
     {
-        $companies = BiraConsultantCompany::withCount('jobs')->orderBy('name')->take(6)->get();
+        $companies = BiraConsultantCompany::publiclyVisible()->withCount(['jobs' => function ($q) { $q->where('status', 1)->where('approval_status', 'approved'); }])->orderBy('name')->take(6)->get();
         return view('partials.companies', compact('companies'));
     }
 
