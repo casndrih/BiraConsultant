@@ -105,6 +105,16 @@
     </li>
 
     <li>
+        <a href="{{ route('admin.contact-messages.index') }}"
+            class="flex items-center p-2 {{ Request::is('admin/contact-messages*') ? 'bg-yellow-300 text-black' : 'text-black dark:text-white' }} rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5Z"/>
+            </svg>
+            <span class="ml-3">Contact messages</span>
+        </a>
+    </li>
+
+    <li>
         <a href="{{ URL::to('/admin/settings') }}"
             class="flex items-center p-2 {{ Request::is('admin/settings') ? 'bg-yellow-300 text-black' : 'text-black dark:text-white' }} rounded-full">
             <!-- Settings Icon -->
