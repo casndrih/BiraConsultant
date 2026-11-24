@@ -259,7 +259,7 @@ jobs:
               }
           }
           echo "DEMO_CREDENTIALS_VERIFIED=17\n";
-          $provider = \\Illuminate\\Support\\Facades\\Auth::guard("web")->getProvider();
+          $provider = \Illuminate\Support\Facades\Auth::guard("web")->getProvider();
           $candidate = $provider->retrieveByCredentials(["email" => "martha.kila@biraconsultant.test"]);
           if (!$candidate || !$provider->validateCredentials($candidate, ["password" => getenv("BIRA_DEMO_PASSWORD")])) { exit(36); }
           echo "AUTH_PROVIDER_VALIDATION_PASSED\n";
