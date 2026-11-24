@@ -234,7 +234,7 @@
                     Browse Jobs
                 </a>
                 @guest
-                    <a href="#" data-modal-target="signup-modal" data-modal-show="signup-modal" class="bg-white hover:bg-gray-100 text-black font-bold py-3 px-8 rounded-full transition duration-200">
+                    <a href="{{ route('register') }}" class="bg-white hover:bg-gray-100 text-black font-bold py-3 px-8 rounded-full transition duration-200">
                         Sign Up Free
                     </a>
                 @endguest
