@@ -226,10 +226,10 @@
         </div>
 
         <!-- CTA -->
-        <div class="bg-black dark:bg-custom-dark rounded-lg p-8 text-center">
+        <div class="bc-home-cta bg-black dark:bg-custom-dark rounded-lg p-8 text-center">
             <h2 class="text-2xl font-bold text-white mb-4">Ready to take the next step in your career?</h2>
             <p class="text-gray-300 mb-6">Join thousands of job seekers who found their dream job through BiraConsultant.</p>
-            <div class="flex justify-center gap-4">
+            <div class="bc-home-cta__actions flex justify-center gap-4">
                 <a href="{{ route('jobs') }}" class="bc-action-button bc-action-button--primary">
                     Browse Jobs
                 </a>
