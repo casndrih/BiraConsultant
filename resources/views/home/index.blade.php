@@ -156,7 +156,7 @@
                 @endforeach
             </select>
         </div>
-        <div id="latest-jobs-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div id="latest-jobs-container" class="qj-home-job-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             @for ($i = 0; $i < 8; $i++)
             <div class="bg-white dark:bg-custom-dark rounded-lg shadow-sm p-5">
                 <div class="flex items-start gap-3 mb-3">
@@ -184,7 +184,7 @@
         <div class="mb-12">
             <div class="qj-featured-panel">
                 <h2 class="qj-featured-panel__title text-2xl font-bold mb-6">Featured Jobs</h2>
-                <div id="featured-jobs-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div id="featured-jobs-container" class="qj-home-featured-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     @for ($i = 0; $i < 4; $i++)
                     <div class="bg-white/10 rounded-lg p-5">
                         <div class="flex items-start gap-3 mb-3">
@@ -214,7 +214,7 @@
                 <h2 class="text-2xl font-bold text-black dark:text-white">Top Companies</h2>
                 <a href="{{ route('companies') }}" class="qj-inline-link">View all companies <span aria-hidden="true">→</span></a>
             </div>
-            <div id="companies-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div id="companies-container" class="qj-home-company-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 @for ($i = 0; $i < 6; $i++)
                 <div class="bg-white dark:bg-custom-dark rounded-lg shadow-md p-4 text-center">
                     <div class="w-12 h-12 rounded-lg mx-auto mb-2 skeleton-box"></div>
@@ -226,10 +226,10 @@
         </div>
 
         <!-- CTA -->
-        <div class="bg-black dark:bg-custom-dark rounded-lg p-8 text-center">
+        <div class="qj-home-cta bg-black dark:bg-custom-dark rounded-lg p-8 text-center">
             <h2 class="text-2xl font-bold text-white mb-4">Ready to take the next step in your career?</h2>
             <p class="text-gray-300 mb-6">Join thousands of job seekers who found their dream job through BiraConsultant.</p>
-            <div class="flex justify-center gap-4">
+            <div class="qj-home-cta__actions flex justify-center gap-4">
                 <a href="{{ route('jobs') }}" class="qj-action-button qj-action-button--primary">
                     Browse Jobs
                 </a>
