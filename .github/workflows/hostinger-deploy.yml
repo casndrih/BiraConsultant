@@ -117,6 +117,7 @@ jobs:
           DB_PASSWORD_B: ${{ secrets.DB_PASSWORD }}
           SEED_DEMO_DATA: ${{ contains(github.event.head_commit.message, '[seed-demo-data]') }}
           # The marker is reserved for intentional demo-account reseeding; the secret is never logged.
+          # Seed refreshes demo company logos as well as their test credentials.
           BIRA_DEMO_PASSWORD: ${{ secrets.BIRA_DEMO_PASSWORD }}
         shell: bash
         run: |
