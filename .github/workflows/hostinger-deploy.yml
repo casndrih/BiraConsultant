@@ -93,6 +93,7 @@ jobs:
         run: |
           set -euo pipefail
           npm ci
+          npm rebuild
           NODE_OPTIONS=--openssl-legacy-provider npm run production
           test -s public/mix-manifest.json
           test -s public/js/app.js
