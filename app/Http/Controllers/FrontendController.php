@@ -879,9 +879,12 @@ class FrontendController extends Controller
                 Log::error('Contact form notification delivery failed.', [
                     'contact_message_id' => $contactMessage->id,
                     'exception' => $exception::class,
+                ]);
+
                 if (app()->environment('testing')) {
                     throw $exception;
                 }
+            }
                 ]);
             }
         }
