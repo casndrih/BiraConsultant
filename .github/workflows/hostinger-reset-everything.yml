@@ -1,1 +1,8 @@
+                case "$DB_DATABASE" in
+                  ""|*[!A-Za-z0-9_]*)
+                    echo "Database name contains unsupported characters; refusing unsafe SQL."
+                    exit 1
+                    ;;
+                esac
+                MYSQL_PWD="$DB_PASSWORD" mysql --protocol=TCP -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USERNAME" -e "DROP DATABASE IF EXISTS $DB_DATABASE;"
 
