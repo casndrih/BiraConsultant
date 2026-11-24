@@ -70,6 +70,35 @@ class ContactAndCaptchaTest extends TestCase
         $this->assertDatabaseCount('biraconsultant_contact_messages', 0);
     }
 
+    public function test_contact_inbox_is_admin_only_and_marks_opened_messages_as_read(): void
+    {
+        $message = BiraConsultantContactMessage::create([
+            'name' => 'Inbox Test Sender',
+            'email' => 'inbox.sender@example.com',
+            'subject' => 'Admin inbox visibility test',
+            'message' => 'This message verifies the protected administrator inbox.',
+        ]);
+
+        $jobSeeker = BiraConsultantUser::where('email', 'martha.kila@biraconsultant.test')->firstOrFail();
+        $admin = BiraConsultantUser::where('email', 'admin@biraconsultant.test')->firstOrFail();
+
+        $this->actingAs($jobSeeker)
+            ->get(route('admin.contact-messages.index'))
+            ->assertRedirect();
+
+        $this->actingAs($admin)
+            ->get(route('admin.contact-messages.index'))
+            ->assertOk()
+            ->assertSee('Admin inbox visibility test');
+
+        $this->actingAs($admin)
+            ->get(route('admin.contact-messages.show', $message))
+            ->assertOk()
+            ->assertSee('Inbox Test Sender');
+
+        $this->assertNotNull($message->fresh()->read_at);
+    }
+
     public function test_enabled_recaptcha_fails_closed_when_secret_key_is_missing(): void
     {
         BiraConsultantSetting::updateOrCreate(['key' => 'recaptcha_enabled'], ['value' => '1']);
