@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   export-source:
@@ -65,3 +65,53 @@ jobs:
           path: export/biraconsultant-source.tar.gz
           if-no-files-found: error
           retention-days: 3
+
+
+  commit-source:
+    needs: export-source
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Download exported source artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: biraconsultant-source
+          path: source-export
+
+      - name: Replace repository application source with Hostinger copy
+        run: |
+          set -euo pipefail
+          mkdir -p source
+          tar -xzf source-export/biraconsultant-source.tar.gz -C source
+          test -f source/artisan
+          test -f source/composer.json
+          test -f source/package.json
+          test -f source/webpack.mix.js
+          rsync -a --delete --exclude='.git/' --exclude='.github/' source/ ./
+          test -f artisan
+          test -f composer.json
+          test -f package.json
+          test -f webpack.mix.js
+          echo "Application source files: $(find . -type f -not -path './.git/*' -not -path './.github/*' | wc -l)"
+          echo "Built theme: $(test -f public/css/biraconsultant-theme.css && echo present || echo missing)"
+          git status --short
+
+      - name: Commit rebuilt application source to main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No source changes to commit."
+            exit 0
+          fi
+          git commit -m "Sync rebuilt BiraConsultant source from Hostinger"
+          git push origin HEAD:main
