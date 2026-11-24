@@ -838,6 +838,7 @@
     .qj-admin-topbar nav a img { height: 30px; }
     .qj-admin-topbar nav a span { display: none; }
     #drawer-navigation { padding: 14px; }
+    #drawer-navigation { width: min(17rem, calc(100vw - 1.25rem)); max-width: calc(100vw - 1.25rem); }
     .qj-app-shell section { min-width: 0; }
     .qj-app-shell section > .overflow-x-auto,
     .qj-app-shell section > div.overflow-x-auto,
