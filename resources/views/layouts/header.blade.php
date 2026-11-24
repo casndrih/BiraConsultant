@@ -20,14 +20,8 @@
             <!-- Right: Auth Button or User Image -->
             <div class="qj-toolbar__actions">
                 @guest
-                    <a data-modal-target="signin-modal" data-modal-show="signin-modal"
-                       class="qj-text-action cursor-pointer">
-                        Sign In
-                    </a>
-                    <a data-modal-target="signup-modal" data-modal-show="signup-modal"
-                       class="qj-action-button qj-action-button--primary cursor-pointer">
-                        Sign Up
-                    </a>
+                    <a href="{{ route('login') }}" class="qj-text-action">Sign In</a>
+                    <a href="{{ route('register') }}" class="qj-action-button qj-action-button--primary">Sign Up</a>
                 @else
                     @if (Auth::user()->role == 1)
                         <!-- Admin -->
