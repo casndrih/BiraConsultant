@@ -885,8 +885,6 @@ class FrontendController extends Controller
                     throw $exception;
                 }
             }
-                ]);
-            }
         }
 
         return redirect()->route('contact')->with('success', 'Thank you. Your message has been received and saved.');
