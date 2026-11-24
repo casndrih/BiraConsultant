@@ -24,6 +24,9 @@ jobs:
         with:
           ref: main
 
+      - name: Install SSH client
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
+
       - name: Build Laravel Mix production assets
         uses: actions/setup-node@v4
         with:
@@ -104,7 +107,8 @@ jobs:
           printf -v Q_DB_NAME '%q' "$DB_NAME"
           printf -v Q_DB_USER '%q' "$DB_USER"
           printf -v Q_DB_PASSWORD '%q' "$DB_PASSWORD"
-          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD"
+          printf -v Q_ARCHIVE '%q' "$ARCHIVE"
+          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD ARCHIVE=$Q_ARCHIVE"
           PORT="${SSH_PORT:-65002}"
           REMOTE="$SSH_USER@$SSH_HOST"
           ARCHIVE="/tmp/biraconsultant-release-${GITHUB_RUN_ID}.tar.gz"
@@ -177,7 +181,7 @@ jobs:
               $line = $name.'='.$quote($value);
               $pattern = '/^'.preg_quote($name, '/').'=.*$/m';
               if (preg_match($pattern, $content)) {
-                  $content = preg_replace($pattern, str_replace('\\', '\\\\', $line), $content, 1);
+                  $content = preg_replace_callback($pattern, static fn () => $line, $content, 1);
               } else {
                   $content = rtrim($content)."\n".$line."\n";
               }
