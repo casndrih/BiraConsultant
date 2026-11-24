@@ -267,6 +267,8 @@ jobs:
           echo "AUTH_PROVIDER_VALIDATION_PASSED id=".$candidate->getKey()." db=".config("database.connections.mysql.database")."\n";
           $peter = \App\Models\BiraConsultantUser::where("email", "peter.wama@biraconsultant.test")->first();
           echo "PETER_DB_CHECK id=".$peter?->getKey()." updated=".$peter?->updated_at?->toIso8601String()." valid=".(\Illuminate\Support\Facades\Hash::check(getenv("BIRA_DEMO_PASSWORD"), $peter?->password ?? "") ? "1" : "0")."\n";
+          $lydia = \App\Models\BiraConsultantUser::where("email", "lydia.saro@biraconsultant.test")->first();
+          echo "LYDIA_DB_CHECK id=".$lydia?->getKey()." updated=".$lydia?->updated_at?->toIso8601String()." valid=".(\Illuminate\Support\Facades\Hash::check(getenv("BIRA_DEMO_PASSWORD"), $lydia?->password ?? "") ? "1" : "0")."\n";
           PHP
               echo "BIRA_DEMO_SEED_COMPLETED"
           fi
