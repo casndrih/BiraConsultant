@@ -377,7 +377,8 @@ jobs:
                       if fields.get("name") == "_token":
                           self.token = fields.get("value")
 
-          role_openers = {}\n          for index, (email, expected_path) in enumerate(accounts):
+          role_openers = {}
+          for index, (email, expected_path) in enumerate(accounts):
               jar = http.cookiejar.CookieJar()
               opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
               request = urllib.request.Request(BASE + "/", headers={"User-Agent": "BiraConsultant-Production-SmokeTest/1.0"})
