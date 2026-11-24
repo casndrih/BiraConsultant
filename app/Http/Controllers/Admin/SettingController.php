@@ -283,9 +283,8 @@ class SettingController extends Controller
                 config(['mail.from.name' => $fromName]);
             }
 
-            // Discard any mailer instantiated earlier in the request so the
-            // transport is rebuilt from the saved settings above.
-            app('mail.manager')->purge($driver);
+            // The mail manager is first resolved when Mail::raw is called in
+            // this request, after the saved settings above have been applied.
 
             Mail::raw(
                 "This is a test email from BiraConsultant. The configured mail transport accepted this message for delivery.\n\nSent at: " . now()->toDateTimeString(),
