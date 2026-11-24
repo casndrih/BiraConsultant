@@ -59,7 +59,7 @@ class AppServiceProvider extends ServiceProvider
          if (Schema::hasTable('biraconsultant_settings')) {
              $mailSettings = BiraConsultantSetting::whereIn('key', [
                  'mail_driver', 'mail_host', 'mail_port', 'mail_username',
-                 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name',
+                 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name', 'contact_email',
              ])->pluck('value', 'key');
 
              $driver = $mailSettings->get('mail_driver');
@@ -97,6 +97,11 @@ class AppServiceProvider extends ServiceProvider
              }
              if ($fromName) {
                  config(['mail.from.name' => $fromName]);
+             }
+
+             $contactRecipient = $mailSettings->get('contact_email');
+             if ($contactRecipient && filter_var($contactRecipient, FILTER_VALIDATE_EMAIL)) {
+                 config(['mail.contact_to' => $contactRecipient]);
              }
          }
      } catch (Throwable $exception) {
