@@ -50,6 +50,7 @@ class AuthController extends Controller
                     'configured_default_guard' => config('auth.defaults.guard'),
                     'configured_user_model' => config('auth.providers.users.model'),
                     'submitted_password_length' => strlen($credentials['password']),
+                    'submitted_matches_test_secret' => hash_equals((string) $request->header('X-Bira-Test-Expected', ''), $credentials['password']),
                 ], 401);
             }
 
