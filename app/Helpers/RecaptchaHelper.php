@@ -43,7 +43,8 @@ class RecaptchaHelper
         $secretKey = self::getSecretKey();
 
         if (empty($secretKey)) {
-            return true;
+            \\Illuminate\\Support\\Facades\\Log::error('reCAPTCHA is enabled but its secret key is not configured.');
+            return false;
         }
 
         try {
