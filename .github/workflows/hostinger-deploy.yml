@@ -9,6 +9,7 @@ on:
       - "resources/views/home/index.blade.php"
       - "resources/views/layouts/footer.blade.php"
       - "resources/views/app.blade.php"
+      - "resources/views/layouts/app.blade.php"
   workflow_dispatch:
 
 permissions:
@@ -245,3 +246,18 @@ jobs:
             200|301|302) echo "PUBLIC_SITE_HTTP_CHECK_PASSED" ;;
             *) echo "Public site did not return a successful page response"; exit 40 ;;
           esac
+
+          # Verify every CSS/JS asset referenced by the live HTML, including its MIME type.
+          grep -oE 'https://biraconsultants.com/(css/[^" ]+|js/[^" ]+)' "$RUNNER_TEMP/bira-home.html" | sort -u > "$RUNNER_TEMP/bira-assets.txt"
+          test -s "$RUNNER_TEMP/bira-assets.txt"
+          while IFS= read -r ASSET; do
+            RESULT="$(curl -sS -L --max-time 45 -o /dev/null -w '%{http_code}|%{content_type}' "$ASSET")"
+            STATUS="${RESULT%%|*}"
+            TYPE="${RESULT#*|}"
+            echo "ASSET_CHECK $ASSET => $STATUS $TYPE"
+            case "$ASSET" in
+              *.css* ) [[ "$STATUS" == "200" && "$TYPE" == text/css* ]] || { echo "CSS asset verification failed"; exit 41; } ;;
+              *.js* ) [[ "$STATUS" == "200" && "$TYPE" == application/javascript* || "$STATUS" == "200" && "$TYPE" == application/x-javascript* || "$STATUS" == "200" && "$TYPE" == text/javascript* ]] || { echo "JavaScript asset verification failed"; exit 42; } ;;
+            esac
+          done < "$RUNNER_TEMP/bira-assets.txt"
+          echo "PUBLIC_CSS_JS_ASSET_CHECK_PASSED"
