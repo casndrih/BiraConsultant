@@ -105,6 +105,7 @@ jobs:
           DB_USER_C: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD_A: ${{ secrets.HOSTINGER_DB_PASSWORD }}
           DB_PASSWORD_B: ${{ secrets.DB_PASSWORD }}
+          SEED_DEMO_DATA: ${{ contains(github.event.head_commit.message, '[seed-demo-data]') }}
         shell: bash
         run: |
           set -euo pipefail
@@ -114,6 +115,17 @@ jobs:
           DB_USER="${DB_USER_A:-${DB_USER_B:-${DB_USER_C:-}}}"
           DB_PASSWORD="${DB_PASSWORD_A:-${DB_PASSWORD_B:-}}"
           test -n "$DB_NAME" && test -n "$DB_USER" && test -n "$DB_PASSWORD"
+          DEMO_PASSWORD=""
+          if [[ "$SEED_DEMO_DATA" == "true" ]]; then
+            DEMO_PASSWORD="BiraTemp-$(openssl rand -hex 8)"
+            {
+              echo "### Demo account credentials"
+              echo
+              echo "Shared temporary password: `$DEMO_PASSWORD`"
+              echo
+              echo "Applies only to the 17 `@biraconsultant.test` demo accounts."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
           ARCHIVE="/tmp/biraconsultant-release-${GITHUB_RUN_ID}.tar.gz"
           STAGE_NAME="biraconsultant-${GITHUB_RUN_ID}"
           printf -v Q_DB_HOST '%q' "$DB_HOST"
@@ -121,9 +133,10 @@ jobs:
           printf -v Q_DB_NAME '%q' "$DB_NAME"
           printf -v Q_DB_USER '%q' "$DB_USER"
           printf -v Q_DB_PASSWORD '%q' "$DB_PASSWORD"
+          printf -v Q_DEMO_PASSWORD '%q' "$DEMO_PASSWORD"
           printf -v Q_ARCHIVE '%q' "$ARCHIVE"
           printf -v Q_STAGE_NAME '%q' "$STAGE_NAME"
-          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD ARCHIVE=$Q_ARCHIVE STAGE_NAME=$Q_STAGE_NAME"
+          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD BIRA_DEMO_PASSWORD=$Q_DEMO_PASSWORD ARCHIVE=$Q_ARCHIVE STAGE_NAME=$Q_STAGE_NAME"
           PORT="${SSH_PORT:-65002}"
           REMOTE="$SSH_USER@$SSH_HOST"
           sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 "$REMOTE" "$REMOTE_ENV bash -s" <<'REMOTE'
@@ -210,6 +223,10 @@ jobs:
           test -f "$APP/vendor/autoload.php"
           php artisan optimize:clear
           php artisan migrate --force --no-interaction
+          if [ -n "${BIRA_DEMO_PASSWORD:-}" ]; then
+              BIRA_DEMO_PASSWORD="$BIRA_DEMO_PASSWORD" php artisan db:seed --force --no-interaction
+              echo "BIRA_DEMO_SEED_COMPLETED"
+          fi
           # Hostinger disables PHP symlink(); create the public storage link with the shell ln command below.
           php artisan config:cache
           php artisan view:cache
