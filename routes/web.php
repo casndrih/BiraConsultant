@@ -231,6 +231,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/settings', 'index')->name('admin.settings.index');
             Route::get('/setting/search', 'query')->name('admin.setting.search');
             Route::post('/setting/update', 'update')->name('admin.setting.update');
+            Route::post('/settings/email/test', 'testEmail')->name('admin.settings.email.test');
         });
 
         // Verification Review Routes
