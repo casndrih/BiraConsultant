@@ -1,0 +1,97 @@
+name: Replace Hostinger production database from project dump
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/hostinger-db-replace.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replace-production-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH client
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
+
+      - name: Inspect dump, replace existing production tables, and import project database
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+          DB_HOST_A: ${{ secrets.HOSTINGER_DB_HOST }}
+          DB_HOST_B: ${{ secrets.DB_HOST }}
+          DB_NAME_A: ${{ secrets.HOSTINGER_DB_NAME }}
+          DB_NAME_B: ${{ secrets.HOSTINGER_DB_DATABASE }}
+          DB_NAME_C: ${{ secrets.DB_DATABASE }}
+          DB_USER_A: ${{ secrets.HOSTINGER_DB_USER }}
+          DB_USER_B: ${{ secrets.HOSTINGER_DB_USERNAME }}
+          DB_USER_C: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD_A: ${{ secrets.HOSTINGER_DB_PASSWORD }}
+          DB_PASSWORD_B: ${{ secrets.DB_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$SSH_HOST" && test -n "$SSH_USER" && test -n "$SSH_PASSWORD"
+          DB_HOST="${DB_HOST_A:-${DB_HOST_B:-localhost}}"
+          DB_NAME="${DB_NAME_A:-${DB_NAME_B:-$DB_NAME_C}}"
+          DB_USER="${DB_USER_A:-${DB_USER_B:-$DB_USER_C}}"
+          DB_PASSWORD="${DB_PASSWORD_A:-$DB_PASSWORD_B}"
+          test -n "$DB_NAME" || { echo "No database-name secret found"; exit 10; }
+          test -n "$DB_USER" || { echo "No database-username secret found"; exit 11; }
+          test -n "$DB_PASSWORD" || { echo "No database-password secret found"; exit 12; }
+
+          printf -v Q_DB_HOST '%q' "$DB_HOST"
+          printf -v Q_DB_NAME '%q' "$DB_NAME"
+          printf -v Q_DB_USER '%q' "$DB_USER"
+          printf -v Q_DB_PASSWORD '%q' "$DB_PASSWORD"
+          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD"
+
+          sshpass -p "$SSH_PASSWORD" ssh -T -p "${SSH_PORT:-65002}" \
+            -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 \
+            "$SSH_USER@$SSH_HOST" "$REMOTE_ENV bash -s" <<'REMOTE'
+          set -euo pipefail
+          APP="$HOME/domains/biraconsultants.com/bira_app"
+          DUMP="$APP/bira_full_dump_with_maintenance.sql"
+          test -f "$APP/artisan" || { echo "Laravel app not found at $APP"; exit 20; }
+          test -s "$DUMP" || { echo "Project SQL dump missing or empty: $DUMP"; exit 21; }
+          command -v mysql >/dev/null 2>&1 || { echo "mysql client unavailable on Hostinger"; exit 22; }
+
+          echo "DUMP_FILE=$DUMP"
+          echo "DUMP_SIZE_BYTES=$(wc -c < "$DUMP")"
+          echo "DUMP_SHA256=$(sha256sum "$DUMP" | cut -d' ' -f1)"
+          echo "DUMP_SQL_DIRECTIVES:"
+          grep -Ein '^[[:space:]]*(CREATE DATABASE|USE[[:space:]]|DROP DATABASE)' "$DUMP" | head -30 || true
+          if grep -Eiq '^[[:space:]]*(CREATE DATABASE|USE[[:space:]]|DROP DATABASE)' "$DUMP"; then
+            echo "Dump contains database-level directives; refusing to risk targeting another database."
+            exit 23
+          fi
+
+          export MYSQL_PWD="$DB_PASSWORD"
+          MYSQL=(mysql --connect-timeout=20 --host="$DB_HOST" --user="$DB_USER" "$DB_NAME")
+          "${MYSQL[@]}" -Nse 'SELECT CONCAT("CONNECTED_DATABASE=", DATABASE())'
+          TABLES="$("${MYSQL[@]}" -Nse "SELECT table_name FROM information_schema.tables WHERE table_schema = DATABASE() AND table_type = 'BASE TABLE'")"
+          COUNT="$(printf '%s\\n' "$TABLES" | sed '/^$/d' | wc -l)"
+          echo "EXISTING_TABLE_COUNT=$COUNT"
+
+          if [ -n "$TABLES" ]; then
+            {
+              echo 'SET FOREIGN_KEY_CHECKS=0;'
+              while IFS= read -r table; do
+                [ -n "$table" ] || continue
+                printf 'DROP TABLE IF EXISTS \`%s\`;\\n' "$table"
+              done <<< "$TABLES"
+              echo 'SET FOREIGN_KEY_CHECKS=1;'
+            } | "${MYSQL[@]}"
+          fi
+          echo "EXISTING_TABLES_CLEARED"
+
+          "${MYSQL[@]}" --binary-mode=1 < "$DUMP"
+          echo "IMPORT_COMPLETED"
+          "${MYSQL[@]}" -Nse "SELECT CONCAT('IMPORTED_TABLE_COUNT=', COUNT(*)) FROM information_schema.tables WHERE table_schema=DATABASE(); SELECT CONCAT('IMPORTED_TABLE=', table_name) FROM information_schema.tables WHERE table_schema=DATABASE() ORDER BY table_name LIMIT 100;"
+          echo "PRODUCTION_DATABASE_REPLACEMENT_SUCCESS"
+          REMOTE
