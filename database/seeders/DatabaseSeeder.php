@@ -119,6 +119,13 @@ class DatabaseSeeder extends Seeder
             ['Lae City Pharmacy', 'lae-city-pharmacy', 'Healthcare', 'Lae', 'jobs@laecitypharmacy.example'],
             ['Highlands Engineering Services', 'highlands-engineering-services', 'Engineering', 'Mt Hagen', 'hr@highlandsengineering.example'],
         ];
+        $companyLogos = [
+            'kumul-petroleum-holdings' => 'https://kumulpetroleum.com/wp-content/uploads/2023/09/KPHL_Main_logo.png',
+            'bank-south-pacific' => 'images/companies/bsp-logo.svg',
+            'lae-city-pharmacy' => 'https://cpl.com.pg/wp-content/uploads/2026/07/City-Pharmacy-Brand-Logo-Pantones.pdf-image-002-768x202.png',
+            'highlands-engineering-services' => 'images/companies/highlands-engineering-services.svg',
+        ];
+
         $companies = [];
         foreach ($companyData as $i => [$name, $slug, $industry, $city, $email]) {
             $ownerEmail = 'company'.($i + 1).'@biraconsultant.test';
@@ -133,6 +140,7 @@ class DatabaseSeeder extends Seeder
                 'name' => $name, 'industry' => $industry, 'location' => $city.', Papua New Guinea',
                 'city' => $city, 'country_id' => $png->id, 'user_id' => $owner->id,
                 'email' => $email, 'phone' => '+675 7000 '.str_pad((string) ($i + 1), 4, '0', STR_PAD_LEFT),
+                'logo' => $companyLogos[$slug] ?? null,
                 'website' => 'https://example.com', 'description' => 'Synthetic sample company profile for validating BiraConsultant company and recruitment workflows.',
                 'founded_year' => 2000 + $i, 'size' => ['201-500', '501-1000', '11-50', '51-200'][$i],
                 'is_approved' => true, 'verification_status' => 1, 'verified_at' => $now,
