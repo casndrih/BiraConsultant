@@ -24,6 +24,25 @@ class CompanyPublicationRulesTest extends TestCase
 
     public function test_public_company_directory_only_shows_approved_verified_companies_with_logos(): void
     {
+        $publicOwner = BiraConsultantUser::create([
+            'name' => 'Verified Public Owner',
+            'slug' => 'verified-public-owner',
+            'username' => 'verified-public-owner',
+            'email' => 'verified.owner@example.com',
+            'password' => Hash::make('test-password'),
+            'role' => 2,
+            'gender' => '0',
+        ]);
+
+        BiraConsultantCompany::create([
+            'name' => 'Verified Public Smoke Test Employer',
+            'slug' => 'verified-public-smoke-test-employer',
+            'user_id' => $publicOwner->id,
+            'is_approved' => true,
+            'verification_status' => 1,
+            'logo' => 'images/companies/bsp-logo.svg',
+        ]);
+
         BiraConsultantCompany::create([
             'name' => 'Pending Smoke Test Employer',
             'slug' => 'pending-smoke-test-employer',
@@ -44,7 +63,8 @@ class CompanyPublicationRulesTest extends TestCase
 
         $html = $response->json('html');
 
-        $this->assertStringContainsString('Bank South Pacific', $html);
+        $this->assertStringContainsString('Verified Public Smoke Test Employer', $html);
+        $this->assertStringNotContainsString('Bank South Pacific', $html);
         $this->assertStringNotContainsString('Pending Smoke Test Employer', $html);
         $this->assertStringNotContainsString('Logo Missing Smoke Test Employer', $html);
     }
@@ -74,6 +94,10 @@ class CompanyPublicationRulesTest extends TestCase
 
         $this->assertDatabaseHas('biraconsultant_jobs', ['id' => $job->id]);
         $this->assertFalse(BiraConsultantJob::active()->whereKey($job->id)->exists());
+
+        $demoCompany = BiraConsultantCompany::where('slug', 'bank-south-pacific')->firstOrFail();
+        $demoJob = BiraConsultantJob::where('company_id', $demoCompany->id)->firstOrFail();
+        $this->assertFalse(BiraConsultantJob::active()->whereKey($demoJob->id)->exists());
     }
 
     public function test_unverified_company_cannot_open_or_submit_job_posting(): void
