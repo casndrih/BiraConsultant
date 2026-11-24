@@ -107,7 +107,7 @@ class ContactAndCaptchaTest extends TestCase
 
         Mail::shouldReceive('raw')
             ->once()
-            ->andThrow(new \\RuntimeException('SMTP connection refused'));
+            ->andThrow(new \RuntimeException('SMTP connection refused'));
 
         $this->actingAs($admin)
             ->post(route('admin.settings.email.test'))
