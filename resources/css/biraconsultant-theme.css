@@ -1123,3 +1123,54 @@
         min-height: 220px;
     }
 }
+
+
+/* Admin mobile overflow fixes: wrap settings tabs and contain wide data tables. */
+.qj-app-shell .overflow-x-auto {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+}
+.qj-app-shell .overflow-x-auto table {
+    width: 100%;
+    min-width: 680px;
+}
+.qj-app-shell #settingsTabs {
+    display: flex;
+    flex-wrap: wrap !important;
+    align-items: stretch;
+    gap: 4px 8px;
+    width: 100%;
+    max-width: 100%;
+}
+.qj-app-shell #settingsTabs > li {
+    flex: 0 0 auto;
+    min-width: 0;
+    margin-right: 0;
+}
+.qj-app-shell #settingsTabs > li > button {
+    max-width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+.qj-app-shell section .flex.items-center.gap-2.bg-white.rounded-lg,
+.qj-app-shell section .flex.flex-wrap.items-center.gap-2.bg-white.rounded-lg {
+    flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+    .qj-app-shell #settingsTabs > li > button {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+    .qj-app-shell section .flex.items-center.justify-between {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .qj-app-shell section .overflow-x-auto {
+        border-radius: 10px;
+    }
+}
