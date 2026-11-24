@@ -42,7 +42,6 @@
     @include('admin.layouts.footer')
     
     <script src="{{ URL::asset('/js/app.js') }}"></script>
-    @include('partials.modal-dismiss-fallback')
     @yield('js')
  
 </body>
