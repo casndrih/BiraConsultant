@@ -1,0 +1,34 @@
+name: Verify BiraConsultant Hostinger database access
+on:
+  push:
+    paths:
+      - ".github/workflows/hostinger-db-verify.yml"
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+      - name: Verify database credentials and inspect schema read-only
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_USER: ${{ secrets.HOSTINGER_USER }}
+          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.HOSTINGER_DB_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$DB_PASSWORD" || { echo "HOSTINGER_DB_PASSWORD secret is missing"; exit 1; }
+          sshpass -p "$HOSTINGER_PASSWORD" ssh -p "${HOSTINGER_PORT:-22}" -o StrictHostKeyChecking=no "$HOSTINGER_USER@$HOSTINGER_HOST" "DB_PASSWORD='$DB_PASSWORD' bash -s" <<'REMOTE'
+          set -euo pipefail
+          D='u269358615_bira'
+          U='u269358615_bira'
+          H='srv1785.hstgr.io'
+          if command -v mysql >/dev/null 2>&1; then
+            MYSQL_PWD="$DB_PASSWORD" mysql --connect-timeout=15 -h "$H" -P 3306 -u "$U" "$D" -N -e "SELECT CONCAT('DATABASE_OK=',DATABASE()); SELECT CONCAT('TABLE_COUNT=',COUNT(*)) FROM information_schema.tables WHERE table_schema=DATABASE(); SELECT CONCAT('TABLE=',table_name) FROM information_schema.tables WHERE table_schema=DATABASE() ORDER BY table_name LIMIT 80;"
+          elif command -v php >/dev/null 2>&1; then
+            php -r '$p=new PDO("mysql:host=".$argv[1].";port=3306;dbname=".$argv[2].";charset=utf8mb4",$argv[3],getenv("DB_PASSWORD"),[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]); echo "DATABASE_OK=".$p->query("SELECT DATABASE()")->fetchColumn().PHP_EOL; echo "TABLE_COUNT=".$p->query("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE()")->fetchColumn().PHP_EOL; foreach($p->query("SELECT table_name FROM information_schema.tables WHERE table_schema=DATABASE() ORDER BY table_name LIMIT 80") as $r) echo "TABLE=".$r[0].PHP_EOL;' "$H" "$D" "$U"
+          else
+            echo "No mysql CLI or PHP runtime available on Hostinger shell"; exit 2
+          fi
+          REMOTE
