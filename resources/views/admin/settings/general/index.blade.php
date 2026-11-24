@@ -76,5 +76,32 @@
                 <option value="F j, Y" {{ ($settings['general']['date_format']->value ?? '') === 'F j, Y' ? 'selected' : '' }}>Month DD, YYYY</option>
             </select>
         </div>
+
+        <!-- Public Contact Details -->
+        <div class="md:col-span-2 border-t border-gray-200 dark:border-gray-700 pt-6">
+            <h3 class="text-base font-semibold text-gray-900 dark:text-white">Public Contact Details</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">These details appear on the public About and Contact pages. Update them here without editing website code.</p>
+        </div>
+        <div>
+            <label for="setting-contact_email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Public Contact Email</label>
+            <input type="email" id="setting-contact_email" name="settings[contact_email]"
+                value="{{ $settings['general']['contact_email']->value ?? 'info@biraconsultant.com' }}"
+                class="block w-full p-2.5 text-gray-900 rounded-lg bg-gray-50 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300 dark:text-white"
+                placeholder="info@biraconsultant.com">
+        </div>
+        <div>
+            <label for="setting-contact_phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Public Contact Phone</label>
+            <input type="text" id="setting-contact_phone" name="settings[contact_phone]"
+                value="{{ $settings['general']['contact_phone']->value ?? '+1 (555) 123-4567' }}"
+                class="block w-full p-2.5 text-gray-900 rounded-lg bg-gray-50 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300 dark:text-white"
+                placeholder="+675 ...">
+        </div>
+        <div class="md:col-span-2">
+            <label for="setting-contact_address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Public Office Address</label>
+            <input type="text" id="setting-contact_address" name="settings[contact_address]"
+                value="{{ $settings['general']['contact_address']->value ?? 'Port Moresby, PNG' }}"
+                class="block w-full p-2.5 text-gray-900 rounded-lg bg-gray-50 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300 dark:text-white"
+                placeholder="City, Province, Country">
+        </div>
     </div>
 </div>
