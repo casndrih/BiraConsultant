@@ -861,3 +861,101 @@
     .qj-dashboard-page .grid.grid-cols-1.lg\:grid-cols-3 { grid-template-columns: minmax(0, 1fr); }
 }
 
+
+
+/* Dashboard layout hardening: prevent fixed admin footer overlap and keep cards/charts inside their columns. */
+.qj-admin-footer {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin-top: 32px;
+}
+.qj-admin-footer > div {
+    min-width: 0;
+    row-gap: 14px;
+}
+.qj-admin-footer p {
+    margin: 0;
+    text-align: center;
+}
+.qj-dashboard-page .qj-dashboard-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.qj-dashboard-page .qj-dashboard-hero__inner > .flex > *,
+.qj-dashboard-page .qj-dashboard-hero__inner .flex.items-center.justify-between > * {
+    min-width: 0;
+}
+.qj-dashboard-page .qj-dashboard-hero h1,
+.qj-dashboard-page h2,
+.qj-dashboard-page h3,
+.qj-dashboard-page p,
+.qj-dashboard-page a {
+    overflow-wrap: anywhere;
+}
+.qj-dashboard-page .qj-dashboard-panel,
+.qj-dashboard-page #dashboardChart,
+.qj-dashboard-page .apexcharts-canvas,
+.qj-dashboard-page .apexcharts-svg {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+.qj-dashboard-page .apexcharts-canvas svg {
+    max-width: 100%;
+}
+.qj-dashboard-page .overflow-x-auto {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+}
+.qj-dashboard-page .overflow-x-auto table {
+    min-width: 680px;
+}
+.qj-admin-topbar > div,
+.qj-admin-topbar > div > div,
+.qj-admin-topbar > div > div > a {
+    min-width: 0;
+}
+.qj-admin-topbar > div > div > a img {
+    flex: 0 0 auto;
+}
+@media (max-width: 1023px) {
+    .qj-dashboard-page .qj-dashboard-stats-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+@media (max-width: 767px) {
+    .qj-dashboard-page .qj-dashboard-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .qj-dashboard-page .qj-dashboard-hero__inner .text-right {
+        text-align: left;
+    }
+    .qj-dashboard-page .qj-dashboard-panel {
+        padding: 16px;
+    }
+    .qj-dashboard-page #dashboardChart {
+        min-height: 220px;
+    }
+    .qj-admin-footer > div {
+        justify-content: center;
+        padding: 20px 16px;
+    }
+    .qj-admin-topbar {
+        padding-inline: 10px;
+    }
+    .qj-admin-topbar > div > div:first-child > a > span {
+        display: none;
+    }
+}
+@media (max-width: 420px) {
+    .qj-dashboard-page .qj-dashboard-stats-grid {
+        gap: 8px;
+    }
+    .qj-dashboard-page .qj-dashboard-stat,
+    .qj-dashboard-page .qj-dashboard-stats-grid > * {
+        padding: 11px !important;
+    }
+    .qj-admin-footer > div {
+        padding-inline: 12px;
+    }
+}
