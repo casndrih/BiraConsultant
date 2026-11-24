@@ -715,3 +715,15 @@
     .qj-home-company-grid { grid-template-columns: minmax(0, 1fr) !important; }
     .qj-home-cta { padding: 24px 16px !important; }
 }
+
+/* Top Companies: keep logo artwork free of any coloured tile. */
+.qj-company-logo.qj-company-logo--bare {
+    background: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+.qj-company-logo.qj-company-logo--bare img {
+    object-fit: contain !important;
+}
