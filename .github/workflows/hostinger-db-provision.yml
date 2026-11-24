@@ -173,6 +173,9 @@ jobs:
           }
           echo "DEMO_CREDENTIALS_VERIFIED=17\n";
           PHP
+          unset APP_KEY
+          php artisan config:cache
+          php artisan view:cache
           php artisan migrate:status
           echo "PRODUCTION_TABLE_COUNTS:"
           mysql --connect-timeout=20 --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" "$DB_NAME" -Nse "SELECT CONCAT('users=', (SELECT COUNT(*) FROM biraconsultant_users)), CONCAT('companies=', (SELECT COUNT(*) FROM biraconsultant_companies)), CONCAT('jobs=', (SELECT COUNT(*) FROM biraconsultant_jobs)), CONCAT('applications=', (SELECT COUNT(*) FROM biraconsultant_applications)), CONCAT('countries=', (SELECT COUNT(*) FROM biraconsultant_countries)), CONCAT('settings=', (SELECT COUNT(*) FROM biraconsultant_settings))"
