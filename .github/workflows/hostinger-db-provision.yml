@@ -143,7 +143,7 @@ jobs:
           <?php
           require getcwd().'/vendor/autoload.php';
           $app = require getcwd().'/bootstrap/app.php';
-          $kernel = $app->make(\\Illuminate\\Contracts\\Console\\Kernel::class);
+          $kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
           $kernel->bootstrap();
           $expected = [
               'admin@biraconsultant.test' => 1,
@@ -167,11 +167,11 @@ jobs:
           foreach ($expected as $email => $role) {
               $user = \App\Models\BiraConsultantUser::where('email', $email)->first();
               if (!$user || (int) $user->role !== $role || !\Illuminate\Support\Facades\Hash::check(getenv('BIRA_DEMO_PASSWORD'), $user->password)) {
-                  fwrite(STDERR, "DEMO_CREDENTIAL_CHECK_FAILED: {$email}\\n");
+                  fwrite(STDERR, "DEMO_CREDENTIAL_CHECK_FAILED: {$email}\n");
                   exit(35);
               }
           }
-          echo "DEMO_CREDENTIALS_VERIFIED=17\\n";
+          echo "DEMO_CREDENTIALS_VERIFIED=17\n";
           PHP
           php artisan migrate:status
           echo "PRODUCTION_TABLE_COUNTS:"
