@@ -1,11 +1,11 @@
 <?php
 
-namespace App\\Mail;
+namespace App\Mail;
 
-use App\\Models\\BiraConsultantContactMessage;
-use Illuminate\\Bus\\Queueable;
-use Illuminate\\Mail\\Mailable;
-use Illuminate\\Queue\\SerializesModels;
+use App\Models\BiraConsultantContactMessage;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
 
 class ContactFormMail extends Mailable
 {
