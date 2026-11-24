@@ -228,9 +228,9 @@ jobs:
               BIRA_DEMO_PASSWORD="$BIRA_DEMO_PASSWORD" php artisan db:seed --force --no-interaction
               BIRA_DEMO_PASSWORD="$BIRA_DEMO_PASSWORD" php <<'PHP'
           <?php
-          require __DIR__.'/vendor/autoload.php';
-          $app = require __DIR__.'/bootstrap/app.php';
-          $kernel = $app->make(Illuminate\\Contracts\\Console\\Kernel::class);
+          require getcwd().'/vendor/autoload.php';
+          $app = require getcwd().'/bootstrap/app.php';
+          $kernel = $app->make(\\Illuminate\\Contracts\\Console\\Kernel::class);
           $kernel->bootstrap();
           $expected = [
               'admin@biraconsultant.test' => 1,
@@ -252,8 +252,8 @@ jobs:
               'joseph.daro@biraconsultant.test' => 0,
           ];
           foreach ($expected as $email => $role) {
-              $user = App\\Models\\BiraConsultantUser::where('email', $email)->first();
-              if (!$user || (int) $user->role !== $role || !Illuminate\\Support\\Facades\\Hash::check(getenv('BIRA_DEMO_PASSWORD'), $user->password)) {
+              $user = \\App\\Models\\BiraConsultantUser::where('email', $email)->first();
+              if (!$user || (int) $user->role !== $role || !\\Illuminate\\Support\\Facades\\Hash::check(getenv('BIRA_DEMO_PASSWORD'), $user->password)) {
                   fwrite(STDERR, "DEMO_CREDENTIAL_CHECK_FAILED: {$email}\\n");
                   exit(35);
               }
