@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $now = now();
-        $password = Hash::make(env('BIRA_DEMO_PASSWORD', 'BiraDemo2026!'));
+        $password = Hash::make(env('BIRA_DEMO_PASSWORD') ?: Str::random(48));
 
         $png = BiraConsultantCountry::updateOrCreate(['iso' => 'PG'], [
             'name' => 'Papua New Guinea', 'iso3' => 'PNG', 'dial' => '+675',
