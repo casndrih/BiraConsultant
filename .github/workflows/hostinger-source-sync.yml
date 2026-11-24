@@ -86,13 +86,14 @@ jobs:
       - name: Replace repository application source with Hostinger copy
         run: |
           set -euo pipefail
-          mkdir -p source
-          tar -xzf source-export/biraconsultant-source.tar.gz -C source
-          test -f source/artisan
-          test -f source/composer.json
-          test -f source/package.json
-          test -f source/webpack.mix.js
-          rsync -a --delete --exclude='.git/' --exclude='.github/' source/ ./
+          SOURCE_DIR="$RUNNER_TEMP/bira-source"
+          mkdir -p "$SOURCE_DIR"
+          tar -xzf source-export/biraconsultant-source.tar.gz -C "$SOURCE_DIR"
+          test -f "$SOURCE_DIR/artisan"
+          test -f "$SOURCE_DIR/composer.json"
+          test -f "$SOURCE_DIR/package.json"
+          test -f "$SOURCE_DIR/webpack.mix.js"
+          rsync -a --delete --exclude='.git/' --exclude='.github/' "$SOURCE_DIR/" ./
           test -f artisan
           test -f composer.json
           test -f package.json
