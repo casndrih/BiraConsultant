@@ -21,6 +21,19 @@ use App\Services\AuthMethodSettings;
 
 class RegistrationController extends Controller {
 
+    public function showRegistrationForm()
+    {
+        if (!AuthMethodSettings::emailEnabled()) {
+            return redirect()->route('login')->with('error', 'Email registration is currently disabled.');
+        }
+
+        $countries = BiraConsultantCountry::orderBy('name')->get(['id', 'name']);
+        return view('auth.register', [
+            'countries' => $countries,
+            'emailRegistrationEnabled' => AuthMethodSettings::emailEnabled(),
+        ]);
+    }
+
     public function signup(Request $request) {
         if (!AuthMethodSettings::emailEnabled()) {
             return back()->with('error', 'Email registration is disabled. Choose another enabled sign-in method.');
@@ -104,7 +117,7 @@ class RegistrationController extends Controller {
             }
             $user->delete();
 
-            return redirect('/')->with('error', 'We could not send the verification email. Please try again in a moment.');
+            return redirect()->route('register')->withInput($request->except(['password', 'password_confirmation']))->with('error', 'We could not send the verification email. Please try again in a moment.');
         }
 
         Auth::login($user);
