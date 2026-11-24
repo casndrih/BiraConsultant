@@ -82,7 +82,7 @@ class ContactAndCaptchaTest extends TestCase
         BiraConsultantSetting::updateOrCreate(['key' => 'mail_from_address'], ['value' => 'mailer@example.test']);
         BiraConsultantSetting::updateOrCreate(['key' => 'mail_from_name'], ['value' => 'BiraConsultant Test']);
 
-        app(AppServiceProvider::class)->boot();
+        app()->getProvider(AppServiceProvider::class)->boot();
 
         $this->assertSame('smtp', config('mail.default'));
         $this->assertSame('smtp.example.test', config('mail.mailers.smtp.host'));
