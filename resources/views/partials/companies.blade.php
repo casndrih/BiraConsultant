@@ -5,6 +5,12 @@
                 <img src="{{ asset('storage/' . $company->logo) }}" alt="" loading="lazy">
             @elseif($company->slug === 'bank-south-pacific')
                 <img src="{{ asset('images/companies/bsp-logo-dark.svg') }}" alt="Bank South Pacific logo" class="w-full h-full object-contain" loading="lazy">
+            @elseif($company->slug === 'kumul-petroleum-holdings')
+                <img src="https://kumulpetroleum.com/wp-content/uploads/2023/09/KPHL_Main_logo.png" alt="Kumul Petroleum Holdings logo" class="w-full h-full object-contain" loading="lazy">
+            @elseif($company->slug === 'lae-city-pharmacy')
+                <img src="https://cpl.com.pg/wp-content/uploads/2026/07/City-Pharmacy-Brand-Logo-Pantones.pdf-image-002-768x202.png" alt="City Pharmacy logo" class="w-full h-full object-contain" loading="lazy">
+            @elseif($company->slug === 'highlands-engineering-services')
+                <img src="{{ asset('images/companies/highlands-engineering-services.svg') }}" alt="Highlands Engineering Services logo" class="w-full h-full object-contain" loading="lazy">
             @else
                 <span>{{ mb_strtoupper(mb_substr($company->name, 0, 1)) }}</span>
             @endif
