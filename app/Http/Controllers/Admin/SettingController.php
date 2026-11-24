@@ -15,6 +15,7 @@ class SettingController extends Controller
         'general' => [
             'site_name', 'site_description', 'site_logo', 'default_language',
             'timezone', 'date_format',
+            'contact_email', 'contact_phone', 'contact_address',
         ],
         'company' => [
             'default_company_logo', 'max_companies_per_user',
@@ -134,6 +135,16 @@ class SettingController extends Controller
 
         $rules = [];
         $messages = [];
+        if (array_key_exists('contact_email', $data)) {
+            $rules['settings.contact_email'] = 'nullable|email|max:255';
+        }
+        if (array_key_exists('contact_phone', $data)) {
+            $rules['settings.contact_phone'] = 'nullable|string|max:60';
+        }
+        if (array_key_exists('contact_address', $data)) {
+            $rules['settings.contact_address'] = 'nullable|string|max:255';
+        }
+
         if (array_key_exists('mobile_ads_provider', $data)) {
             $rules['settings.mobile_ads_provider'] = 'required|in:google,ironsource,tapjoy,none';
         }
