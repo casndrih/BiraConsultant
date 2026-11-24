@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $demoPassword = env('BIRA_DEMO_PASSWORD');
 
         if (app()->environment('production') && empty($demoPassword)) {
-            throw new \\RuntimeException('BIRA_DEMO_PASSWORD must be configured before seeding demo accounts in production.');
+            throw new \RuntimeException('BIRA_DEMO_PASSWORD must be configured before seeding demo accounts in production.');
         }
 
         $password = Hash::make($demoPassword ?: Str::random(48));
