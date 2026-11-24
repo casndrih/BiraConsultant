@@ -1,5 +1,6 @@
 name: Inspect BiraConsultant Hostinger live paths
 on:
+  workflow_dispatch:
   push:
     paths:
       - ".github/workflows/hostinger-live-inspect.yml"
