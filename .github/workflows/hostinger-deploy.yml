@@ -399,6 +399,7 @@ jobs:
                   "_token": token,
                   "email": email,
                   "password": PASSWORD,
+              "_auth_test": "1",
               }).encode()
               post = urllib.request.Request(
                   BASE + "/signin",
@@ -423,6 +424,12 @@ jobs:
                       "rate limited" if status == 429 else
                       "unexpected redirect or HTTP response"
                   )
+                  try:
+                      diagnostic = __import__("json").loads(body)
+                      if "auth_attempt" in diagnostic:
+                          print("AUTH_DIAGNOSTIC " + __import__("json").dumps(diagnostic, sort_keys=True))
+                  except Exception:
+                      pass
                   print(f"LOGIN_FAILED account={email} status={status} path={actual_path} reason={reason}")
                   raise SystemExit(43)
 
