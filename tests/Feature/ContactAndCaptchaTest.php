@@ -20,6 +20,64 @@ class ContactAndCaptchaTest extends TestCase
         $this->seed();
     }
 
+    public function test_confirmed_contact_recipient_is_the_default_notification_address(): void
+    {
+        $this->assertSame('info@biraconsultant.com', config('mail.contact_to'));
+    }
+
+    public function test_admin_can_update_contact_details_shown_on_about_and_contact_pages(): void
+    {
+        $admin = BiraConsultantUser::where('email', 'admin@biraconsultant.test')->firstOrFail();
+
+        $this->actingAs($admin)
+            ->post(route('admin.setting.update'), [
+                'settings' => [
+                    'contact_email' => 'hello@biraconsultant.com',
+                    'contact_phone' => '+675 7000 1234',
+                    'contact_address' => 'Lae, Morobe Province, Papua New Guinea',
+                ],
+            ])
+            ->assertRedirect(route('admin.settings.index'))
+            ->assertSessionHas('success');
+
+        $this->assertDatabaseHas('biraconsultant_settings', [
+            'key' => 'contact_email',
+            'value' => 'hello@biraconsultant.com',
+        ]);
+        $this->assertDatabaseHas('biraconsultant_settings', [
+            'key' => 'contact_phone',
+            'value' => '+675 7000 1234',
+        ]);
+        $this->assertDatabaseHas('biraconsultant_settings', [
+            'key' => 'contact_address',
+            'value' => 'Lae, Morobe Province, Papua New Guinea',
+        ]);
+
+        $this->get(route('about'))
+            ->assertOk()
+            ->assertSee('hello@biraconsultant.com')
+            ->assertSee('+675 7000 1234')
+            ->assertSee('Lae, Morobe Province, Papua New Guinea');
+
+        $this->get(route('contact'))
+            ->assertOk()
+            ->assertSee('hello@biraconsultant.com')
+            ->assertSee('+675 7000 1234')
+            ->assertSee('Lae, Morobe Province, Papua New Guinea');
+    }
+
+    public function test_admin_contact_email_setting_rejects_invalid_email(): void
+    {
+        $admin = BiraConsultantUser::where('email', 'admin@biraconsultant.test')->firstOrFail();
+
+        $this->actingAs($admin)
+            ->from(route('admin.settings.index'))
+            ->post(route('admin.setting.update'), [
+                'settings' => ['contact_email' => 'not-an-email'],
+            ])
+            ->assertSessionHasErrors('settings.contact_email');
+    }
+
     public function test_contact_form_persists_message_when_no_notification_recipient_is_configured(): void
     {
         config(['mail.contact_to' => null]);
