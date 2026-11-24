@@ -239,6 +239,50 @@ return new class extends Migration
             $table->unique(['job_id', 'skill_id']);
         });
 
+        Schema::create('personal_access_tokens', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('tokenable');
+            $table->string('name');
+            $table->string('token', 64)->unique();
+            $table->text('abilities')->nullable();
+            $table->timestamp('last_used_at')->nullable();
+            $table->timestamp('expires_at')->nullable()->index();
+            $table->timestamps();
+        });
+
+        Schema::create('jobs', function (Blueprint $table) {
+            $table->id();
+            $table->string('queue')->index();
+            $table->longText('payload');
+            $table->unsignedTinyInteger('attempts');
+            $table->unsignedInteger('reserved_at')->nullable();
+            $table->unsignedInteger('available_at');
+            $table->unsignedInteger('created_at');
+        });
+
+        Schema::create('job_batches', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->string('name');
+            $table->integer('total_jobs');
+            $table->integer('pending_jobs');
+            $table->integer('failed_jobs');
+            $table->longText('failed_job_ids');
+            $table->mediumText('options')->nullable();
+            $table->integer('cancelled_at')->nullable();
+            $table->integer('created_at');
+            $table->integer('finished_at')->nullable();
+        });
+
+        Schema::create('failed_jobs', function (Blueprint $table) {
+            $table->id();
+            $table->string('uuid')->unique();
+            $table->text('connection');
+            $table->text('queue');
+            $table->longText('payload');
+            $table->longText('exception');
+            $table->timestamp('failed_at')->useCurrent();
+        });
+
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('type');
@@ -252,7 +296,7 @@ return new class extends Migration
     public function down(): void
     {
         foreach ([
-            'notifications', 'biraconsultant_job_skill', 'biraconsultant_company_followers',
+            'notifications', 'failed_jobs', 'job_batches', 'jobs', 'personal_access_tokens', 'biraconsultant_job_skill', 'biraconsultant_company_followers',
             'biraconsultant_saved_jobs', 'biraconsultant_user_category_interests',
             'biraconsultant_user_skills', 'biraconsultant_settings', 'biraconsultant_blogs',
             'biraconsultant_blog_categories', 'biraconsultant_user_work_experiences',
