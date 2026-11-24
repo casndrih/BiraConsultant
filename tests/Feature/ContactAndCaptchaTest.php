@@ -94,6 +94,27 @@ class ContactAndCaptchaTest extends TestCase
         $this->assertSame('BiraConsultant Test', config('mail.from.name'));
     }
 
+    public function test_admin_smtp_test_handles_transport_exceptions_without_returning_http_500(): void
+    {
+        $admin = BiraConsultantUser::where('email', 'admin@biraconsultant.test')->firstOrFail();
+        BiraConsultantSetting::updateOrCreate(['key' => 'contact_email'], ['value' => 'info@biraconsultant.com']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_driver'], ['value' => 'smtp']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_host'], ['value' => 'smtp.example.test']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_port'], ['value' => '587']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_username'], ['value' => 'mailer@example.test']);
+        BiraConsultantSetting::updateOrCreate(['key' => 'mail_password'], ['value' => 'test-secret']);
+        app()->getProvider(AppServiceProvider::class)->boot();
+
+        Mail::shouldReceive('raw')
+            ->once()
+            ->andThrow(new \\RuntimeException('SMTP connection refused'));
+
+        $this->actingAs($admin)
+            ->post(route('admin.settings.email.test'))
+            ->assertRedirect(route('admin.settings.index'))
+            ->assertSessionHas('error', 'SMTP test failed. Check the saved mail host, port, encryption and mailbox credentials, then review the application log for the server response.');
+    }
+
     public function test_blank_mail_password_submission_keeps_existing_saved_password(): void
     {
         $admin = BiraConsultantUser::where('email', 'admin@biraconsultant.test')->firstOrFail();
