@@ -48,6 +48,8 @@ class DatabaseSeeder extends Seeder
             'referral_code' => 'BIRAADMIN',
         ]);
 
+        $admin->forceFill(['email_verified_at' => $now])->save();
+
         $categories = [];
         foreach (['Administration', 'Accounting & Finance', 'Engineering', 'Information Technology', 'Healthcare', 'Education', 'Construction', 'Sales & Marketing', 'Hospitality & Tourism', 'Transport & Logistics'] as $name) {
             $slug = Str::slug($name);
@@ -102,6 +104,7 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => $now, 'referral_code' => strtoupper(Str::random(8)),
                 'bio' => 'Sample BiraConsultant job seeker profile for production workflow testing.',
             ]);
+            $jobSeekers[array_key_last($jobSeekers)]->forceFill(['email_verified_at' => $now])->save();
         }
 
         $companyData = [
@@ -119,6 +122,7 @@ class DatabaseSeeder extends Seeder
                 'role' => 2, 'gender' => '0', 'country_id' => $png->id,
                 'email_verified_at' => $now, 'referral_code' => strtoupper(Str::random(8)),
             ]);
+            $owner->forceFill(['email_verified_at' => $now])->save();
             $companies[] = BiraConsultantCompany::updateOrCreate(['slug' => $slug], [
                 'name' => $name, 'industry' => $industry, 'location' => $city.', Papua New Guinea',
                 'city' => $city, 'country_id' => $png->id, 'user_id' => $owner->id,
@@ -160,11 +164,11 @@ class DatabaseSeeder extends Seeder
                 'approved_at' => $i < 10 ? $now : null,
                 'approved_by' => $i < 10 ? $admin->id : null, 'duration' => 30,
             ]);
-            $job->skills()->syncWithoutDetaching(array_slice(array_values($skills), $i % 5, 3));
+            $job->skills()->syncWithoutDetaching(array_slice(array_map(fn ($skill) => $skill->id, array_values($skills)), $i % 5, 3));
         }
 
         foreach ($jobSeekers as $i => $user) {
-            $user->skills()->syncWithoutDetaching(array_slice(array_values($skills), $i % 6, 3));
+            $user->skills()->syncWithoutDetaching(array_slice(array_map(fn ($skill) => $skill->id, array_values($skills)), $i % 6, 3));
             $user->interests()->syncWithoutDetaching([$categories[array_keys($categories)[$i % count($categories)]]->id]);
             $user->workExperiences()->firstOrCreate([
                 'company_name' => ['Lae Business Services', 'Morobe Trading', 'PNG Skills Centre'][$i % 3],
