@@ -23,6 +23,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Helpers\UploadLimitHelper;
+use App\Models\BiraConsultantContactMessage;
+use App\Mail\ContactFormMail;
+use Illuminate\Support\Facades\Log;
 
 class FrontendController extends Controller
 {
@@ -872,7 +875,7 @@ class FrontendController extends Controller
         if (is_string($recipient) && filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
             try {
                 Mail::to($recipient)->send(new ContactFormMail($contactMessage));
-            } catch (\\Throwable $exception) {
+            } catch (\Throwable $exception) {
                 Log::error('Contact form notification delivery failed.', [
                     'contact_message_id' => $contactMessage->id,
                     'exception' => $exception::class,
