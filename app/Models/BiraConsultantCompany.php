@@ -158,16 +158,26 @@ class BiraConsultantCompany extends Model
         return asset('storage/' . ltrim($logo, '/'));
     }
 
+    public function isDemoCompany(): bool
+    {
+        $ownerEmail = strtolower((string) ($this->user?->email ?? ''));
+
+        return str_ends_with($ownerEmail, '@biraconsultant.test');
+    }
+
     public function isPubliclyVisible(): bool
     {
         return (bool) $this->is_approved
             && $this->isVerified()
-            && filled($this->logo);
+            && filled($this->logo)
+            && !$this->isDemoCompany();
     }
 
     public function canPostJobs(): bool
     {
-        return $this->isPubliclyVisible();
+        return (bool) $this->is_approved
+            && $this->isVerified()
+            && filled($this->logo);
     }
 
     public function scopePubliclyVisible($query)
@@ -175,6 +185,12 @@ class BiraConsultantCompany extends Model
         return $query->where('is_approved', 1)
             ->where('verification_status', 1)
             ->whereNotNull('logo')
-            ->where('logo', '!=', '');
+            ->where('logo', '!=', '')
+            ->where(function ($companyQuery) {
+                $companyQuery->whereNull('user_id')
+                    ->orWhereHas('user', function ($userQuery) {
+                        $userQuery->where('email', 'not like', '%@biraconsultant.test');
+                    });
+            });
     }
 }
