@@ -35,6 +35,8 @@ class RegistrationWorkflowTest extends TestCase
             'country_id' => $country->id,
             'email' => 'workflow.applicant@example.com',
             'password' => 'StrongPass525',
+            'password_confirmation' => 'StrongPass525',
+            'agree' => '1',
             'role' => '0',
         ])->assertRedirect('/');
 
@@ -55,6 +57,8 @@ class RegistrationWorkflowTest extends TestCase
             'company_name' => 'Workflow Registered Company',
             'email' => 'workflow.company@example.com',
             'password' => 'StrongPass525',
+            'password_confirmation' => 'StrongPass525',
+            'agree' => '1',
             'role' => '2',
         ])->assertRedirect(route('company.dashboard'));
 
@@ -89,6 +93,30 @@ class RegistrationWorkflowTest extends TestCase
         ])->assertRedirect(route('password.request'))->assertSessionHas('status');
 
         Notification::assertNothingSent();
+    }
+
+    public function test_registration_requires_matching_password_confirmation_and_policy_acceptance(): void
+    {
+        Mail::fake();
+        $country = BiraConsultantCountry::where('iso', 'PG')->firstOrFail();
+
+        $this->from('/register')->post('/signup', [
+            'name' => 'Invalid Registration Applicant',
+            'username' => 'invalid.registration',
+            'birthday' => '1998-05-12',
+            'gender' => '0',
+            'country_id' => $country->id,
+            'email' => 'invalid.registration@example.com',
+            'password' => 'StrongPass525',
+            'password_confirmation' => 'DifferentPass525',
+            'agree' => '0',
+            'role' => '0',
+        ])->assertSessionHasErrors(['password', 'agree']);
+
+        $this->assertDatabaseMissing('biraconsultant_users', [
+            'email' => 'invalid.registration@example.com',
+        ]);
+        Mail::assertNothingSent();
     }
 
     public function test_registration_cannot_self_assign_administrator_role(): void
