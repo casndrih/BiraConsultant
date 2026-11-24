@@ -21,11 +21,10 @@ jobs:
           coverage: none
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
-      - name: Prepare application key
-        run: cp .env.example .env && php artisan key:generate
       - name: Run database and feature tests
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: ':memory:'
           BIRA_DEMO_PASSWORD: 'TestOnly-Bira-2026!'
+          APP_KEY: 'base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
         run: php artisan test
