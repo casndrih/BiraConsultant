@@ -7,9 +7,17 @@
 
 <article class="qj-company-card">
     <div class="qj-company-card__top">
-        <div class="qj-company-logo qj-company-logo--large" aria-hidden="true">
+        <div class="qj-company-logo qj-company-logo--large qj-company-logo--bare" aria-hidden="true">
             @if($company->logo)
                 <img src="{{ asset('storage/' . $company->logo) }}" alt="" loading="lazy">
+            @elseif($company->slug === 'bank-south-pacific')
+                <img src="{{ asset('images/companies/bsp-logo-dark.svg') }}" alt="" loading="lazy">
+            @elseif($company->slug === 'kumul-petroleum-holdings')
+                <img src="https://kumulpetroleum.com/wp-content/uploads/2023/09/KPHL_Main_logo.png" alt="" loading="lazy">
+            @elseif($company->slug === 'lae-city-pharmacy')
+                <img src="https://cpl.com.pg/wp-content/uploads/2026/07/City-Pharmacy-Brand-Logo-Pantones.pdf-image-002-768x202.png" alt="" loading="lazy">
+            @elseif($company->slug === 'highlands-engineering-services')
+                <img src="{{ asset('images/companies/highlands-engineering-services.svg') }}" alt="" loading="lazy">
             @else
                 <span>{{ mb_strtoupper(mb_substr($company->name, 0, 1)) }}</span>
             @endif
