@@ -200,7 +200,7 @@ mkdir -p "$APP" "$WEBROOT" "$HOME/deployments" "$STAGE"
           test "$(readlink -f "$WEBROOT")" = "$DOMAIN/public_html"
           echo "DEPLOY_STAGE=extract_release"
 tar -xzf "$ARCHIVE" -C "$STAGE"
-echo "DEPLOY_STAGE=release_extracted"
+          echo "DEPLOY_STAGE=release_extracted"
           test -f "$STAGE/artisan"
           test -f "$STAGE/composer.json"
           test -f "$STAGE/composer.lock"
@@ -209,7 +209,7 @@ echo "DEPLOY_STAGE=release_extracted"
           # Overlay the checked-in application source; preserve .env, vendor and runtime storage.
           echo "DEPLOY_STAGE=copy_application_source"
 cp -a "$STAGE/." "$APP/"
-echo "DEPLOY_STAGE=application_source_copied"
+          echo "DEPLOY_STAGE=application_source_copied"
           mkdir -p "$APP/bootstrap/cache" "$APP/storage/framework/cache/data" "$APP/storage/framework/sessions" "$APP/storage/framework/views" "$APP/storage/logs" "$APP/storage/app/public"
           cd "$APP"
           export DB_HOST DB_PORT DB_NAME DB_USER DB_PASSWORD WEBROOT
@@ -281,7 +281,7 @@ echo "DEPLOY_STAGE=application_source_copied"
           if command -v composer >/dev/null 2>&1; then
               echo "DEPLOY_STAGE=composer_install"
 composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
-echo "DEPLOY_STAGE=composer_install_complete"
+          echo "DEPLOY_STAGE=composer_install_complete"
           elif [ ! -f "$APP/vendor/autoload.php" ]; then
               echo "Composer is unavailable and vendor/autoload.php is missing"
               exit 33
@@ -345,15 +345,15 @@ php artisan config:cache
 php artisan view:cache
           echo "DEPLOY_STAGE=artisan_about"
 php artisan about --only=environment
-echo "DEPLOY_STAGE=about_complete"
+          echo "DEPLOY_STAGE=about_complete"
 
           # Replace the domain document root with Laravel's public assets only.
           echo "DEPLOY_STAGE=clear_public_webroot"
 find "$WEBROOT" -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +
-echo "DEPLOY_STAGE=public_webroot_cleared"
+          echo "DEPLOY_STAGE=public_webroot_cleared"
           echo "DEPLOY_STAGE=copy_public_assets"
 cp -a "$APP/public/." "$WEBROOT/"
-echo "DEPLOY_STAGE=public_assets_copied"
+          echo "DEPLOY_STAGE=public_assets_copied"
           if [ -e "$WEBROOT/storage" ] || [ -L "$WEBROOT/storage" ]; then rm -rf -- "$WEBROOT/storage"; fi
           ln -s ../bira_app/storage/app/public "$WEBROOT/storage"
 
