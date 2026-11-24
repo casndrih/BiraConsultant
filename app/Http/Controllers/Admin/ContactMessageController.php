@@ -1,9 +1,9 @@
 <?php
 
-namespace App\\Http\\Controllers\\Admin;
+namespace App\Http\Controllers\Admin;
 
-use App\\Http\\Controllers\\Controller;
-use App\\Models\\BiraConsultantContactMessage;
+use App\Http\Controllers\Controller;
+use App\Models\BiraConsultantContactMessage;
 
 class ContactMessageController extends Controller
 {
