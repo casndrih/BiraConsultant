@@ -1,0 +1,75 @@
+name: Provision Hostinger production database from Laravel schema
+
+on:
+  workflow_run:
+    workflows: ["Laravel database tests"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  provision-production-database:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tested repository
+        uses: actions/checkout@v4
+
+      - name: Install SSH client
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
+
+      - name: Upload Laravel models and migrations, then migrate and seed Hostinger MariaDB
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+          DB_HOST_A: ${{ secrets.HOSTINGER_DB_HOST }}
+          DB_HOST_B: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.HOSTINGER_DB_PORT }}
+          DB_NAME_A: ${{ secrets.HOSTINGER_DB_NAME }}
+          DB_NAME_B: ${{ secrets.HOSTINGER_DB_DATABASE }}
+          DB_NAME_C: ${{ secrets.DB_DATABASE }}
+          DB_USER_A: ${{ secrets.HOSTINGER_DB_USER }}
+          DB_USER_B: ${{ secrets.HOSTINGER_DB_USERNAME }}
+          DB_USER_C: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD_A: ${{ secrets.HOSTINGER_DB_PASSWORD }}
+          DB_PASSWORD_B: ${{ secrets.DB_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$SSH_HOST" && test -n "$SSH_USER" && test -n "$SSH_PASSWORD"
+          DB_HOST="${DB_HOST_A:-${DB_HOST_B:-localhost}}"
+          DB_PORT="${DB_PORT:-3306}"
+          DB_NAME="${DB_NAME_A:-${DB_NAME_B:-${DB_NAME_C:-}}}"
+          DB_USER="${DB_USER_A:-${DB_USER_B:-${DB_USER_C:-}}}"
+          DB_PASSWORD="${DB_PASSWORD_A:-${DB_PASSWORD_B:-}}"
+          test -n "$DB_NAME" || { echo "No production database-name secret found"; exit 10; }
+          test -n "$DB_USER" || { echo "No production database-username secret found"; exit 11; }
+          test -n "$DB_PASSWORD" || { echo "No production database-password secret found"; exit 12; }
+
+          printf -v Q_DB_HOST '%q' "$DB_HOST"
+          printf -v Q_DB_PORT '%q' "$DB_PORT"
+          printf -v Q_DB_NAME '%q' "$DB_NAME"
+          printf -v Q_DB_USER '%q' "$DB_USER"
+          printf -v Q_DB_PASSWORD '%q' "$DB_PASSWORD"
+          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD"
+
+          sshpass -p "$SSH_PASSWORD" ssh -T -p "${SSH_PORT:-65002}" \
+            -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 \
+            "$SSH_USER@$SSH_HOST" "$REMOTE_ENV bash -s" <<'REMOTE'
+          set -euo pipefail
+          APP="$HOME/domains/biraconsultants.com/bira_app"
+          test -f "$APP/artisan" || { echo "Laravel application not found at $APP"; exit 20; }
+          command -v php >/dev/null 2>&1 || { echo "PHP CLI unavailable"; exit 21; }
+          command -v mysql >/dev/null 2>&1 || { echo "MySQL client unavailable"; exit 22; }
+
+          mkdir -p "$APP/database/migrations" "$APP/database/seeders" "$APP/app/Models"
+          echo "Uploading current Laravel model and migration definitions..."
+          REMOTE
+
+          sshpass -p "$SSH_PASSWORD" scp -P "${SSH_PORT:-65002}" -o StrictHostKeyChecking=accept-new \
+            database/migrations/*.php "$SSH_USER@$SSH_HOST:$HOME_PLACEHOLDER" 2>/dev/null || true
