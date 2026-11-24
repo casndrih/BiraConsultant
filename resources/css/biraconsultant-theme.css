@@ -1826,3 +1826,73 @@
     .qj-app-shell .qj-admin-data-table--blogs th:last-child,
     .qj-app-shell .qj-admin-data-table--blogs td:last-child { min-width:0; }
 }
+
+
+/* Flowbite-aligned finishing rules: clear focus states, consistent controls,
+   and dark-mode parity for the mobile table-card presentation. */
+.qj-app-shell button,
+.qj-app-shell a,
+.qj-app-shell input,
+.qj-app-shell select,
+.qj-app-shell textarea {
+    -webkit-tap-highlight-color: transparent;
+}
+.qj-app-shell button:focus-visible,
+.qj-app-shell a:focus-visible,
+.qj-app-shell input:focus-visible,
+.qj-app-shell select:focus-visible,
+.qj-app-shell textarea:focus-visible {
+    outline: 2px solid #d4a90b;
+    outline-offset: 2px;
+}
+.qj-app-shell .qj-admin-data-table tbody tr {
+    transition: background-color .16s ease, box-shadow .16s ease;
+}
+.qj-app-shell .qj-admin-data-table tbody td button,
+.qj-app-shell .qj-admin-data-table tbody td a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 36px;
+    border-radius: 8px;
+}
+.qj-app-shell [id$="Modal"] .relative.bg-white,
+.qj-app-shell #removeImageModal > div {
+    box-shadow: 0 24px 70px rgba(15, 23, 42, .22);
+}
+@media (prefers-color-scheme: dark) {
+    .qj-app-shell .qj-admin-data-table tbody tr {
+        color: #f4f4f5 !important;
+        background: #111113 !important;
+        border-color: #303036 !important;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, .28);
+    }
+    .qj-app-shell .qj-admin-data-table tbody td,
+    .qj-app-shell .qj-admin-data-table tbody th[scope="row"] {
+        color: #e4e4e7 !important;
+        border-color: #303036 !important;
+    }
+    .qj-app-shell .qj-admin-data-table tbody td::before,
+    .qj-app-shell .qj-admin-data-table tbody th[scope="row"]::before {
+        color: #a1a1aa !important;
+    }
+    .qj-app-shell .qj-admin-search__form input {
+        color: #f4f4f5 !important;
+        background: #171719 !important;
+        border-color: #3f3f46 !important;
+    }
+    .qj-app-shell [id$="Modal"] .relative.bg-white,
+    .qj-app-shell #removeImageModal > div {
+        color: #f4f4f5;
+        background: #111113 !important;
+        border-color: #303036 !important;
+    }
+    .qj-app-shell [id$="Modal"] .relative.bg-white input,
+    .qj-app-shell [id$="Modal"] .relative.bg-white select,
+    .qj-app-shell [id$="Modal"] .relative.bg-white textarea {
+        color: #f4f4f5 !important;
+        background: #1b1b1f !important;
+        border-color: #3f3f46 !important;
+    }
+}
