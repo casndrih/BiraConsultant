@@ -41,19 +41,31 @@
                     <div class="flex items-start gap-6 mb-6">
                         <div class="flex-shrink-0">
                             @if($company->logo)
-                                <img src="{{ asset('storage/' . $company->logo) }}" 
-                                     alt="{{ $company->name }}" 
-                                     class="w-24 h-24 rounded-lg object-cover">
+                                <img src="{{ asset('storage/' . $company->logo) }}"
+                                     alt="{{ $company->name }} logo"
+                                     class="w-24 h-24 rounded-lg object-contain">
                             @elseif($company->slug === 'bank-south-pacific')
                                 <div class="w-24 h-24 rounded-lg bg-[#24523B] flex items-center justify-center p-3">
-                                    <img src="{{ URL::asset('images/companies/bsp-logo.svg') }}"
+                                    <img src="{{ asset('images/companies/bsp-logo.svg') }}"
                                          alt="Bank South Pacific logo"
                                          class="w-full h-auto object-contain">
                                 </div>
+                            @elseif($company->slug === 'kumul-petroleum-holdings')
+                                <img src="https://kumulpetroleum.com/wp-content/uploads/2023/09/KPHL_Main_logo.png"
+                                     alt="Kumul Petroleum Holdings logo"
+                                     class="w-24 h-24 rounded-lg object-contain">
+                            @elseif($company->slug === 'lae-city-pharmacy')
+                                <img src="https://cpl.com.pg/wp-content/uploads/2026/07/City-Pharmacy-Brand-Logo-Pantones.pdf-image-002-768x202.png"
+                                     alt="City Pharmacy logo"
+                                     class="w-24 h-24 rounded-lg object-contain">
+                            @elseif($company->slug === 'highlands-engineering-services')
+                                <img src="{{ asset('images/companies/highlands-engineering-services.svg') }}"
+                                     alt="Highlands Engineering Services logo"
+                                     class="w-24 h-24 rounded-lg object-contain">
                             @else
-                                <img src="{{ URL::asset('images/favicon/logo.svg') }}" 
-                                     alt="Company Logo" 
-                                     class="w-24 h-24 rounded-lg">
+                                <img src="{{ asset('images/favicon/logo.svg') }}"
+                                     alt="Company Logo"
+                                     class="w-24 h-24 rounded-lg object-contain">
                             @endif
                         </div>
                         <div class="flex-1 min-w-0">
