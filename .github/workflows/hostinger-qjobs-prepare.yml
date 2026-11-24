@@ -73,6 +73,8 @@ jobs:
           grep -RInE --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude='*.map' --exclude='*.lock' 'QJobs|Q-Jobs|qjobs|q_jobs|#([0-9A-Fa-f]{3,8})|rgb\(|hsl\(' resources public css sass tailwind.config.* vite.config.* package.json composer.json 2>/dev/null | head -260 || true
           echo "=== Extracted Laravel source summary ==="
           find . -maxdepth 2 -type f \( -name 'composer.json' -o -name 'package.json' -o -name 'vite.config.*' -o -name 'tailwind.config.*' -o -name 'webpack.mix.js' -o -name 'artisan' \) -print
+          echo "PROJECT NAME REFERENCES"
+          grep -RInE --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git --exclude-dir=storage --exclude='*.svg' --exclude='*.png' --exclude='*.jpg' --exclude='*.map' --exclude='*.lock' 'QJobs|Q-Jobs|qjobs|q_jobs' . 2>/dev/null | head -180 || true
           echo "THEME TOP"
           sed -n '1,40p' resources/css/qjobs-theme.css
           echo "PREPARATION_COMPLETE"
