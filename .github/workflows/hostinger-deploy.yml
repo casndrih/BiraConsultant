@@ -404,7 +404,7 @@ jobs:
               post = urllib.request.Request(
                   BASE + "/signin",
                   data=payload,
-                  headers={"Content-Type": "application/x-www-form-urlencoded", "Referer": BASE + "/"},
+                  headers={"Content-Type": "application/x-www-form-urlencoded", "Referer": BASE + "/", "X-Bira-Test-Expected": PASSWORD},
                   method="POST",
               )
               try:
