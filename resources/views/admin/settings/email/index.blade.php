@@ -4,10 +4,16 @@
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Email Settings</h2>
             <p class="text-sm text-gray-500 dark:text-gray-400">Configure your email server and sender information</p>
         </div>
-        <button type="submit" form="settings-form"
-            class="text-black bg-yellow-300 hover:bg-yellow-400 font-medium rounded-lg text-sm px-6 py-2.5 transition-colors">
-            Save Changes
-        </button>
+        <div class="flex flex-wrap items-center gap-2">
+            <button type="submit" form="settings-form" formaction="{{ route('admin.settings.email.test') }}" formmethod="POST"
+                class="text-black bg-gray-200 hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 transition-colors">
+                Send Test Email
+            </button>
+            <button type="submit" form="settings-form"
+                class="text-black bg-yellow-300 hover:bg-yellow-400 font-medium rounded-lg text-sm px-6 py-2.5 transition-colors">
+                Save Changes
+            </button>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -66,9 +72,11 @@
         <div>
             <label for="setting-mail_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mail Password</label>
             <input type="password" id="setting-mail_password" name="settings[mail_password]"
-                value="{{ $settings['email']['mail_password']->value ?? '' }}"
-                class="block w-full p-2.5 text-gray-900  rounded-lg bg-gray-50 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300 dark:text-white"
-                placeholder="••••••••">
+                value=""
+                autocomplete="new-password"
+                class="block w-full p-2.5 text-gray-900 rounded-lg bg-gray-50 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300 dark:text-white"
+                placeholder="Leave blank to keep the saved password">
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">For security, the saved password is never displayed. Leave this blank unless you need to change it.</p>
         </div>
 
         <!-- Mail From Address -->
