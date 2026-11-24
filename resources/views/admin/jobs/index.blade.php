@@ -101,7 +101,7 @@
                                 {{ $job->created_at->format('Y-m-d') }}
                             </td>
                             <td class="px-6 py-4">
-                                <div class="flex items-center gap-1 flex-wrap">
+                                <div class="qj-admin-table-actions flex items-center gap-2 flex-wrap">
                                     @if($job->approval_status === 'pending')
                                         <form action="{{ route('admin.jobs.approve', $job->id) }}" method="POST" class="inline">
                                             @csrf
