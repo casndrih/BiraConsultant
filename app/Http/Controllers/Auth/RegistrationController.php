@@ -52,7 +52,8 @@ class RegistrationController extends Controller {
            'gender' => ['required_if:role,0', 'nullable', 'in:0,1'],
            'country_id' => ['required_if:role,0', 'nullable', 'integer', 'exists:biraconsultant_countries,id'],
            'email' => ['required', 'string', 'email:filter', 'unique:biraconsultant_users,email', 'max:255'],
-           'password' => ['required', 'string', Password::min(8)->mixedCase()->numbers()],
+           'password' => ['required', 'string', 'confirmed', Password::min(8)->mixedCase()->numbers()],
+           'agree' => ['accepted'],
            'role' => ['required', 'in:0,2'],
            'company_name' => ['required_if:role,2', 'nullable', 'string', 'max:255'],
         ], [
