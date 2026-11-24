@@ -25,7 +25,8 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>BiraConsultant</title>
+    <title>@yield('title', 'BiraConsultant - Find Your Next Opportunity')</title>
+    @yield('meta')
     @include('partials.adsense-script')
     <link href="{{ URL::asset('/css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}" rel="stylesheet">
     <link href="{{ URL::asset('/css/biraconsultant-theme.css') }}?v={{ filemtime(public_path('css/biraconsultant-theme.css')) }}" rel="stylesheet">
