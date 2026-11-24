@@ -55,5 +55,24 @@ jobs:
           curl -ksS -o /tmp/bira-home-body -w 'http_code=%{http_code} content_type=%{content_type} redirect=%{redirect_url}\n' --max-time 20 -H 'Host: biraconsultants.com' http://127.0.0.1/ || true
           head -c 300 /tmp/bira-home-body 2>/dev/null | tr '\n' ' ' || true
           echo
+          echo "LARAVEL_LOG_DIAGNOSTICS:"
+          LOG="$A/storage/logs/laravel.log"
+          if [ -f "$LOG" ]; then
+            grep -E 'production.ERROR|local.ERROR|SQLSTATE|Exception|Fatal error|ParseError|ErrorException' "$LOG" | tail -35 | sed -E 's/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}/[email]/g; s/(password|passwd|secret|token)([=: ]+)[^ ,"}]+/\\1\\2[REDACTED]/Ig' || true
+          else
+            echo "LARAVEL_LOG_NOT_FOUND"
+          fi
+          echo "ARTISAN_PACKAGE_DISCOVERY_DIAGNOSTIC:"
+          if [ -f "$A/artisan" ] && [ -f "$A/vendor/autoload.php" ]; then
+            cd "$A"
+            set +e
+            php artisan package:discover --no-ansi -vvv > /tmp/bira-package-discover.log 2>&1
+            DISCOVER_STATUS=$?
+            set -e
+            echo "PACKAGE_DISCOVER_EXIT=$DISCOVER_STATUS"
+            grep -E 'In [^ ]+\\.php|Exception|SQLSTATE|Fatal error|ParseError|ErrorException|Target class|Class .* not found|Call to .* on' /tmp/bira-package-discover.log | tail -35 | sed -E 's/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}/[email]/g; s/(password|passwd|secret|token)([=: ]+)[^ ,"}]+/\\1\\2[REDACTED]/Ig' || true
+          else
+            echo "ARTISAN_OR_VENDOR_MISSING"
+          fi
           echo "INSPECTION_COMPLETE"
           REMOTE
