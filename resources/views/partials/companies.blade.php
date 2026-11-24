@@ -1,10 +1,10 @@
 @forelse($companies as $company)
     <a href="{{ route('company.detail', $company->slug) }}" class="qj-company-tile">
-        <div class="qj-company-logo qj-company-logo--tile{{ $company->slug === 'bank-south-pacific' ? ' bg-[#24523B] p-2' : '' }}" aria-hidden="true">
+        <div class="qj-company-logo qj-company-logo--tile qj-company-logo--bare" aria-hidden="true">
             @if($company->logo)
                 <img src="{{ asset('storage/' . $company->logo) }}" alt="" loading="lazy">
             @elseif($company->slug === 'bank-south-pacific')
-                <img src="{{ asset('images/companies/bsp-logo.svg') }}" alt="Bank South Pacific logo" class="w-full h-full object-contain" loading="lazy">
+                <img src="{{ asset('images/companies/bsp-logo-dark.svg') }}" alt="Bank South Pacific logo" class="w-full h-full object-contain" loading="lazy">
             @else
                 <span>{{ mb_strtoupper(mb_substr($company->name, 0, 1)) }}</span>
             @endif
