@@ -663,3 +663,53 @@
     background: linear-gradient(145deg, #FEF9C3, #FDE68A);
     border-color: #FDE68A;
 }
+
+
+/* Mobile homepage layout and footer logo corrections (2026-11-24). */
+.qj-home-job-grid,
+.qj-home-featured-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: stretch;
+    gap: 16px !important;
+}
+.qj-home-company-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: stretch;
+    gap: 10px !important;
+}
+.qj-home-company-grid > * { min-width: 0; }
+.qj-home-cta { color: #fff !important; }
+.qj-home-cta h2 { color: #fff !important; }
+.qj-home-cta p { color: #d4d4d8 !important; }
+.qj-home-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px !important;
+}
+.qj-footer-brand-logo {
+    display: block !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    flex: 0 0 40px !important;
+    object-fit: contain !important;
+}
+@media (min-width: 768px) {
+    .qj-home-job-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    .qj-home-featured-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (min-width: 1024px) {
+    .qj-home-job-grid,
+    .qj-home-featured-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+    .qj-home-company-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 420px) {
+    .qj-home-company-grid { grid-template-columns: minmax(0, 1fr) !important; }
+    .qj-home-cta { padding: 24px 16px !important; }
+}
