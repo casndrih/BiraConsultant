@@ -1896,3 +1896,61 @@
         border-color: #3f3f46 !important;
     }
 }
+
+
+/* Admin Users: preserve the real data-table layout on phones.
+   Other admin lists may use stacked cards, but the Users directory has many
+   profile fields and is clearer as one horizontally scrollable table. */
+@media (max-width: 767px) {
+    .qj-app-shell .qj-admin-data-table--users {
+        display: table !important;
+        width: max-content !important;
+        min-width: 1080px !important;
+        table-layout: auto;
+    }
+    .qj-app-shell .qj-admin-data-table--users thead {
+        display: table-header-group !important;
+    }
+    .qj-app-shell .qj-admin-data-table--users tbody {
+        display: table-row-group !important;
+        padding: 0 !important;
+    }
+    .qj-app-shell .qj-admin-data-table--users tbody tr {
+        display: table-row !important;
+        width: auto !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+    .qj-app-shell .qj-admin-data-table--users tbody td {
+        display: table-cell !important;
+        width: auto !important;
+        min-width: 110px;
+        padding: 12px 16px !important;
+        border-bottom: 1px solid #e5e7eb;
+        white-space: normal !important;
+        vertical-align: middle;
+    }
+    .qj-app-shell .qj-admin-data-table--users tbody td::before {
+        content: none !important;
+        display: none !important;
+    }
+    .qj-app-shell .qj-admin-data-table--users tbody td:first-child {
+        min-width: 250px;
+    }
+    .qj-app-shell .qj-admin-data-table--users tbody td:first-child > div {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+    .qj-app-shell .qj-admin-data-table--users tbody td[colspan] {
+        display: table-cell !important;
+        text-align: center;
+    }
+    .qj-app-shell .qj-admin-data-table--users tbody td img {
+        max-width: 42px;
+        max-height: 42px;
+    }
+}
