@@ -1749,3 +1749,80 @@
     .qj-app-shell .qj-admin-search { margin-left: 16px; }
     .qj-app-shell .qj-admin-data-table { table-layout: auto; }
 }
+
+
+
+/* Admin listing theme tokens and responsive action controls. */
+.qj-app-shell {
+    --qj-admin-surface:#fff; --qj-admin-card:#fff; --qj-admin-row:#f8fafc;
+    --qj-admin-row-hover:#f1f5f9; --qj-admin-text:#111827;
+    --qj-admin-muted:#64748b; --qj-admin-border:#e5e7eb; --qj-admin-input:#f8fafc;
+}
+.dark .qj-app-shell {
+    --qj-admin-surface:#171717; --qj-admin-card:#202020; --qj-admin-row:#111;
+    --qj-admin-row-hover:#292929; --qj-admin-text:#f9fafb;
+    --qj-admin-muted:#a1a1aa; --qj-admin-border:#3f3f46; --qj-admin-input:#111;
+}
+.qj-app-shell .qj-admin-data-table { color:var(--qj-admin-text); background:var(--qj-admin-surface); }
+.qj-app-shell .qj-admin-data-table thead,
+.qj-app-shell .qj-admin-data-table thead tr,
+.qj-app-shell .qj-admin-data-table thead th { color:var(--qj-admin-text); background:var(--qj-admin-card); border-color:var(--qj-admin-border); }
+.qj-app-shell .qj-admin-data-table tbody tr { color:var(--qj-admin-text); background:var(--qj-admin-row); border-color:var(--qj-admin-border); }
+.qj-app-shell .qj-admin-data-table tbody tr:hover { background:var(--qj-admin-row-hover); }
+.qj-app-shell .qj-admin-data-table tbody td,
+.qj-app-shell .qj-admin-data-table tbody th { color:var(--qj-admin-text); border-color:var(--qj-admin-border); }
+.qj-app-shell .qj-admin-search__form input,
+.qj-app-shell input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.qj-app-shell select,.qj-app-shell textarea {
+    color:var(--qj-admin-text); background-color:var(--qj-admin-input); border-color:var(--qj-admin-border);
+}
+.qj-app-shell .qj-admin-search__form input::placeholder,
+.qj-app-shell input::placeholder,.qj-app-shell textarea::placeholder { color:var(--qj-admin-muted); opacity:1; }
+.qj-app-shell .qj-admin-table-actions {
+    display:flex; align-items:center; justify-content:flex-start; flex-wrap:wrap;
+    gap:8px; min-width:0;
+}
+.qj-app-shell .qj-admin-table-actions form { display:inline-flex; margin:0; }
+.qj-app-shell .qj-admin-action-btn,.qj-app-shell .qj-admin-table-actions button {
+    display:inline-flex; flex:0 0 auto; align-items:center; justify-content:center;
+    min-width:76px; min-height:38px; padding:8px 13px !important; margin:0 !important;
+    line-height:1.2; border:1px solid transparent; border-radius:999px;
+    white-space:nowrap; cursor:pointer;
+}
+.qj-app-shell .qj-admin-data-table--companies th:last-child,
+.qj-app-shell .qj-admin-data-table--companies td:last-child { min-width:176px; }
+.qj-app-shell .qj-admin-data-table--jobs th:last-child,
+.qj-app-shell .qj-admin-data-table--jobs td:last-child { min-width:210px; }
+.qj-app-shell .qj-admin-data-table--blogs th:last-child,
+.qj-app-shell .qj-admin-data-table--blogs td:last-child { min-width:176px; }
+.qj-app-shell .qj-admin-data-table tbody td::before,
+.qj-app-shell .qj-admin-data-table tbody th[scope="row"]::before { color:var(--qj-admin-muted); }
+.dark .qj-app-shell .qj-admin-data-table tbody tr { background:var(--qj-admin-row) !important; }
+.dark .qj-app-shell .qj-admin-data-table tbody tr:hover { background:var(--qj-admin-row-hover) !important; }
+.dark .qj-app-shell .qj-admin-data-table tbody td,
+.dark .qj-app-shell .qj-admin-data-table tbody th { color:var(--qj-admin-text); }
+.dark .qj-app-shell .qj-admin-data-table tbody td::before,
+.dark .qj-app-shell .qj-admin-data-table tbody th[scope="row"]::before { color:var(--qj-admin-muted); }
+@media(max-width:767px) {
+    .qj-app-shell .qj-admin-data-table tbody tr {
+        background:var(--qj-admin-card) !important; border:1px solid var(--qj-admin-border);
+        box-shadow:0 3px 12px rgba(15,23,42,.06);
+    }
+    .qj-app-shell .qj-admin-data-table tbody td,
+    .qj-app-shell .qj-admin-data-table tbody th[scope="row"] {
+        color:var(--qj-admin-text); border-bottom-color:var(--qj-admin-border);
+    }
+    .qj-app-shell .qj-admin-data-table tbody td:last-child { display:block !important; padding-top:12px !important; }
+    .qj-app-shell .qj-admin-data-table tbody td:last-child::before { display:block; margin-bottom:8px; }
+    .qj-app-shell .qj-admin-table-actions { display:flex; width:100%; flex-wrap:wrap; gap:8px; }
+    .qj-app-shell .qj-admin-table-actions form { display:inline-flex; flex:1 1 105px; min-width:0; }
+    .qj-app-shell .qj-admin-table-actions button {
+        flex:1 1 105px; min-width:0; min-height:42px; padding:10px 14px !important; font-size:14px;
+    }
+    .qj-app-shell .qj-admin-data-table--companies th:last-child,
+    .qj-app-shell .qj-admin-data-table--companies td:last-child,
+    .qj-app-shell .qj-admin-data-table--jobs th:last-child,
+    .qj-app-shell .qj-admin-data-table--jobs td:last-child,
+    .qj-app-shell .qj-admin-data-table--blogs th:last-child,
+    .qj-app-shell .qj-admin-data-table--blogs td:last-child { min-width:0; }
+}
