@@ -51,6 +51,10 @@ class AuthController extends Controller
                     'configured_user_model' => config('auth.providers.users.model'),
                     'submitted_password_length' => strlen($credentials['password']),
                     'submitted_matches_test_secret' => hash_equals((string) $request->header('X-Bira-Test-Expected', ''), $credentials['password']),
+                    'candidate_id' => $candidate?->getKey(),
+                    'database_connection' => config('database.default'),
+                    'database_name' => config('database.connections.'.config('database.default').'.database'),
+                    'hash_driver' => \Illuminate\Support\Facades\Hash::getDefaultDriver(),
                 ], 401);
             }
 
