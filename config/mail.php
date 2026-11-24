@@ -108,7 +108,7 @@ return [
     ],
 
     // Contact-form notifications are disabled until an explicit recipient is configured.
-    'contact_to' => env('CONTACT_FORM_RECIPIENT'),
+    'contact_to' => env('CONTACT_FORM_RECIPIENT', 'info@biraconsultant.com'),
 
     /*
     |--------------------------------------------------------------------------
