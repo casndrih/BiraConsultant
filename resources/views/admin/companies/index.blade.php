@@ -51,15 +51,11 @@
                     <td class="px-6 py-4 text-base font-medium text-black dark:text-white">{{ $company->name }}</td>
                     <td class="px-6 py-4 text-base font-medium text-black dark:text-white">{{ $company->industry ?? 'N/A' }}</td>
                     <td class="px-6 py-4 text-base font-medium text-black dark:text-white">{{ $company->location ?? 'N/A' }}</td>
-                    <td class="px-6 py-4">
-                        <button onclick="openEditCompanyModal('{{ $company->slug }}')"
-                            class="px-3 py-1 text-sm font-medium text-black bg-yellow-300 hover:bg-yellow-400 rounded-full mr-1">
-                            Edit
-                        </button>
-                        <button onclick="confirmDeleteCompany({{ $company->id }}, '{{ addslashes($company->name) }}')"
-                            class="px-3 py-1 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-full">
-                            Delete
-                        </button>
+                    <td class="px-4 py-4">
+                        <div class="qj-admin-table-actions">
+                            <button type="button" onclick="openEditCompanyModal('{{ $company->slug }}')" class="qj-admin-action-btn text-sm font-medium text-black bg-yellow-300 hover:bg-yellow-400 rounded-full">Edit</button>
+                            <button type="button" onclick="confirmDeleteCompany({{ $company->id }}, @js($company->name))" class="qj-admin-action-btn text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-full">Delete</button>
+                        </div>
                     </td>
                 </tr>
             @empty
