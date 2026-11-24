@@ -117,6 +117,9 @@ class BiraConsultantJob extends Model
     {
         return $query->where('status', 1)
                      ->where('approval_status', 'approved')
+                     ->whereHas('company', function ($companyQuery) {
+                         $companyQuery->publiclyVisible();
+                     })
                      ->where(function ($q) {
                          $q->whereNull('deadline')
                            ->orWhere('deadline', '>=', now());
@@ -147,6 +150,8 @@ class BiraConsultantJob extends Model
     {
         return $this->status == 1
             && $this->approval_status === 'approved'
+            && $this->company
+            && $this->company->isPubliclyVisible()
             && !$this->isExpired();
     }
 
