@@ -4,11 +4,8 @@
             <!-- Left: Logo & Nav -->
             <div class="qj-toolbar__main">
                 <a href="{{ route('home') }}" class="qj-brand" aria-label="BiraConsultant home">
-                    <span class="qj-brand__mark" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="M19.8 4.2C12.7 4.2 7.2 6.2 5.1 10.2c-1.8 3.4.3 7.1 3.9 7.1 4.8 0 8.7-5.2 10.8-13.1Z" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M3.9 20c2.1-4 5.4-6.8 9.8-8.8" stroke-linecap="round" />
-                        </svg>
+                    <span class="qj-brand__mark">
+                        <img src="{{ URL::asset('images/favicon/logo.svg') }}" alt="BiraConsultant logo">
                     </span>
                     <span class="qj-brand__name">BiraConsultant</span>
                 </a>
