@@ -46,6 +46,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
+      - name: Determine whether database migrations changed
+        id: migration-check
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          elif git diff --name-only "$GITHUB_EVENT_BEFORE" "$GITHUB_SHA" | grep -q '^database/migrations/'; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Install SSH client
         run: sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
@@ -104,6 +116,7 @@ jobs:
           SSH_USER: ${{ secrets.HOSTINGER_USER }}
           SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
           SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+          RUN_MIGRATIONS: ${{ steps.migration-check.outputs.run }}
           DB_HOST_A: ${{ secrets.HOSTINGER_DB_HOST }}
           DB_HOST_B: ${{ secrets.DB_HOST }}
           DB_PORT_SECRET: ${{ secrets.HOSTINGER_DB_PORT }}
@@ -148,9 +161,10 @@ jobs:
           printf -v Q_DB_USER '%q' "$DB_USER"
           printf -v Q_DB_PASSWORD '%q' "$DB_PASSWORD"
           printf -v Q_DEMO_PASSWORD '%q' "$DEMO_PASSWORD"
+          printf -v Q_RUN_MIGRATIONS '%q' "$RUN_MIGRATIONS"
           printf -v Q_ARCHIVE '%q' "$ARCHIVE"
           printf -v Q_STAGE_NAME '%q' "$STAGE_NAME"
-          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD BIRA_DEMO_PASSWORD=$Q_DEMO_PASSWORD ARCHIVE=$Q_ARCHIVE STAGE_NAME=$Q_STAGE_NAME"
+          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD BIRA_DEMO_PASSWORD=$Q_DEMO_PASSWORD RUN_MIGRATIONS=$Q_RUN_MIGRATIONS ARCHIVE=$Q_ARCHIVE STAGE_NAME=$Q_STAGE_NAME"
           PORT="${SSH_PORT:-65002}"
           REMOTE="$SSH_USER@$SSH_HOST"
           sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 "$REMOTE" "$REMOTE_ENV bash -s" <<'REMOTE'
@@ -236,7 +250,11 @@ jobs:
           fi
           test -f "$APP/vendor/autoload.php"
           php artisan optimize:clear
-          php artisan migrate --force --no-interaction
+          if [ "$RUN_MIGRATIONS" = "true" ]; then
+              php artisan migrate --force --no-interaction
+          else
+              echo "Skipping migrations: this release contains no database migration changes."
+          fi
           if [ -n "${BIRA_DEMO_PASSWORD:-}" ]; then
               BIRA_DEMO_PASSWORD="$BIRA_DEMO_PASSWORD" php artisan db:seed --force --no-interaction
               BIRA_DEMO_PASSWORD="$BIRA_DEMO_PASSWORD" php <<'PHP'
