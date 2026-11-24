@@ -137,7 +137,7 @@ class DatabaseSeeder extends Seeder
         $jobSpecs = [
             ['Senior Systems Administrator', 'Information Technology', 'Full-time', 'Senior Level', 0],
             ['Accounts Officer', 'Accounting & Finance', 'Full-time', 'Mid Level', 1],
-            ['Graduate Electrical Engineer', 'Engineering', 'Graduate', 'Graduate', 3],
+            ['Graduate Electrical Engineer', 'Engineering', 'Full-time', 'Graduate', 3],
             ['Registered Nurse', 'Healthcare', 'Full-time', 'Mid Level', 2],
             ['Project Coordinator', 'Administration', 'Contract', 'Mid Level', 0],
             ['IT Support Technician', 'Information Technology', 'Full-time', 'Entry Level', 2],
