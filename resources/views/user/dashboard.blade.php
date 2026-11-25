@@ -38,7 +38,7 @@
     <div class="container mx-auto px-4 py-8">
         <!-- Verification Alert -->
         @if(!$user->email_verified_at || !$user->isIdentityVerified())
-        <div class="bg-yellow-50 dark:bg-yellow-900/20 border-yellow-300 dark:border-yellow-700 rounded-lg p-4 mb-6">
+        <div role="alert" class="flex flex-col gap-3 rounded-lg border border-yellow-300 bg-yellow-50 p-4 mb-6 sm:flex-row sm:items-center sm:justify-between dark:border-yellow-700 dark:bg-yellow-900/20">
             <h3 class="text-sm font-medium text-yellow-800 dark:text-yellow-300 mb-2">Complete Your Verification</h3>
             <div class="flex flex-wrap gap-3 text-xs">
                 @if(!$user->email_verified_at)
@@ -95,8 +95,8 @@
             <!-- Main Content -->
             <div class="lg:col-span-2">
                 <!-- Recent Applications -->
-                <div class="bg-white dark:bg-custom-dark rounded-lg shadow-md p-6 mb-6">
-                    <div class="flex items-center justify-between mb-6">
+                <div class="bg-white border border-gray-200 dark:border-gray-700 dark:bg-gray-800 rounded-lg shadow-sm p-5 sm:p-6 mb-6">
+                    <div class="mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-gray-200 pb-4 dark:border-gray-700">
                         <h2 class="text-xl font-semibold text-black dark:text-white">Recent Applications</h2>
                         <a href="{{ route('user.applications') }}" class="text-yellow-500 hover:text-yellow-600 text-sm font-medium">
                             View All →
@@ -106,7 +106,7 @@
                     @if($applications->count() > 0)
                         <div class="space-y-4">
                             @foreach($applications as $application)
-                                <div class=" rounded-lg p-4">
+                                <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
                                     <div class="flex items-start justify-between">
                                         <div class="flex-1">
                                             <h3 class="font-medium text-black dark:text-white hover:text-yellow-500">
@@ -140,11 +140,11 @@
                 </div>
 
                 <!-- Recommended Jobs -->
-                <div class="bg-white dark:bg-custom-dark rounded-lg shadow-md p-6">
+                <div class="bg-white border border-gray-200 dark:border-gray-700 dark:bg-gray-800 rounded-lg shadow-sm p-5 sm:p-6">
                     <h2 class="text-xl font-semibold text-black dark:text-white mb-6">Recommended for You</h2>
                     <div class="space-y-4">
                         @forelse($recommendedJobs as $job)
-                            <div class=" rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-sm dark:border-gray-700 dark:bg-gray-800">
                                 <div class="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
                                     <div class="flex-shrink-0">
                                         @if($job->company && $job->company->logo)
