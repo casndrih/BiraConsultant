@@ -2923,3 +2923,16 @@
 .qj-dashboard-page a:focus-visible,.qj-dashboard-page button:focus-visible { outline:2px solid #ca8a04; outline-offset:2px; }
 @media(max-width:639px){.qj-dashboard-page .qj-dashboard-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}.qj-dashboard-page .qj-dashboard-stat{padding:.875rem!important}.qj-dashboard-page .qj-dashboard-monthly-panel{padding:1rem}.qj-dashboard-page .qj-dashboard-monthly-panel #dashboardChart{min-height:260px}.qj-dashboard-page .qj-dashboard-hero__inner .text-right{text-align:left}}
 @media(prefers-color-scheme:dark){.qj-dashboard-page .qj-dashboard-stat{border-color:#374151}.qj-dashboard-page .qj-dashboard-stat:hover{border-color:#4b5563}}
+
+
+/* Prevent the public/auth header from colliding on 320px phones. */
+@media (max-width: 360px) {
+  .qj-toolbar__inner { gap: 8px; min-height: 64px; padding-inline: 12px; }
+  .qj-toolbar__main { min-width: 0; flex: 1 1 auto; gap: 6px; }
+  .qj-brand { min-width: 0; gap: 6px; }
+  .qj-brand .qj-footer-brand-logo { width: 32px; height: 32px; flex: 0 0 32px; }
+  .qj-brand__name { font-size: 15px; letter-spacing: -.04em; }
+  .qj-toolbar__actions { min-width: 0; flex: 0 0 auto; gap: 8px; }
+  .qj-toolbar__actions .qj-text-action { font-size: 12px; white-space: nowrap; }
+  .qj-toolbar__actions .qj-action-button { min-height: 36px; padding-inline: 10px; font-size: 11px; }
+}
