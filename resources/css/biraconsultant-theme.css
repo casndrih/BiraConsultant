@@ -3150,3 +3150,47 @@
     .qj-admin-users-search-form button { padding-inline: 12px; }
     .qj-admin-users-table-wrap table { min-width: 820px; }
 }
+
+
+/* Admin applications: compact Flowbite-style search toolbar integrated into
+   the table card, matching the users listing on desktop and mobile. */
+.qj-app-shell .qj-admin-applications-table-card {
+    width:auto; min-width:0; max-width:100%;
+}
+.qj-app-shell .qj-admin-applications-toolbar {
+    min-width:0; gap:12px;
+}
+.qj-app-shell .qj-admin-applications-toolbar > * { min-width:0; }
+.qj-app-shell .qj-admin-applications-search-form {
+    align-items:center; max-width:100%;
+}
+.qj-app-shell .qj-admin-applications-search-form input {
+    min-width:0; min-height:40px;
+}
+.qj-app-shell .qj-admin-applications-search-form button {
+    white-space:nowrap;
+}
+.qj-app-shell .qj-admin-applications-table-wrap {
+    width:100%; max-width:100%; overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+.qj-app-shell .qj-admin-data-table--applications {
+    width:100%; min-width:900px;
+}
+.qj-app-shell .qj-admin-data-table--applications th,
+.qj-app-shell .qj-admin-data-table--applications td {
+    vertical-align:middle;
+}
+@media (max-width:639px) {
+    .qj-app-shell .qj-admin-applications-table-card { margin-inline:12px; }
+    .qj-app-shell .qj-admin-applications-toolbar {
+        align-items:stretch; padding:12px;
+    }
+    .qj-app-shell .qj-admin-applications-search-form {
+        display:flex; width:100%;
+    }
+    .qj-app-shell .qj-admin-applications-search-form button {
+        padding-inline:12px;
+    }
+    .qj-app-shell .qj-admin-data-table--applications { min-width:820px; }
+}
