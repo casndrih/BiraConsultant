@@ -178,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(r => r.json())
             .then(data => {
                 container.innerHTML = data.html;
+                window.initQjCompanyPopovers?.();
                 document.getElementById('results-count').textContent = data.total + ' Jobs Found';
                 const rangeText = data.total > 0
                     ? 'Showing ' + data.from + '-' + data.to + ' of ' + data.total

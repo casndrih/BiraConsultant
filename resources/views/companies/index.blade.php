@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(r => r.json())
             .then(data => {
                 document.getElementById('companies-container').innerHTML = data.html;
+                window.initQjCompanyPopovers?.();
                 document.getElementById('results-count').textContent = data.total + ' Companies Found';
                 const rangeText = data.total > 0
                     ? 'Showing ' + data.from + '-' + data.to + ' of ' + data.total

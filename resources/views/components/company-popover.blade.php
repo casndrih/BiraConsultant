@@ -40,7 +40,7 @@
             <span class="qj-company-popover__description block">{{ \Illuminate\Support\Str::limit($popoverDescription, 150) }}</span>
         @endif
         <span class="qj-company-popover__footer">
-            <span>{{ $company->jobs_count ?? $company->jobs()->where('status', 1)->count() }} open roles</span>
+            <span>{{ $company->jobs_count ?? 0 }} open roles</span>
             <a href="{{ route('company.detail', $company->slug) }}" class="qj-company-popover__link">View company <span aria-hidden="true">→</span></a>
         </span>
     </span>
