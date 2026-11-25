@@ -64,3 +64,42 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Local development (SQLite)
+
+The application uses SQLite by default for local development. This keeps local work independent of the Hostinger production database.
+
+1. Install the PHP extensions required by the project, including `pdo_sqlite` and `sqlite3`.
+2. Install dependencies:
+
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. Create your local environment and SQLite database:
+
+   ```bash
+   cp .env.example .env
+   touch database/database.sqlite
+   php artisan key:generate
+   php artisan migrate --seed
+   ```
+
+   On Windows PowerShell, create the database file with:
+
+   ```powershell
+   New-Item -ItemType File -Force database/database.sqlite
+   ```
+
+4. Start the Laravel application:
+
+   ```bash
+   php artisan serve
+   ```
+
+The SQLite database file is local-only and ignored by Git. Do not commit it or copy it to production.
+
+## Production database
+
+Production remains on Hostinger MySQL. The Hostinger deployment workflow explicitly writes `DB_CONNECTION=mysql` and the production database credentials into the server-side `.env`. When preparing a production release, keep those settings and run migrations against the Hostinger database only after its connection quota and availability have been confirmed.
