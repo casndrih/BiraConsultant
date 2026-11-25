@@ -2873,3 +2873,39 @@
     letter-spacing: normal !important;
     line-height: 1.5rem;
 }
+
+
+/* Keep the admin header profile control and avatar at a fixed, unsqueezed size. */
+.qj-admin-topbar #user-menu-button.qj-admin-avatar-button {
+    display: inline-flex;
+    flex: 0 0 40px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    padding: 2px;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    line-height: 1;
+}
+.qj-admin-topbar #user-menu-button .qj-admin-avatar-image,
+.qj-admin-topbar #user-menu-button .qj-admin-avatar-fallback {
+    display: block;
+    flex: 0 0 36px;
+    width: 36px !important;
+    min-width: 36px;
+    max-width: 36px;
+    height: 36px !important;
+    min-height: 36px;
+    max-height: 36px;
+    aspect-ratio: 1 / 1;
+    border-radius: 9999px;
+    object-fit: cover;
+}
+.qj-admin-topbar #user-menu-button .qj-admin-avatar-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

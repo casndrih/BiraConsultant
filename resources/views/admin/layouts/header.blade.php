@@ -30,14 +30,14 @@
             <!-- User profile image aligned to far right -->
             <div class="flex items-center ml-auto">
                 <button type="button"
-                    class="flex text-sm bg-gray-100 dark:bg-black rounded-full focus:ring-4 focus:ring-gray-300"
+                    class="qj-admin-avatar-button flex items-center justify-center bg-gray-100 dark:bg-black rounded-full focus:ring-4 focus:ring-gray-300"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
                     @if (Auth::check() && Auth::user()->role == 1 && Auth::user()->image)
-                        <img class="w-8 h-8 object-cover rounded-full" src="{{ asset(Auth::user()->image) }}"
+                        <img class="qj-admin-avatar-image object-cover rounded-full" src="{{ asset(Auth::user()->image) }}"
                             alt="{{ Auth::user()->name }} photo">
                     @else
-                        <span class="flex w-8 h-8 items-center justify-center rounded-full bg-gray-200 text-sm font-semibold text-gray-700 dark:bg-gray-700 dark:text-white" aria-hidden="true">{{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}</span>
+                        <span class="qj-admin-avatar-fallback flex items-center justify-center rounded-full bg-gray-200 text-sm font-semibold text-gray-700 dark:bg-gray-700 dark:text-white" aria-hidden="true">{{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}</span>
                     @endif
                 </button>
             </div>
