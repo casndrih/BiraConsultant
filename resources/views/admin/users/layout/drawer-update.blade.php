@@ -83,13 +83,13 @@
             <div>
                 <label for="edit_user_name" class="block mb-2 text-md font-medium text-black dark:text-white">Name</label>
                 <input type="text" name="edit_user_name" id="edit_user_name"
-                    class="bg-gray-100 dark:bg-custom-dark dark: text-black dark:text-white text-md rounded-full focus:ring-yellow-300 focus: block w-full p-2.5" required>
+                    class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-md rounded-full focus:ring-yellow-300 block w-full p-2.5" required>
             </div>
 
             <div>
                 <label for="edit_user_gender" class="block mb-2 text-md font-medium text-black dark:text-white">Gender</label>
                 <select name="edit_user_gender" id="edit_user_gender"
-                    class="bg-gray-100 dark:bg-custom-dark dark: text-black dark:text-white text-md rounded-full focus:ring-yellow-300 focus: block w-full p-2.5" required>
+                    class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-md rounded-full focus:ring-yellow-300 block w-full p-2.5" required>
                     <option value="">Select gender</option>
                     <option value="0">Male</option>
                     <option value="1">Female</option>
@@ -99,19 +99,19 @@
             <div>
                 <label for="edit_user_dob" class="block mb-2 text-md font-medium text-black dark:text-white">Date of Birth</label>
                 <input type="date" name="edit_user_dob" id="dob"
-                    class="bg-gray-100 dark:bg-custom-dark dark: text-black dark:text-white text-md rounded-full focus:ring-yellow-300 focus: block w-full p-2.5" required>
+                    class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-md rounded-full focus:ring-yellow-300 block w-full p-2.5" required>
             </div>
 
             <div>
                 <label for="edit_user_email" class="block mb-2 text-md font-medium text-black dark:text-white">Email</label>
                 <input type="email" name="edit_user_email" id="edit_user_email"
-                    class="bg-gray-100 dark:bg-custom-dark dark: text-black dark:text-white text-md rounded-full focus:ring-yellow-300 focus: block w-full p-2.5" required>
+                    class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-md rounded-full focus:ring-yellow-300 block w-full p-2.5" required>
             </div>
 
             <div>
                 <label for="edit_user_country_id" class="block mb-2 text-md font-medium text-black dark:text-white">Country</label>
                 <select id="edit_user_country_id" name="edit_user_country_id"
-                    class="bg-gray-100 dark:bg-custom-dark dark: text-black dark:text-white text-md rounded-full focus:ring-yellow-300 focus: block w-full p-2.5">
+                    class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-md rounded-full focus:ring-yellow-300 block w-full p-2.5">
                     <option value="">Select country</option>
                     <!-- Populate dynamically -->
                 </select>
@@ -131,7 +131,7 @@
             <div>
                 <label for="edit_user_phone" class="block mb-2 text-md font-medium text-black dark:text-white">Mobile Number</label>
                 <input type="tel" name="edit_user_phone" id="edit_user_phone"
-                    class="bg-gray-100 dark:bg-custom-dark dark: text-black dark:text-white text-md rounded-full focus:ring-yellow-300 focus: block w-full p-2.5" required>
+                    class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-md rounded-full focus:ring-yellow-300 block w-full p-2.5" required>
             </div>
 
             <div>
@@ -145,7 +145,7 @@
         @endforeach
     </div>
 
-    <input type="text" id="skill-input" class="bg-gray-100 dark:bg-custom-dark dark: text-black dark:text-white text-md rounded-full focus:ring-yellow-300 focus: block w-full p-2.5" placeholder="Type a skill and press enter">
+    <input type="text" id="skill-input" class="bg-gray-100 dark:bg-custom-dark text-black dark:text-white text-md rounded-full focus:ring-yellow-300 block w-full p-2.5" placeholder="Type a skill and press enter">
        </div>
 
             <div>
