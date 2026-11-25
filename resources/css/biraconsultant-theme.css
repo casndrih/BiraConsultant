@@ -3333,3 +3333,19 @@
     .qj-app-shell .qj-admin-data-table--companies { min-width:820px; }
     .qj-app-shell .qj-admin-data-table--blogs { min-width:900px; }
 }
+
+
+/* Keep the shared company table card as one surface without nested margins. */
+.qj-app-shell .qj-admin-companies-table-card .qj-admin-companies-toolbar {
+    margin:0; border:0; border-radius:0; box-shadow:none;
+}
+.qj-app-shell .qj-admin-companies-table-card .qj-admin-companies-table-wrap {
+    margin:0; border:0; border-top:0; border-radius:0; box-shadow:none;
+}
+@media (max-width:767px) {
+    .qj-app-shell .qj-admin-data-table--companies tbody th,
+    .qj-app-shell .qj-admin-data-table--blogs tbody th {
+        display:table-cell !important; white-space:nowrap !important;
+        padding:12px 16px !important;
+    }
+}
