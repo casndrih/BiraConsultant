@@ -3556,3 +3556,144 @@
 .dark .qj-app-shell .qj-dashboard-panel__icon {
     color:#facc15 !important;
 }
+
+
+/* Consistent admin component rhythm: keep controls, text and cards from
+   touching or accumulating conflicting Tailwind margins. */
+.qj-app-shell .qj-admin-users-table-card,
+.qj-app-shell .qj-admin-applications-table-card,
+.qj-app-shell .qj-admin-companies-table-card,
+.qj-app-shell .qj-admin-blogs-table-card {
+    margin:16px !important;
+    border-radius:14px;
+}
+.qj-app-shell .qj-admin-users-toolbar,
+.qj-app-shell .qj-admin-applications-toolbar,
+.qj-app-shell .qj-admin-companies-toolbar,
+.qj-app-shell .qj-admin-blogs-toolbar {
+    gap:12px;
+    padding:16px 18px;
+}
+.qj-app-shell .qj-admin-users-search-form,
+.qj-app-shell .qj-admin-applications-search-form {
+    gap:8px;
+    align-items:center;
+}
+.qj-app-shell .qj-admin-users-search-form button,
+.qj-app-shell .qj-admin-applications-search-form button,
+.qj-app-shell .qj-admin-users-toolbar button,
+.qj-app-shell .qj-admin-applications-toolbar button,
+.qj-app-shell .qj-admin-companies-toolbar button,
+.qj-app-shell .qj-admin-blogs-toolbar button {
+    margin:0 !important;
+    white-space:nowrap;
+}
+.qj-app-shell .qj-admin-data-table th,
+.qj-app-shell .qj-admin-data-table td {
+    vertical-align:middle;
+}
+.qj-app-shell .qj-admin-data-table th { padding:13px 16px; }
+.qj-app-shell .qj-admin-data-table td { padding:14px 16px; }
+.qj-app-shell .qj-admin-user-edit-fields { gap:16px; }
+.qj-app-shell .qj-admin-user-edit-drawer form > div { margin-bottom:12px; }
+.qj-app-shell .qj-admin-user-edit-drawer label {
+    display:block;
+    margin-bottom:7px;
+    line-height:1.4;
+}
+.qj-app-shell .qj-admin-user-edit-drawer input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.qj-app-shell .qj-admin-user-edit-drawer select,
+.qj-app-shell .qj-admin-user-edit-drawer textarea {
+    min-height:42px;
+    line-height:1.4;
+}
+.qj-app-shell .qj-admin-user-edit-drawer__header {
+    gap:12px;
+    padding-top:16px;
+    padding-bottom:16px;
+}
+.qj-app-shell .qj-admin-user-edit-actions { gap:12px; }
+.qj-app-shell .qj-admin-user-edit-actions button,
+.qj-app-shell .qj-admin-user-edit-actions a { margin:0 !important; }
+.qj-app-shell .qj-admin-user-edit-drawer {
+    top:0;
+    right:0;
+    left:auto;
+    bottom:0;
+    height:100vh;
+    height:100dvh;
+    max-height:100dvh;
+    width:min(100vw, 680px);
+    max-width:100vw;
+    z-index:60;
+    overscroll-behavior:contain;
+    box-shadow:-18px 0 48px rgba(15,23,42,.16);
+    border-left:1px solid #e5e7eb;
+}
+@media (min-width:640px) {
+    .qj-app-shell .qj-admin-user-edit-drawer {
+        width:min(88vw, 680px);
+        max-width:680px;
+    }
+}
+@media (max-width:639px) {
+    .qj-app-shell .qj-admin-users-table-card,
+    .qj-app-shell .qj-admin-applications-table-card,
+    .qj-app-shell .qj-admin-companies-table-card,
+    .qj-app-shell .qj-admin-blogs-table-card { margin:10px !important; }
+    .qj-app-shell .qj-admin-users-toolbar,
+    .qj-app-shell .qj-admin-applications-toolbar,
+    .qj-app-shell .qj-admin-companies-toolbar,
+    .qj-app-shell .qj-admin-blogs-toolbar { padding:12px; }
+    .qj-app-shell .qj-admin-user-edit-drawer { padding:14px; }
+}
+
+/* Card and panel theme tokens apply to custom wrappers as well as Flowbite
+   utility-based cards, preventing white surfaces or dark text leaking into
+   dark mode on less frequently used admin pages. */
+.qj-app-shell .qj-dashboard-stat,
+.qj-app-shell .qj-dashboard-panel,
+.qj-app-shell .qj-admin-users-table-card,
+.qj-app-shell .qj-admin-applications-table-card,
+.qj-app-shell .qj-admin-companies-table-card,
+.qj-app-shell .qj-admin-blogs-table-card,
+.qj-app-shell .qj-admin-user-edit-drawer,
+.qj-app-shell .qj-admin-user-edit-drawer__header {
+    color:var(--qj-admin-text, #111827);
+    background-color:var(--qj-admin-card, #ffffff);
+    border-color:var(--qj-admin-border, #e5e7eb);
+}
+.dark .qj-app-shell .qj-admin-user-edit-drawer,
+.dark .qj-app-shell .qj-admin-user-edit-drawer__header,
+.dark .qj-app-shell .qj-admin-user-edit-drawer .bg-gray-100,
+.dark .qj-app-shell .qj-admin-user-edit-drawer .bg-gray-200,
+.dark .qj-app-shell .qj-admin-user-edit-drawer .bg-white {
+    color:#f9fafb !important;
+    background-color:#111827 !important;
+    border-color:#374151 !important;
+}
+.dark .qj-app-shell .qj-admin-user-edit-drawer input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.dark .qj-app-shell .qj-admin-user-edit-drawer select,
+.dark .qj-app-shell .qj-admin-user-edit-drawer textarea {
+    color:#f9fafb !important;
+    background-color:#1f2937 !important;
+    border-color:#4b5563 !important;
+}
+.dark .qj-app-shell .qj-admin-user-edit-drawer input::placeholder,
+.dark .qj-app-shell .qj-admin-user-edit-drawer textarea::placeholder {
+    color:#9ca3af !important;
+}
+.dark .qj-app-shell .qj-admin-user-edit-drawer .text-black,
+.dark .qj-app-shell .qj-admin-user-edit-drawer .text-gray-900,
+.dark .qj-app-shell .qj-admin-user-edit-drawer .text-gray-700,
+.dark .qj-app-shell .qj-admin-user-edit-drawer .text-gray-600 {
+    color:#f9fafb !important;
+}
+.dark .qj-app-shell .qj-admin-user-edit-drawer .text-gray-500,
+.dark .qj-app-shell .qj-admin-user-edit-drawer .text-gray-400 {
+    color:#9ca3af !important;
+}
+.dark .qj-app-shell .qj-admin-user-edit-drawer {
+    border-left-color:#374151 !important;
+    box-shadow:-18px 0 48px rgba(0,0,0,.42);
+}
