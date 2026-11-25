@@ -9,12 +9,12 @@
     <!-- Dashboard Header -->
     <div class="qj-dashboard-hero">
         <div class="qj-dashboard-hero__inner">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-2xl font-bold mb-1">@include('components.company-popover', ['company' => $company])</h1>
+            <div class="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div class="min-w-0">
+                    <h1 class="mb-1 break-words text-2xl font-bold">@include('components.company-popover', ['company' => $company])</h1>
                     <p class="text-sm opacity-75">Company Dashboard</p>
                 </div>
-                <div class="text-right">
+                <div class="text-left sm:text-right">
                     <div class="text-xs opacity-75 mb-1">Verification</div>
                     <span class="inline-block px-3 py-1 rounded-full text-xs font-medium {{ $company->verification_status_color }}">
                         {{ $company->verification_status_label }}
@@ -95,7 +95,7 @@
                         <div class="divide-y divide-gray-200 dark:divide-gray-700">
                             @foreach($jobs as $job)
                             <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-750 transition">
-                                <div class="flex items-start justify-between gap-3">
+                                <div class="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-center gap-2 flex-wrap">
                                             <h3 class="font-medium text-black dark:text-white text-sm">{{ $job->title }}</h3>
@@ -108,7 +108,7 @@
                                                 <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium text-green-600 bg-green-100">Live</span>
                                             @endif
                                         </div>
-                                        <div class="flex items-center gap-3 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
                                             <span>{{ $job->location ?? 'No location' }}</span>
                                             <span>•</span>
                                             <span>{{ $job->applications_count ?? 0 }} application{{ ($job->applications_count ?? 0) != 1 ? 's' : '' }}</span>
@@ -120,7 +120,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="flex items-center gap-2 flex-shrink-0">
+                                    <div class="flex w-full flex-wrap items-center gap-3 border-t border-gray-100 pt-3 sm:w-auto sm:flex-shrink-0 sm:border-0 sm:pt-0 dark:border-gray-700">
                                         <a href="{{ route('company.jobs.edit', $job->id) }}" class="text-xs text-yellow-500 hover:text-yellow-600 font-medium">Edit</a>
                                         @if($job->approval_status === 'approved')
                                         <form action="{{ route('company.jobs.toggle', $job->id) }}" method="POST" class="inline">
@@ -234,21 +234,21 @@
                 <div class="bg-white dark:bg-custom-dark rounded-lg shadow-md p-4">
                     <h3 class="text-base font-semibold text-black dark:text-white mb-3">Company Info</h3>
                     <div class="space-y-2 text-sm">
-                        <div class="flex justify-between">
+                        <div class="flex min-w-0 flex-wrap items-start justify-between gap-x-3 gap-y-1">
                             <span class="text-gray-500">Industry</span>
-                            <span class="text-black dark:text-white">{{ $company->industry ?? 'N/A' }}</span>
+                            <span class="min-w-0 max-w-full break-words text-right text-black dark:text-white">{{ $company->industry ?? 'N/A' }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-500">Location</span>
-                            <span class="text-black dark:text-white">{{ $company->city ?? 'N/A' }}</span>
+                            <span class="min-w-0 max-w-full break-words text-right text-black dark:text-white">{{ $company->city ?? 'N/A' }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-500">Size</span>
-                            <span class="text-black dark:text-white">{{ $company->size ?? 'N/A' }}</span>
+                            <span class="min-w-0 max-w-full break-words text-right text-black dark:text-white">{{ $company->size ?? 'N/A' }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-500">Member since</span>
-                            <span class="text-black dark:text-white">{{ $company->created_at->format('M Y') }}</span>
+                            <span class="min-w-0 max-w-full break-words text-right text-black dark:text-white">{{ $company->created_at->format('M Y') }}</span>
                         </div>
                     </div>
                 </div>

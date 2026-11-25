@@ -48,7 +48,7 @@
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Monthly Overview</h3>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Comparison of jobs, applications, and user registrations</p>
             </div>
-            <div id="dashboardChart" class="w-full"></div>
+            <div id="dashboardChart" class="w-full min-w-0" role="img" aria-label="Monthly comparison chart for users, applications, companies and blogs"></div>
         </div>
     </div>
 </section>
@@ -61,8 +61,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const options = {
         chart: {
             type: 'line',
-            height: 200,
-            toolbar: { show: false }
+            height: 320,
+            toolbar: { show: false },
+            parentHeightOffset: 0,
+            redrawOnParentResize: true,
+            redrawOnWindowResize: true
         },
         series: [
             {
@@ -95,8 +98,18 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         colors: ['#78ad68', '#b9e49e', '#3e7143', '#c9e9b7'],
         legend: {
-            position: 'top'
+            position: 'top',
+            horizontalAlign: 'left',
+            fontSize: '12px'
         },
+        responsive: [{
+            breakpoint: 640,
+            options: {
+                chart: { height: 280 },
+                legend: { position: 'bottom', horizontalAlign: 'left' },
+                xaxis: { labels: { rotate: -45, trim: true } }
+            }
+        }],
         tooltip: {
             shared: true,
             intersect: false

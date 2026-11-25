@@ -9,13 +9,13 @@
     <!-- Dashboard Header -->
     <div class="qj-dashboard-hero">
         <div class="qj-dashboard-hero__inner">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold mb-2">Welcome back, {{ $user->name }}!</h1>
-                    <p class="text-xl opacity-90">Manage your job search and applications</p>
+            <div class="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div class="min-w-0">
+                    <h1 class="mb-2 break-words text-2xl font-bold sm:text-3xl">Welcome back, {{ $user->name }}!</h1>
+                    <p class="text-base opacity-90 sm:text-lg">Manage your job search and applications</p>
                 </div>
-                <div class="text-right hidden md:block">
-                    <div class="flex items-center gap-2 justify-end mb-1">
+                <div class="hidden text-left sm:block sm:text-right">
+                    <div class="mb-2 flex flex-wrap items-center gap-2 sm:justify-end">
                         @if($user->email_verified_at)
                             <span class="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">Email ✓</span>
                         @endif
@@ -131,15 +131,11 @@
                             @endforeach
                         </div>
                     @else
-                                            {{-- Skeleton placeholders when no applications yet --}}
-                                            <div class="space-y-4">
-                                                @for($i = 0; $i < 3; $i++)
-                                                <div class="rounded-lg p-4 bg-gray-200 dark:bg-gray-700 animate-pulse">
-                                                    <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-3/4 mb-2"></div>
-                                                    <div class="h-3 bg-gray-300 dark:bg-gray-600 rounded w-1/2"></div>
-                                                </div>
-                                                @endfor
-                                            </div>
+                        <div class="rounded-lg border border-dashed border-gray-300 px-5 py-8 text-center dark:border-gray-600">
+                            <p class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">No applications yet</p>
+                            <p class="mb-4 text-sm text-gray-500 dark:text-gray-400">When you apply for a job, your application progress will appear here.</p>
+                            <a href="{{ route('jobs') }}" class="inline-flex min-h-10 items-center justify-center rounded-lg bg-yellow-300 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-200 dark:focus:ring-yellow-800">Browse jobs</a>
+                        </div>
                                         @endif
                 </div>
 
@@ -149,7 +145,7 @@
                     <div class="space-y-4">
                         @forelse($recommendedJobs as $job)
                             <div class=" rounded-lg p-4 hover:shadow-md transition-shadow">
-                                <div class="flex items-start gap-4">
+                                <div class="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
                                     <div class="flex-shrink-0">
                                         @if($job->company && $job->company->logo)
                                             <img src="{{ asset('storage/' . $job->company->logo) }}" alt="{{ $job->company->name }}" class="w-10 h-10 rounded-md object-cover">
@@ -168,20 +164,15 @@
                                         </p>
                                         <p class="text-sm text-gray-500 dark:text-gray-500">{{ Str::limit(strip_tags($job->description), 80) }}</p>
                                     </div>
-                                    <div class="text-right flex-shrink-0">
+                                    <div class="max-w-full text-left sm:flex-shrink-0 sm:text-right">
                                         <span class="text-sm font-medium text-black dark:text-white">{{ $job->salary ?? '' }}</span>
                                     </div>
                                 </div>
                             </div>
                         @empty
-                            {{-- Skeleton placeholders for recommended jobs when none exist --}}
-                            <div class="space-y-4">
-                                @for($i = 0; $i < 3; $i++)
-                                <div class="rounded-lg p-4 bg-gray-200 dark:bg-gray-700 animate-pulse">
-                                    <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-3/4 mb-2"></div>
-                                    <div class="h-3 bg-gray-300 dark:bg-gray-600 rounded w-1/2"></div>
-                                </div>
-                                @endfor
+                            <div class="rounded-lg border border-dashed border-gray-300 px-5 py-8 text-center dark:border-gray-600">
+                                <p class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">No recommendations available yet</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Check back soon as new jobs are posted.</p>
                             </div>
                         @endforelse
                     </div>
