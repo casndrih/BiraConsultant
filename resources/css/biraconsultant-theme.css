@@ -3920,3 +3920,65 @@
 .qj-app-shell .qj-admin-blogs-table-wrap {
     border-top:0 !important;
 }
+
+
+/* Admin dashboard: normalize every card surface, not only the named stat and
+   chart panels. This covers Flowbite/Tailwind cards and custom card wrappers
+   used by overview, activity, recent records, quick actions and analytics. */
+.qj-app-shell .qj-dashboard-page [class*="card"],
+.qj-app-shell .qj-dashboard-page [class*="panel"],
+.qj-app-shell .qj-dashboard-page [class*="widget"] {
+    color:var(--qj-admin-text);
+    background-color:var(--qj-admin-card);
+}
+.dark .qj-app-shell .qj-dashboard-page [class*="card"],
+.dark .qj-app-shell .qj-dashboard-page [class*="panel"],
+.dark .qj-app-shell .qj-dashboard-page [class*="widget"],
+.qj-app-shell.dark .qj-dashboard-page [class*="card"],
+.qj-app-shell.dark .qj-dashboard-page [class*="panel"],
+.qj-app-shell.dark .qj-dashboard-page [class*="widget"] {
+    color:var(--qj-dashboard-heading, #f3f4f6) !important;
+    background-color:var(--qj-dashboard-card, #151d2b) !important;
+    border-color:var(--qj-dashboard-card-border, #293548) !important;
+    box-shadow:0 1px 2px rgba(0,0,0,.32) !important;
+}
+/* Catch utility-based cards even when their markup does not include a
+   semantic card class. Buttons, status pills and form controls are excluded. */
+.dark .qj-app-shell .qj-dashboard-page [class*="bg-white"]:not(button):not(a),
+.dark .qj-app-shell .qj-dashboard-page [class*="bg-gray-50"]:not(button):not(a),
+.dark .qj-app-shell .qj-dashboard-page [class*="bg-gray-100"]:not(button):not(a),
+.dark .qj-app-shell .qj-dashboard-page [class*="bg-slate-50"]:not(button):not(a),
+.dark .qj-app-shell .qj-dashboard-page [class*="bg-slate-100"]:not(button):not(a),
+.qj-app-shell.dark .qj-dashboard-page [class*="bg-white"]:not(button):not(a),
+.qj-app-shell.dark .qj-dashboard-page [class*="bg-gray-50"]:not(button):not(a),
+.qj-app-shell.dark .qj-dashboard-page [class*="bg-gray-100"]:not(button):not(a),
+.qj-app-shell.dark .qj-dashboard-page [class*="bg-slate-50"]:not(button):not(a),
+.qj-app-shell.dark .qj-dashboard-page [class*="bg-slate-100"]:not(button):not(a) {
+    color:var(--qj-dashboard-heading, #f3f4f6) !important;
+    background-color:var(--qj-dashboard-card, #151d2b) !important;
+    border-color:var(--qj-dashboard-card-border, #293548) !important;
+}
+/* Keep headings, descriptions, labels and metadata legible inside every
+   dashboard card, including markup with hard-coded Tailwind text colors. */
+.dark .qj-app-shell .qj-dashboard-page [class*="card"] [class*="text-gray-"],
+.dark .qj-app-shell .qj-dashboard-page [class*="panel"] [class*="text-gray-"],
+.dark .qj-app-shell .qj-dashboard-page [class*="widget"] [class*="text-gray-"],
+.qj-app-shell.dark .qj-dashboard-page [class*="card"] [class*="text-gray-"],
+.qj-app-shell.dark .qj-dashboard-page [class*="panel"] [class*="text-gray-"],
+.qj-app-shell.dark .qj-dashboard-page [class*="widget"] [class*="text-gray-"] {
+    color:var(--qj-dashboard-muted, #a8b3c4) !important;
+}
+.dark .qj-app-shell .qj-dashboard-page [class*="card"] h1,
+.dark .qj-app-shell .qj-dashboard-page [class*="card"] h2,
+.dark .qj-app-shell .qj-dashboard-page [class*="card"] h3,
+.dark .qj-app-shell .qj-dashboard-page [class*="panel"] h1,
+.dark .qj-app-shell .qj-dashboard-page [class*="panel"] h2,
+.dark .qj-app-shell .qj-dashboard-page [class*="panel"] h3,
+.qj-app-shell.dark .qj-dashboard-page [class*="card"] h1,
+.qj-app-shell.dark .qj-dashboard-page [class*="card"] h2,
+.qj-app-shell.dark .qj-dashboard-page [class*="card"] h3,
+.qj-app-shell.dark .qj-dashboard-page [class*="panel"] h1,
+.qj-app-shell.dark .qj-dashboard-page [class*="panel"] h2,
+.qj-app-shell.dark .qj-dashboard-page [class*="panel"] h3 {
+    color:var(--qj-dashboard-heading, #f3f4f6) !important;
+}
