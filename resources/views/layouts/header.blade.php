@@ -150,20 +150,100 @@
         </nav>
 
         @guest
-            <div class="qj-navigation-drawer__footer">
-                <a href="{{ route('login') }}" class="qj-drawer-secondary">Sign In</a>
-                <a href="{{ route('register') }}" class="qj-drawer-primary">Create Account</a>
-            </div>
+            <section class="qj-drawer-guest">
+                <div class="qj-drawer-guest__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 21a8 8 0 0 0-16 0M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </div>
+                <h2>Welcome to BiraConsultant</h2>
+                <p>Sign in to manage your profile, applications and account.</p>
+                <div class="qj-drawer-guest__actions">
+                    <a href="{{ route('login') }}" class="qj-drawer-secondary">Sign In</a>
+                    <a href="{{ route('register') }}" class="qj-drawer-primary">Create Account</a>
+                </div>
+            </section>
         @else
-            <div class="qj-navigation-drawer__footer">
-                @if (Auth::user()->role == 1)
-                    <a href="{{ route('admin-dashboard') }}" class="qj-drawer-link">Admin Dashboard</a>
-                @elseif (Auth::user()->role == 2)
-                    <a href="{{ route('company.dashboard') }}" class="qj-drawer-link">Company Dashboard</a>
+            @php
+                $drawerUser = Auth::user();
+                $drawerRole = (int) $drawerUser->role === 1 ? 'Administrator' : ((int) $drawerUser->role === 2 ? 'Company Account' : 'Job Seeker');
+                $drawerAvatar = $drawerUser->image
+                    ? asset('storage/' . $drawerUser->image)
+                    : 'https://ui-avatars.com/api/?name=' . urlencode($drawerUser->name) . '&background=FACC15&color=24452D&bold=true&size=160';
+            @endphp
+            <section class="qj-drawer-profile" aria-label="Signed-in account">
+                <div class="qj-drawer-profile__identity">
+                    <img class="qj-drawer-profile__avatar" src="{{ $drawerAvatar }}" alt="{{ $drawerUser->name }} profile picture">
+                    <div class="qj-drawer-profile__copy">
+                        <h2 title="{{ $drawerUser->name }}">{{ $drawerUser->name }}</h2>
+                        <p title="{{ $drawerUser->email }}">{{ $drawerUser->email }}</p>
+                        <span class="qj-drawer-role">{{ $drawerRole }}</span>
+                    </div>
+                </div>
+                <div class="qj-drawer-profile__meta">
+                    <div>
+                        <span class="qj-drawer-profile__meta-icon" aria-hidden="true">✓</span>
+                        <span>Account</span>
+                        <strong>Active</strong>
+                    </div>
+                    @if($drawerUser->created_at)
+                        <div>
+                            <span class="qj-drawer-profile__meta-icon" aria-hidden="true">◷</span>
+                            <span>Member since</span>
+                            <strong>{{ $drawerUser->created_at->format('M Y') }}</strong>
+                        </div>
+                    @endif
+                </div>
+            </section>
+
+            <p class="qj-navigation-drawer__eyebrow">Your account</p>
+            <nav class="qj-navigation-drawer__nav" aria-label="Account navigation">
+                @if ((int) $drawerUser->role === 1)
+                    <a href="{{ route('admin-dashboard') }}" class="qj-drawer-link">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="3" width="8" height="5" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="10" width="8" height="11" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
+                        <span>Admin Dashboard</span>
+                    </a>
+                @elseif ((int) $drawerUser->role === 2)
+                    <a href="{{ route('company.dashboard') }}" class="qj-drawer-link">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21h18M5 21V5l7-2v18M19 21V9l-7-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>Company Dashboard</span>
+                    </a>
+                    <a href="{{ route('company.applications') }}" class="qj-drawer-link">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.8"/></svg>
+                        <span>Applications</span>
+                    </a>
                 @else
-                    <a href="{{ route('user.dashboard') }}" class="qj-drawer-link">My Dashboard</a>
+                    <a href="{{ route('user.dashboard') }}" class="qj-drawer-link">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M7 15a5 5 0 0 1 10 0M12 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        <span>My Dashboard</span>
+                    </a>
+                    <a href="{{ route('user.profile') }}" class="qj-drawer-link">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        <span>My Profile</span>
+                    </a>
+                    <a href="{{ route('user.applications') }}" class="qj-drawer-link">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        <span>My Applications</span>
+                    </a>
+                    @if($drawerUser->company)
+                        <a href="{{ route('company.dashboard') }}" class="qj-drawer-link">
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21h18M5 21V5l7-2v18M19 21V9l-7-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>Company Dashboard</span>
+                        </a>
+                    @endif
                 @endif
+            </nav>
+            <div class="qj-navigation-drawer__footer qj-navigation-drawer__footer--account">
+                @if ((int) $drawerUser->role === 1)
+                    <a href="{{ route('admin-dashboard') }}" class="qj-drawer-primary">Open Admin Dashboard</a>
+                @elseif ((int) $drawerUser->role === 2)
+                    <a href="{{ route('company.dashboard') }}" class="qj-drawer-primary">Open Company Dashboard</a>
+                @else
+                    <a href="{{ route('user.profile') }}" class="qj-drawer-secondary">Edit My Profile</a>
+                @endif
+                <a href="{{ URL::to('/signout') }}" class="qj-drawer-signout">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3m9-9h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Sign Out
+                </a>
             </div>
         @endguest
-    </aside>
+    </aside>    </aside>
 
