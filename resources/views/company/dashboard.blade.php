@@ -11,7 +11,7 @@
         <div class="qj-dashboard-hero__inner">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-2xl font-bold mb-1">{{ $company->name }}</h1>
+                    <h1 class="text-2xl font-bold mb-1">@include('components.company-popover', ['company' => $company])</h1>
                     <p class="text-sm opacity-75">Company Dashboard</p>
                 </div>
                 <div class="text-right">
