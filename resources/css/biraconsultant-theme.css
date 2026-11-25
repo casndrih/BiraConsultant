@@ -2854,3 +2854,11 @@
 .dark .qj-company-popover__meta, .dark .qj-company-popover__description, .dark .qj-company-popover__footer, .qj-app-shell.dark .qj-company-popover__meta, .qj-app-shell.dark .qj-company-popover__description, .qj-app-shell.dark .qj-company-popover__footer { color: #a1a1aa; }
 .dark .qj-company-popover__footer, .qj-app-shell.dark .qj-company-popover__footer { border-color: #3f3f46; }
 @media (hover: none) { .qj-company-popover-trigger { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: currentColor; } }
+
+
+/* Fully rounded drawer account actions on homepage and every page. */
+.qj-navigation-drawer__footer--account .qj-drawer-primary,
+.qj-navigation-drawer__footer--account .qj-drawer-secondary,
+.qj-navigation-drawer__footer--account .qj-drawer-signout {
+    border-radius: 9999px !important;
+}
