@@ -12,7 +12,7 @@
             <p class="text-gray-600 dark:text-gray-400 mb-8">Submit your company registration and tax documents for verification.</p>
 
             @if(session('success'))
-                <div class="bg-green-100 dark:bg-green-900/30 border-green-400 dark:border-green-600 text-green-700 dark:text-green-300 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+                <div class="border bg-green-100 dark:bg-green-900/30 border-green-400 dark:border-green-600 text-green-700 dark:text-green-300 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
                     <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                     </svg>
@@ -21,13 +21,13 @@
             @endif
 
             @if(session('error'))
-                <div class="bg-red-100 dark:bg-red-900/30 border-red-400 dark:border-red-600 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg mb-6">
+                <div class="border bg-red-100 dark:bg-red-900/30 border-red-400 dark:border-red-600 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg mb-6">
                     {{ session('error') }}
                 </div>
             @endif
 
             <!-- Current Status -->
-            <div class="mb-6 p-4 rounded-lg {{ $company->verification_status == 1 ? 'border-green-300 dark:border-green-700 bg-green-50 dark:bg-green-900/20' : ($company->verification_status == 2 ? 'border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20' : 'border-yellow-300 dark:border-yellow-700 bg-yellow-50 dark:bg-yellow-900/20') }}">
+            <div class="mb-6 p-4 border rounded-lg {{ $company->verification_status == 1 ? 'border-green-300 dark:border-green-700 bg-green-50 dark:bg-green-900/20' : ($company->verification_status == 2 ? 'border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20' : 'border-yellow-300 dark:border-yellow-700 bg-yellow-50 dark:bg-yellow-900/20') }}">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         @if($company->verification_status == 1)
@@ -116,7 +116,7 @@
                         @error('tax_doc')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
 
-                    <div class="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                    <div class="border bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 rounded-lg p-3">
                         <p class="text-xs text-blue-700 dark:text-blue-300">
                             <strong>📋 Guidelines:</strong> Upload your company registration certificate and tax identification document. Accepted formats: PDF, JPG, PNG. Maximum file size: 2MB each. Your documents will be reviewed by our admin team within 24-48 hours.
                         </p>
