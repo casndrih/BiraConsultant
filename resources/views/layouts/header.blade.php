@@ -15,6 +15,20 @@
                     <a href="{{ route('blog') }}" class="qj-nav-link {{ request()->routeIs('blog', 'blog.*') ? 'is-active' : '' }}">Blog</a>
                     <a href="{{ route('contact') }}" class="qj-nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">Contact</a>
                 </nav>
+                <details class="qj-mobile-nav md:hidden">
+                    <summary class="qj-mobile-nav__toggle" aria-label="Open main menu">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <path d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <span class="sr-only">Menu</span>
+                    </summary>
+                    <nav class="qj-mobile-nav__panel" aria-label="Mobile navigation">
+                        <a href="{{ route('jobs') }}" class="qj-mobile-nav__link {{ request()->routeIs('jobs', 'job.*') ? 'is-active' : '' }}">Jobs</a>
+                        <a href="{{ route('companies') }}" class="qj-mobile-nav__link {{ request()->routeIs('companies', 'company.detail') ? 'is-active' : '' }}">Companies</a>
+                        <a href="{{ route('blog') }}" class="qj-mobile-nav__link {{ request()->routeIs('blog', 'blog.*') ? 'is-active' : '' }}">Blog</a>
+                        <a href="{{ route('contact') }}" class="qj-mobile-nav__link {{ request()->routeIs('contact') ? 'is-active' : '' }}">Contact</a>
+                    </nav>
+                </details>
             </div>
 
             <!-- Right: Auth Button or User Image -->
