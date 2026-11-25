@@ -1,6 +1,6 @@
 @forelse($companies as $company)
     <article class="qj-company-tile">
-        <a href="{{ route('company.detail', $company->slug) }}" class="qj-company-tile__main-link flex items-center gap-4 min-w-0">
+        <div class="qj-company-tile__main-link flex items-center gap-4 min-w-0">
             <div class="qj-company-logo qj-company-logo--tile qj-company-logo--bare" aria-hidden="true">
                 @if($company->logo)
                     <img src="{{ asset('storage/' . $company->logo) }}" alt="" loading="lazy">
@@ -20,7 +20,7 @@
                 <h3>@include('components.company-popover', ['company' => $company])</h3>
                 <p>{{ $company->jobs_count ?? 0 }} open {{ ($company->jobs_count ?? 0) === 1 ? 'role' : 'roles' }}</p>
             </div>
-        </a>
+        </div>
         <span class="qj-company-tile__arrow" aria-hidden="true">→</span>
     </article>
 @empty
