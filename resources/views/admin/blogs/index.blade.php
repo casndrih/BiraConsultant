@@ -26,7 +26,6 @@
                 </button>
             </div>
         </div>
-    </div>
 
     <div class="qj-admin-blogs-table-wrap w-full overflow-x-auto">
         <table aria-label="Blog posts" class="w-full min-w-[900px] text-sm text-left text-black qj-admin-data-table qj-admin-data-table--blogs">
