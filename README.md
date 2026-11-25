@@ -1,107 +1,259 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# BiraConsultant
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <strong>A recruitment and career platform connecting job seekers with employers.</strong>
 </p>
 
-## About Laravel
+<p align="center">
+  <a href="https://biraconsultants.com">Live website</a> ·
+  <a href="https://github.com/casndrih/BiraConsultant">Source code</a> ·
+  <a href="https://laravel.com/docs/11.x">Laravel 11 documentation</a>
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Overview
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**BiraConsultant** is a web-based recruitment portal built to support the job-search and hiring process in one place. Job seekers can discover opportunities, maintain their profiles and submit applications. Employers can manage company information, publish vacancies and review applicants. Administrators oversee platform content, users and configuration.
 
-## Learning Laravel
+The application is built with Laravel and a server-rendered Blade interface, with a responsive frontend powered by Tailwind CSS, Flowbite and Laravel Mix.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Platform capabilities
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Public website
+- Browse and search job vacancies.
+- Explore company profiles and published opportunities.
+- View blog articles and informational pages.
+- Submit enquiries through the contact form.
+- Register, sign in and recover account access.
+- Optional Google authentication integration.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Job-seeker workspace
+- Personal dashboard and profile management.
+- Browse vacancies and submit job applications.
+- Save jobs for later and withdraw applications.
+- Maintain work experience and skills.
+- Follow companies.
+- Manage notifications and notification preferences.
+- Submit identity information and complete supported verification steps.
 
-## Laravel Sponsors
+### Employer workspace
+- Company dashboard and profile settings.
+- Create and manage job listings.
+- Review applications for company vacancies.
+- Update applicant stages.
+- Access applicant-submitted files where permitted.
+- Submit company verification information.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Administration
+- Administrative dashboard.
+- Manage users, companies and job listings.
+- Review and manage applications.
+- Manage blog content.
+- Review contact messages.
+- Configure platform settings and verification workflows.
 
-### Premium Partners
+Access to workspace routes is protected by authentication and role/access middleware.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Technology stack
+
+| Layer | Technologies |
+| --- | --- |
+| Backend | PHP 8.2+, Laravel 11 |
+| Application UI | Laravel Blade |
+| Styling | Tailwind CSS, Flowbite |
+| JavaScript | Alpine.js, Axios |
+| Asset pipeline | Laravel Mix 6, Webpack |
+| UI and visualisations | ApexCharts, Lottie |
+| Database | SQLite for the current development/deployment phase |
+| Authentication | Laravel session authentication, optional Google OAuth |
+| Hosting | Hostinger |
+| CI/CD | GitHub Actions |
+
+## Getting started
+
+### Requirements
+
+Install the following before setting up the project:
+
+- PHP **8.2 or newer**
+- Composer
+- Node.js and npm
+- PHP extensions required by Laravel, including **PDO SQLite** and **SQLite3**
+- Git
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/casndrih/BiraConsultant.git
+cd BiraConsultant
+```
+
+### 2. Install dependencies
+
+```bash
+composer install
+npm install
+```
+
+### 3. Configure the environment
+
+Create your local environment file:
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Configure the application environment in `.env`. For local development, use SQLite:
+
+```dotenv
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
+
+DB_CONNECTION=sqlite
+DB_DATABASE=database/database.sqlite
+```
+
+Create the SQLite database file:
+
+**Linux / macOS**
+```bash
+mkdir -p database
+touch database/database.sqlite
+```
+
+**Windows PowerShell**
+```powershell
+New-Item -ItemType Directory -Force database
+New-Item -ItemType File -Force database/database.sqlite
+```
+
+Ensure the PHP CLI has the `pdo_sqlite` extension enabled.
+
+### 4. Run migrations and seed development data
+
+```bash
+php artisan migrate --seed
+```
+
+The project seeders provide synthetic records for local interface and workflow testing. If demo sign-in is required, configure a private `BIRA_DEMO_PASSWORD` in your local environment before running the seeders. Never commit passwords, production credentials, or populated database files.
+
+### 5. Build frontend assets
+
+For development:
+
+```bash
+npm run dev
+```
+
+For a production asset build:
+
+```bash
+npm run prod
+```
+
+### 6. Start the application
+
+```bash
+php artisan serve
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+## Useful development commands
+
+```bash
+# Run the automated test suite
+php artisan test
+
+# Run database migrations
+php artisan migrate
+
+# Clear Laravel's cached configuration and compiled files
+php artisan optimize:clear
+
+# Rebuild frontend assets
+npm run prod
+
+# Run the Laravel code formatter
+./vendor/bin/pint
+```
+
+## Database and deployment
+
+The current application configuration uses **SQLite** so development and deployment validation can proceed without depending on the Hostinger MySQL service. The production deployment workflow prepares the SQLite database in the persistent application directory and runs Laravel migrations against it.
+
+Important operational notes:
+
+- The SQLite database is runtime data and must not be committed to Git.
+- Keep the database in persistent storage; do not place it in a directory replaced during asset publishing.
+- Back up the database before deployments that may alter schema or data.
+- Do not change the production database driver to MySQL until the application is approved for that migration and the production connection, credentials, backup and migration plan have been verified.
+- Never place secrets in source files, README examples, commit messages or logs.
+
+### GitHub Actions deployment
+
+The repository includes a GitHub Actions workflow for deploying the Laravel application to Hostinger. Deployment depends on repository Actions secrets for the hosting connection and application configuration. Maintain those values in the repository's **Settings → Secrets and variables → Actions**; do not store them in the codebase.
+
+After a deployment, verify the workflow result and the public site at [https://biraconsultants.com](https://biraconsultants.com). A successful workflow is not a substitute for checking the key public pages and authenticated role-based areas.
+
+## Project structure
+
+The main Laravel directories follow the standard framework layout:
+
+```text
+app/
+  Http/Controllers/     Application, authentication and dashboard controllers
+  Models/               Eloquent models
+  Providers/             Service providers
+bootstrap/               Framework bootstrap
+config/                  Application configuration
+database/
+  factories/             Model factories
+  migrations/             Database schema
+  seeders/                Development/demo seed data
+public/                   Public entry point and compiled assets
+resources/
+  js/                     Frontend JavaScript
+  sass/                   Stylesheets
+  views/                  Blade templates
+routes/
+  web.php                 Web routes
+  console.php              Console routes
+storage/                   Logs, cache and uploaded files
+tests/                     Automated tests
+webpack.mix.js             Laravel Mix asset configuration
+```
+
+## Security
+
+- Keep `.env` and all credentials private.
+- Use HTTPS in deployed environments.
+- Keep `APP_DEBUG=false` in production.
+- Review authentication, role middleware and authorization before changing protected routes.
+- Preserve request validation, CSRF protection, throttling and configured reCAPTCHA checks.
+- Validate and authorize uploaded files and downloads.
+- Do not use real personal information in demo or test records.
+- Report suspected security issues privately to the repository maintainers rather than publishing exploit details.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Contributions should be focused and tested before they are merged.
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Create a feature branch from `main`.
+2. Make the smallest coherent change that addresses the task.
+3. Run relevant automated tests and rebuild frontend assets when applicable.
+4. Review the affected public and role-protected views at desktop and mobile sizes.
+5. Open a pull request with a clear description, implementation notes and test results.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The repository currently identifies itself as **MIT** in its Composer project metadata. Confirm the repository's intended distribution and licensing terms before redistributing the application.
 
-## Local development (SQLite)
+---
 
-The application uses SQLite by default for local development. This keeps local work independent of the Hostinger production database.
-
-1. Install the PHP extensions required by the project, including `pdo_sqlite` and `sqlite3`.
-2. Install dependencies:
-
-   ```bash
-   composer install
-   npm install
-   ```
-
-3. Create your local environment and SQLite database:
-
-   ```bash
-   cp .env.example .env
-   touch database/database.sqlite
-   php artisan key:generate
-   php artisan migrate --seed
-   ```
-
-   On Windows PowerShell, create the database file with:
-
-   ```powershell
-   New-Item -ItemType File -Force database/database.sqlite
-   ```
-
-4. Start the Laravel application:
-
-   ```bash
-   php artisan serve
-   ```
-
-The seeder creates synthetic administrator, company, job-seeker, job, and application records for local UI testing. Set a private `BIRA_DEMO_PASSWORD` in your local `.env` before seeding if you need to sign in to those demo accounts. Without it, the seeder assigns a random password. Never reuse a production credential for local testing.
-
-The SQLite database file is local-only and ignored by Git. Do not commit it or copy it to production.
-
-## Production database
-
-Production remains on Hostinger MySQL. The Hostinger deployment workflow explicitly writes `DB_CONNECTION=mysql` and the production database credentials into the server-side `.env`. When preparing a production release, keep those settings and run migrations against the Hostinger database only after its connection quota and availability have been confirmed.
+<p align="center">
+  Built for a more accessible job-search and hiring experience.
+</p>
