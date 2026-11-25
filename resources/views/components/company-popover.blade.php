@@ -17,7 +17,7 @@
        aria-describedby="{{ $popoverId }}">
         {{ $company->name }}
     </a>
-    <span id="{{ $popoverId }}" role="tooltip" class="qj-company-popover invisible absolute z-50 inline-block opacity-0 transition-opacity duration-200">
+    <span id="{{ $popoverId }}" data-popover role="tooltip" class="qj-company-popover invisible absolute z-50 inline-block opacity-0 transition-opacity duration-200">
         <span class="qj-company-popover__head">
             <span class="qj-company-popover__logo">
                 @if($popoverLogo)
