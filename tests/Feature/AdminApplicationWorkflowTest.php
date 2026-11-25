@@ -21,7 +21,15 @@ class AdminApplicationWorkflowTest extends TestCase
     public function test_admin_can_delete_application_using_route_id(): void
     {
         $admin = BiraConsultantUser::where('email', 'admin@biraconsultant.test')->firstOrFail();
-        $applicant = BiraConsultantUser::where('email', 'martha.kila@biraconsultant.test')->firstOrFail();
+        $applicant = BiraConsultantUser::create([
+            'name' => 'Admin Delete Regression Applicant',
+            'slug' => 'admin-delete-regression-applicant',
+            'username' => 'admin-delete-regression-applicant',
+            'email' => 'admin-delete-regression@example.test',
+            'password' => bcrypt('test-password'),
+            'role' => 0,
+            'gender' => '0',
+        ]);
         $job = BiraConsultantJob::query()->firstOrFail();
 
         $application = BiraConsultantApplication::create([
