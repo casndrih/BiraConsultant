@@ -67,21 +67,22 @@ class ApplicationController extends Controller
         return redirect()->route('admin.applications.index');
     }
 
-    public function delete(Request $request)
+    public function delete($id)
     {
-    $application = BiraConsultantApplication::findOrFail($request->application_id);
+        $application = BiraConsultantApplication::findOrFail($id);
 
-    if ($application->cover_letter) {
-        $relativePath = Str::after($application->cover_letter, 'storage/');
-        if (Storage::exists($relativePath)) {
-            Storage::delete($relativePath);
+        if ($application->cover_letter) {
+            $relativePath = Str::after($application->cover_letter, 'storage/');
+            if (Storage::exists($relativePath)) {
+                Storage::delete($relativePath);
+            }
         }
-    }
 
-    $application->delete();
+        $application->delete();
 
-    Session::flash('success', 'Application deleted!');
-    return redirect()->route('admin.applications.index');
+        Session::flash('success', 'Application deleted!');
+
+        return redirect()->route('admin.applications.index');
     }
     
     public function downloadCoverLetter($fullPath)
