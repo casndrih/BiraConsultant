@@ -3741,3 +3741,126 @@
 .dark .qj-app-shell .qj-dashboard-page #dashboardChart {
     color:var(--qj-dashboard-heading);
 }
+
+/* Consistent Flowbite table-search alignment across every admin listing.
+   Keep the magnifier and placeholder on one baseline with a clear 12px gap,
+   and give each search input its own positioning context. */
+.qj-app-shell .qj-admin-users-search-form,
+.qj-app-shell .qj-admin-applications-search-form {
+    display:flex !important;
+    align-items:center !important;
+    gap:10px !important;
+    min-width:0;
+}
+.qj-app-shell .qj-admin-users-search-form > .relative,
+.qj-app-shell .qj-admin-applications-search-form > .relative {
+    position:relative !important;
+    display:flex !important;
+    flex:1 1 auto !important;
+    align-items:center !important;
+    min-width:0 !important;
+    height:42px;
+}
+.qj-app-shell .qj-admin-users-search-form > .relative > div:first-child,
+.qj-app-shell .qj-admin-applications-search-form > .relative > div:first-child {
+    position:absolute !important;
+    top:0 !important;
+    bottom:0 !important;
+    left:13px !important;
+    right:auto !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:18px;
+    height:100%;
+    margin:0 !important;
+    padding:0 !important;
+    line-height:1 !important;
+    z-index:2;
+    pointer-events:none;
+}
+.qj-app-shell .qj-admin-users-search-form > .relative > div:first-child svg,
+.qj-app-shell .qj-admin-applications-search-form > .relative > div:first-child svg {
+    display:block !important;
+    width:17px !important;
+    height:17px !important;
+    flex:0 0 17px !important;
+}
+.qj-app-shell .qj-admin-users-search-form > .relative > input,
+.qj-app-shell .qj-admin-users-search-form > .relative > input[type="search"],
+.qj-app-shell .qj-admin-applications-search-form > .relative > input,
+.qj-app-shell .qj-admin-applications-search-form > .relative > input[type="search"] {
+    display:block !important;
+    width:100% !important;
+    min-width:0 !important;
+    height:42px !important;
+    min-height:42px !important;
+    box-sizing:border-box !important;
+    padding:0 14px 0 43px !important;
+    line-height:1.4 !important;
+    text-indent:0 !important;
+}
+.qj-app-shell .qj-admin-users-search-form > button,
+.qj-app-shell .qj-admin-applications-search-form > button {
+    flex:0 0 auto;
+    margin:0 !important;
+}
+.qj-app-shell .qj-admin-search__form {
+    position:relative !important;
+    display:block !important;
+    width:100% !important;
+    min-width:0 !important;
+}
+.qj-app-shell .qj-admin-search__form > div:first-child {
+    position:absolute !important;
+    top:0 !important;
+    bottom:0 !important;
+    left:14px !important;
+    right:auto !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:18px;
+    height:100%;
+    margin:0 !important;
+    padding:0 !important;
+    line-height:1 !important;
+    z-index:2;
+    pointer-events:none;
+}
+.qj-app-shell .qj-admin-search__form > div:first-child svg {
+    display:block !important;
+    width:18px !important;
+    height:18px !important;
+    flex:0 0 18px !important;
+}
+.qj-app-shell .qj-admin-search__form input {
+    display:block !important;
+    width:100% !important;
+    min-width:0 !important;
+    min-height:42px !important;
+    box-sizing:border-box !important;
+    padding:0 16px 0 46px !important;
+    line-height:1.4 !important;
+    text-indent:0 !important;
+}
+.qj-app-shell .qj-admin-users-search-form input::placeholder,
+.qj-app-shell .qj-admin-applications-search-form input::placeholder,
+.qj-app-shell .qj-admin-search__form input::placeholder {
+    opacity:1;
+}
+@media (max-width:639px) {
+    .qj-app-shell .qj-admin-users-search-form,
+    .qj-app-shell .qj-admin-applications-search-form {
+        gap:8px !important;
+        width:100%;
+    }
+    .qj-app-shell .qj-admin-users-search-form > .relative,
+    .qj-app-shell .qj-admin-applications-search-form > .relative {
+        flex:1 1 0% !important;
+    }
+    .qj-app-shell .qj-admin-users-search-form > button,
+    .qj-app-shell .qj-admin-applications-search-form > button {
+        padding-inline:12px !important;
+    }
+}
