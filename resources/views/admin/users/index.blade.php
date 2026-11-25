@@ -73,19 +73,17 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4">
-                                <p
-                                    class="inline-flex line-clamp-2 items-center text-base font-nunito font-medium">
+                                <div class="qj-admin-country-cell">
                                     @if (
                                         $user->country &&
                                             file_exists(public_path('vendor/blade-flags/country-' . strtolower($user->country->iso) . '.svg')))
                                         <img src="{{ asset('vendor/blade-flags/country-' . strtolower($user->country->iso) . '.svg') }}"
-                                            alt="{{ $user->country->iso }} flag" class="w-6 h-6 mr-2 inline" />
-                                        {{ $user->country->name }}
+                                            alt="{{ $user->country->iso }} flag" class="qj-admin-country-cell__flag" />
+                                        <span class="qj-admin-country-cell__name">{{ $user->country->name }}</span>
                                     @else
-                                        <span class="text-gray-500">N/A</span>
+                                        <span class="qj-admin-country-cell__name text-gray-500">N/A</span>
                                     @endif
-
-                                </p>
+                                </div>
                             </td>
                             <td class="px-6 py-4 text-base font-medium">{{ $user->phone ?? 'N/A' }}</td>
                             <td class="px-6 py-4 text-base font-medium">{{ $user->website ?? 'N/A' }}</td>
