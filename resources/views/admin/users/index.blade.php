@@ -13,7 +13,7 @@
     ])
     <section class="bg-gray-100 dark:bg-black py-2">
         <!-- Search -->
-        <div class="relative mx-4 overflow-x-auto rounded-t-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div class="qj-admin-users-search-card relative mx-4 overflow-visible rounded-t-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <div class="flex flex-col items-stretch justify-between gap-3 bg-white px-4 py-4 sm:flex-row sm:items-center dark:bg-gray-800">
                     <label for="search" class="sr-only">Search User</label>
                     <div class="qj-admin-search ml-4 relative flex items-center">
