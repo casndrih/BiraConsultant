@@ -17,7 +17,7 @@
     <div class="container mx-auto px-4 py-8 max-w-3xl">
 
         @if($errors->any())
-        <div class="bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-700 rounded-lg p-4 mb-6">
+        <div class="border bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-700 rounded-lg p-4 mb-6">
             <ul class="list-disc list-inside text-sm text-red-700 dark:text-red-300">
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -27,7 +27,7 @@
         @endif
 
         @if(session('success'))
-        <div class="bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-700 rounded-lg p-4 mb-6">
+        <div class="border bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-700 rounded-lg p-4 mb-6">
             <p class="text-sm text-green-700 dark:text-green-300">{{ session('success') }}</p>
         </div>
         @endif
