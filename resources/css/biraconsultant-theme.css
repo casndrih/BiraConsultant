@@ -2516,3 +2516,19 @@
     color: #d9f0cd;
     background: #26382a;
 }
+
+
+/* Anchor the mobile menu overlay to the viewport, not the narrow flex item
+   that contains the menu toggle. This prevents left-edge clipping on phones. */
+@media (max-width: 767px) {
+    .qj-mobile-nav__panel {
+        position: fixed;
+        top: calc(env(safe-area-inset-top, 0px) + 76px);
+        right: max(16px, env(safe-area-inset-right, 0px));
+        left: auto;
+        width: min(260px, calc(100vw - 32px));
+        max-height: calc(100dvh - 96px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+}
