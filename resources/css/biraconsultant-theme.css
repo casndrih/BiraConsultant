@@ -3131,3 +3131,22 @@
         margin-bottom: 20px !important;
     }
 }
+
+
+/* Admin users: integrate search into the users table card, not a full-width
+   standalone panel. Keep controls compact and fluid at desktop/mobile widths. */
+.qj-admin-users-table-card { width: auto; min-width: 0; max-width: 100%; }
+.qj-admin-users-toolbar { min-width: 0; gap: 12px; }
+.qj-admin-users-toolbar > * { min-width: 0; }
+.qj-admin-users-search-form { align-items: center; max-width: 100%; }
+.qj-admin-users-search-form input { min-width: 0; min-height: 40px; }
+.qj-admin-users-search-form button { white-space: nowrap; }
+.qj-admin-users-table-wrap { width: 100%; max-width: 100%; -webkit-overflow-scrolling: touch; }
+.qj-admin-users-table-wrap table { min-width: 900px; }
+@media (max-width: 639px) {
+    .qj-admin-users-table-card { margin-inline: 12px; }
+    .qj-admin-users-toolbar { align-items: stretch; padding: 12px; }
+    .qj-admin-users-search-form { display: flex; width: 100%; }
+    .qj-admin-users-search-form button { padding-inline: 12px; }
+    .qj-admin-users-table-wrap table { min-width: 820px; }
+}
