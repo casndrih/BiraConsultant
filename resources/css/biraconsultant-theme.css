@@ -3469,3 +3469,90 @@
 .dark .qj-app-shell a[class*="bg-red-"] {
     color:inherit;
 }
+
+
+/* Admin palette adjustment: replace green accents and cover surfaces with
+   the site's yellow brand color. Scope is admin-only; semantic red/blue
+   alerts and non-admin public pages are left untouched. */
+.qj-app-shell {
+    --qj-brand:#facc15;
+    --qj-brand-hover:#eab308;
+    --qj-brand-soft:#fef9c3;
+    --qj-brand-ink:#713f12;
+}
+.qj-app-shell [class*="text-green-"],
+.qj-app-shell [class*="text-emerald-"],
+.qj-app-shell [class*="text-lime-"] {
+    color:#a16207 !important;
+}
+.dark .qj-app-shell [class*="text-green-"],
+.dark .qj-app-shell [class*="text-emerald-"],
+.dark .qj-app-shell [class*="text-lime-"] {
+    color:#facc15 !important;
+}
+.qj-app-shell [class*="bg-green-"],
+.qj-app-shell [class*="bg-emerald-"],
+.qj-app-shell [class*="bg-lime-"] {
+    color:#713f12 !important;
+    background-color:#fef08a !important;
+}
+.dark .qj-app-shell [class*="bg-green-"],
+.dark .qj-app-shell [class*="bg-emerald-"],
+.dark .qj-app-shell [class*="bg-lime-"] {
+    color:#fde68a !important;
+    background-color:#422006 !important;
+}
+.qj-app-shell [class*="border-green-"],
+.qj-app-shell [class*="border-emerald-"],
+.qj-app-shell [class*="border-lime-"] {
+    border-color:#facc15 !important;
+}
+.qj-app-shell [class*="ring-green-"],
+.qj-app-shell [class*="ring-emerald-"],
+.qj-app-shell [class*="ring-lime-"] {
+    --tw-ring-color:#facc15 !important;
+}
+/* Admin cover/hero backgrounds that previously used green gradients. */
+.qj-app-shell .qj-dashboard-hero,
+.qj-app-shell .qj-content-hero {
+    color:#422006 !important;
+    background:
+      radial-gradient(circle at 88% 10%, rgba(255,255,255,.42), transparent 26%),
+      linear-gradient(122deg,#facc15 0%,#fbbf24 58%,#eab308 100%) !important;
+}
+.qj-app-shell .qj-dashboard-hero h1,
+.qj-app-shell .qj-dashboard-hero h2,
+.qj-app-shell .qj-dashboard-hero p,
+.qj-app-shell .qj-content-hero h1,
+.qj-app-shell .qj-content-hero h2,
+.qj-app-shell .qj-content-hero p {
+    color:#422006 !important;
+}
+.dark .qj-app-shell .qj-dashboard-hero,
+.dark .qj-app-shell .qj-content-hero {
+    color:#fef3c7 !important;
+    background:linear-gradient(122deg,#713f12 0%,#854d0e 58%,#a16207 100%) !important;
+}
+.dark .qj-app-shell .qj-dashboard-hero h1,
+.dark .qj-app-shell .qj-dashboard-hero h2,
+.dark .qj-app-shell .qj-dashboard-hero p,
+.dark .qj-app-shell .qj-content-hero h1,
+.dark .qj-app-shell .qj-content-hero h2,
+.dark .qj-app-shell .qj-content-hero p {
+    color:#fef3c7 !important;
+}
+/* Replace green text/icon accents in custom admin components. */
+.qj-app-shell .qj-content-breadcrumb a,
+.qj-app-shell .qj-inline-link,
+.qj-app-shell .qj-admin-section-link,
+.qj-app-shell .qj-dashboard-stat__icon,
+.qj-app-shell .qj-dashboard-panel__icon {
+    color:#a16207 !important;
+}
+.dark .qj-app-shell .qj-content-breadcrumb a,
+.dark .qj-app-shell .qj-inline-link,
+.dark .qj-app-shell .qj-admin-section-link,
+.dark .qj-app-shell .qj-dashboard-stat__icon,
+.dark .qj-app-shell .qj-dashboard-panel__icon {
+    color:#facc15 !important;
+}
