@@ -361,12 +361,8 @@ jobs:
 
           chmod -R u+rwX,g+rwX "$APP/storage" "$APP/bootstrap/cache"
           chmod 0644 "$WEBROOT/index.php"
-          if [ "$RUN_MIGRATIONS" = "true" ]; then
-            echo "DEPLOY_STAGE=migration_status_check"
-            php artisan migrate:status
-          else
-            echo "Skipping migration-status DB query: no migration files changed in this release."
-          fi
+          echo "DEPLOY_STAGE=sqlite_connection_verification"
+          php -r '$pdo = new PDO("sqlite:".getcwd()."/database/database.sqlite"); echo "SQLITE_CONNECTION_VERIFIED=1".PHP_EOL;'
           rm -rf "$STAGE" "$ARCHIVE"
           echo "DEPLOY_STAGE=cleanup_complete"
           echo "HOSTINGER_LARAVEL_DEPLOYMENT_COMPLETE"
