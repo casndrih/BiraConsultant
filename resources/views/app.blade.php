@@ -38,16 +38,16 @@
     @if (session('success') || session('error') || session('status') || (auth()->check() && auth()->user()->email_verified_at === null))
     <div class="max-w-7xl mx-auto px-4 mt-3 space-y-2">
         @if (session('success'))
-            <div class="flash-msg bg-green-100 border border-green-400 text-green-800 px-4 py-2.5 rounded-lg text-sm">{{ session('success') }}</div>
+            <div class="flash-msg bg-green-100 border border-green-400 text-green-800 dark:bg-green-900/30 dark:border-green-700 dark:text-green-200 px-4 py-2.5 rounded-lg text-sm">{{ session('success') }}</div>
         @endif
         @if (session('error'))
-            <div class="flash-msg bg-red-100 border border-red-400 text-red-800 px-4 py-2.5 rounded-lg text-sm">{{ session('error') }}</div>
+            <div class="flash-msg bg-red-100 border border-red-400 text-red-800 dark:bg-red-900/30 dark:border-red-700 dark:text-red-200 px-4 py-2.5 rounded-lg text-sm">{{ session('error') }}</div>
         @endif
         @if (session('status'))
-            <div class="flash-msg bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-2.5 rounded-lg text-sm">{{ session('status') }}</div>
+            <div class="flash-msg bg-yellow-100 border border-yellow-400 text-yellow-800 dark:bg-yellow-900/30 dark:border-yellow-700 dark:text-yellow-200 px-4 py-2.5 rounded-lg text-sm">{{ session('status') }}</div>
         @endif
         @if (auth()->check() && auth()->user()->email_verified_at === null)
-            <div class="bg-orange-100 border border-orange-400 text-orange-800 px-4 py-2.5 rounded-lg text-sm">
+            <div class="bg-orange-100 border border-orange-400 text-orange-800 dark:bg-orange-900/30 dark:border-orange-700 dark:text-orange-200 px-4 py-2.5 rounded-lg text-sm">
                 <strong>Please verify your email address.</strong> Check your inbox for the verification link we sent when you registered.
             </div>
         @endif
