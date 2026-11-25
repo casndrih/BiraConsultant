@@ -85,6 +85,22 @@ class ApplicationController extends Controller
         return redirect()->route('admin.applications.index');
     }
     
+    public function downloadFile(BiraConsultantApplication $application, string $type)
+    {
+        $paths = [
+            'cv' => $application->cv_path,
+            'resume' => $application->resume_path,
+            'cover-letter' => $application->cover_letter_path,
+        ];
+
+        abort_unless(array_key_exists($type, $paths), 404);
+
+        $path = $paths[$type];
+        abort_if(blank($path) || !Storage::disk('public')->exists($path), 404);
+
+        return Storage::disk('public')->download($path, basename($path));
+    }
+
     public function downloadCoverLetter($fullPath)
     {
     $filename = basename($fullPath);
