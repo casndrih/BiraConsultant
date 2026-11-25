@@ -3249,3 +3249,87 @@
         text-align: center;
     }
 }
+
+
+/* Admin company and blog listings: one compact Flowbite table surface.
+   Search/actions live in the table toolbar; data rows remain real table rows
+   on mobile and scroll horizontally instead of becoming stacked cards. */
+.qj-app-shell .qj-admin-companies-table-card,
+.qj-app-shell .qj-admin-blogs-table-card {
+    width:auto; min-width:0; max-width:100%;
+}
+.qj-app-shell .qj-admin-companies-table-card .qj-admin-companies-toolbar,
+.qj-app-shell .qj-admin-blogs-table-card .qj-admin-blogs-toolbar {
+    min-width:0; gap:12px; border-bottom:1px solid var(--qj-admin-border);
+}
+.qj-app-shell .qj-admin-companies-table-card .qj-admin-search,
+.qj-app-shell .qj-admin-blogs-table-card .qj-admin-search {
+    flex:1 1 280px; width:min(100%,460px); max-width:100%; min-width:0; margin:0;
+}
+.qj-app-shell .qj-admin-companies-table-card .qj-admin-search__form,
+.qj-app-shell .qj-admin-blogs-table-card .qj-admin-search__form { width:100%; }
+.qj-app-shell .qj-admin-companies-table-card .qj-admin-search__form input,
+.qj-app-shell .qj-admin-blogs-table-card .qj-admin-search__form input {
+    width:100%; min-width:0; min-height:40px;
+}
+.qj-app-shell .qj-admin-companies-table-card .qj-admin-companies-table-wrap,
+.qj-app-shell .qj-admin-blogs-table-card .qj-admin-blogs-table-wrap {
+    width:100%; max-width:100%; margin:0; overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+.qj-app-shell .qj-admin-data-table--companies,
+.qj-app-shell .qj-admin-data-table--blogs {
+    display:table; width:100%; table-layout:auto; border-collapse:collapse;
+}
+.qj-app-shell .qj-admin-data-table--companies { min-width:820px; }
+.qj-app-shell .qj-admin-data-table--blogs { min-width:900px; }
+.qj-app-shell .qj-admin-data-table--companies th,
+.qj-app-shell .qj-admin-data-table--companies td,
+.qj-app-shell .qj-admin-data-table--blogs th,
+.qj-app-shell .qj-admin-data-table--blogs td { vertical-align:middle; }
+@media (max-width:767px) {
+    .qj-app-shell .qj-admin-companies-table-card,
+    .qj-app-shell .qj-admin-blogs-table-card { margin-inline:12px; }
+    .qj-app-shell .qj-admin-companies-table-card .qj-admin-companies-toolbar,
+    .qj-app-shell .qj-admin-blogs-table-card .qj-admin-blogs-toolbar {
+        align-items:stretch; padding:12px;
+    }
+    .qj-app-shell .qj-admin-companies-table-card .qj-admin-search,
+    .qj-app-shell .qj-admin-blogs-table-card .qj-admin-search { flex:1 1 100%; width:100%; }
+    .qj-app-shell .qj-admin-companies-table-card .qj-admin-companies-toolbar > div:last-child,
+    .qj-app-shell .qj-admin-blogs-table-card .qj-admin-blogs-toolbar > div:last-child { width:100%; }
+    .qj-app-shell .qj-admin-companies-table-card .qj-admin-companies-toolbar button,
+    .qj-app-shell .qj-admin-blogs-table-card .qj-admin-blogs-toolbar button {
+        width:100%; margin:0 !important;
+    }
+    .qj-app-shell .qj-admin-data-table--companies,
+    .qj-app-shell .qj-admin-data-table--blogs {
+        display:table !important; table-layout:auto; border-collapse:collapse;
+    }
+    .qj-app-shell .qj-admin-data-table--companies thead,
+    .qj-app-shell .qj-admin-data-table--blogs thead { display:table-header-group !important; }
+    .qj-app-shell .qj-admin-data-table--companies tbody,
+    .qj-app-shell .qj-admin-data-table--blogs tbody { display:table-row-group !important; padding:0 !important; }
+    .qj-app-shell .qj-admin-data-table--companies tbody tr,
+    .qj-app-shell .qj-admin-data-table--blogs tbody tr {
+        display:table-row !important; width:auto; min-width:0; padding:0 !important;
+        border:0 !important; border-radius:0 !important; box-shadow:none !important;
+        white-space:nowrap !important;
+    }
+    .qj-app-shell .qj-admin-data-table--companies tbody td,
+    .qj-app-shell .qj-admin-data-table--blogs tbody td {
+        display:table-cell !important; width:auto; min-width:0;
+        padding:12px 16px !important; text-align:left; white-space:nowrap !important;
+        border-bottom:1px solid #e5e7eb;
+    }
+    .qj-app-shell .qj-admin-data-table--companies tbody td::before,
+    .qj-app-shell .qj-admin-data-table--blogs tbody td::before {
+        content:none !important; display:none !important;
+    }
+    .qj-app-shell .qj-admin-data-table--companies tbody td[colspan],
+    .qj-app-shell .qj-admin-data-table--blogs tbody td[colspan] {
+        display:table-cell !important; text-align:center;
+    }
+    .qj-app-shell .qj-admin-data-table--companies { min-width:820px; }
+    .qj-app-shell .qj-admin-data-table--blogs { min-width:900px; }
+}
