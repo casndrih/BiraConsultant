@@ -111,30 +111,59 @@
 
 <script>
     let selectedUserId = null;
+    let userEditDrawer = null;
 
     document.addEventListener('DOMContentLoaded', function () {
-        $('tr[data-href]').on('click', function () {
+        const drawerElement = document.getElementById('drawer-update-user');
+        if (drawerElement && typeof Drawer !== 'undefined') {
+            userEditDrawer = new Drawer(drawerElement, {
+                placement: 'right',
+                bodyScrolling: false,
+                backdrop: true,
+                backdropClasses: 'bg-gray-900/50 fixed inset-0 z-30'
+            });
+        }
+
+        $(document).on('click', 'tr[data-href]', function (event) {
+            if ($(event.target).closest('a, button, input, select, textarea').length) return;
             const slug = $(this).data('href');
+            if (!slug) return;
+
+            const row = $(this);
+            row.attr('aria-busy', 'true');
 
             $.ajax({
-                url: `/admin/user/edit/${slug}`,
-                type: "GET",
+                url: `/admin/user/edit/${encodeURIComponent(slug)}`,
+                type: 'GET',
+                dataType: 'json',
                 success: function (data) {
-                    selectedUserId = data.user.id;
+                    if (!data || !data.user) {
+                        alert('User details were not returned. Please try again.');
+                        return;
+                    }
+
+                    const user = data.user;
+                    selectedUserId = user.id;
                     $('#upload-pic, #upload-cover').val('');
+                    $('#edit_user_id').val(user.id);
+                    $('#edit_user_name').val(user.name || '');
+                    $('#dob').val(user.birthday ? String(user.birthday).slice(0, 10) : '');
+                    $('#edit_user_email').val(user.email || '');
+                    $('#edit_user_gender').val(String(user.gender ?? '0'));
+                    // The update endpoint expects the stored phone digits, not a prefixed international number.
+                    $('#edit_user_phone').val(user.phone || '');
 
-                    $('#edit_user_id').val(data.user.id);
-                    $('#edit_user_name').val(data.user.name);
-                    $('#dob').val(data.user.birthday);
-                    $('#edit_user_email').val(data.user.email);
-                    $('#edit_user_gender').val(data.user.gender);
+                    const countrySelect = $('#edit_user_country_id');
+                    countrySelect.empty().append(new Option('Select country', ''));
+                    const countries = Array.isArray(data.countries) ? data.countries : [];
+                    countries.forEach(country => {
+                        countrySelect.append(new Option(country.name, country.id));
+                    });
+                    countrySelect.val(user.country_id == null ? '' : String(user.country_id));
 
-                    const matchedCountry = data.countries.find(c => c.id === data.user.country_id);
-                    const dialCode = matchedCountry ? matchedCountry.dial : '';
-                    $('#edit_user_phone').val('+' + dialCode + data.user.phone);
                     const stateSelect = $('#edit_user_state');
                     stateSelect.find('option[data-current-state="true"]').remove();
-                    const savedState = data.user.state || '';
+                    const savedState = user.state || '';
                     const hasProvince = stateSelect.find('option').toArray()
                         .some(option => option.value === savedState);
                     if (savedState && !hasProvince) {
@@ -143,60 +172,55 @@
                         stateSelect.append(legacyState);
                     }
                     stateSelect.val(savedState);
-                    $('#edit_user_pic').attr('src', data.user.image);
-                    $('#edit_user_cover').attr('src', data.user.cover);
 
-                    // Role radio
-                    $('#admin-radio').prop('checked', data.user.role == 1);
-                    $('#regular-radio').prop('checked', data.user.role == 0);
-
-                    // Populate country dropdown
-                    const countrySelect = $('#edit_user_country_id');
-                    countrySelect.empty().append('<option>Select country</option>');
-
-                    data.countries.forEach(country => {
-                        const isSelected = country.id === data.user.country_id ? 'selected' : '';
-                        countrySelect.append(
-                            `<option value="${country.id}" ${isSelected}>${country.name}</option>`
-                        );
+                    const fallbackAvatar = row.find('img').first().attr('src') || '';
+                    $('#edit_user_pic').attr('src', user.image || fallbackAvatar);
+                    $('#edit_user_cover').attr('src', user.cover || '');
+                    $('#edit_user_pic, #edit_user_cover').off('error.userEdit').on('error.userEdit', function () {
+                        if (this.id === 'edit_user_pic') this.src = fallbackAvatar;
+                        else this.removeAttribute('src');
                     });
 
-                    // Populate skills
+                    // Match the actual radio names/values rendered in the edit form.
+                    $('input[name="user_role"]').prop('checked', false)
+                        .filter(`[value="${Number(user.role) || 0}"]`).prop('checked', true);
+
                     const skillsContainer = $('#user-skills');
                     skillsContainer.empty();
-
-                    if (data.skills && data.skills.length > 0) {
-                        data.skills.forEach(skill => {
-                            skillsContainer.append(`
-                                <span id="skill-chip-${skill.id}" class="inline-flex items-center px-3 py-1 mr-2 mb-2 text-sm font-medium text-black bg-yellow-300 rounded-full">
-                                    ${skill.name}
-                                    <button type="button" class="ml-2 text-black hover:text-white focus:outline-none remove-skill" data-skill-id="${skill.id}">
-                                        &times;
-                                    </button>
-                                </span>
-                            `);
+                    (Array.isArray(data.skills) ? data.skills : []).forEach(skill => {
+                        const chip = $('<span>', {
+                            id: `skill-chip-${skill.id}`,
+                            class: 'inline-flex items-center px-3 py-1 text-sm font-medium text-black bg-yellow-300 rounded-full'
                         });
-                    }
-
-                    $('.btn-del-pic').attr('href', `/admin/users/delete/pic/${data.user.id}`);
-                    $('.btn-del-user').attr('href', `/admin/users/delete/${data.user.id}`);
-                },
-                complete: function () {
-                    const drawerElement = document.getElementById('drawer-update-user');
-                    const drawer = new Drawer(drawerElement, {
-                        placement: 'right',
-                        bodyScrolling: true,
-                        backdrop: true,
+                        chip.append(document.createTextNode(skill.name + ' '));
+                        chip.append($('<button>', {
+                            type: 'button',
+                            class: 'ml-2 text-black hover:text-white focus:outline-none remove-skill',
+                            'data-skill-id': skill.id,
+                            text: '×',
+                            'aria-label': `Remove ${skill.name}`
+                        }));
+                        skillsContainer.append(chip);
                     });
-                    drawer.show();
+
+                    $('.btn-del-pic').attr('href', `/admin/users/delete/pic/${user.id}`);
+                    $('.btn-del-user').attr('href', `/admin/users/delete/${user.id}`);
+                    $('#removeImageModal [data-user-id], #confirmRemoveProfile, #confirmRemoveCover').attr('data-user-id', user.id);
+                    $('[data-user-id]').filter(function () {
+                        return $(this).closest('#drawer-update-user').length > 0;
+                    }).attr('data-user-id', user.id);
+
+                    if (userEditDrawer) userEditDrawer.show();
                 },
                 error: function () {
-                    alert('Unable to load user details.');
+                    alert('Unable to load user details. Please try again.');
+                },
+                complete: function () {
+                    row.removeAttr('aria-busy');
                 }
             });
         });
     });
-</script>
 
 <script>
     $(document).ready(function () {

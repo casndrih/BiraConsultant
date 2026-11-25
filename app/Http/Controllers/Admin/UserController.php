@@ -55,7 +55,7 @@ class UserController extends Controller
             'edit_user_name' => ['required', 'regex:/^[a-zA-Z\s]+$/u', 'max:255'],
             'edit_user_dob' => 'required|date_format:Y-m-d',
             'edit_user_email' => 'required|email|max:255',
-            'edit_user_gender' => 'required|in:male,female,other',
+            'edit_user_gender' => 'required|in:0,1',
             'edit_user_country_id' => 'nullable|exists:biraconsultant_countries,id',
             'edit_user_state' => 'nullable|string|max:100',
             'edit_user_phone' => 'nullable|digits_between:1,15',

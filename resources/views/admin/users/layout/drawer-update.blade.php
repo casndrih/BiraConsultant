@@ -1,14 +1,14 @@
 <!-- Edit User Drawer -->
 <div id="drawer-update-user"
-    class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform translate-x-full bg-white dark:bg-black"
-    tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
+    class="qj-admin-user-edit-drawer fixed top-0 right-0 z-40 w-full h-screen max-w-full sm:max-w-xl lg:max-w-2xl p-4 sm:p-6 overflow-y-auto overscroll-contain transition-transform translate-x-full bg-white dark:bg-black"
+    tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true" role="dialog" aria-modal="true">
 
-    <h5 id="drawer-label"
-        class="inline-flex items-center mb-6 text-md font-semibold text-black dark:text-white uppercase">Edit Profile
-    </h5>
+    <div class="qj-admin-user-edit-drawer__header sticky top-0 z-20 -mx-4 -mt-4 mb-5 flex items-center justify-between border-b border-gray-200 bg-white/95 px-4 py-4 backdrop-blur dark:border-gray-700 dark:bg-black/95 sm:-mx-6 sm:-mt-6 sm:px-6"><h5 id="drawer-label"
+        class="inline-flex items-center text-lg font-semibold text-black dark:text-white uppercase">Edit User
+    </h5><span class="text-sm text-gray-500 dark:text-gray-400">Update account details</span></div>
 
     <button type="button" data-drawer-dismiss="drawer-update-user" aria-controls="drawer-update-user"
-        class="absolute top-2.5 right-2.5 text-black dark:text-white hover:text-yellow-300 rounded-lg text-sm p-1.5">
+        class="absolute top-3 right-3 z-30 text-black dark:text-white hover:text-yellow-300 rounded-full text-sm p-2 hover:bg-gray-100 dark:hover:bg-gray-800">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd"
                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -23,7 +23,7 @@
         <input type="hidden" name="edit_user_id" id="edit_user_id">
         <div>
         <!-- Cover + Profile Picture -->
-       <div class="relative w-full h-40 rounded-lg overflow-hidden bg-gray-200 dark:bg-custom-dark mb-4">
+       <div class="relative w-full h-44 sm:h-52 rounded-xl overflow-hidden bg-gray-200 dark:bg-custom-dark mb-4">
        <!-- Cover image -->
        <img id="edit_user_cover" class="absolute inset-0 w-full h-full object-cover" src="#" alt="Cover Image">
 
@@ -33,7 +33,7 @@
        </div>
        </div>
 
-            <div class="flex space-x-2 justify-center">
+            <div class="flex flex-wrap gap-2 justify-center">
                 <a type="button"
                     class="btn-user-history justify-center text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-full text-md px-2.5 py-2.5 text-center inline-flex items-center me-2 mb-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" aria-hidden="true" viewBox="0 -960 960 960"
@@ -69,7 +69,7 @@
 
                 <a type="button"
    class="justify-center text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
-   data-user-id="{{ $user->id }}"
+   data-user-id=""
    onclick="openDeleteImageModal(this)">
    <svg aria-hidden="true" class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
@@ -79,7 +79,7 @@
             </div>
         </div>
 
-        <div class="space-y-4 mt-6">
+        <div class="qj-admin-user-edit-fields grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
             <div>
                 <label for="edit_user_name" class="block mb-2 text-md font-medium text-black dark:text-white">Name</label>
                 <input type="text" name="edit_user_name" id="edit_user_name"
@@ -140,7 +140,7 @@
         @foreach($user->skills as $skill)
             <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center gap-1">
                 {{ $skill->name }}
-                <button class="remove-skill text-red-500 font-bold" data-skill="{{ $skill->id }}">×</button>
+                <button type="button" class="remove-skill text-red-500 font-bold" data-skill-id="{{ $skill->id }}" aria-label="Remove {{ $skill->name }}">×</button>
             </span>
         @endforeach
     </div>
@@ -182,7 +182,7 @@
             </div>
         </div>
 
-        <div class="flex justify-center w-full pt-6 space-x-4">
+        <div class="qj-admin-user-edit-actions flex flex-col sm:flex-row justify-center w-full pt-6 gap-3">
             <button type="submit"
                     class="w-full justify-center text-white bg-[#050708] dark:bg-custom-dark hover:bg-[#050708]/80 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-full text-md px-5  text-center inline-flex items-center me-2 mb-2">
                     Update
