@@ -58,6 +58,9 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    const isDarkMode = () => document.documentElement.classList.contains('dark') ||
+        document.body.classList.contains('dark');
+
     const options = {
         chart: {
             type: 'line',
@@ -65,7 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
             toolbar: { show: false },
             parentHeightOffset: 0,
             redrawOnParentResize: true,
-            redrawOnWindowResize: true
+            redrawOnWindowResize: true,
+            background: 'transparent',
+            foreColor: isDarkMode() ? '#cbd5e1' : '#475569',
+            theme: { mode: isDarkMode() ? 'dark' : 'light' },
+            grid: { borderColor: isDarkMode() ? '#334155' : '#e2e8f0' }
         },
         series: [
             {
@@ -86,10 +93,14 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         ],
         xaxis: {
+            labels: { style: { colors: isDarkMode() ? '#a8b3c4' : '#64748b' } },
+            axisBorder: { color: isDarkMode() ? '#334155' : '#e2e8f0' },
+            axisTicks: { color: isDarkMode() ? '#334155' : '#e2e8f0' },
             categories: @json($monthlyLabels),
             title: { text: 'Month' }
         },
         yaxis: {
+            labels: { style: { colors: isDarkMode() ? '#a8b3c4' : '#64748b' } },
             title: { text: 'Count' }
         },
         stroke: {
@@ -100,7 +111,8 @@ document.addEventListener("DOMContentLoaded", function () {
         legend: {
             position: 'top',
             horizontalAlign: 'left',
-            fontSize: '12px'
+            fontSize: '12px',
+            labels: { colors: isDarkMode() ? '#cbd5e1' : '#475569' }
         },
         responsive: [{
             breakpoint: 640,
@@ -111,12 +123,35 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }],
         tooltip: {
+            theme: isDarkMode() ? 'dark' : 'light',
             shared: true,
             intersect: false
         }
     };
 
-    new ApexCharts(document.querySelector("#dashboardChart"), options).render();
+    const chart = new ApexCharts(document.querySelector("#dashboardChart"), options);
+    chart.render();
+
+    // Keep the chart readable when the user switches theme without reloading.
+    const themeObserver = new MutationObserver(() => {
+        const dark = isDarkMode();
+        chart.updateOptions({
+            theme: { mode: dark ? 'dark' : 'light' },
+            chart: { foreColor: dark ? '#cbd5e1' : '#475569' },
+            grid: { borderColor: dark ? '#334155' : '#e2e8f0' },
+            xaxis: {
+                labels: { style: { colors: dark ? '#a8b3c4' : '#64748b' } },
+                axisBorder: { color: dark ? '#334155' : '#e2e8f0' },
+                axisTicks: { color: dark ? '#334155' : '#e2e8f0' }
+            },
+            yaxis: { labels: { style: { colors: dark ? '#a8b3c4' : '#64748b' } } },
+            legend: { labels: { colors: dark ? '#cbd5e1' : '#475569' } },
+            tooltip: { theme: dark ? 'dark' : 'light' }
+        });
+    });
+
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 });
 </script>
 @endsection
