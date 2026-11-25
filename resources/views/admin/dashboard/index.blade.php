@@ -12,31 +12,31 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Stat Cards -->
         <div class="qj-dashboard-stats-grid my-7">
-            <div class="bg-white border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm rounded-lg p-4 text-center">
+            <div class="qj-dashboard-stat text-center">
                 <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Active Jobs</p>
                 <p class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $totalJobs }}</p>
             </div>
-            <div class="bg-white dark:bg-custom-dark shadow-sm rounded-lg p-4 text-center">
+            <div class="qj-dashboard-stat text-center">
                 <p class="text-gray-600 dark:text-gray-300">Total Applications</p>
                 <p class="text-3xl font-medium text-gray-800 dark:text-white">{{ $totalApplications }}</p>
             </div>
-            <div class="bg-white dark:bg-custom-dark shadow-sm rounded-lg p-4 text-center">
+            <div class="qj-dashboard-stat text-center">
                 <p class="text-gray-600 dark:text-gray-300">Pending Applications</p>
                 <p class="text-3xl font-medium text-gray-800 dark:text-white">{{ $pendingApplications }}</p>
             </div>
-            <div class="bg-white dark:bg-custom-dark shadow-sm rounded-lg p-4 text-center">
+            <div class="qj-dashboard-stat text-center">
                 <p class="text-gray-600 dark:text-gray-300">Total Companies</p>
                 <p class="text-3xl font-medium text-gray-800 dark:text-white">{{ $totalCompanies }}</p>
             </div>
-            <div class="bg-white dark:bg-custom-dark shadow-sm rounded-lg p-4 text-center">
+            <div class="qj-dashboard-stat text-center">
                 <p class="text-gray-600 dark:text-gray-300">Total Blogs</p>
                 <p class="text-3xl font-medium text-gray-800 dark:text-white">{{ $totalBlogs }}</p>
             </div>
-            <div class="bg-white dark:bg-custom-dark shadow-sm rounded-lg p-4 text-center">
+            <div class="qj-dashboard-stat text-center">
                 <p class="text-gray-600 dark:text-gray-300">Applications Today</p>
                 <p class="text-3xl font-medium text-gray-800 dark:text-white">{{ $todayApplications }}</p>
             </div>
-            <div class="bg-white dark:bg-custom-dark shadow-sm rounded-lg p-4 text-center">
+            <div class="qj-dashboard-stat text-center">
                 <p class="text-gray-600 dark:text-gray-300">Users Joined Today</p>
                 <p class="text-3xl font-medium text-gray-800 dark:text-white">{{ $todayUsers }}</p>
             </div>
