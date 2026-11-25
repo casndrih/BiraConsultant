@@ -439,7 +439,7 @@ jobs:
           set -euo pipefail
           PORT="${SSH_PORT:-65002}"
           REMOTE="${SSH_USER}@${SSH_HOST}"
-          sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 -o ServerAliveInterval=15 -o ServerAliveCountMax=8 "$REMOTE" 'APP="$HOME/domains/biraconsultants.com/bira_app"; LOG="$APP/storage/logs/laravel.log"; if [ -f "$LOG" ]; then grep -a "production.ERROR:" "$LOG" | tail -n 8 | sed -E "s/.*\\[object\\] \\(([^:]+):.*/LARAVEL_EXCEPTION_CLASS=\\1/" | cut -c1-300; else echo "LARAVEL_DIAGNOSTIC=log_not_found"; fi; printf "CLI_PHP_VERSION="; php -r "echo PHP_VERSION, PHP_EOL;"; printf "CLI_PSR_EXTENSION="; php -r "echo extension_loaded(\"psr\") ? \"loaded\" : \"not_loaded\", PHP_EOL;"'
+          sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 -o ServerAliveInterval=15 -o ServerAliveCountMax=8 "$REMOTE" 'APP="$HOME/domains/biraconsultants.com/bira_app"; LOG="$APP/storage/logs/laravel.log"; if [ -f "$LOG" ]; then grep -a "production.ERROR:" "$LOG" | tail -n 5 | sed -E "s/.*\\[object\\] \\(([^:]+):.*/LARAVEL_EXCEPTION_CLASS=\\1/" | cut -c1-300; grep -a "SQLSTATE\\[" "$LOG" | tail -n 5 | sed -E "s/ \\(Connection:.*//; s/[[:alnum:]._%+-]+@[[:alnum:].-]+/<email>/g; s#/(home|var|opt)/[^ ]+#<path>#g" | cut -c1-700; else echo "LARAVEL_DIAGNOSTIC=log_not_found"; fi; printf "CLI_PHP_VERSION="; php -r "echo PHP_VERSION, PHP_EOL;"; printf "CLI_PSR_EXTENSION="; php -r "echo extension_loaded(\"psr\") ? \"loaded\" : \"not_loaded\", PHP_EOL;"'
  
       - name: Verify demo account authentication and role dashboards
         env:
