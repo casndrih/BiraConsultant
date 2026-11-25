@@ -98,6 +98,8 @@ The application uses SQLite by default for local development. This keeps local w
    php artisan serve
    ```
 
+The seeder creates synthetic administrator, company, job-seeker, job, and application records for local UI testing. Set a private `BIRA_DEMO_PASSWORD` in your local `.env` before seeding if you need to sign in to those demo accounts. Without it, the seeder assigns a random password. Never reuse a production credential for local testing.
+
 The SQLite database file is local-only and ignored by Git. Do not commit it or copy it to production.
 
 ## Production database
