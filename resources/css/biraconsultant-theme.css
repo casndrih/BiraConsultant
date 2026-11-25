@@ -2971,3 +2971,40 @@
         width: 100%;
     }
 }
+
+
+/* Clamp long country names in the admin users table without shrinking flag icons. */
+.qj-app-shell .qj-admin-users-table-wrap .qj-admin-country-cell {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    max-width: 160px;
+    min-width: 0;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.35;
+}
+.qj-app-shell .qj-admin-users-table-wrap .qj-admin-country-cell__flag {
+    display: block;
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    object-fit: contain;
+}
+.qj-app-shell .qj-admin-users-table-wrap .qj-admin-country-cell__name {
+    display: -webkit-box;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+}
+@media (max-width: 767px) {
+    .qj-app-shell .qj-admin-users-table-wrap .qj-admin-country-cell {
+        max-width: 120px;
+    }
+}
