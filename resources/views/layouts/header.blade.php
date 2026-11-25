@@ -1,3 +1,8 @@
+<!-- Google Material Symbols used by the site navigation -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
+
 <!-- Header -->
 <header class="qj-toolbar text-gray-900 dark:text-white">
     <div class="qj-toolbar__inner">
@@ -9,9 +14,7 @@
                         data-drawer-show="qj-navigation-drawer"
                         aria-controls="qj-navigation-drawer"
                         aria-label="Open navigation menu">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
+                    <span class="material-symbols-rounded qj-nav-material-icon" aria-hidden="true">menu</span>
                 </button>
                 <a href="{{ route('home') }}" class="qj-brand" aria-label="BiraConsultant home">
                     <span class="qj-brand__mark">
@@ -119,32 +122,30 @@
                     data-drawer-hide="qj-navigation-drawer"
                     aria-controls="qj-navigation-drawer"
                     aria-label="Close navigation menu">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
+                <span class="material-symbols-rounded qj-nav-material-icon" aria-hidden="true">close</span>
             </button>
         </div>
 
         <p class="qj-navigation-drawer__eyebrow">Explore</p>
         <nav class="qj-navigation-drawer__nav" aria-label="Main navigation">
             <a href="{{ route('home') }}" class="qj-drawer-link {{ request()->routeIs('home') ? 'is-active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">home</span>
                 <span>Home</span>
             </a>
             <a href="{{ route('jobs') }}" class="qj-drawer-link {{ request()->routeIs('jobs', 'job.*') ? 'is-active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">work</span>
                 <span>Jobs</span>
             </a>
             <a href="{{ route('companies') }}" class="qj-drawer-link {{ request()->routeIs('companies', 'company.detail') ? 'is-active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21h18M5 21V5l7-2v18M19 21V9l-7-2M8 8v.01M8 12v.01M8 16v.01M15 12v.01M15 16v.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">business</span>
                 <span>Companies</span>
             </a>
             <a href="{{ route('blog') }}" class="qj-drawer-link {{ request()->routeIs('blog', 'blog.*') ? 'is-active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3h11l3 3v15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 10h8M8 14h8M8 18h5M16 3v4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">article</span>
                 <span>Blog</span>
             </a>
             <a href="{{ route('contact') }}" class="qj-drawer-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v14H4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">mail</span>
                 <span>Contact</span>
             </a>
         </nav>
@@ -152,7 +153,7 @@
         @guest
             <section class="qj-drawer-guest">
                 <div class="qj-drawer-guest__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 21a8 8 0 0 0-16 0M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">account_circle</span>
                 </div>
                 <h2>Welcome to BiraConsultant</h2>
                 <p>Sign in to manage your profile, applications and account.</p>

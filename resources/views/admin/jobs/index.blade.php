@@ -80,7 +80,7 @@
                                     src="{{ $job->company->logo ?? asset('/images/users/userpro.png') }}"
                                     alt="Company image" onerror="this.onerror=null;this.src='{{ asset('/images/providers/default.png') }}';">
                                     <div class="text-base font-semibold text-black dark:text-white">
-                                        {{ $job->company->name ?? 'Unknown Company' }}
+                                        @if($job->company) @include('components.company-popover', ['company' => $job->company]) @else Unknown Company @endif
                                     </div>
                                 </div>
                             </td>

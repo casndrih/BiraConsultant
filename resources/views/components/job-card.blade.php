@@ -22,7 +22,7 @@
         </div>
 
         <div class="qj-job-card__heading">
-            <p class="qj-job-card__company">{{ $companyName }}</p>
+            <p class="qj-job-card__company">@if($company) @include('components.company-popover', ['company' => $company]) @else {{ $companyName }} @endif</p>
             <h3 class="qj-job-card__title">
                 <a href="{{ route('job.detail', $job->slug) }}">{{ $job->title }}</a>
             </h3>

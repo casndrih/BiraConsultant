@@ -2821,3 +2821,36 @@
     .qj-drawer-profile__avatar { width: 54px; height: 54px; flex-basis: 54px; }
     .qj-drawer-profile__meta { gap: 5px; }
 }
+
+
+/* Google Material Symbols navigation icons: icon-only hamburger and drawer controls. */
+.qj-drawer-trigger {
+    width: 42px; height: 42px; flex-basis: 42px;
+    padding: 0; border: 0 !important; border-radius: 10px;
+    color: var(--qj-ink, #17251b); background: transparent !important;
+    box-shadow: none !important;
+}
+.qj-drawer-trigger:hover { color: var(--qj-brand-ink, #713f12); background: var(--qj-brand-soft, #fef9c3) !important; border: 0 !important; }
+.qj-nav-material-icon { display: inline-block; font-size: 28px; line-height: 1; font-weight: 400; font-feature-settings: 'liga'; }
+.qj-drawer-material-icon { display: inline-flex; width: 22px; height: 22px; flex: 0 0 22px; align-items: center; justify-content: center; font-size: 22px; line-height: 1; font-feature-settings: 'liga'; }
+.qj-navigation-drawer__close .qj-nav-material-icon { font-size: 24px; }
+.dark .qj-drawer-trigger, .qj-app-shell.dark .qj-drawer-trigger { color: #f4f4f5; }
+@media (max-width: 420px) { .qj-drawer-trigger { width: 40px; height: 40px; flex-basis: 40px; } }
+
+/* Company hover cards, compatible with Flowbite popover triggers and touch devices. */
+.qj-company-popover-trigger { display: inline; color: inherit; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 3px; cursor: pointer; }
+.qj-company-popover-trigger:hover, .qj-company-popover-trigger:focus-visible { text-decoration-color: currentColor; }
+.qj-company-popover { z-index: 80; width: min(330px, calc(100vw - 28px)); padding: 16px; border: 1px solid #e5e7eb; border-radius: 16px; background: #fff; color: #18181b; box-shadow: 0 18px 50px rgb(15 23 42 / 20%); }
+.qj-company-popover__head { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.qj-company-popover__logo { width: 48px; height: 48px; flex: 0 0 48px; display: grid; place-items: center; overflow: hidden; border: 1px solid #e5e7eb; border-radius: 12px; background: #f9fafb; font-weight: 800; }
+.qj-company-popover__logo img { width: 100%; height: 100%; object-fit: contain; }
+.qj-company-popover__name { margin: 0; color: #18181b; font-size: 14px; font-weight: 800; line-height: 1.35; overflow-wrap: anywhere; }
+.qj-company-popover__meta { margin: 4px 0 0; color: #71717a; font-size: 11px; }
+.qj-company-popover__description { margin: 12px 0; color: #52525b; font-size: 12px; line-height: 1.55; }
+.qj-company-popover__footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 10px; border-top: 1px solid #e5e7eb; color: #71717a; font-size: 11px; }
+.qj-company-popover__link { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 999px; background: #facc15; color: #422006; font-size: 11px; font-weight: 800; text-decoration: none; white-space: nowrap; }
+.dark .qj-company-popover, .qj-app-shell.dark .qj-company-popover { border-color: #3f3f46; background: #18181b; color: #f4f4f5; }
+.dark .qj-company-popover__name, .qj-app-shell.dark .qj-company-popover__name { color: #f4f4f5; }
+.dark .qj-company-popover__meta, .dark .qj-company-popover__description, .dark .qj-company-popover__footer, .qj-app-shell.dark .qj-company-popover__meta, .qj-app-shell.dark .qj-company-popover__description, .qj-app-shell.dark .qj-company-popover__footer { color: #a1a1aa; }
+.dark .qj-company-popover__footer, .qj-app-shell.dark .qj-company-popover__footer { border-color: #3f3f46; }
+@media (hover: none) { .qj-company-popover-trigger { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: currentColor; } }

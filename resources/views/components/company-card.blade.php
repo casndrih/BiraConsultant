@@ -24,7 +24,7 @@
         </div>
         <div class="qj-company-card__identity">
             <span class="qj-company-card__eyebrow">Hiring on BiraConsultant</span>
-            <h3><a href="{{ route('company.detail', $company->slug) }}">{{ $company->name }}</a></h3>
+            <h3>@include('components.company-popover', ['company' => $company])</h3>
             @if($companyLocation)
                 <p class="qj-company-card__location">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
