@@ -3349,3 +3349,123 @@
         padding:12px 16px !important;
     }
 }
+
+
+/* Admin card surfaces: enforce readable light/dark theme parity across every
+   admin section, including settings panels, dashboard widgets, verification
+   cards, modal bodies, filters and listing toolbars. Scoped to the admin shell
+   so public-facing cards retain their own design. */
+.qj-app-shell {
+    --qj-admin-surface:#ffffff;
+    --qj-admin-card:#ffffff;
+    --qj-admin-row:#f8fafc;
+    --qj-admin-row-hover:#f1f5f9;
+    --qj-admin-text:#111827;
+    --qj-admin-muted:#64748b;
+    --qj-admin-border:#e5e7eb;
+    --qj-admin-input:#f8fafc;
+}
+.dark .qj-app-shell {
+    --qj-surface:#1f2937;
+    --qj-surface-alt:#111827;
+    --qj-ink:#f9fafb;
+    --qj-muted:#a1a1aa;
+    --qj-line:#374151;
+    --qj-admin-surface:#111827;
+    --qj-admin-card:#1f2937;
+    --qj-admin-row:#111827;
+    --qj-admin-row-hover:#273449;
+    --qj-admin-text:#f9fafb;
+    --qj-admin-muted:#9ca3af;
+    --qj-admin-border:#374151;
+    --qj-admin-input:#111827;
+    color:var(--qj-ink);
+    background-color:#030712;
+}
+.dark .qj-app-shell [class~="bg-white"],
+.dark .qj-app-shell [class~="bg-gray-50"],
+.dark .qj-app-shell [class~="bg-gray-100"],
+.dark .qj-app-shell [class~="bg-gray-200"] {
+    color:var(--qj-admin-text);
+    background-color:var(--qj-admin-card) !important;
+    border-color:var(--qj-admin-border);
+}
+.dark .qj-app-shell [class~="bg-white"][class~="dark:bg-custom-dark"],
+.dark .qj-app-shell [class~="bg-white"][class~="dark:bg-gray-800"],
+.dark .qj-app-shell [class~="bg-gray-50"][class~="dark:bg-black"],
+.dark .qj-app-shell [class~="bg-gray-100"][class~="dark:bg-black"] {
+    background-color:var(--qj-admin-card) !important;
+    border-color:var(--qj-admin-border) !important;
+    box-shadow:0 8px 24px rgba(0,0,0,.22);
+}
+.dark .qj-app-shell [class~="text-black"],
+.dark .qj-app-shell [class~="text-gray-900"],
+.dark .qj-app-shell [class~="text-gray-800"],
+.dark .qj-app-shell [class~="text-gray-700"],
+.dark .qj-app-shell [class~="text-gray-600"] {
+    color:var(--qj-admin-text) !important;
+}
+.dark .qj-app-shell [class~="text-gray-500"],
+.dark .qj-app-shell [class~="text-gray-400"] {
+    color:var(--qj-admin-muted) !important;
+}
+.dark .qj-app-shell [class~="border-gray-100"],
+.dark .qj-app-shell [class~="border-gray-200"],
+.dark .qj-app-shell [class~="border-gray-300"],
+.dark .qj-app-shell [class~="divide-gray-100"] > * + * {
+    border-color:var(--qj-admin-border) !important;
+}
+.dark .qj-app-shell input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.dark .qj-app-shell select,
+.dark .qj-app-shell textarea {
+    color:var(--qj-admin-text) !important;
+    background-color:var(--qj-admin-input) !important;
+    border:1px solid var(--qj-admin-border) !important;
+}
+.dark .qj-app-shell input::placeholder,
+.dark .qj-app-shell textarea::placeholder {
+    color:#9ca3af !important;
+}
+.dark .qj-app-shell .qj-dashboard-stat,
+.dark .qj-app-shell .qj-dashboard-panel,
+.dark .qj-app-shell .qj-admin-users-table-card,
+.dark .qj-app-shell .qj-admin-applications-table-card,
+.dark .qj-app-shell .qj-admin-companies-table-card,
+.dark .qj-app-shell .qj-admin-blogs-table-card,
+.dark .qj-app-shell [id$="Modal"] .relative.bg-white,
+.dark .qj-app-shell #removeImageModal > div {
+    color:var(--qj-admin-text);
+    background-color:var(--qj-admin-card) !important;
+    border-color:var(--qj-admin-border) !important;
+}
+.dark .qj-app-shell .qj-admin-data-table,
+.dark .qj-app-shell .qj-admin-data-table thead,
+.dark .qj-app-shell .qj-admin-data-table thead tr,
+.dark .qj-app-shell .qj-admin-data-table thead th {
+    color:var(--qj-admin-text) !important;
+    background-color:var(--qj-admin-card) !important;
+    border-color:var(--qj-admin-border) !important;
+}
+.dark .qj-app-shell .qj-admin-data-table tbody tr {
+    color:var(--qj-admin-text) !important;
+    background-color:var(--qj-admin-row) !important;
+    border-color:var(--qj-admin-border) !important;
+    box-shadow:none;
+}
+.dark .qj-app-shell .qj-admin-data-table tbody tr:hover {
+    background-color:var(--qj-admin-row-hover) !important;
+}
+.dark .qj-app-shell .qj-admin-data-table tbody td,
+.dark .qj-app-shell .qj-admin-data-table tbody th {
+    color:var(--qj-admin-text) !important;
+    border-color:var(--qj-admin-border) !important;
+}
+/* Preserve semantic action/status colors and yellow brand buttons in dark mode. */
+.dark .qj-app-shell button[class*="bg-yellow-"],
+.dark .qj-app-shell a[class*="bg-yellow-"],
+.dark .qj-app-shell button[class*="bg-green-"],
+.dark .qj-app-shell a[class*="bg-green-"],
+.dark .qj-app-shell button[class*="bg-red-"],
+.dark .qj-app-shell a[class*="bg-red-"] {
+    color:inherit;
+}
