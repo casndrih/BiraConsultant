@@ -12,9 +12,9 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Stat Cards -->
         <div class="qj-dashboard-stats-grid my-7">
-            <div class="bg-white dark:bg-custom-dark shadow-sm rounded-lg p-4 text-center">
-                <p class="text-gray-600 dark:text-gray-300">Active Jobs</p>
-                <p class="text-3xl font-medium text-gray-800 dark:text-white">{{ $totalJobs }}</p>
+            <div class="bg-white border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm rounded-lg p-4 text-center">
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Active Jobs</p>
+                <p class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $totalJobs }}</p>
             </div>
             <div class="bg-white dark:bg-custom-dark shadow-sm rounded-lg p-4 text-center">
                 <p class="text-gray-600 dark:text-gray-300">Total Applications</p>
@@ -46,9 +46,9 @@
         <div class="qj-dashboard-panel qj-dashboard-monthly-panel max-w-full w-full p-6 mb-10">
             <div class="mb-4">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Monthly Overview</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Comparison of jobs, applications, and user registrations</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Monthly totals for users, applications, companies, and blogs</p>
             </div>
-            <div id="dashboardChart" class="w-full min-w-0" role="img" aria-label="Monthly comparison chart for users, applications, companies and blogs"></div>
+            <div id="dashboardChart" class="w-full min-w-0" role="img" aria-label="Monthly totals for users, applications, companies, and blogs"></div>
         </div>
     </div>
 </section>
