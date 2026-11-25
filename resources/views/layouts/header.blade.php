@@ -17,10 +17,8 @@
                     <span class="material-symbols-rounded qj-nav-material-icon" aria-hidden="true">menu</span>
                 </button>
                 <a href="{{ route('home') }}" class="qj-brand" aria-label="BiraConsultant home">
-                    <span class="qj-brand__mark">
-                        <img src="{{ URL::asset('images/favicon/logo.svg') }}" alt="BiraConsultant logo">
-                    </span>
-                    <span class="qj-brand__name">BiraConsultant</span>
+                    <img class="w-10 h-10 qj-footer-brand-logo" src="{{ URL::asset('images/favicon/logo.svg') }}" alt="BiraConsultant logo">
+                    <span class="qj-brand__name text-xl font-ubuntu font-medium text-black dark:text-white">BiraConsultant</span>
                 </a>
 
             </div>
@@ -112,10 +110,8 @@
            aria-hidden="true">
         <div class="qj-navigation-drawer__header">
             <a href="{{ route('home') }}" class="qj-brand" aria-label="BiraConsultant home">
-                <span class="qj-brand__mark">
-                    <img src="{{ URL::asset('images/favicon/logo.svg') }}" alt="" aria-hidden="true">
-                </span>
-                <span class="qj-brand__name" id="qj-navigation-drawer-title">BiraConsultant</span>
+                <img class="w-10 h-10 qj-footer-brand-logo" src="{{ URL::asset('images/favicon/logo.svg') }}" alt="" aria-hidden="true">
+                <span class="qj-brand__name text-xl font-ubuntu font-medium text-black dark:text-white" id="qj-navigation-drawer-title">BiraConsultant</span>
             </a>
             <button type="button"
                     class="qj-navigation-drawer__close"

@@ -2862,3 +2862,14 @@
 .qj-navigation-drawer__footer--account .qj-drawer-signout {
     border-radius: 9999px !important;
 }
+
+
+/* Keep header and drawer branding identical to the footer wordmark. */
+.qj-brand { gap: 4px; }
+.qj-brand__name {
+    font-family: inherit;
+    font-size: 1.25rem !important;
+    font-weight: 500 !important;
+    letter-spacing: normal !important;
+    line-height: 1.5rem;
+}
