@@ -107,7 +107,7 @@
                                 {{ $job->title }}
                             </h1>
                             <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-                                <span class="font-medium text-black dark:text-white">{{ $job->company->name ?? 'Company' }}</span>
+                                <span class="font-medium text-black dark:text-white">@if($job->company) @include('components.company-popover', ['company' => $job->company]) @else Company @endif</span>
                                 <span>•</span>
                                 <span>{{ $job->jobType->name ?? 'Full Time' }}</span>
                                 <span>•</span>
@@ -226,7 +226,7 @@
                                             </a>
                                         </h4>
                                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                                            {{ $similarJob->company->name ?? 'Company' }} • {{ $similarJob->location ?? 'Remote' }}
+                                            @if($similarJob->company) @include('components.company-popover', ['company' => $similarJob->company]) @else Company @endif • {{ $similarJob->location ?? 'Remote' }}
                                         </p>
                                     </div>
                                     <a href="{{ route('job.detail', $similarJob->slug) }}"
@@ -366,7 +366,7 @@
                     <!-- Company Info -->
                     @if($job->company)
                     <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-                        <h4 class="font-semibold text-black dark:text-white mb-3">{{ $job->company->name }}</h4>
+                        <h4 class="font-semibold text-black dark:text-white mb-3">@include('components.company-popover', ['company' => $job->company])</h4>
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
                             {{ Str::limit(strip_tags($job->company->description ?? ''), 150) }}
                         </p>

@@ -72,7 +72,7 @@
                                             src="{{ $application->job->company->logo ?? asset('/images/providers/default.png') }}"
                                             alt="Company image" onerror="this.onerror=null;this.src='{{ asset('/images/providers/default.png') }}';">
                                         <p class="text-base text-black dark:text-white font-medium">
-                                            {{ $application->job->company->name }}</p>
+                                            @include('components.company-popover', ['company' => $application->job->company])</p>
                                         </div>
                                     </div>
                                 @else

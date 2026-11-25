@@ -115,7 +115,7 @@
                                                 </a>
                                             </h3>
                                             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                                {{ optional($application->job->company)->name }} • {{ $application->job->location ?? 'Remote' }}
+                                                @if($application->job->company) @include('components.company-popover', ['company' => $application->job->company]) @endif • {{ $application->job->location ?? 'Remote' }}
                                             </p>
                                             <div class="flex items-center gap-3 mt-2">
                                                 <span class="text-xs px-2 py-1 rounded-full {{ $application->getStatusColorClassAttribute() }}">
@@ -164,7 +164,7 @@
                                             <a href="{{ route('job.detail', $job->slug) }}">{{ $job->title }}</a>
                                         </h3>
                                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
-                                            {{ optional($job->company)->name }} • {{ $job->location ?? 'Remote' }}
+                                            @if($job->company) @include('components.company-popover', ['company' => $job->company]) @endif • {{ $job->location ?? 'Remote' }}
                                         </p>
                                         <p class="text-sm text-gray-500 dark:text-gray-500">{{ Str::limit(strip_tags($job->description), 80) }}</p>
                                     </div>
@@ -307,7 +307,7 @@
                                     <a href="{{ route('job.detail', $savedJob->slug) }}" class="text-sm font-medium text-black dark:text-white hover:text-yellow-500">
                                         {{ $savedJob->title }}
                                     </a>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ optional($savedJob->company)->name }}</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">@if($savedJob->company) @include('components.company-popover', ['company' => $savedJob->company]) @endif</p>
                                 </div>
                             @endforeach
                         </div>

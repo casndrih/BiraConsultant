@@ -133,7 +133,7 @@
                                         </a>
                                     </h3>
                                     <p class="text-sm text-gray-600 dark:text-gray-400">
-                                        {{ optional($application->job->company)->name }} • {{ $application->job->location ?? 'Remote' }}
+                                        @if($application->job->company) @include('components.company-popover', ['company' => $application->job->company]) @endif • {{ $application->job->location ?? 'Remote' }}
                                     </p>
                                     <div class="flex items-center gap-2 mt-1">
                                         <span class="text-xs text-gray-500 dark:text-gray-400">
