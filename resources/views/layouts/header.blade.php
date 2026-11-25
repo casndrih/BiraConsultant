@@ -181,13 +181,13 @@
                 </div>
                 <div class="qj-drawer-profile__meta">
                     <div>
-                        <span class="qj-drawer-profile__meta-icon" aria-hidden="true">✓</span>
+                        <span class="qj-drawer-profile__meta-icon material-symbols-rounded" aria-hidden="true">check_circle</span>
                         <span>Account</span>
                         <strong>Active</strong>
                     </div>
                     @if($drawerUser->created_at)
                         <div>
-                            <span class="qj-drawer-profile__meta-icon" aria-hidden="true">◷</span>
+                            <span class="qj-drawer-profile__meta-icon material-symbols-rounded" aria-hidden="true">calendar_month</span>
                             <span>Member since</span>
                             <strong>{{ $drawerUser->created_at->format('M Y') }}</strong>
                         </div>
@@ -199,34 +199,34 @@
             <nav class="qj-navigation-drawer__nav" aria-label="Account navigation">
                 @if ((int) $drawerUser->role === 1)
                     <a href="{{ route('admin-dashboard') }}" class="qj-drawer-link">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="3" width="8" height="5" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="10" width="8" height="11" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
+                        <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">dashboard</span>
                         <span>Admin Dashboard</span>
                     </a>
                 @elseif ((int) $drawerUser->role === 2)
                     <a href="{{ route('company.dashboard') }}" class="qj-drawer-link">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21h18M5 21V5l7-2v18M19 21V9l-7-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">business</span>
                         <span>Company Dashboard</span>
                     </a>
                     <a href="{{ route('company.applications') }}" class="qj-drawer-link">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.8"/></svg>
+                        <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">work</span>
                         <span>Applications</span>
                     </a>
                 @else
                     <a href="{{ route('user.dashboard') }}" class="qj-drawer-link">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M7 15a5 5 0 0 1 10 0M12 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">dashboard</span>
                         <span>My Dashboard</span>
                     </a>
                     <a href="{{ route('user.profile') }}" class="qj-drawer-link">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">person</span>
                         <span>My Profile</span>
                     </a>
                     <a href="{{ route('user.applications') }}" class="qj-drawer-link">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">description</span>
                         <span>My Applications</span>
                     </a>
                     @if($drawerUser->company)
                         <a href="{{ route('company.dashboard') }}" class="qj-drawer-link">
-                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21h18M5 21V5l7-2v18M19 21V9l-7-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">business</span>
                             <span>Company Dashboard</span>
                         </a>
                     @endif
@@ -241,10 +241,10 @@
                     <a href="{{ route('user.profile') }}" class="qj-drawer-secondary">Edit My Profile</a>
                 @endif
                 <a href="{{ URL::to('/signout') }}" class="qj-drawer-signout">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3m9-9h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="material-symbols-rounded qj-drawer-material-icon" aria-hidden="true">logout</span>
                     Sign Out
                 </a>
             </div>
         @endguest
-    </aside>    </aside>
+    </aside>
 
