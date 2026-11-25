@@ -17,7 +17,7 @@
         <div class="max-w-2xl mx-auto">
             {{-- Flash Messages --}}
             @if(session('success'))
-                <div class="bg-green-100 border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+                <div class="border bg-green-100 border-green-400 text-green-700 dark:bg-green-900/30 dark:border-green-600 dark:text-green-300 px-4 py-3 rounded-lg mb-6">
                     {{ session('success') }}
                 </div>
             @endif
