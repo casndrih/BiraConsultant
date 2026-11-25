@@ -9,9 +9,9 @@
             <p class="qj-content-hero__subtitle">A live snapshot of jobs, applications, employers, and members.</p>
         </div>
     </div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="qj-admin-dashboard-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Stat Cards -->
-        <div class="qj-dashboard-stats-grid my-7">
+        <div class="qj-dashboard-stats-grid">
             <div class="qj-dashboard-stat text-center">
                 <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Active Jobs</p>
                 <p class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $totalJobs }}</p>
