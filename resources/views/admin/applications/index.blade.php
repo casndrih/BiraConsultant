@@ -12,28 +12,30 @@
         'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&h=240&q=85'
     ])
     <section class="bg-gray-100 dark:bg-black py-2">
-        <div class="relative overflow-x-auto mx-4 shadow-md rounded-t-lg">
-            <div class="flex items-center justify-between py-4 bg-white dark:bg-custom-dark">
-                <label for="table-search" class="sr-only">Search Application</label>
-                <div class="qj-admin-search ml-4 relative flex items-center">
-                    
-                    <form class="qj-admin-search__form relative" action="{{ route('admin.application.search') }}" method="GET">
-                        <div class="absolute inset-y-0 left-0 flex items-center ml-4 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 
-                                4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div><input type="text" id="query-application" name="query-application"
-                            value="{{ request()->query('query-application') }}"
-                            class="block w-full p-2 !pl-12 text-base text-gray-900  rounded-full bg-gray-100 dark:bg-black focus:ring-yellow-300 focus:border-yellow-300"
-                            placeholder="Search Application">
-                    </form>
+        <div class="qj-admin-applications-table-card mx-4 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <div class="qj-admin-applications-toolbar flex flex-col gap-3 border-b border-gray-200 px-4 py-3 dark:border-gray-700 sm:flex-row sm:items-center sm:justify-between">
+                <div class="min-w-0">
+                    <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Job applications</h2>
+                    <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Search and review submitted applications</p>
                 </div>
+                <form class="qj-admin-applications-search-form flex w-full min-w-0 sm:w-auto sm:min-w-[280px] sm:max-w-md" action="{{ route('admin.application.search') }}" method="GET" role="search">
+                    <label for="query-application" class="sr-only">Search applications</label>
+                    <div class="relative w-full min-w-0">
+                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <input type="search" id="query-application" name="query-application"
+                            value="{{ request()->query('query-application') }}"
+                            class="block h-10 w-full rounded-lg border border-gray-300 bg-gray-50 py-2 pl-9 pr-3 text-sm text-gray-900 placeholder-gray-500 focus:border-yellow-400 focus:ring-yellow-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                            placeholder="Search applications..." autocomplete="off">
+                    </div>
+                    <button type="submit" class="ml-2 inline-flex h-10 shrink-0 items-center rounded-lg bg-yellow-400 px-4 text-sm font-medium text-gray-900 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-800">Search</button>
+                </form>
             </div>
-        </div>
-
-        <div class="overflow-x-auto mx-4 shadow-md rounded-b-lg">
-            <table class="w-full text-sm text-left text-black qj-admin-data-table qj-admin-data-table--applications">
+            <div class="qj-admin-applications-table-wrap relative overflow-x-auto">
+                <table class="w-full text-sm text-left text-black qj-admin-data-table qj-admin-data-table--applications">
                 <thead class="text-md text-black dark:text-white font-medium uppercase bg-white dark:bg-custom-dark">
                     <tr>
                         <th class="px-6 py-4">User</th>
@@ -103,10 +105,11 @@
                         </tr>
                     @endforelse
                 </tbody>
-            </table>
+                </table>
+            </div>
         </div>
 
-        {{ $applications->links('vendor.pagination.tailwind') }}
+        <div class="mx-4 mt-4">{{ $applications->links('vendor.pagination.tailwind') }}</div>
         @include('admin.applications.modal.application-modal')
     </section>
 @endsection
