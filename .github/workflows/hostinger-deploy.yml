@@ -145,17 +145,6 @@ jobs:
           SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
           SSH_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
           RUN_MIGRATIONS: ${{ steps.migration-check.outputs.run }}
-          DB_HOST_A: ${{ secrets.HOSTINGER_DB_HOST }}
-          DB_HOST_B: ${{ secrets.DB_HOST }}
-          DB_PORT_SECRET: ${{ secrets.HOSTINGER_DB_PORT }}
-          DB_NAME_A: ${{ secrets.HOSTINGER_DB_NAME }}
-          DB_NAME_B: ${{ secrets.HOSTINGER_DB_DATABASE }}
-          DB_NAME_C: ${{ secrets.DB_DATABASE }}
-          DB_USER_A: ${{ secrets.HOSTINGER_DB_USER }}
-          DB_USER_B: ${{ secrets.HOSTINGER_DB_USERNAME }}
-          DB_USER_C: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD_A: ${{ secrets.HOSTINGER_DB_PASSWORD }}
-          DB_PASSWORD_B: ${{ secrets.DB_PASSWORD }}
           SEED_DEMO_DATA: ${{ contains(github.event.head_commit.message, '[seed-demo-data]') }}
           # The marker is reserved for intentional demo-account reseeding; the secret is never logged.
           # Seed refreshes demo company logos as well as their test credentials.
@@ -164,12 +153,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          DB_HOST="${DB_HOST_A:-${DB_HOST_B:-localhost}}"
-          DB_PORT="${DB_PORT_SECRET:-3306}"
-          DB_NAME="${DB_NAME_A:-${DB_NAME_B:-${DB_NAME_C:-}}}"
-          DB_USER="${DB_USER_A:-${DB_USER_B:-${DB_USER_C:-}}}"
-          DB_PASSWORD="${DB_PASSWORD_A:-${DB_PASSWORD_B:-}}"
-          test -n "$DB_NAME" && test -n "$DB_USER" && test -n "$DB_PASSWORD"
+          # Development and UI work currently use a persistent SQLite database on Hostinger.
+          # No Hostinger MySQL secrets or connections are required during this phase.
           DEMO_PASSWORD=""
           if [[ "$SEED_DEMO_DATA" == "true" ]]; then
             test -n "$BIRA_DEMO_PASSWORD" || { echo "BIRA_DEMO_PASSWORD secret is missing"; exit 31; }
@@ -183,16 +168,11 @@ jobs:
           fi
           ARCHIVE="/tmp/biraconsultant-release-${GITHUB_RUN_ID}.tar.gz"
           STAGE_NAME="biraconsultant-${GITHUB_RUN_ID}"
-          printf -v Q_DB_HOST '%q' "$DB_HOST"
-          printf -v Q_DB_PORT '%q' "$DB_PORT"
-          printf -v Q_DB_NAME '%q' "$DB_NAME"
-          printf -v Q_DB_USER '%q' "$DB_USER"
-          printf -v Q_DB_PASSWORD '%q' "$DB_PASSWORD"
           printf -v Q_DEMO_PASSWORD '%q' "$DEMO_PASSWORD"
           printf -v Q_RUN_MIGRATIONS '%q' "$RUN_MIGRATIONS"
           printf -v Q_ARCHIVE '%q' "$ARCHIVE"
           printf -v Q_STAGE_NAME '%q' "$STAGE_NAME"
-          REMOTE_ENV="DB_HOST=$Q_DB_HOST DB_PORT=$Q_DB_PORT DB_NAME=$Q_DB_NAME DB_USER=$Q_DB_USER DB_PASSWORD=$Q_DB_PASSWORD BIRA_DEMO_PASSWORD=$Q_DEMO_PASSWORD RUN_MIGRATIONS=$Q_RUN_MIGRATIONS ARCHIVE=$Q_ARCHIVE STAGE_NAME=$Q_STAGE_NAME"
+          REMOTE_ENV="BIRA_DEMO_PASSWORD=$Q_DEMO_PASSWORD RUN_MIGRATIONS=$Q_RUN_MIGRATIONS ARCHIVE=$Q_ARCHIVE STAGE_NAME=$Q_STAGE_NAME"
           PORT="${SSH_PORT:-65002}"
           REMOTE="$SSH_USER@$SSH_HOST"
           sshpass -p "$SSH_PASSWORD" ssh -T -p "$PORT" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 -o ConnectionAttempts=3 -o ServerAliveInterval=15 -o ServerAliveCountMax=8 -o TCPKeepAlive=yes "$REMOTE" "$REMOTE_ENV bash -s" <<'REMOTE'
@@ -219,7 +199,7 @@ jobs:
           echo "DEPLOY_STAGE=application_source_copied"
           mkdir -p "$APP/bootstrap/cache" "$APP/storage/framework/cache/data" "$APP/storage/framework/sessions" "$APP/storage/framework/views" "$APP/storage/logs" "$APP/storage/app/public"
           cd "$APP"
-          export DB_HOST DB_PORT DB_NAME DB_USER DB_PASSWORD WEBROOT
+          export WEBROOT
 
           # Persist production settings and generate APP_KEY only if it does not already exist.
           php <<'PHP'
@@ -241,12 +221,8 @@ jobs:
               'APP_URL' => 'https://biraconsultants.com',
               'LOG_CHANNEL' => 'stack',
               'LOG_LEVEL' => 'warning',
-              'DB_CONNECTION' => 'mysql',
-              'DB_HOST' => getenv('DB_HOST') ?: 'localhost',
-              'DB_PORT' => getenv('DB_PORT') ?: '3306',
-              'DB_DATABASE' => getenv('DB_NAME') ?: '',
-              'DB_USERNAME' => getenv('DB_USER') ?: '',
-              'DB_PASSWORD' => getenv('DB_PASSWORD') ?: '',
+              'DB_CONNECTION' => 'sqlite',
+              'DB_DATABASE' => getcwd().'/database/database.sqlite',
               'SESSION_DRIVER' => 'file',
               'CACHE_STORE' => 'file',
               'QUEUE_CONNECTION' => 'sync',
@@ -298,11 +274,15 @@ jobs:
           test -f "$APP/vendor/autoload.php"
           echo "DEPLOY_STAGE=artisan_optimize_clear"
           php artisan optimize:clear
-          if [ "$RUN_MIGRATIONS" = "true" ]; then
-              php artisan migrate --force --no-interaction
-          else
-              echo "Skipping migrations: this release contains no database migration changes."
-          fi
+          echo "DEPLOY_STAGE=prepare_sqlite_database"
+          mkdir -p "$APP/database"
+          touch "$APP/database/database.sqlite"
+          chmod 0664 "$APP/database/database.sqlite"
+          php -r 'if (!extension_loaded("pdo_sqlite")) { fwrite(STDERR, "PDO_SQLITE_EXTENSION_MISSING\\n"); exit(37); }'
+          echo "DATABASE_DRIVER=sqlite"
+          echo "SQLITE_DATABASE_FILE=$APP/database/database.sqlite"
+          echo "DEPLOY_STAGE=run_sqlite_migrations"
+          php artisan migrate --force --no-interaction
           if [ -n "${BIRA_DEMO_PASSWORD:-}" ]; then
               BIRA_DEMO_PASSWORD="$BIRA_DEMO_PASSWORD" php artisan db:seed --force --no-interaction
               BIRA_DEMO_PASSWORD="$BIRA_DEMO_PASSWORD" php <<'PHP'
