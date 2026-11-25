@@ -3194,3 +3194,58 @@
     }
     .qj-app-shell .qj-admin-data-table--applications { min-width:820px; }
 }
+
+
+/* Admin applications must remain a real data table on small screens.
+   Keep the same horizontal-scroll behavior as the desktop users listing;
+   do not convert each application row into an individual card. */
+@media (max-width: 767px) {
+    .qj-app-shell .qj-admin-applications-table-wrap {
+        overflow-x: auto !important;
+        width: 100%;
+        max-width: 100%;
+    }
+    .qj-app-shell .qj-admin-data-table--applications {
+        display: table !important;
+        width: 100%;
+        min-width: 820px;
+        table-layout: auto;
+        border-collapse: collapse;
+    }
+    .qj-app-shell .qj-admin-data-table--applications thead {
+        display: table-header-group !important;
+    }
+    .qj-app-shell .qj-admin-data-table--applications tbody {
+        display: table-row-group !important;
+        padding: 0 !important;
+    }
+    .qj-app-shell .qj-admin-data-table--applications tbody tr {
+        display: table-row !important;
+        width: auto;
+        min-width: 0;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        white-space: nowrap !important;
+    }
+    .qj-app-shell .qj-admin-data-table--applications tbody th[scope="row"],
+    .qj-app-shell .qj-admin-data-table--applications tbody td {
+        display: table-cell !important;
+        width: auto;
+        min-width: 0;
+        padding: 12px 16px !important;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+        white-space: nowrap !important;
+    }
+    .qj-app-shell .qj-admin-data-table--applications tbody th[scope="row"]::before,
+    .qj-app-shell .qj-admin-data-table--applications tbody td::before {
+        content: none !important;
+        display: none !important;
+    }
+    .qj-app-shell .qj-admin-data-table--applications tbody td[colspan] {
+        display: table-cell !important;
+        text-align: center;
+    }
+}
