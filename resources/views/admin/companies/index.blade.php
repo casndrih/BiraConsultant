@@ -2,7 +2,7 @@
 
 @section('content')
 <section class="bg-gray-100 dark:bg-black py-2">
-    <div class="relative overflow-x-auto mx-4 shadow-md rounded-t-lg">
+    <div class="qj-admin-companies-toolbar">
         <div class="flex items-center justify-between py-4 bg-white dark:bg-custom-dark">
             <div class="qj-admin-search ml-4 relative flex items-center">
                 
@@ -20,7 +20,7 @@
                 </form>
             </div>
 
-            <div class="flex items-center">
+            <div class="flex min-w-0 items-center">
                 <button type="button" data-modal-target="createCompanyModal"
                     data-modal-show="createCompanyModal"
                     class="text-white bg-black font-medium rounded-full text-md px-5 py-2.5 ml-4 mr-4">
@@ -30,8 +30,8 @@
         </div>
     </div>
 
-    <div class="overflow-x-auto mx-4 shadow-md rounded-b-lg">
-        <table class="w-full text-sm text-left text-black qj-admin-data-table qj-admin-data-table--companies">
+    <div class="qj-admin-companies-table-wrap">
+        <table aria-label="Registered companies" class="w-full min-w-[760px] text-sm text-left text-black qj-admin-data-table qj-admin-data-table--companies">
             <thead class="text-md text-black dark:text-white font-medium uppercase bg-white dark:bg-custom-dark">
             <tr>
                 <th class="px-6 py-4">Logo</th>
