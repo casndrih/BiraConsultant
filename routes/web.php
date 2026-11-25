@@ -225,6 +225,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/application/delete/{id}', 'delete')->name('admin.application.delete');
             Route::post('/application/update', 'update')->name('admin.application.update');
             Route::get('/application/edit/{id}', 'edit')->name('admin.application.edit');
+            Route::get('/application/{application}/file/{type}', [ApplicationController::class, 'downloadFile'])->name('admin.application.file');
 
             Route::get('/application/cover-letter/{filename}', 'downloadCoverLetter')->where('filename', '.*')->name('admin.cover_letter.download');
         });
