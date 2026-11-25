@@ -3864,3 +3864,59 @@
         padding-inline:12px !important;
     }
 }
+
+/* Clean elevation treatment for cards and table surfaces throughout the
+   admin: remove perimeter strokes and use a subtle 1dp-style shadow instead.
+   Inner table row separators remain intact for scanability. */
+.qj-app-shell .qj-dashboard-stat,
+.qj-app-shell .qj-dashboard-panel,
+.qj-app-shell .qj-dashboard-stats-grid > *,
+.qj-app-shell .qj-admin-users-table-card,
+.qj-app-shell .qj-admin-applications-table-card,
+.qj-app-shell .qj-admin-companies-table-card,
+.qj-app-shell .qj-admin-blogs-table-card,
+.qj-app-shell .qj-admin-users-table-wrap,
+.qj-app-shell .qj-admin-applications-table-wrap,
+.qj-app-shell .qj-admin-companies-table-wrap,
+.qj-app-shell .qj-admin-blogs-table-wrap,
+.qj-app-shell .qj-admin-users-search-card,
+.qj-app-shell .qj-admin-user-edit-drawer {
+    border:0 !important;
+    outline:0;
+    box-shadow:0 1px 2px rgba(15,23,42,.12) !important;
+}
+.qj-app-shell.dark .qj-dashboard-stat,
+.qj-app-shell.dark .qj-dashboard-panel,
+.qj-app-shell.dark .qj-dashboard-stats-grid > *,
+.dark .qj-app-shell .qj-dashboard-stat,
+.dark .qj-app-shell .qj-dashboard-panel,
+.dark .qj-app-shell .qj-dashboard-stats-grid > *,
+.dark .qj-app-shell .qj-admin-users-table-card,
+.dark .qj-app-shell .qj-admin-applications-table-card,
+.dark .qj-app-shell .qj-admin-companies-table-card,
+.dark .qj-app-shell .qj-admin-blogs-table-card,
+.dark .qj-app-shell .qj-admin-users-table-wrap,
+.dark .qj-app-shell .qj-admin-applications-table-wrap,
+.dark .qj-app-shell .qj-admin-companies-table-wrap,
+.dark .qj-app-shell .qj-admin-blogs-table-wrap,
+.dark .qj-app-shell .qj-admin-users-search-card,
+.qj-app-shell.dark .qj-admin-users-table-card,
+.qj-app-shell.dark .qj-admin-applications-table-card,
+.qj-app-shell.dark .qj-admin-companies-table-card,
+.qj-app-shell.dark .qj-admin-blogs-table-card,
+.qj-app-shell.dark .qj-admin-users-table-wrap,
+.qj-app-shell.dark .qj-admin-applications-table-wrap,
+.qj-app-shell.dark .qj-admin-companies-table-wrap,
+.qj-app-shell.dark .qj-admin-blogs-table-wrap,
+.qj-app-shell.dark .qj-admin-users-search-card {
+    border:0 !important;
+    box-shadow:0 1px 2px rgba(0,0,0,.32) !important;
+}
+.qj-app-shell .qj-admin-companies-table-card .qj-admin-companies-toolbar,
+.qj-app-shell .qj-admin-blogs-table-card .qj-admin-blogs-toolbar {
+    border-bottom:0 !important;
+}
+.qj-app-shell .qj-admin-companies-table-wrap,
+.qj-app-shell .qj-admin-blogs-table-wrap {
+    border-top:0 !important;
+}
