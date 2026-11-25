@@ -13,8 +13,8 @@
     ])
     <section class="bg-gray-100 dark:bg-black py-2">
         <!-- Search -->
-        <div class="relative overflow-x-auto mx-4 shadow-md rounded-t-lg">
-            <div class="flex items-center justify-between py-4 bg-white dark:bg-custom-dark">
+        <div class="relative mx-4 overflow-x-auto rounded-t-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <div class="flex flex-col items-stretch justify-between gap-3 bg-white px-4 py-4 sm:flex-row sm:items-center dark:bg-gray-800">
                     <label for="search" class="sr-only">Search User</label>
                     <div class="qj-admin-search ml-4 relative flex items-center">
                     
@@ -27,7 +27,7 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </div><input type="text" name="search"
-                        class="block w-full p-2 !pl-12 text-base text-gray-900 rounded-full bg-gray-100 dark:bg-black focus:ring-yellow-300 focus:ring-2 focus:ring-yellow-300"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-12 text-sm text-gray-900 focus:border-yellow-400 focus:ring-yellow-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                         placeholder="Search User">
                 </form>
                 </div>
@@ -35,9 +35,9 @@
         </div>
 
         <!-- Table -->
-        <div class="qj-admin-users-table-wrap overflow-x-auto mx-4 shadow-md rounded-b-lg">
-            <table class="w-full text-left text-black dark:text-white qj-admin-data-table qj-admin-data-table--users">
-                <thead class="text-md font-medium uppercase bg-white dark:bg-custom-dark">
+        <div class="qj-admin-users-table-wrap relative mx-4 overflow-x-auto rounded-b-lg border border-t-0 border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <table aria-label="Registered users" class="w-full min-w-[900px] text-left text-sm text-gray-600 dark:text-gray-300 qj-admin-data-table qj-admin-data-table--users">
+                <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-300">
                     <tr>
                         <th class="px-6 py-4">Users</th>
                         <th class="px-6 py-4">Skills</th>
@@ -64,7 +64,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-base font-medium">{{ $user->skills->count() }}</td>
-                            <td class="px-6 py-4 text-base font-medium">{{ $user->birthday }}</td>
+                            <td class="whitespace-nowrap px-6 py-4 text-sm">{{ $user->birthday ? \Illuminate\Support\Carbon::parse($user->birthday)->format('d M Y') : 'N/A' }}</td>
                             <td class="px-6 py-4 text-base font-medium capitalize">
                                 @if ($user->gender == 0)
                                     <p class="">Male</p>
@@ -93,7 +93,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center px-6 py-4 text-md font-medium">No users found.</td>
+                            <td colspan="8" class="px-6 py-10 text-center text-sm font-medium text-gray-500 dark:text-gray-400">No users found.</td>
                         </tr>
                     @endforelse
                 </tbody>
