@@ -12,30 +12,30 @@
         'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&h=240&q=85'
     ])
     <section class="bg-gray-100 dark:bg-black py-2">
-        <!-- Search -->
-        <div class="qj-admin-users-search-card relative mx-4 overflow-visible rounded-t-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div class="flex flex-col items-stretch justify-between gap-3 bg-white px-4 py-4 sm:flex-row sm:items-center dark:bg-gray-800">
-                    <label for="search" class="sr-only">Search User</label>
-                    <div class="qj-admin-search ml-4 relative flex items-center">
-                    
-                     
-                    <form class="qj-admin-search__form relative" action="{{ route('admin.user.search') }}" method="GET">
-                    <div class="absolute inset-y-0 left-0 flex items-center ml-4 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </div><input type="text" name="search"
-                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-12 text-sm text-gray-900 focus:border-yellow-400 focus:ring-yellow-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-                        placeholder="Search User">
-                </form>
+        <!-- Users search is integrated into the table card below. -->
+        <!-- Users table card -->
+        <div class="qj-admin-users-table-card mx-4 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <div class="qj-admin-users-toolbar flex flex-col gap-3 border-b border-gray-200 px-4 py-3 dark:border-gray-700 sm:flex-row sm:items-center sm:justify-between">
+                <div class="min-w-0">
+                    <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Registered users</h2>
+                    <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Search and manage user records</p>
                 </div>
+                <form class="qj-admin-users-search-form flex w-full min-w-0 sm:w-auto sm:min-w-[280px] sm:max-w-md" action="{{ route('admin.user.search') }}" method="GET" role="search">
+                    <label for="admin-user-search" class="sr-only">Search users</label>
+                    <div class="relative w-full min-w-0">
+                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <input id="admin-user-search" type="search" name="search" value="{{ request('search') }}"
+                            class="block h-10 w-full rounded-lg border border-gray-300 bg-gray-50 py-2 pl-9 pr-3 text-sm text-gray-900 placeholder-gray-500 focus:border-yellow-400 focus:ring-yellow-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                            placeholder="Search users..." autocomplete="off">
+                    </div>
+                    <button type="submit" class="ml-2 inline-flex h-10 shrink-0 items-center rounded-lg bg-yellow-400 px-4 text-sm font-medium text-gray-900 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-800">Search</button>
+                </form>
             </div>
-        </div>
-
-        <!-- Table -->
-        <div class="qj-admin-users-table-wrap relative mx-4 overflow-x-auto rounded-b-lg border border-t-0 border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <div class="qj-admin-users-table-wrap relative overflow-x-auto">
             <table aria-label="Registered users" class="w-full min-w-[900px] text-left text-sm text-gray-600 dark:text-gray-300 qj-admin-data-table qj-admin-data-table--users">
                 <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-300">
                     <tr>
@@ -96,9 +96,10 @@
                     @endforelse
                 </tbody>
             </table>
+            </div>
         </div>
 
-        {{ $users->links('vendor.pagination.tailwind') }}
+        <div class="mx-4 mt-4">{{ $users->links('vendor.pagination.tailwind') }}</div>
         @include('admin.users.layout.drawer-update')
         @include('admin.users.modal.img-remove')
     </section>
